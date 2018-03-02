@@ -87,7 +87,7 @@ namespace NK_Label3.ViewModels
             ClickSaveAs = new DelegateCommand(SaveAs);
         }
 
-        #region Events
+        #region Label Control Events
         public ICommand ClickAddNewLabel { get; private set; }
         private void AddNewLabel()
         {
@@ -129,9 +129,9 @@ namespace NK_Label3.ViewModels
                 SelectedLabelView = null;
             }
         }
-        #endregion //Events
+        #endregion //Label Control Events
 
-        #region File Control
+        #region File Control Events
         public ICommand ClickOpen { get; private set; }
         private void Open()
         {
@@ -167,6 +167,6 @@ namespace NK_Label3.ViewModels
                 FileController.SaveLabel(ref labelVM, true);
             }
         }
-        #endregion //File Control
+        #endregion //File Control Events
     }
 }
