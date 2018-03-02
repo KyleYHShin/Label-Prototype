@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="BasicModule.Views.OptionText"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary Source="pack://application:,,,/Themes/BasicTheme.xaml"/>
+    </UserControl.Resources>
+
+    <Grid Width="250" Background="White">
+        <StackPanel>
+            <GroupBox Style="{StaticResource OptionGroup}" Header=" Basic Values ">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="80"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Name"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource OptionColumnValue}" Text="{Binding TextObject.Name}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Width"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource OptionColumnValue}" Text="{Binding TextObject.Width}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Height"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource OptionColumnValue}" Text="{Binding TextObject.Height}"/>
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Positon X"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource OptionColumnValue}" Text="{Binding TextObject.PosX}"/>
+                    <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Positon Y"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource OptionColumnValue}" Text="{Binding TextObject.PosY}"/>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Style="{StaticResource OptionGroup}" Header=" Text Values ">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="80"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Text" />
+                    <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource OptionColumnValue}" Text="{Binding TextObject.Text}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Max Length"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource OptionColumnValue}" Text="{Binding TextObject.MaxLength}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Font Size"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource OptionColumnValue}" Text="{Binding TextObject.FontSize}"/>
+                </Grid>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</UserControl>

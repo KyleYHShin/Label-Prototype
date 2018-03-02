@@ -1,0 +1,5 @@
+C:\StudyC#\PrismWPF\Label-Prototype\AdvancedAdornedControlSample\AdornedControl\bin\Debug\AdornedControl.dll
+C:\StudyC#\PrismWPF\Label-Prototype\AdvancedAdornedControlSample\AdornedControl\bin\Debug\AdornedControl.pdb
+C:\StudyC#\PrismWPF\Label-Prototype\AdvancedAdornedControlSample\AdornedControl\obj\Debug\AdornedControl.csproj.CoreCompileInputs.cache
+C:\StudyC#\PrismWPF\Label-Prototype\AdvancedAdornedControlSample\AdornedControl\obj\Debug\AdornedControl.dll
+C:\StudyC#\PrismWPF\Label-Prototype\AdvancedAdornedControlSample\AdornedControl\obj\Debug\AdornedControl.pdb

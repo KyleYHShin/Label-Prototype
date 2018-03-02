@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gu.Wpf.Adorners", "Gu.Wpf.Adorners\Gu.Wpf.Adorners.csproj", "{9D7B857D-71E4-42CD-ADCE-F9B2DEC1BB52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gu.Wpf.Adorners.Demo", "Gu.Wpf.Adorners.Demo\Gu.Wpf.Adorners.Demo.csproj", "{F6E9A3FD-DE68-4A76-AA71-362DD333635B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gu.Wpf.Adorners.Tests", "Gu.Wpf.Adorners.Tests\Gu.Wpf.Adorners.Tests.csproj", "{C7423414-C8C1-4484-A7F6-CAFFC92F0150}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{4A04C09C-1598-448C-BA67-80E052F72CB9}"
+	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
+		paket.dependencies = paket.dependencies
+		paket.lock = paket.lock
+		.paket\paket.targets = .paket\paket.targets
+		.paket\Readme.paket.md = .paket\Readme.paket.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gu.Wpf.Adorners.UiTests", "Gu.Wpf.Adorners.UiTests\Gu.Wpf.Adorners.UiTests.csproj", "{EBE66C3B-EE19-48E7-90F4-9FCF50689674}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".docs", ".docs", "{F402CCC1-AF91-4C70-B0FE-94C907035A23}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+		RELEASE_NOTES.md = RELEASE_NOTES.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9D7B857D-71E4-42CD-ADCE-F9B2DEC1BB52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D7B857D-71E4-42CD-ADCE-F9B2DEC1BB52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D7B857D-71E4-42CD-ADCE-F9B2DEC1BB52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D7B857D-71E4-42CD-ADCE-F9B2DEC1BB52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6E9A3FD-DE68-4A76-AA71-362DD333635B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6E9A3FD-DE68-4A76-AA71-362DD333635B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6E9A3FD-DE68-4A76-AA71-362DD333635B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6E9A3FD-DE68-4A76-AA71-362DD333635B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7423414-C8C1-4484-A7F6-CAFFC92F0150}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7423414-C8C1-4484-A7F6-CAFFC92F0150}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7423414-C8C1-4484-A7F6-CAFFC92F0150}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7423414-C8C1-4484-A7F6-CAFFC92F0150}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBE66C3B-EE19-48E7-90F4-9FCF50689674}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBE66C3B-EE19-48E7-90F4-9FCF50689674}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBE66C3B-EE19-48E7-90F4-9FCF50689674}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBE66C3B-EE19-48E7-90F4-9FCF50689674}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D972AFFF-B45A-4D58-9893-2B201EC5BCE0}
+	EndGlobalSection
+EndGlobal

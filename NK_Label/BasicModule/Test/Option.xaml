@@ -1,0 +1,160 @@
+﻿<UserControl x:Class="BasicModule.Views.Option"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BasicModule.Views"
+             xmlns:model="clr-namespace:BasicModule.Models"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <Style x:Key="ColHeader" TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="3,0,0,0"/>
+        </Style>
+        <Style x:Key="ColValue" TargetType="{x:Type TextBox}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="3,0,3,0"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Width="250" Background="White">
+        <ListBox ItemsSource="{Binding CurrentObject, Mode=TwoWay}">
+            <ListBox.Resources>
+                <ControlTemplate x:Key="itemTemplate" TargetType="{x:Type ListBoxItem}">
+                    <ContentPresenter/>
+                </ControlTemplate>
+
+                <DataTemplate DataType="{x:Type model:LabelObject}">
+                    <StackPanel>
+                        <GroupBox Header="Basic Values">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" MinWidth="80"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource ColHeader}" Text="Name"/>
+                                <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ColValue}" Text="{Binding CurrObj.Name, Mode=TwoWay}"/>
+                                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource ColHeader}" Text="Width"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource ColValue}" Text="{Binding CurrObj.Width, Mode=TwoWay}"/>
+                                <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource ColHeader}" Text="Height"/>
+                                <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource ColValue}" Text="{Binding CurrObj.Height, Mode=TwoWay}"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox Header="Label Values">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" MinWidth="80"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource ColHeader}" Text="ViewSize" />
+                                <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ColValue}" Text="{Binding CurrObj.ViewSize, Mode=TwoWay}"/>
+                                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource ColHeader}" Text="RadiusX"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource ColValue}" Text="{Binding CurrObj.RadiusX, Mode=TwoWay}"/>
+                                <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource ColHeader}" Text="RadiusY"/>
+                                <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource ColValue}" Text="{Binding CurrObj.RadiusY, Mode=TwoWay}"/>
+                            </Grid>
+                        </GroupBox>
+                    </StackPanel>
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type model:TextObject}">
+                    <StackPanel>
+                        <GroupBox Header="Basic Values">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" MinWidth="80"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource ColHeader}" Text="Name"/>
+                                <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ColValue}" Text="{Binding CurrObj.Name, Mode=TwoWay}"/>
+                                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource ColHeader}" Text="Width"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource ColValue}" Text="{Binding CurrObj.Width, Mode=TwoWay}"/>
+                                <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource ColHeader}" Text="Height"/>
+                                <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource ColValue}" Text="{Binding CurrObj.Height, Mode=TwoWay}"/>
+
+                                <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource ColHeader}" Text="PosX"/>
+                                <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource ColValue}" Text="{Binding CurrObj.PosX, Mode=TwoWay}"/>
+                                <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource ColHeader}" Text="PosY"/>
+                                <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource ColValue}" Text="{Binding CurrObj.PosY, Mode=TwoWay}"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox Header="Text Values">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" MinWidth="80"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource ColHeader}" Text="Text" />
+                                <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ColValue}" Text="{Binding CurrObj.Text, Mode=TwoWay}"/>
+                                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource ColHeader}" Text="MaxLength"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource ColValue}" Text="{Binding CurrObj.MaxLength, Mode=TwoWay}"/>
+                                <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource ColHeader}" Text="FontSize"/>
+                                <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource ColValue}" Text="{Binding CurrObj.FontSize, Mode=TwoWay}"/>
+                            </Grid>
+                        </GroupBox>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.Resources>
+
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="Template" Value="{StaticResource itemTemplate}" />
+                </Style>
+            </ListBox.ItemContainerStyle>
+
+
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
+        
+        
+        
+
+            <!--<GroupBox Header="Rules">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="80"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource ColHeader}" Text="Rule1"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ColValue}" Text=""/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource ColHeader}" Text="Rule2"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource ColValue}" Text=""/>
+                </Grid>
+            </GroupBox>-->
+    </Grid>
+</UserControl>

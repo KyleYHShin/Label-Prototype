@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="NK_Label3.Views.Menu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d">
+    <Grid>
+        <Menu
+            Height="24"
+            VerticalAlignment="Top"
+            Padding="10,0,10,0"
+            FontSize="13">
+
+            <MenuItem Header="{Binding Language.MenuFile}">
+                <MenuItem Header="{Binding Language.MenuFileNew}" Command=""/>
+                <Separator />
+                <MenuItem Header="{Binding Language.MenuFileLoad}" Command=""/>
+                <MenuItem Header="{Binding Language.MenuFileSave}" Command=""/>
+                <Separator />
+                <MenuItem Header="{Binding Language.MenuFilePrint}" Command=""/>
+                <MenuItem Header="{Binding Language.MenuFileCloseWindow}" Command=""/>
+                <Separator />
+                <MenuItem Header="{Binding Language.MenuFileProgramExit}" Command=""/>
+            </MenuItem>
+
+            <MenuItem Header="{Binding Language.MenuEdit}">
+                <MenuItem Header="{Binding Language.MenuEditCopy}" Command=""/>
+                <MenuItem Header="{Binding Language.MenuEditTruncate}" Command=""/>
+                <MenuItem Header="{Binding Language.MenuEditPaste}" Command=""/>
+                <Separator />
+                <MenuItem Header="{Binding Language.MenuEditUndo}" Command=""/>
+                <MenuItem Header="{Binding Language.MenuEditRedo}" Command=""/>
+            </MenuItem>
+
+            <MenuItem Header="{Binding Language.MenuView}">
+                <MenuItem Header="{Binding Language.MenuViewExpansion}" Command=""/>
+                <MenuItem Header="{Binding Language.MenuViewReduce}" Command=""/>
+                <Separator />
+                <MenuItem Header="{Binding Language.MenuViewGrid}" Command=""/>
+            </MenuItem>
+
+            <MenuItem Header="{Binding Language.MenuTool}">
+                <MenuItem Header="{Binding Language.MenuToolText}" Command=""/>
+                <MenuItem Header="{Binding Language.MenuToolBarcode}" Command=""/>
+                <MenuItem Header="{Binding Language.MenuToolCompositeComponent}" Command=""/>
+                <Separator />
+                <MenuItem Header="{Binding Language.MenuToolLine}" Command=""/>
+                <MenuItem Header="{Binding Language.MenuToolImage}" Command=""/>
+            </MenuItem>
+
+            <MenuItem Header="{Binding Language.MenuWindow}">
+                <MenuItem Header="{Binding Language.MenuWindowPreference}" Command=""/>
+            </MenuItem>
+
+        </Menu>
+    </Grid>
+</UserControl>
