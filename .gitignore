@@ -217,3 +217,5 @@ NK_Label/BasicModule/bin/Debug/BasicModule.dll
 *.dll
 *.baml
 *.cache
+*.exe
+*.pdb
