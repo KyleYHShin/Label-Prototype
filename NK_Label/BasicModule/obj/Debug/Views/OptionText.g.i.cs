@@ -37,7 +37,7 @@ namespace BasicModule.Views {
     /// <summary>
     /// OptionText
     /// </summary>
-    public partial class OptionText : System.Windows.Controls.UserControl, System.Windows.Markup.IComponentConnector {
+    public partial class OptionTextView : System.Windows.Controls.UserControl, System.Windows.Markup.IComponentConnector {
         
         private bool _contentLoaded;
         

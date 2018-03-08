@@ -16,8 +16,8 @@ namespace BasicModule.Files
         public double Width { get; set; }
         public double Height { get; set; }
 
-        //public int Printer { get; set; }
-        //public int Dpi { get; set; }
+        public int SelectedPrinter { get; set; }
+        public int SelectedDpi { get; set; }
         public double RadiusX { get; set; }
         public double RadiusY { get; set; }
     }

@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="BasicModule.Views.OptionLabelView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
+    </UserControl.Resources>
+
+    <Grid Width="250" Background="White">
+        <StackPanel>
+            <GroupBox Header=" Basic Values " Style="{StaticResource OptionGroup}" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="80"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <TextBlock Grid.Row="0" Grid.Column="0"
+                               Text="Name"
+                               Style="{StaticResource OptionColumnHeader}" />
+                    <TextBox Grid.Row="0" Grid.Column="1"
+                             Text="{Binding LabelObject.Name, Mode=TwoWay}"
+                             Style="{StaticResource OptionColumnValue}" />
+
+                    <TextBlock Grid.Row="1" Grid.Column="0"
+                               Text="Width"
+                               Style="{StaticResource OptionColumnHeader}" />
+                    <TextBox Grid.Row="1" Grid.Column="1"
+                             Text="{Binding LabelObject.Width, Mode=TwoWay}"
+                             Style="{StaticResource OptionColumnValue}"/>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0"
+                               Text="Height"
+                               Style="{StaticResource OptionColumnHeader}" />
+                    <TextBox Grid.Row="2" Grid.Column="1"
+                             Text="{Binding LabelObject.Height, Mode=TwoWay}"
+                             Style="{StaticResource OptionColumnValue}" />
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Header=" Label Values " Style="{StaticResource OptionGroup}" >
+                <Grid>
+                        <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="80"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <TextBlock Grid.Row="0" Grid.Column="0"
+                               Text="Printer"
+                               Style="{StaticResource OptionColumnHeader}" />
+                    <ComboBox Grid.Row="0" Grid.Column="1"
+                              ItemsSource="{Binding PrinterList, Mode=OneWay}"
+                              DisplayMemberPath="Name"
+                              SelectedValuePath="Id"
+                              SelectedValue="{Binding LabelObject.SelectedPrinter, Mode=TwoWay}"
+                              Style="{StaticResource OptionComboBoxValue}" />
+                    
+                    <TextBlock Grid.Row="1" Grid.Column="0"
+                               Text="DPI"
+                               Style="{StaticResource OptionColumnHeader}" />
+                    <ComboBox Grid.Row="1" Grid.Column="1"
+                              ItemsSource="{Binding DpiList, Mode=OneWay}"
+                              DisplayMemberPath="Name"
+                              SelectedValuePath="Id"
+                              SelectedValue="{Binding LabelObject.SelectedDpi, Mode=TwoWay}"
+                              VerticalAlignment="Center"
+                              FontWeight="Medium"
+                              FontSize="13"
+                              Margin="1"/>
+                    
+                    <TextBlock Grid.Row="2" Grid.Column="0"
+                               Text="Radius X"
+                               Style="{StaticResource OptionColumnHeader}" />
+                    <TextBox Grid.Row="2" Grid.Column="1"
+                             Text="{Binding LabelObject.RadiusX, Mode=TwoWay}"
+                             Style="{StaticResource OptionColumnValue}" />
+                    
+                    <TextBlock Grid.Row="3" Grid.Column="0"
+                               Text="Radius Y"
+                               Style="{StaticResource OptionColumnHeader}" />
+                    <TextBox Grid.Row="3" Grid.Column="1"
+                             Text="{Binding LabelObject.RadiusY, Mode=TwoWay}"
+                             Style="{StaticResource OptionColumnValue}" />
+                </Grid>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</UserControl>

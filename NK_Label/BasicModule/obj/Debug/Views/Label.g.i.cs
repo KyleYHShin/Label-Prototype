@@ -45,7 +45,7 @@ namespace BasicModule.Views {
     /// <summary>
     /// Label
     /// </summary>
-    public partial class Label : System.Windows.Controls.UserControl, System.Windows.Markup.IComponentConnector {
+    public partial class LabelView : System.Windows.Controls.UserControl, System.Windows.Markup.IComponentConnector {
         
         
         #line 15 "..\..\..\Views\Label.xaml"

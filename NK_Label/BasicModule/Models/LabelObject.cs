@@ -4,8 +4,27 @@
     {
         #region Default Properties
 
-        //private int _printer;
-        //private int dpi;
+        private int _selectedPrinter;
+        public int SelectedPrinter
+        {
+            get { return _selectedPrinter; }
+            set
+            {
+                _selectedPrinter = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _selectedDpi;
+        public int SelectedDpi
+        {
+            get { return _selectedDpi; }
+            set
+            {
+                _selectedDpi = value;
+                OnPropertyChanged();
+            }
+        }
 
         #endregion //Default Properties
 

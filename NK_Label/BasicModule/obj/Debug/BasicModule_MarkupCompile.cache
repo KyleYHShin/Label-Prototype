@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 
-7-378999321
+8-1560035310
 
-29-1013043291
+28766509960
 79-571052044
-Test\Menu.xaml;Themes\BasicTheme.xaml;Views\Label.xaml;Test\Option.xaml;Views\OptionBarcode.xaml;Views\OptionLabel.xaml;Views\OptionText.xaml;
+Test\Menu.xaml;Themes\Theme.xaml;Views\ChildWindow.xaml;Views\LabelView.xaml;Test\Option.xaml;Views\OptionBarcodeView.xaml;Views\OptionLabelView.xaml;Views\OptionTextView.xaml;
 
-True
+False
 

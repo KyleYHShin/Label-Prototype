@@ -57,7 +57,7 @@ namespace BasicModule.ViewModels
         {
             _regionManager = regionManager;
 
-            var newView = new OptionLabel();
+            var newView = new OptionLabelView();
             newView.DataContext = new OptionLabelViewModel(_label);
             _regionManager.Regions["OptionRegion"].Add(newView, null, true);
 
@@ -77,19 +77,19 @@ namespace BasicModule.ViewModels
 
                 if (SelectedObject is TextObject)
                 {
-                    var newView = new OptionText();
+                    var newView = new OptionTextView();
                     newView.DataContext = new OptionTextViewModel(SelectedObject as TextObject);
                     _regionManager.Regions["OptionRegion"].Add(newView, null, true);
                 }
                 else if (SelectedObject is BarcodeObject)
                 {
-                    var newView = new OptionBarcode();
+                    var newView = new OptionBarcodeView();
                     newView.DataContext = new OptionBarcodeViewModel(SelectedObject as BarcodeObject);
                     _regionManager.Regions["OptionRegion"].Add(newView, null, true);
                 }
                 else
                 {
-                    var newView = new OptionLabel();
+                    var newView = new OptionLabelView();
                     newView.DataContext = new OptionLabelViewModel(_label);
                     _regionManager.Regions["OptionRegion"].Add(newView, null, true);
                 }

@@ -37,7 +37,7 @@ namespace BasicModule.Views {
     /// <summary>
     /// OptionBarcode
     /// </summary>
-    public partial class OptionBarcode : System.Windows.Controls.UserControl, System.Windows.Markup.IComponentConnector {
+    public partial class OptionBarcodeView : System.Windows.Controls.UserControl, System.Windows.Markup.IComponentConnector {
         
         private bool _contentLoaded;
         

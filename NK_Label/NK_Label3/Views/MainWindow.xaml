@@ -13,7 +13,8 @@
         Background="{Binding Background}">
 
     <Window.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Themes/BasicTheme.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
+        
     </Window.Resources>
     
     <Grid>
@@ -111,6 +112,9 @@
             </TabControl.ContentTemplate>
         </TabControl>-->
 
+        <!--<TabControl 
+            ItemsSource="{Binding LabelViewList}"
+            SelectedItem="{Binding SelectedLabelView}"-->
         <TabControl prism:RegionManager.RegionName="ContentRegion"
                 Grid.Row="1"
                 Grid.Column="0"

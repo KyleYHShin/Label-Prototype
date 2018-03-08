@@ -18,6 +18,8 @@ namespace BasicModule.Files
                 label.Name = originData.Label.Name;
                 label.Width = originData.Label.Width;
                 label.Height = originData.Label.Height;
+                label.SelectedPrinter = originData.Label.SelectedPrinter;
+                label.SelectedDpi = originData.Label.SelectedDpi;
                 label.RadiusX = originData.Label.RadiusX;
                 label.RadiusY = originData.Label.RadiusY;
                 ret.Label = label;
@@ -74,6 +76,8 @@ namespace BasicModule.Files
                 labelData.Label.Name = fileData.Label.Name;
                 labelData.Label.Width = fileData.Label.Width;
                 labelData.Label.Height = fileData.Label.Height;
+                labelData.Label.SelectedPrinter = fileData.Label.SelectedPrinter;
+                labelData.Label.SelectedDpi = fileData.Label.SelectedDpi;
                 labelData.Label.RadiusX = fileData.Label.RadiusX;
                 labelData.Label.RadiusY = fileData.Label.RadiusY;
 

@@ -4,17 +4,17 @@
 library
 C#
 .cs
-C:\StudyC#\PrismWPF\Label-Prototype\NK_Label\BasicModule\obj\Debug\
+C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\
 BasicModule
 none
 false
 DEBUG;TRACE
 
-7-378999321
+8-1560035310
 
-29-1013043291
-791943249460
-Test\Menu.xaml;Themes\BasicTheme.xaml;Views\Label.xaml;Test\Option.xaml;Views\OptionBarcode.xaml;Views\OptionLabel.xaml;Views\OptionText.xaml;
+32555996115
+79-571052044
+Test\Menu.xaml;Themes\Theme.xaml;Views\ChildWindow.xaml;Views\LabelView.xaml;Test\Option.xaml;Views\OptionBarcodeView.xaml;Views\OptionLabelView.xaml;Views\OptionTextView.xaml;
 
-False
+True
 
