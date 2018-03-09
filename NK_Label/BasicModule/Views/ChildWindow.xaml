@@ -3,8 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="clr-namespace:BasicModule.ViewModels"
-        xmlns:vw="clr-namespace:BasicModule.Views"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize">
@@ -28,17 +26,13 @@
                 Grid.Row="0"
                 Grid.Column="0"
                 Grid.ColumnSpan="2">
-            <Grid.Resources>
-                <DataTemplate DataType="{x:Type vm:OptionLabelViewModel}">
-                    <vw:OptionLabelView/>
-                </DataTemplate>
-            </Grid.Resources>
-            <ContentControl Content="{Binding CurrentViewModel}"/>
+            <ContentControl x:Name="PART_ContentControl" />
         </Grid>
 
         <Button Content="Apply"
                 Grid.Row="1"
                 Grid.Column="0"
+                Click="Ok_Click"
                 Background="{StaticResource NKThirdBrush}"
                 BorderBrush="{StaticResource NKThirdBrush}"
                 Style="{StaticResource OptionButton}"
@@ -46,6 +40,7 @@
         <Button Content="Cancle"
                 Grid.Row="1"
                 Grid.Column="1"
+                Click="Cancel_Click"
                 VerticalContentAlignment="Bottom"
                 Background="{StaticResource NKSecondBrush}"
                 BorderBrush="{StaticResource NKSecondBrush}"

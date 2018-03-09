@@ -114,6 +114,8 @@
     <Compile Include="Files\Parser.cs" />
     <Compile Include="Files\TotalData.cs" />
     <Compile Include="Files\XMLSerializer.cs" />
+    <Compile Include="Utils\DialogService.cs" />
+    <Compile Include="ViewModels\IOptionViewModel.cs" />
     <Compile Include="ViewModels\LabelViewModel.cs" />
     <Compile Include="Test\OptionViewModel.cs" />
     <Compile Include="ViewModels\OptionBarcodeViewModel.cs" />

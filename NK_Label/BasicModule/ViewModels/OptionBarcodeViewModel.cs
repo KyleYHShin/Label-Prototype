@@ -3,7 +3,7 @@ using Prism.Mvvm;
 
 namespace BasicModule.ViewModels
 {
-    public class OptionBarcodeViewModel : BindableBase
+    public class OptionBarcodeViewModel : BindableBase, IOptionViewModel
     {
         private BarcodeObject _barcodeObject;
         public BarcodeObject BarcodeObject
@@ -15,6 +15,11 @@ namespace BasicModule.ViewModels
         public OptionBarcodeViewModel(BarcodeObject bo)
         {
             BarcodeObject = bo;
+        }
+
+        public bool isRight()
+        {
+            return true;
         }
     }
 }

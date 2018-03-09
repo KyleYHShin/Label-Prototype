@@ -219,3 +219,4 @@ NK_Label/BasicModule/bin/Debug/BasicModule.dll
 *.cache
 *.exe
 *.pdb
+*.dll

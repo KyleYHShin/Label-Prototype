@@ -8,8 +8,8 @@ using Prism.Regions;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using BasicModule.Models;
+using BasicModule.Utils;
 using System.Windows;
-using System;
 
 namespace NK_Label3.ViewModels
 {
@@ -55,6 +55,7 @@ namespace NK_Label3.ViewModels
         #endregion //System Properties
 
         #region Event Properties
+        private IDialogService DialogService { get { return new DialogService(); } }
 
         private ObservableCollection<LabelView> _labelViewList = new ObservableCollection<LabelView>();
         public ObservableCollection<LabelView> LabelViewList
@@ -96,10 +97,9 @@ namespace NK_Label3.ViewModels
             {
                 var newView = new LabelView();
                 newView.DataContext = newLVM;
-                newView.ViewModel = newLVM;
                 _labelViewList.Add(newView);
                 SelectedLabelView = newView;
-
+                
                 _regionManager.Regions["ContentRegion"].Add(newView, null, true);
                 _regionManager.Regions["ContentRegion"].Activate(newView);
             }
@@ -109,47 +109,17 @@ namespace NK_Label3.ViewModels
         private void AddNewLabel()
         {
             var newLabel = new LabelObject();
-            var cVM = new ChildWindowViewModel();
-            cVM.CurrentViewModel = new OptionLabelViewModel(newLabel);
+            var olViewModel = new OptionLabelViewModel(newLabel); ;
+            var olView = new OptionLabelView();
+            olView.DataContext = olViewModel;
+            
+            var dialogResult = DialogService.ShowDialog(Application.Current.MainWindow, olView, "Create New Label");
 
-            var cWin = new ChildWindow();
-            cWin.Owner = Application.Current.MainWindow;
-            cWin.Title = "Create New Label";
-            cWin.DataContext = cVM;
-            try
+            if (dialogResult == true)
             {
-                Application.Current.MainWindow.IsEnabled = false;
-                cWin.Show();
-                //if dialogResult==ok -> Create new LabelView by newLabel -> Active LabelView
-                //1. How to get signal from ChildWindow
-                //2. How to get LabelObject from ChildWindow
-                //  -> check newLabel object
-                //LabelViewModel newLVM = new LabelViewModel(_regionManager);
-                //newLVM.Label = newLabel;
-                //AddLabel(newLVM);
-
-
-
-                //Origin Test Source
-                //var newViewModel = new LabelViewModel(_regionManager);
-                //newViewModel.Init();
-                //var newView = new LabelView();
-                //newView.DataContext = newViewModel;
-                //newView.ViewModel = newViewModel;
-                //_labelViewList.Add(newView);
-                //SelectedLabelView = newView;
-
-                //_regionManager.Regions["ContentRegion"].Add(newView, null, true);
-                //_regionManager.Regions["ContentRegion"].Activate(newView);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-            finally
-            {
-                Application.Current.MainWindow.IsEnabled = true;
-                cWin.Close();
+                var newLVM = new LabelViewModel(_regionManager);
+                newLVM.Label = newLabel;
+                AddLabel(newLVM);
             }
         }
 
@@ -158,14 +128,9 @@ namespace NK_Label3.ViewModels
         {
             if (LabelViewList.Count > 0 && SelectedLabelView != null)
             {
-                //if (SelectedLabelView.ViewModel.IsChanged)
-                //{
-                //    Console.log(SelectedLabelView.ViewModel.Label.Name + "is changed");
-                //}
                 _regionManager.Regions["ContentRegion"].Remove(SelectedLabelView);
                 LabelViewList.Remove(SelectedLabelView);
                 SelectedLabelView = LabelViewList[0];
-                //tab 연동
             }
         }
         public ICommand ClickCloseAllLabel { get; private set; }
@@ -181,6 +146,7 @@ namespace NK_Label3.ViewModels
         #endregion //Label Control Events
 
         #region File Control Events
+
         public ICommand ClickOpen { get; private set; }
         private void Open()
         {
@@ -192,7 +158,7 @@ namespace NK_Label3.ViewModels
         {
             if (SelectedLabelView != null)
             {
-                var labelVM = SelectedLabelView.ViewModel;
+                var labelVM = SelectedLabelView.DataContext as LabelViewModel;
                 FileController.SaveLabel(ref labelVM, false);
             }
         }
@@ -201,10 +167,11 @@ namespace NK_Label3.ViewModels
         {
             if (SelectedLabelView != null)
             {
-                var labelVM = SelectedLabelView.ViewModel;
+                var labelVM = SelectedLabelView.DataContext as LabelViewModel;
                 FileController.SaveLabel(ref labelVM, true);
             }
         }
+
         #endregion //File Control Events
     }
 }

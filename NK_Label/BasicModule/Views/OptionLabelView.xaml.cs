@@ -1,5 +1,4 @@
-﻿using BasicModule.Models;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace BasicModule.Views
 {

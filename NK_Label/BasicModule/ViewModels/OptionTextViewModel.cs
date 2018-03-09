@@ -3,7 +3,7 @@ using Prism.Mvvm;
 
 namespace BasicModule.ViewModels
 {
-    public class OptionTextViewModel : BindableBase
+    public class OptionTextViewModel : BindableBase, IOptionViewModel
     {
         private TextObject _textObject;
         public TextObject TextObject
@@ -15,6 +15,11 @@ namespace BasicModule.ViewModels
         public OptionTextViewModel(TextObject to)
         {
             TextObject = to;
+        }
+
+        public bool isRight()
+        {
+            return true;
         }
     }
 }
