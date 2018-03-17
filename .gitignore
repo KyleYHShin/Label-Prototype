@@ -220,3 +220,6 @@ NK_Label/BasicModule/bin/Debug/BasicModule.dll
 *.exe
 *.pdb
 *.dll
+*.cache
+*.resources
+*.baml

@@ -80,7 +80,10 @@ namespace BasicModule.Files
             //var newLabelViewModel = new LabelViewModel() { FilePath = path };
             var newLabelViewModel = new LabelViewModel(regionManager) { FilePath = path };
             if (OpenLabel_Xml(ref newLabelViewModel))
+            {
+                newLabelViewModel.IsChanged = false;
                 return newLabelViewModel;
+            }
 
             return null;
         }

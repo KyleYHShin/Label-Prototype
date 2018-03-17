@@ -8,9 +8,9 @@ namespace BasicModule.Views
     /// <summary>
     /// ChildWindow.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class ChildWindow : Window
+    public partial class DialogWindow : Window
     {
-        public ChildWindow()
+        public DialogWindow()
         {
             InitializeComponent();
             this.SizeToContent = SizeToContent.WidthAndHeight;
@@ -22,7 +22,12 @@ namespace BasicModule.Views
             if (content is UserControl)
             {
                 var iViewModel = (content as UserControl).DataContext as IOptionViewModel;
-                if (iViewModel.isRight())
+                if (iViewModel != null && iViewModel is IOptionViewModel)
+                {
+                    if(iViewModel.isRight())
+                        DialogResult = true;
+                }
+                else
                     DialogResult = true;
             }
         }

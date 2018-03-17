@@ -27,7 +27,7 @@ namespace BasicModule.ViewModels
             set { SetProperty(ref _label, value); }
         }
 
-        private ObservableCollection<BasicObject> _objectList = new ObservableCollection<BasicObject>();
+        private ObservableCollection<BasicObject> _objectList;
         public ObservableCollection<BasicObject> ObjectList
         {
             get { return _objectList; }
@@ -51,11 +51,12 @@ namespace BasicModule.ViewModels
         #endregion //Event Properties
 
         #region Constructor
-
+        
         private readonly IRegionManager _regionManager;
         public LabelViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
+            ObjectList = new ObservableCollection<BasicObject>();
 
             var newView = new OptionLabelView();
             newView.DataContext = new OptionLabelViewModel(_label);
@@ -72,27 +73,31 @@ namespace BasicModule.ViewModels
         {
             if (selectedItems != null && selectedItems.Count() > 0)
             {
-                SelectedObject = selectedItems.FirstOrDefault();
-                _regionManager.Regions["OptionRegion"].RemoveAll();
+                ChangeOptionRegion();
+            }
+        }
 
-                if (SelectedObject is TextObject)
-                {
-                    var newView = new OptionTextView();
-                    newView.DataContext = new OptionTextViewModel(SelectedObject as TextObject);
-                    _regionManager.Regions["OptionRegion"].Add(newView, null, true);
-                }
-                else if (SelectedObject is BarcodeObject)
-                {
-                    var newView = new OptionBarcodeView();
-                    newView.DataContext = new OptionBarcodeViewModel(SelectedObject as BarcodeObject);
-                    _regionManager.Regions["OptionRegion"].Add(newView, null, true);
-                }
-                else
-                {
-                    var newView = new OptionLabelView();
-                    newView.DataContext = new OptionLabelViewModel(_label);
-                    _regionManager.Regions["OptionRegion"].Add(newView, null, true);
-                }
+        public void ChangeOptionRegion()
+        {
+            _regionManager.Regions["OptionRegion"].RemoveAll();
+
+            if (SelectedObject is TextObject)
+            {
+                var newView = new OptionTextView();
+                newView.DataContext = new OptionTextViewModel(SelectedObject as TextObject);
+                _regionManager.Regions["OptionRegion"].Add(newView, null, true);
+            }
+            else if (SelectedObject is BarcodeObject)
+            {
+                var newView = new OptionBarcodeView();
+                newView.DataContext = new OptionBarcodeViewModel(SelectedObject as BarcodeObject);
+                _regionManager.Regions["OptionRegion"].Add(newView, null, true);
+            }
+            else
+            {
+                var newView = new OptionLabelView();
+                newView.DataContext = new OptionLabelViewModel(_label);
+                _regionManager.Regions["OptionRegion"].Add(newView, null, true);
             }
         }
 
@@ -113,10 +118,10 @@ namespace BasicModule.ViewModels
             }
             set
             {
-                Label.Changed = false;
+                Label.Changed = value;
                 foreach (var obj in ObjectList)
                 {
-                    obj.Changed = false;
+                    obj.Changed = value;
                 }
             }
         }

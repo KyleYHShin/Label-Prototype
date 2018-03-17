@@ -10,6 +10,7 @@ using System.Windows.Input;
 using BasicModule.Models;
 using BasicModule.Utils;
 using System.Windows;
+using System;
 
 namespace NK_Label3.ViewModels
 {
@@ -57,28 +58,39 @@ namespace NK_Label3.ViewModels
         #region Event Properties
         private IDialogService DialogService { get { return new DialogService(); } }
 
-        private ObservableCollection<LabelView> _labelViewList = new ObservableCollection<LabelView>();
+        private ObservableCollection<LabelView> _labelViewList;
         public ObservableCollection<LabelView> LabelViewList
         {
             get { return _labelViewList; }
             set { SetProperty(ref _labelViewList, value); }
         }
+
         private LabelView _selectedLabelView;
         public LabelView SelectedLabelView
         {
             get { return _selectedLabelView; }
-            set { SetProperty(ref _selectedLabelView, value); }
+            set
+            {
+                SetProperty(ref _selectedLabelView, value);
+                try
+                {
+                    if (value.DataContext is LabelViewModel)
+                        (value.DataContext as LabelViewModel).ChangeOptionRegion();
+                }
+                catch (Exception e) { }
+            }
         }
 
         #endregion //Event Properties
-        
+
         private readonly IRegionManager _regionManager;
         public MainWindowViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
 
-            _language = new SystemLanguage();
+            Language = new SystemLanguage();
             //language.Load();
+            LabelViewList = new ObservableCollection<LabelView>();
 
             ClickAddNewLabel = new DelegateCommand(AddNewLabel);
             ClickCloseCurrentLabel = new DelegateCommand(CloseCurrentLabel);
@@ -97,11 +109,8 @@ namespace NK_Label3.ViewModels
             {
                 var newView = new LabelView();
                 newView.DataContext = newLVM;
-                _labelViewList.Add(newView);
+                LabelViewList.Add(newView);
                 SelectedLabelView = newView;
-                
-                _regionManager.Regions["ContentRegion"].Add(newView, null, true);
-                _regionManager.Regions["ContentRegion"].Activate(newView);
             }
         }
 
@@ -112,10 +121,10 @@ namespace NK_Label3.ViewModels
             var olViewModel = new OptionLabelViewModel(newLabel); ;
             var olView = new OptionLabelView();
             olView.DataContext = olViewModel;
-            
-            var dialogResult = DialogService.ShowDialog(Application.Current.MainWindow, olView, "Create New Label");
 
-            if (dialogResult == true)
+
+
+            if (DialogService.ShowDialog(Application.Current.MainWindow, olView, "새 라벨 만들기") == true)
             {
                 var newLVM = new LabelViewModel(_regionManager);
                 newLVM.Label = newLabel;
@@ -123,24 +132,43 @@ namespace NK_Label3.ViewModels
             }
         }
 
+        private bool CanCloseCurrentLabel()
+        {
+            if (SelectedLabelView.DataContext is LabelViewModel)
+            {
+                LabelViewModel lvm = SelectedLabelView.DataContext as LabelViewModel;
+                if (lvm != null && lvm.IsChanged)
+                {
+                    if (DialogService.ShowSimpleDialog(Application.Current.MainWindow, "경고", "'" + lvm.Label.Name + "'에 수정된 항목이 있습니다.\n 무시하고 종료하시겠습니까?") == true)
+                    {
+                        _regionManager.Regions["OptionRegion"].RemoveAll();
+                        LabelViewList.Remove(SelectedLabelView);
+                        return true;
+                    }
+                }
+                else
+                {
+                    _regionManager.Regions["OptionRegion"].RemoveAll();
+                    LabelViewList.Remove(SelectedLabelView);
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public ICommand ClickCloseCurrentLabel { get; private set; }
         private void CloseCurrentLabel()
         {
-            if (LabelViewList.Count > 0 && SelectedLabelView != null)
-            {
-                _regionManager.Regions["ContentRegion"].Remove(SelectedLabelView);
-                LabelViewList.Remove(SelectedLabelView);
-                SelectedLabelView = LabelViewList[0];
-            }
+            CanCloseCurrentLabel();
         }
+
         public ICommand ClickCloseAllLabel { get; private set; }
         private void CloseAllLabel()
         {
-            if (LabelViewList.Count > 0 && SelectedLabelView != null)
+            while (LabelViewList.Count > 0 && SelectedLabelView != null)
             {
-                _regionManager.Regions["ContentRegion"].RemoveAll();
-                LabelViewList.Clear();
-                SelectedLabelView = null;
+                if (!CanCloseCurrentLabel())
+                    break;
             }
         }
         #endregion //Label Control Events
@@ -150,7 +178,24 @@ namespace NK_Label3.ViewModels
         public ICommand ClickOpen { get; private set; }
         private void Open()
         {
-            AddLabel(FileController.OpenLabel(_regionManager));
+            LabelViewModel newLVM = FileController.OpenLabel(_regionManager);
+            var newPath = newLVM.FilePath;
+            bool isExist = false;
+            foreach (LabelView lv in LabelViewList)
+            {
+                if (lv.DataContext is LabelViewModel)
+                {
+                    var lvm = lv.DataContext as LabelViewModel;
+                    if (lvm.FilePath.Equals(newPath))
+                    {
+                        MessageBox.Show("'" + lvm.Label.Name + "' 라벨이 이미 열려있습니다.");
+                        isExist = true;
+                        break;
+                    }
+                }
+            }
+            if (!isExist)
+                AddLabel(newLVM);
         }
 
         public ICommand ClickSave { get; private set; }
@@ -160,6 +205,7 @@ namespace NK_Label3.ViewModels
             {
                 var labelVM = SelectedLabelView.DataContext as LabelViewModel;
                 FileController.SaveLabel(ref labelVM, false);
+                labelVM.IsChanged = false;
             }
         }
         public ICommand ClickSaveAs { get; private set; }
@@ -169,6 +215,7 @@ namespace NK_Label3.ViewModels
             {
                 var labelVM = SelectedLabelView.DataContext as LabelViewModel;
                 FileController.SaveLabel(ref labelVM, true);
+                labelVM.IsChanged = false;
             }
         }
 

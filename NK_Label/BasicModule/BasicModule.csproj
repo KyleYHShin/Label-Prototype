@@ -121,9 +121,8 @@
     <Compile Include="ViewModels\OptionBarcodeViewModel.cs" />
     <Compile Include="ViewModels\OptionLabelViewModel.cs" />
     <Compile Include="ViewModels\OptionTextViewModel.cs" />
-    <Compile Include="ViewModels\ChildWindowViewModel.cs" />
-    <Compile Include="Views\ChildWindow.xaml.cs">
-      <DependentUpon>ChildWindow.xaml</DependentUpon>
+    <Compile Include="Views\DialogWindow.xaml.cs">
+      <DependentUpon>DialogWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LabelView.xaml.cs">
       <DependentUpon>LabelView.xaml</DependentUpon>
@@ -139,6 +138,9 @@
     </Compile>
     <Compile Include="Views\OptionTextView.xaml.cs">
       <DependentUpon>OptionTextView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SimpleTextView.xaml.cs">
+      <DependentUpon>SimpleTextView.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -159,7 +161,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ChildWindow.xaml">
+    <Page Include="Views\DialogWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -182,6 +184,10 @@
     <Page Include="Views\OptionTextView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SimpleTextView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

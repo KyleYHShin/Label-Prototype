@@ -21,6 +21,14 @@
         <Setter Property="FontSize" Value="13"/>
     </Style>
 
+    <Style TargetType="{x:Type TextBox}"
+           x:Key="CommonTextStyle">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="FontFamily" Value="Pescadero"/>
+    </Style>
+
     <!--Option-->
     <Style TargetType="{x:Type GroupBox}"
            x:Key="OptionGroup">

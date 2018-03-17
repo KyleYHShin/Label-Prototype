@@ -32,6 +32,7 @@
             Grid.Row="0"
             Grid.Column="0"
             Grid.ColumnSpan="2" />-->
+        
         <Menu
             Grid.Row="0"
             Grid.Column="0"
@@ -48,7 +49,7 @@
                 <MenuItem Header="{Binding Language.MenuFilePrint}" Command=""/>
                 <Separator />
                 <MenuItem Header="{Binding Language.MenuFileClose}" Command="{Binding ClickCloseCurrentLabel}"/>
-                <MenuItem Header="{Binding Language.MenuFileCloseAll}" Command=""/>
+                <MenuItem Header="{Binding Language.MenuFileCloseAll}" Command="{Binding ClickCloseAllLabel}"/>
                 <Separator />
                 <MenuItem Header="{Binding Language.MenuFileProgramExit}" Command=""/>
             </MenuItem>
@@ -83,7 +84,9 @@
             </MenuItem>
         </Menu>
 
-        <!--<TabControl Name="tabDynamic" ItemsSource="{Binding LabelViewList}"
+        <TabControl Name="tabDynamic"
+                ItemsSource="{Binding LabelViewList}"
+                SelectedItem="{Binding SelectedLabelView}"
                 Grid.Row="1"
                 Grid.Column="0"
                 Margin="5"
@@ -95,33 +98,19 @@
                     <TextBlock Text="{Binding ViewModel.Label.Name}"/>
                 </DataTemplate>
             </TabControl.ItemTemplate>
-        </TabControl>-->
+        </TabControl>
         
-        <!--<TabControl ItemsSource="{Binding LabelViewList}">
-            <TabControl.ItemTemplate>
-                --><!-- this is the header template--><!--
-                <DataTemplate>
-                    <TextBlock Text="{Binding ViewModel.Label.Name}" />
-                </DataTemplate>
-            </TabControl.ItemTemplate>
-            <TabControl.ContentTemplate>
-                --><!-- this is the body of the TabItem template--><!--
-                <DataTemplate>
-                    <MyUserControl xmlns="clr-namespace:WpfApplication12" />
-                </DataTemplate>
-            </TabControl.ContentTemplate>
-        </TabControl>-->
-
         <!--<TabControl 
             ItemsSource="{Binding LabelViewList}"
             SelectedItem="{Binding SelectedLabelView}"-->
-        <TabControl prism:RegionManager.RegionName="ContentRegion"
+        
+        <!--<TabControl prism:RegionManager.RegionName="ContentRegion"
                 Grid.Row="1"
                 Grid.Column="0"
                 Margin="5"
                 Background="Transparent"
                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                ScrollViewer.VerticalScrollBarVisibility="Auto"/>-->
 
         <ContentControl prism:RegionManager.RegionName="OptionRegion" 
                         Grid.Row="1"
