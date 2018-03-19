@@ -73,6 +73,7 @@ namespace BasicModule.ViewModels
         {
             if (selectedItems != null && selectedItems.Count() > 0)
             {
+                SelectedObject = selectedItems[0];
                 ChangeOptionRegion();
             }
         }

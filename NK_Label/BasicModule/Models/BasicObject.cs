@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace BasicModule.Models
@@ -41,7 +42,7 @@ namespace BasicModule.Models
             {
                 if (value > 0)
                 {
-                    _width = value;
+                    _width = getRounde(value, 2);
                     OnPropertyChanged();
                 }
             }
@@ -55,7 +56,7 @@ namespace BasicModule.Models
             {
                 if (value > 0)
                 {
-                    _height = value;
+                    _height = getRounde(value, 2);
                     OnPropertyChanged();
                 }
             }
@@ -67,7 +68,7 @@ namespace BasicModule.Models
             get { return _posX; }
             set
             {
-                _posX = value;
+                _posX = getRounde(value, 2);
                 OnPropertyChanged();
             }
         }
@@ -78,12 +79,17 @@ namespace BasicModule.Models
             get { return _posY; }
             set
             {
-                _posY = value;
+                _posY = getRounde(value, 2);
                 OnPropertyChanged();
             }
         }
 
         #endregion //Vector Properties
+
+        protected double getRounde(double original, int point)
+        {
+            return Math.Round(original, point);
+        }
 
         #region INotifyPropertyChanged
 

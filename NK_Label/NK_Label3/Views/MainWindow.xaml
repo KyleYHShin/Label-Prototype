@@ -27,11 +27,6 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-
-        <!--<ContentControl prism:RegionManager.RegionName="MenuRegion"
-            Grid.Row="0"
-            Grid.Column="0"
-            Grid.ColumnSpan="2" />-->
         
         <Menu
             Grid.Row="0"
@@ -84,7 +79,7 @@
             </MenuItem>
         </Menu>
 
-        <TabControl Name="tabDynamic"
+        <TabControl Name="DynamicTab"
                 ItemsSource="{Binding LabelViewList}"
                 SelectedItem="{Binding SelectedLabelView}"
                 Grid.Row="1"
@@ -95,7 +90,7 @@
                 ScrollViewer.VerticalScrollBarVisibility="Auto">
             <TabControl.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding ViewModel.Label.Name}"/>
+                    <TextBlock Text="{Binding DataContext.Label.Name}"/>
                 </DataTemplate>
             </TabControl.ItemTemplate>
         </TabControl>

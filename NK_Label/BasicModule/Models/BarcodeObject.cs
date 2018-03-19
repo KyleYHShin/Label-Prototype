@@ -93,7 +93,7 @@ namespace BasicModule.Models
             {
                 if (value > 0)
                 {
-                    _width = value;
+                    _width = getRounde(value, 2);
                     OnPropertyChanged();
 
                     if (BarcodeWriter != null)
@@ -114,7 +114,7 @@ namespace BasicModule.Models
             {
                 if (value > 0)
                 {
-                    _height = value;
+                    _height = getRounde(value, 2);
                     OnPropertyChanged();
 
                     if (BarcodeWriter != null)

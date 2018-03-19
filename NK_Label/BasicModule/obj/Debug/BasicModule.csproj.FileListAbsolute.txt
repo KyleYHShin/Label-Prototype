@@ -90,11 +90,13 @@ C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\BasicModule.pdb
 C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\Views\OptionBarcodeView.baml
 C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\Views\OptionLabelView.baml
 C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\Views\OptionTextView.baml
-C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\Views\ChildWindow.g.cs
 C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\Views\LabelView.g.cs
 C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\Views\OptionBarcodeView.g.cs
 C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\Views\OptionLabelView.g.cs
 C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\Views\OptionTextView.g.cs
-C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\Views\ChildWindow.baml
 C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\Views\LabelView.baml
 C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\Themes\Theme.baml
+C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\Views\DialogWindow.baml
+C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\Views\DialogWindow.g.cs
+C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\Views\SimpleTextView.baml
+C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\Views\SimpleTextView.g.cs
