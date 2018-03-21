@@ -58,9 +58,9 @@ namespace BasicModule.ViewModels
             _regionManager = regionManager;
             ObjectList = new ObservableCollection<BasicObject>();
 
-            var newView = new OptionLabelView();
-            newView.DataContext = new OptionLabelViewModel(_label);
-            _regionManager.Regions["OptionRegion"].Add(newView, null, true);
+            //var newView = new OptionLabelView();
+            //newView.DataContext = new OptionLabelViewModel(_label);
+            //_regionManager.Regions["OptionRegion"].Add(newView, null, true);
 
             SelectedCommand = new DelegateCommand<object[]>(OnItemSelected);
         }
