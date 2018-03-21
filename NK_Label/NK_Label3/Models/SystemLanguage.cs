@@ -30,7 +30,7 @@
         public string MenuTool { get; set; }
         public string MenuToolText { get; set; }
         public string MenuToolBarcode { get; set; }
-        public string MenuToolCompositeComponent { get; set; }
+        public string MenuToolRuleManager { get; set; }
         public string MenuToolLine { get; set; }
         public string MenuToolImage { get; set; }
 
@@ -52,7 +52,7 @@
             #region Initialize Test Source
 
             MenuFile = "파일";
-            MenuFileNew = "새로 만들기";
+            MenuFileNew = "새 라벨 만들기";
             MenuFileLoad = "열기";
             MenuFileSave = "저장";
             MenuFileSaveAs = "다른 이름으로 저장";
@@ -75,9 +75,9 @@
             MenuViewGrid = "그리드";
 
             MenuTool = "도구";
-            MenuToolText = "텍스트";
-            MenuToolBarcode = "바코드";
-            MenuToolCompositeComponent = "복합 구성";
+            MenuToolText = "새 텍스트 추가";
+            MenuToolBarcode = "새 바코드 추가";
+            MenuToolRuleManager = "규칙 관리자";
             MenuToolLine = "선";
             MenuToolImage = "이미지";
 

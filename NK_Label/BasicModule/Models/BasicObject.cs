@@ -42,7 +42,7 @@ namespace BasicModule.Models
             {
                 if (value > 0)
                 {
-                    _width = getRounde(value, 2);
+                    _width = getRound(value, 2);
                     OnPropertyChanged();
                 }
             }
@@ -56,7 +56,7 @@ namespace BasicModule.Models
             {
                 if (value > 0)
                 {
-                    _height = getRounde(value, 2);
+                    _height = getRound(value, 2);
                     OnPropertyChanged();
                 }
             }
@@ -68,7 +68,7 @@ namespace BasicModule.Models
             get { return _posX; }
             set
             {
-                _posX = getRounde(value, 2);
+                _posX = getRound(value, 2);
                 OnPropertyChanged();
             }
         }
@@ -79,14 +79,14 @@ namespace BasicModule.Models
             get { return _posY; }
             set
             {
-                _posY = getRounde(value, 2);
+                _posY = getRound(value, 2);
                 OnPropertyChanged();
             }
         }
 
         #endregion //Vector Properties
 
-        protected double getRounde(double original, int point)
+        protected double getRound(double original, int point)
         {
             return Math.Round(original, point);
         }

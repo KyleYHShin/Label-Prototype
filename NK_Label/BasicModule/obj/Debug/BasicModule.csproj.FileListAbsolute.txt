@@ -97,6 +97,6 @@ C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\Views\OptionTextView.g.cs
 C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\Views\LabelView.baml
 C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\Themes\Theme.baml
 C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\Views\DialogWindow.baml
-C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\Views\DialogWindow.g.cs
 C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\Views\SimpleTextView.baml
+C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\Views\DialogWindow.g.cs
 C:\Work\Label-Prototype\NK_Label\BasicModule\obj\Debug\Views\SimpleTextView.g.cs

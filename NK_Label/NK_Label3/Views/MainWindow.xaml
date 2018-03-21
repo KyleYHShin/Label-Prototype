@@ -2,8 +2,6 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://prismlibrary.com/"
-        xmlns:views="clr-namespace:BasicModule.Views;assembly=BasicModule"
-        xmlns:viewmodels="clr-namespace:BasicModule.ViewModels;assembly=BasicModule"
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="{Binding Title}"
         MaxWidth="{Binding Source={x:Static SystemParameters.WorkArea}}"
@@ -16,7 +14,6 @@
 
     <Window.Resources>
         <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
-        
     </Window.Resources>
     
     <Grid>
@@ -29,6 +26,11 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
+
+        <!--<ContentControl prism:RegionManager.RegionName="MenuRegion"
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2" />-->
         
         <Menu
             Grid.Row="0"
@@ -55,25 +57,26 @@
                 <MenuItem Header="{Binding Language.MenuEditCopy}" Command=""/>
                 <MenuItem Header="{Binding Language.MenuEditTruncate}" Command=""/>
                 <MenuItem Header="{Binding Language.MenuEditPaste}" Command=""/>
-                <Separator />
+                <!--<Separator />
                 <MenuItem Header="{Binding Language.MenuEditUndo}" Command=""/>
-                <MenuItem Header="{Binding Language.MenuEditRedo}" Command=""/>
+                <MenuItem Header="{Binding Language.MenuEditRedo}" Command=""/>-->
             </MenuItem>
 
-            <MenuItem Header="{Binding Language.MenuView}">
+            <!--<MenuItem Header="{Binding Language.MenuView}">
                 <MenuItem Header="{Binding Language.MenuViewExpansion}" Command=""/>
                 <MenuItem Header="{Binding Language.MenuViewReduce}" Command=""/>
                 <Separator />
                 <MenuItem Header="{Binding Language.MenuViewGrid}" Command=""/>
-            </MenuItem>
+            </MenuItem>-->
 
             <MenuItem Header="{Binding Language.MenuTool}">
-                <MenuItem Header="{Binding Language.MenuToolText}" Command=""/>
-                <MenuItem Header="{Binding Language.MenuToolBarcode}" Command=""/>
-                <MenuItem Header="{Binding Language.MenuToolCompositeComponent}" Command=""/>
-                <Separator />
+                <MenuItem Header="{Binding Language.MenuToolText}" Command="{Binding ClickAddText}"/>
+                <MenuItem Header="{Binding Language.MenuToolBarcode}" Command="{Binding ClickAddBarcode}"/>
+                <!--<Separator />
                 <MenuItem Header="{Binding Language.MenuToolLine}" Command=""/>
-                <MenuItem Header="{Binding Language.MenuToolImage}" Command=""/>
+                <MenuItem Header="{Binding Language.MenuToolImage}" Command=""/>-->
+                <Separator />
+                <MenuItem Header="{Binding Language.MenuToolRuleManager}" Command=""/>
             </MenuItem>
 
             <MenuItem Header="{Binding Language.MenuWindow}">
@@ -81,51 +84,21 @@
             </MenuItem>
         </Menu>
 
-        <TabControl Name="DynamicTab"
-                ItemsSource="{Binding LabelViewModelList}"
-                SelectedItem="{Binding SelectedLabelViewModel}"
+        <TabControl Name="tabDynamic"
+                ItemsSource="{Binding LabelViewList}"
+                SelectedItem="{Binding SelectedLabelView}"
                 Grid.Row="1"
                 Grid.Column="0"
                 Margin="5"
                 Background="Transparent"
                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
                 ScrollViewer.VerticalScrollBarVisibility="Auto">
-            <!--<TabControl.Resources>
-                <DataTemplate x:Key="ViewModel" DataType="{x:Type viewmodels:LabelViewModel}">
-                    <views:LabelView />
-                </DataTemplate>
+            <TabControl.Resources>
+                <Style TargetType="{x:Type TabItem}">
+                    <Setter Property="Header" Value="{Binding DataContext.Label.Name}" />
+                </Style>
             </TabControl.Resources>
-            
-            <TabControl.ContentTemplate>
-                <DataTemplate>
-                    <views:LabelView DataContext="{Binding Source={StaticResource ViewModel}}"/>
-                </DataTemplate>
-            </TabControl.ContentTemplate>-->
-
-            <TabControl.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Label.Name}" />
-                </DataTemplate>
-            </TabControl.ItemTemplate>
-            
-            <TabControl.ContentTemplate>
-                <DataTemplate>
-                    <views:LabelView VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                </DataTemplate>
-            </TabControl.ContentTemplate>
         </TabControl>
-        
-        <!--<TabControl 
-            ItemsSource="{Binding LabelViewList}"
-            SelectedItem="{Binding SelectedLabelView}"-->
-        
-        <!--<TabControl prism:RegionManager.RegionName="ContentRegion"
-                Grid.Row="1"
-                Grid.Column="0"
-                Margin="5"
-                Background="Transparent"
-                ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                ScrollViewer.VerticalScrollBarVisibility="Auto"/>-->
 
         <ContentControl prism:RegionManager.RegionName="OptionRegion" 
                         Grid.Row="1"

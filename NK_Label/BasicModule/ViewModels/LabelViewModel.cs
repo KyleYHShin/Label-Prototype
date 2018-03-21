@@ -12,7 +12,7 @@ namespace BasicModule.ViewModels
     public class LabelViewModel : BindableBase
     {
         #region Properties
-        
+
         private string _filePath;
         public string FilePath
         {
@@ -34,11 +34,26 @@ namespace BasicModule.ViewModels
             set { SetProperty(ref _objectList, value); }
         }
 
-        //public OptionViewModel OptionViewModel { get; set; }
-
         #endregion //Properties
+        
+        #region Constructor
 
-        #region Event Properties
+        private readonly IRegionManager _regionManager;
+        public LabelViewModel(IRegionManager regionManager)
+        {
+            _regionManager = regionManager;
+            ObjectList = new ObservableCollection<BasicObject>();
+
+            var newView = new OptionLabelView();
+            newView.DataContext = new OptionLabelViewModel(_label);
+            _regionManager.Regions["OptionRegion"].Add(newView, null, true);
+
+            SelectedCommand = new DelegateCommand<object[]>(OnItemSelected);
+        }
+
+        #endregion //Constructor
+
+        #region Common Event
 
         public DelegateCommand<object[]> SelectedCommand { get; private set; }
         private Object _selectedObject;
@@ -48,28 +63,7 @@ namespace BasicModule.ViewModels
             private set { SetProperty(ref _selectedObject, value); }
         }
 
-        #endregion //Event Properties
-
-        #region Constructor
-        
-        private readonly IRegionManager _regionManager;
-        public LabelViewModel(IRegionManager regionManager)
-        {
-            _regionManager = regionManager;
-            ObjectList = new ObservableCollection<BasicObject>();
-
-            //var newView = new OptionLabelView();
-            //newView.DataContext = new OptionLabelViewModel(_label);
-            //_regionManager.Regions["OptionRegion"].Add(newView, null, true);
-
-            SelectedCommand = new DelegateCommand<object[]>(OnItemSelected);
-        }
-
-        #endregion //Constructor
-
-        #region Events
-
-        private void OnItemSelected(object[] selectedItems)
+        public void OnItemSelected(object[] selectedItems)
         {
             if (selectedItems != null && selectedItems.Count() > 0)
             {
@@ -102,7 +96,7 @@ namespace BasicModule.ViewModels
             }
         }
 
-        #endregion //Events
+        #endregion //Common Events
 
         #region Functions
 
@@ -129,67 +123,11 @@ namespace BasicModule.ViewModels
 
         #endregion //Functions
 
-        #region Test Sources
-        public void Init()
-        {
-            Label = new LabelObject()
-            {
-                Name = "First Label",
-                Width = 400,
-                Height = 160,
-                Changed = false
-            };
+        #region Rule
+        //룰 프로퍼티
+        //룰
 
-            var testObjList = new ObservableCollection<BasicObject>();
+        #endregion
 
-            testObjList.Add(new BarcodeObject()
-            {
-                Name = "barcode1",
-                Text = "NK-Label Test1",
-                PosX = 20,
-                PosY = 40,
-                Width = 80,
-                Height = 80,
-                BarcodeType = "DATA_MATRIX",
-                Changed = false
-            });
-            testObjList.Add(new TextObject()
-            {
-                Name = "tb1",
-                Text = "NK-Label",
-                PosX = 20,
-                PosY = 120,
-                Width = 70,
-                Height = 20,
-                Margin = new System.Windows.Thickness(50, 0, 0, 0),
-                FontSize = 10,
-                Changed = false
-            });
-            testObjList.Add(new BarcodeObject()
-            {
-                Name = "barcode2",
-                Text = "NK-Label Test2",
-                PosX = 130,
-                PosY = 40,
-                Width = 210,
-                Height = 70,
-                BarcodeType = "CODE_128",
-                Changed = false
-            });
-            testObjList.Add(new TextObject()
-            {
-                Name = "tb2",
-                Text = "NK-Label Test2",
-                PosX = 150,
-                PosY = 120,
-                Width = 70,
-                Height = 20,
-                Margin = new System.Windows.Thickness(0, 10, 0, 0),
-                FontSize = 16,
-                Changed = false
-            });
-            ObjectList = testObjList;
-        }
-        #endregion //Test Sources
     }
 }

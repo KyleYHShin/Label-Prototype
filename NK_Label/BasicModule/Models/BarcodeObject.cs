@@ -37,7 +37,8 @@ namespace BasicModule.Models
                 newWriter.Options.Height = (int)Height;
 
                 BarcodeWriter = newWriter;
-                Barcode = BitmapConversion.BitmapToBitmapSource(newWriter.Write(_text));
+                if (_text != null)
+                    Barcode = BitmapConversion.BitmapToBitmapSource(newWriter.Write(_text));
 
                 OnPropertyChanged();
             }
@@ -54,7 +55,7 @@ namespace BasicModule.Models
                     _text = value;
                     OnPropertyChanged();
 
-                    if(BarcodeWriter != null)
+                    if (BarcodeWriter != null)
                         Barcode = BitmapConversion.BitmapToBitmapSource(_barcodeWriter.Write(_text));
                 }
             }
@@ -93,7 +94,7 @@ namespace BasicModule.Models
             {
                 if (value > 0)
                 {
-                    _width = getRounde(value, 2);
+                    _width = getRound(value, 2);
                     OnPropertyChanged();
 
                     if (BarcodeWriter != null)
@@ -114,7 +115,7 @@ namespace BasicModule.Models
             {
                 if (value > 0)
                 {
-                    _height = getRounde(value, 2);
+                    _height = getRound(value, 2);
                     OnPropertyChanged();
 
                     if (BarcodeWriter != null)
