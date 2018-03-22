@@ -78,10 +78,7 @@
                               DisplayMemberPath="Name"
                               SelectedValuePath="Id"
                               SelectedValue="{Binding LabelObject.SelectedDpi, Mode=TwoWay}"
-                              VerticalAlignment="Center"
-                              FontWeight="Medium"
-                              FontSize="13"
-                              Margin="1"/>
+                              Style="{StaticResource OptionComboBoxValue}" />
                     
                     <TextBlock Grid.Row="2" Grid.Column="0"
                                Text="Radius X"

@@ -19,7 +19,15 @@ namespace BasicModule.ViewModels
 
         public bool isRight()
         {
-            return true;
+            bool ret = !string.IsNullOrWhiteSpace(_textObject.Name)
+                && _textObject.PosX >= 0
+                && _textObject.PosY >= 0
+                && !string.IsNullOrWhiteSpace(_textObject.Text)
+                && _textObject.MaxLength > 0
+                && _textObject.FontSize > 0;
+            if (ret)
+                _textObject.Changed = true;
+            return ret;
         }
     }
 }

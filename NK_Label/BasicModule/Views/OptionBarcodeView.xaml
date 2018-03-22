@@ -44,14 +44,18 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" MinWidth="80"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Barcode Type" />
-                    <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource OptionColumnValue}" Text="{Binding BarcodeObject.BarcodeType}"/>
+                    <ComboBox Grid.Row="0" Grid.Column="1"
+                              ItemsSource="{Binding BarcodeFormatList, Mode=OneWay}"
+                              DisplayMemberPath="Name"
+                              SelectedValuePath="Key"
+                              SelectedValue="{Binding BarcodeObject.BarcodeType, Mode=TwoWay}"
+                              Style="{StaticResource OptionComboBoxValue}" />
                     <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Text" />
                     <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource OptionColumnValue}" Text="{Binding BarcodeObject.Text}"/>
                     <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Max Length"/>

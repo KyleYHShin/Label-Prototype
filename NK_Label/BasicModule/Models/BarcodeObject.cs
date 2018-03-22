@@ -6,7 +6,6 @@ namespace BasicModule.Models
 {
     public class BarcodeObject : BasicObject
     {
-
         #region Barcode Properties
 
         private BarcodeWriter _barcodeWriter;
@@ -19,25 +18,23 @@ namespace BasicModule.Models
             }
         }
 
-        private string _barcodeType;
-        public string BarcodeType
+        private BarcodeFormat _barcodeType;
+        public BarcodeFormat BarcodeType
         {
             get { return _barcodeType; }
             set
             {
-                //if(value not in BarcodeFormat)
-                //else
                 _barcodeType = value;
 
                 BarcodeWriter newWriter = new BarcodeWriter();
-                BarcodeConversion.ChangeFormat(ref newWriter, value);
+                newWriter.Format = _barcodeType;
                 newWriter.Options.PureBarcode = true;
                 newWriter.Options.Margin = 0;
                 newWriter.Options.Width = (int)Width;
                 newWriter.Options.Height = (int)Height;
 
                 BarcodeWriter = newWriter;
-                if (_text != null)
+                if (BarcodeWriter != null && !string.IsNullOrEmpty(_text))
                     Barcode = BitmapConversion.BitmapToBitmapSource(newWriter.Write(_text));
 
                 OnPropertyChanged();
@@ -55,7 +52,7 @@ namespace BasicModule.Models
                     _text = value;
                     OnPropertyChanged();
 
-                    if (BarcodeWriter != null)
+                    if (BarcodeWriter != null && !string.IsNullOrEmpty(_text))
                         Barcode = BitmapConversion.BitmapToBitmapSource(_barcodeWriter.Write(_text));
                 }
             }
@@ -101,7 +98,8 @@ namespace BasicModule.Models
                     {
                         BarcodeWriter.Options.Width = (int)_width;
                         BarcodeWriter.Options.Height = (int)_height;
-                        Barcode = BitmapConversion.BitmapToBitmapSource(BarcodeWriter.Write(_text));
+                        if (BarcodeWriter != null && !string.IsNullOrEmpty(_text))
+                            Barcode = BitmapConversion.BitmapToBitmapSource(BarcodeWriter.Write(_text));
                     }
                 }
             }
@@ -122,7 +120,8 @@ namespace BasicModule.Models
                     {
                         BarcodeWriter.Options.Width = (int)_width;
                         BarcodeWriter.Options.Height = (int)_height;
-                        Barcode = BitmapConversion.BitmapToBitmapSource(BarcodeWriter.Write(_text));
+                        if (BarcodeWriter != null && !string.IsNullOrEmpty(_text))
+                            Barcode = BitmapConversion.BitmapToBitmapSource(BarcodeWriter.Write(_text));
                     }
                 }
             }
@@ -165,10 +164,6 @@ namespace BasicModule.Models
             {
                 _isSelected = value;
                 OnPropertyChanged();
-                //if (value)
-                //    BorderColor = "Red";
-                //else
-                //    BorderColor = "Transparent";
             }
         }
 

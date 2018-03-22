@@ -227,3 +227,11 @@ NK_Label/BasicModule/bin/Debug/BasicModule.dll
 *.dll
 NK_Label/BasicModule/bin/Debug/BasicModule.pdb
 NK_Label/BasicModule/bin/Debug/BasicModule.dll
+*.dll
+*.dll
+*.pdb
+*.cache
+*.txt
+*.resources
+*.lref
+*.baml

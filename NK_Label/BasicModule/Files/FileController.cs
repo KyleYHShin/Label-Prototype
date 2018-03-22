@@ -70,14 +70,12 @@ namespace BasicModule.Files
         #endregion //Save
 
         #region Open
-        //public static LabelViewModel OpenLabel()
         public static LabelViewModel OpenLabel(IRegionManager regionManager)
         {
             string path = OpenLabel_FileDialog();
             if (!IsValidPath(path))
                 return null;
-
-            //var newLabelViewModel = new LabelViewModel() { FilePath = path };
+            
             var newLabelViewModel = new LabelViewModel(regionManager) { FilePath = path };
             if (OpenLabel_Xml(ref newLabelViewModel))
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ZXing;
 
 namespace BasicModule.Files
 {
@@ -49,6 +50,6 @@ namespace BasicModule.Files
 
         public string Text { get; set; }
         public int MaxLength { get; set; }
-        public string BarcodeType { get; set; }
+        public BarcodeFormat BarcodeType { get; set; }
     }
 }

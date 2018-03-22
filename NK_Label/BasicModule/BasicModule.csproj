@@ -105,10 +105,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Test\Menu.xaml.cs">
-      <DependentUpon>Menu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Utils\BarcodeConversion.cs" />
+    <Compile Include="Models\BarcodeOption.cs" />
     <Compile Include="Utils\BitmapConversion.cs" />
     <Compile Include="Files\FileController.cs" />
     <Compile Include="Files\Parser.cs" />
@@ -117,7 +114,6 @@
     <Compile Include="Utils\DialogService.cs" />
     <Compile Include="ViewModels\IOptionViewModel.cs" />
     <Compile Include="ViewModels\LabelViewModel.cs" />
-    <Compile Include="Test\OptionViewModel.cs" />
     <Compile Include="ViewModels\OptionBarcodeViewModel.cs" />
     <Compile Include="ViewModels\OptionLabelViewModel.cs" />
     <Compile Include="ViewModels\OptionTextViewModel.cs" />
@@ -126,9 +122,6 @@
     </Compile>
     <Compile Include="Views\LabelView.xaml.cs">
       <DependentUpon>LabelView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Test\Option.xaml.cs">
-      <DependentUpon>Option.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\OptionBarcodeView.xaml.cs">
       <DependentUpon>OptionBarcodeView.xaml</DependentUpon>
@@ -153,10 +146,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Test\Menu.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Themes\Theme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -166,10 +155,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LabelView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Test\Option.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

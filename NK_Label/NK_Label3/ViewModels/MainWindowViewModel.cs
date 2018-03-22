@@ -193,8 +193,6 @@ namespace NK_Label3.ViewModels
                 {
                     LabelViewModel thisViewModel = SelectedLabelView.DataContext as LabelViewModel;
                     thisViewModel.ObjectList.Add(newText);
-                    //object[] selectedItems = { newText };
-                    //thisViewModel.SelectedCommand.Execute(selectedItems);
                 }
             }
         }
@@ -216,8 +214,6 @@ namespace NK_Label3.ViewModels
                 {
                     LabelViewModel thisViewModel = SelectedLabelView.DataContext as LabelViewModel;
                     thisViewModel.ObjectList.Add(newBarcode);
-                    //object[] selectedItems = { newText };
-                    //thisViewModel.SelectedCommand.Execute(selectedItems);
                 }
             }
         }
