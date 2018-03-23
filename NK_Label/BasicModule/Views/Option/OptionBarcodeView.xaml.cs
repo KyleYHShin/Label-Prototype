@@ -1,13 +1,13 @@
 ﻿using System.Windows.Controls;
 
-namespace BasicModule.Views
+namespace BasicModule.Views.Option
 {
     /// <summary>
     /// TextOption.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class OptionTextView : UserControl
+    public partial class OptionBarcodeView : UserControl
     {
-        public OptionTextView()
+        public OptionBarcodeView()
         {
             InitializeComponent();
         }

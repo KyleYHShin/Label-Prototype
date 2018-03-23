@@ -93,7 +93,7 @@ namespace BasicModule.Files
             //openFileDialog.Filter = "NK Label-File | *.nkl";
             openFileDialog.Title = "Select a Label File";
 
-            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
                 return openFileDialog.FileName;
             
             return null;

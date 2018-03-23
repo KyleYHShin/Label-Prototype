@@ -20,8 +20,6 @@ namespace BasicModule
 
         public void Initialize()
         {
-            //_regionManager.RegisterViewWithRegion("MenuRegion", typeof(PersonDetail));
-            //_regionManager.RegisterViewWithRegion("ContentRegion", typeof(Label));
             _container.RegisterTypeForNavigation<LabelView>(); //추후 새 윈도우 추가
         }
     }

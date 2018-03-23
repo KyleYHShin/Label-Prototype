@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BasicModule.Models
+namespace BasicModule.Models.Option
 {
     public static class PrinterOption
     {
@@ -28,18 +28,6 @@ namespace BasicModule.Models
         public static IList<Option> LabelTypeList
         {
             get { return null; }
-        }
-    }
-
-    public class Option
-    {
-        public string Name { get; set; }
-        public int Id { get; set; }
-
-        public Option(string name, int id)
-        {
-            this.Name = name;
-            this.Id = id;
         }
     }
 }

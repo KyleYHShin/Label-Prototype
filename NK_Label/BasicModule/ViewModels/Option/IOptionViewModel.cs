@@ -1,4 +1,4 @@
-﻿namespace BasicModule.ViewModels
+﻿namespace BasicModule.ViewModels.Option
 {
     public  interface IOptionViewModel
     {

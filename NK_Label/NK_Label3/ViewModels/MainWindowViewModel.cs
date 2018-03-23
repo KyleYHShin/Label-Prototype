@@ -1,16 +1,21 @@
-﻿using BasicModule.Files;
-using BasicModule.ViewModels;
-using BasicModule.Views;
-using NK_Label3.Models;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Input;
+
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
+
+using BasicModule.Files;
 using BasicModule.Models;
 using BasicModule.Utils;
-using System.Windows;
-using System;
+using BasicModule.ViewModels;
+using BasicModule.ViewModels.Option;
+using BasicModule.Views;
+using BasicModule.Views.Option;
+
+using NK_Label3.Models;
 
 namespace NK_Label3.ViewModels
 {
@@ -193,6 +198,7 @@ namespace NK_Label3.ViewModels
                 {
                     LabelViewModel thisViewModel = SelectedLabelView.DataContext as LabelViewModel;
                     thisViewModel.ObjectList.Add(newText);
+                    thisViewModel.IsChanged = true;
                 }
             }
         }
@@ -214,6 +220,7 @@ namespace NK_Label3.ViewModels
                 {
                     LabelViewModel thisViewModel = SelectedLabelView.DataContext as LabelViewModel;
                     thisViewModel.ObjectList.Add(newBarcode);
+                    thisViewModel.IsChanged = true;
                 }
             }
         }

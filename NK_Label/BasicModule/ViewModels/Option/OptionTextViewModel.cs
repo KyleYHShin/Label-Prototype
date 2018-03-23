@@ -1,7 +1,7 @@
 ﻿using BasicModule.Models;
 using Prism.Mvvm;
 
-namespace BasicModule.ViewModels
+namespace BasicModule.ViewModels.Option
 {
     public class OptionTextViewModel : BindableBase, IOptionViewModel
     {

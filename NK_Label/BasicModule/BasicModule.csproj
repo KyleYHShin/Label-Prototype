@@ -89,8 +89,15 @@
     <Compile Include="BasicModuleModule.cs" />
     <Compile Include="Models\BarcodeObject.cs" />
     <Compile Include="Models\BasicObject.cs" />
+    <Compile Include="Models\INotifyProperty.cs" />
     <Compile Include="Models\LabelObject.cs" />
-    <Compile Include="Models\PrinterOption.cs" />
+    <Compile Include="Models\Option\Option.cs" />
+    <Compile Include="Models\Option\PrinterOption.cs" />
+    <Compile Include="Models\Rule\RuleManualList.cs" />
+    <Compile Include="Models\Rule\Rule.cs" />
+    <Compile Include="Models\Rule\RuleRregulation.cs" />
+    <Compile Include="Models\Rule\RuleTime.cs" />
+    <Compile Include="Models\Rule\RuleSequentialNo.cs" />
     <Compile Include="Models\TextObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -105,31 +112,31 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Models\BarcodeOption.cs" />
+    <Compile Include="Models\Option\BarcodeOption.cs" />
     <Compile Include="Utils\BitmapConversion.cs" />
     <Compile Include="Files\FileController.cs" />
     <Compile Include="Files\Parser.cs" />
     <Compile Include="Files\TotalData.cs" />
     <Compile Include="Files\XMLSerializer.cs" />
     <Compile Include="Utils\DialogService.cs" />
-    <Compile Include="ViewModels\IOptionViewModel.cs" />
+    <Compile Include="ViewModels\Option\IOptionViewModel.cs" />
     <Compile Include="ViewModels\LabelViewModel.cs" />
-    <Compile Include="ViewModels\OptionBarcodeViewModel.cs" />
-    <Compile Include="ViewModels\OptionLabelViewModel.cs" />
-    <Compile Include="ViewModels\OptionTextViewModel.cs" />
+    <Compile Include="ViewModels\Option\OptionBarcodeViewModel.cs" />
+    <Compile Include="ViewModels\Option\OptionLabelViewModel.cs" />
+    <Compile Include="ViewModels\Option\OptionTextViewModel.cs" />
     <Compile Include="Views\DialogWindow.xaml.cs">
       <DependentUpon>DialogWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LabelView.xaml.cs">
       <DependentUpon>LabelView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\OptionBarcodeView.xaml.cs">
+    <Compile Include="Views\Option\OptionBarcodeView.xaml.cs">
       <DependentUpon>OptionBarcodeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\OptionLabelView.xaml.cs">
+    <Compile Include="Views\Option\OptionLabelView.xaml.cs">
       <DependentUpon>OptionLabelView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\OptionTextView.xaml.cs">
+    <Compile Include="Views\Option\OptionTextView.xaml.cs">
       <DependentUpon>OptionTextView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SimpleTextView.xaml.cs">
@@ -158,15 +165,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\OptionBarcodeView.xaml">
+    <Page Include="Views\Option\OptionBarcodeView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\OptionLabelView.xaml">
+    <Page Include="Views\Option\OptionLabelView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\OptionTextView.xaml">
+    <Page Include="Views\Option\OptionTextView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -181,6 +188,9 @@
       <Name>SmartAdorner</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ViewModels\Rule\" />
+    <Folder Include="Views\Rule\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

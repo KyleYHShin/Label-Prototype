@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ZXing;
 
-namespace BasicModule.Utils
+namespace BasicModule.Models.Option
 {
     public static class BarcodeOption
     {
@@ -16,18 +16,6 @@ namespace BasicModule.Utils
                     new Option("QR CODE", BarcodeFormat.QR_CODE)
                 };
             }
-        }
-    }
-
-    public class Option
-    {
-        public string Name { get; set; }
-        public BarcodeFormat Key { get; set; }
-
-        public Option(string name, BarcodeFormat key)
-        {
-            this.Name = name;
-            this.Key = key;
         }
     }
 }

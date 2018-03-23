@@ -1,8 +1,9 @@
 ﻿using BasicModule.Models;
+using BasicModule.Models.Option;
 using Prism.Mvvm;
 using System.Windows.Data;
 
-namespace BasicModule.ViewModels
+namespace BasicModule.ViewModels.Option
 {
     public class OptionLabelViewModel : BindableBase, IOptionViewModel
     {

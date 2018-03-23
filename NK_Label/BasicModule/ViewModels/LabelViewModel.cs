@@ -1,11 +1,14 @@
-﻿using BasicModule.Models;
-using BasicModule.Views;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
-using System;
-using System.Collections.ObjectModel;
-using System.Linq;
+
+using BasicModule.Models;
+using BasicModule.ViewModels.Option;
+using BasicModule.Views.Option;
 
 namespace BasicModule.ViewModels
 {
