@@ -93,11 +93,12 @@
     <Compile Include="Models\LabelObject.cs" />
     <Compile Include="Models\Option\Option.cs" />
     <Compile Include="Models\Option\PrinterOption.cs" />
+    <Compile Include="Models\Rule\IRuleObject.cs" />
     <Compile Include="Models\Rule\RuleManualList.cs" />
     <Compile Include="Models\Rule\Rule.cs" />
     <Compile Include="Models\Rule\RuleRregulation.cs" />
     <Compile Include="Models\Rule\RuleTime.cs" />
-    <Compile Include="Models\Rule\RuleSequentialNo.cs" />
+    <Compile Include="Models\Rule\RuleSequentialNum.cs" />
     <Compile Include="Models\TextObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -119,6 +120,7 @@
     <Compile Include="Files\TotalData.cs" />
     <Compile Include="Files\XMLSerializer.cs" />
     <Compile Include="Utils\DialogService.cs" />
+    <Compile Include="Utils\TimeConversion.cs" />
     <Compile Include="ViewModels\Option\IOptionViewModel.cs" />
     <Compile Include="ViewModels\LabelViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionBarcodeViewModel.cs" />
@@ -138,6 +140,9 @@
     </Compile>
     <Compile Include="Views\Option\OptionTextView.xaml.cs">
       <DependentUpon>OptionTextView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Rule\RuleSequentialNumView.xaml.cs">
+      <DependentUpon>RuleSequentialNumView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SimpleTextView.xaml.cs">
       <DependentUpon>SimpleTextView.xaml</DependentUpon>
@@ -177,6 +182,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Rule\RuleSequentialNumView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SimpleTextView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -190,7 +199,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\Rule\" />
-    <Folder Include="Views\Rule\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -15,5 +15,10 @@ namespace BasicModule.Utils
                           Int32Rect.Empty,
                           BitmapSizeOptions.FromEmptyOptions());
         }
+
+        public static void GetLabelToImage()
+        {
+            // 라벨 화면 이미지화
+        }
     }
 }

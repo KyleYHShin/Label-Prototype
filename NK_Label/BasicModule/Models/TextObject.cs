@@ -13,13 +13,10 @@ namespace BasicModule.Models
             get { return _text; }
             set
             {
-                if (value != null)
+                if (value != null && value.Length <= _maxLength)
                 {
-                    if (value.Length <= _maxLength)
-                    {
-                        _text = value;
-                        OnPropertyChanged();
-                    }
+                    _text = value;
+                    OnPropertyChanged();
                 }
             }
         }

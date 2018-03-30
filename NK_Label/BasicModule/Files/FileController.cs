@@ -75,7 +75,7 @@ namespace BasicModule.Files
             string path = OpenLabel_FileDialog();
             if (!IsValidPath(path))
                 return null;
-            
+
             var newLabelViewModel = new LabelViewModel(regionManager) { FilePath = path };
             if (OpenLabel_Xml(ref newLabelViewModel))
             {
@@ -95,7 +95,7 @@ namespace BasicModule.Files
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
                 return openFileDialog.FileName;
-            
+
             return null;
         }
 
@@ -117,8 +117,7 @@ namespace BasicModule.Files
         }
 
         #endregion //Open
-
-
+        
         private static bool IsValidPath(string filePath)
         {
             try

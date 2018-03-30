@@ -2,16 +2,30 @@
 
 namespace BasicModule.Models.Rule
 {
-    public class Rule : INotifyProperty
+    public class Rule : INotifyProperty, IRuleObject
     {
-        private string _name;
-        public string Name
+        private RuleFormat _format;
+        public RuleFormat Format
         {
-            get { return _name; }
+            get { return _format; }
             set
             {
-                _name = value;
+                _format = value;
                 OnPropertyChanged();
+            }
+        }
+
+        private string _name; // Prefix && Postfix 미포함
+        public string Name
+        {
+            get { return RuleNameCombiner(_name); }
+            set
+            {
+                if (!string.IsNullOrEmpty(value) && value.Length >= MIN_NAME_LEN)
+                {
+                    _name = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -26,41 +40,33 @@ namespace BasicModule.Models.Rule
             }
         }
 
-        private RuleFormat _format;
-        public RuleFormat Format
+        private IRuleObject _content;
+        public IRuleObject Content
         {
-            get { return _format; }
+            get { return _content; }
             set
             {
-                _format = value;
+                _content = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _keyword;
-        public string Keyword
+        public IRuleObject Clone()
         {
-            get { return Prefix + _keyword + Postfix; }
-            set
-            {
-                if (!string.IsNullOrEmpty(value) && value.Length >= 2)
-                {
-                    _keyword = value;
-                    OnPropertyChanged();
-                }
-            }
+            Rule rule = new Rule();
+            rule.Format = Format;
+            rule.Name = Name;
+            rule.Description = Description;
+            rule.Content = Content;
+
+            return rule;
         }
 
-        private object _ruleContent;
-        public object RuleContent
+        public string PrintValue()
         {
-            get { return _ruleContent; }
-            set
-            {
-                _ruleContent = value;
-                OnPropertyChanged();
-            }
+            if (Content != null)
+                return Content.PrintValue();
+            return "";
         }
-
     }
 }

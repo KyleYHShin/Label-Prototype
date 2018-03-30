@@ -7,8 +7,10 @@ using Prism.Mvvm;
 using Prism.Regions;
 
 using BasicModule.Models;
+using BasicModule.Models.Rule;
 using BasicModule.ViewModels.Option;
 using BasicModule.Views.Option;
+using System.Collections.Generic;
 
 namespace BasicModule.ViewModels
 {
@@ -37,13 +39,22 @@ namespace BasicModule.ViewModels
             set { SetProperty(ref _objectList, value); }
         }
 
+        private List<Rule> _ruleList;
+        public List<Rule> RuleList
+        {
+            get { return _ruleList; }
+            set { SetProperty(ref _ruleList, value); }
+        }
+
         #endregion //Properties
-        
+
         #region Constructor
 
         private readonly IRegionManager _regionManager;
         public LabelViewModel(IRegionManager regionManager)
         {
+            TestSource();
+
             _regionManager = regionManager;
             ObjectList = new ObservableCollection<BasicObject>();
 
@@ -56,6 +67,32 @@ namespace BasicModule.ViewModels
 
         #endregion //Constructor
 
+        private void TestSource()
+        {
+            while (true)
+            {
+                Rule r = new Rule()
+                {
+                    Format = RuleRregulation.RuleFormat.MANUAL_LIST,
+                    Name = "Rule1",
+                    Description = "Test Rule"
+                };
+
+                //RuleManualList rml = new RuleManualList()
+                //{
+                //    ContentList = new Dictionary<string, string>()
+                //};
+                //r.Content = rml;
+
+                //bool ret = rml.AddList("key1", "value1");
+                //ret = rml.AddList("Key1", "value2");
+                //ret = rml.AddList("fda@@", "dfdf");
+                //rml.SelectedContent = "value2";
+
+                var print = r.PrintValue();
+            }
+        }
+        
         #region Common Event
 
         public DelegateCommand<object[]> SelectedCommand { get; private set; }
@@ -124,13 +161,15 @@ namespace BasicModule.ViewModels
             }
         }
 
+        public bool RuleNameDuplicationVerifier(Rule rule)
+        {
+            foreach (var r in RuleList)
+                if (r.Name.Equals(rule.Name))
+                    return false;
+
+            return true;
+        }
+
         #endregion //Functions
-
-        #region Rule
-        //룰 프로퍼티
-        //룰
-
-        #endregion
-
     }
 }

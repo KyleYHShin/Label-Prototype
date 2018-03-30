@@ -24,7 +24,7 @@ namespace BasicModule.Models
             get { return _name; }
             set
             {
-                if (value != null)
+                if (!string.IsNullOrEmpty(value) && !string.IsNullOrWhiteSpace(value))
                 {
                     _name = value;
                     OnPropertyChanged();
