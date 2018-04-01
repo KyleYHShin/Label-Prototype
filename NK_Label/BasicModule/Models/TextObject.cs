@@ -20,6 +20,7 @@ namespace BasicModule.Models
                 }
             }
         }
+        public string OriginText { get; set; }
 
         private int _maxLength = 15;
         public int MaxLength
@@ -78,8 +79,7 @@ namespace BasicModule.Models
         }
 
         #endregion //Text Properties
-
-
+        
         #region Vector Properties
 
         public double ActualPosX { get { return PosX - 10; } }

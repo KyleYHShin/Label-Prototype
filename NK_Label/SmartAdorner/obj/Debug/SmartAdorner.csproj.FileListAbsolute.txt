@@ -37,3 +37,15 @@ C:\Work\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\SmartAdorner.csproj.Gene
 C:\Work\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\SmartAdorner.csproj.CoreCompileInputs.cache
 C:\Work\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\SmartAdorner.dll
 C:\Work\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\SmartAdorner.pdb
+C:\Work\Git\Label-Prototype\NK_Label\SmartAdorner\bin\Debug\SmartAdorner.dll
+C:\Work\Git\Label-Prototype\NK_Label\SmartAdorner\bin\Debug\SmartAdorner.pdb
+C:\Work\Git\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\SmartAdorner.csprojResolveAssemblyReference.cache
+C:\Work\Git\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Work\Git\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\SmartAdorner_MarkupCompile.cache
+C:\Work\Git\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\SmartAdorner_MarkupCompile.lref
+C:\Work\Git\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\Themes\Generic.baml
+C:\Work\Git\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\SmartAdorner.g.resources
+C:\Work\Git\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\SmartAdorner.Properties.Resources.resources
+C:\Work\Git\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\SmartAdorner.csproj.GenerateResource.Cache
+C:\Work\Git\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\SmartAdorner.dll
+C:\Work\Git\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\SmartAdorner.pdb

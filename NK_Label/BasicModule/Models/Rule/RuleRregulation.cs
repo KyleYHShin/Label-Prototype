@@ -5,8 +5,13 @@ namespace BasicModule.Models.Rule
 {
     public static class RuleRregulation
     {
-        public static string Prefix = "*{";
-        public static string Postfix = "}*";
+        private static char Symbol = '*';
+        private static char SymbolPre = '{';
+        private static char SymbolPost = '}';
+
+        public static string Prefix = Symbol.ToString() + SymbolPre.ToString();
+        public static string Postfix = SymbolPost.ToString() + Symbol.ToString();
+
         public static int MIN_NAME_LEN = 2;
 
         public enum RuleFormat
@@ -71,19 +76,17 @@ namespace BasicModule.Models.Rule
         {
             try
             {
-                string[] blocks;
-
                 List<int> startIndex = new List<int>();
                 List<int> endIndex = new List<int>();
                 int blockCount = 0;
                 for (int i = 0; i < originText.Length; i++)
                 {
-                    if (originText[i] == '*' && i + 1 < originText.Length - 1 && originText[i + 1] == '{')
+                    if (originText[i] == Symbol && i + 1 < originText.Length - 1 && originText[i + 1] == SymbolPre)
                     {
                         startIndex.Add(i);
                         blockCount++;
                     }
-                    else if (originText[i] == '*' && i - 1 >= 0 && originText[i - 1] == '}')
+                    else if (originText[i] == Symbol && i - 1 >= 0 && originText[i - 1] == SymbolPost)
                     {
                         endIndex.Add(i);
                         blockCount++;
@@ -92,7 +95,7 @@ namespace BasicModule.Models.Rule
                 if (startIndex.Count != endIndex.Count)
                     throw new Exception();
 
-                blocks = new string[blockCount + 1];
+                string[] blocks = new string[blockCount + 1];
                 int blockIndex = 0;
                 int prevIndex = 0;
                 for (int i = 0; i < originText.Length; i++)

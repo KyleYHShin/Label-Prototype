@@ -53,8 +53,6 @@ namespace BasicModule.ViewModels
         private readonly IRegionManager _regionManager;
         public LabelViewModel(IRegionManager regionManager)
         {
-            TestSource();
-
             _regionManager = regionManager;
             ObjectList = new ObservableCollection<BasicObject>();
 
@@ -78,6 +76,7 @@ namespace BasicModule.ViewModels
                     Description = "Test Rule"
                 };
 
+                //List 출력
                 //RuleManualList rml = new RuleManualList()
                 //{
                 //    ContentList = new Dictionary<string, string>()
@@ -89,7 +88,28 @@ namespace BasicModule.ViewModels
                 //ret = rml.AddList("fda@@", "dfdf");
                 //rml.SelectedContent = "value2";
 
-                var print = r.PrintValue();
+                //Sequential 출력
+                //var rsn = new RuleSequentialNum()
+                //{
+                //    NumLength = 5,
+                //    MaxNum = 10,
+                //    MinNum = 1,
+                //    Increment = 1
+                //};
+                //r.Content = rsn;
+                //for (var i = rsn.CurrNum; i <= rsn.MaxNum; i += rsn.Increment)
+                //{
+                //    Console.WriteLine(r.PrintValue());
+                //}
+
+                //Time 출력
+                //var rt = new RuleTime()
+                //{
+                //    Pattern = "yyyy-MM-dd : HH:mm:ss"
+                //};
+                //r.Content = rt;
+                //Console.WriteLine(r.PrintValue());
+
             }
         }
         

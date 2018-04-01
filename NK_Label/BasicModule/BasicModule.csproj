@@ -120,12 +120,14 @@
     <Compile Include="Files\TotalData.cs" />
     <Compile Include="Files\XMLSerializer.cs" />
     <Compile Include="Utils\DialogService.cs" />
+    <Compile Include="Utils\PrintService.cs" />
     <Compile Include="Utils\TimeConversion.cs" />
     <Compile Include="ViewModels\Option\IOptionViewModel.cs" />
     <Compile Include="ViewModels\LabelViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionBarcodeViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionLabelViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionTextViewModel.cs" />
+    <Compile Include="ViewModels\PrintViewModel.cs" />
     <Compile Include="Views\DialogWindow.xaml.cs">
       <DependentUpon>DialogWindow.xaml</DependentUpon>
     </Compile>

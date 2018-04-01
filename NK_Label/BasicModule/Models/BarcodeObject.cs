@@ -57,6 +57,7 @@ namespace BasicModule.Models
                 }
             }
         }
+        public string OriginText { get; set; }
 
         private int _maxLength = 15;
         public int MaxLength

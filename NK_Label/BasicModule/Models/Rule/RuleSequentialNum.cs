@@ -30,6 +30,8 @@
                 if (value >= 0 && value <= _maxNum && value.ToString("D").Length <= NumLength)
                 {
                     _minNum = value;
+                    if (CurrNum < _minNum)
+                        CurrNum = _minNum;
                     OnPropertyChanged();
                 }
             }
@@ -49,6 +51,8 @@
                 if (value >= 0 && value >= _minNum && value.ToString("D").Length <= NumLength)
                 {
                     _maxNum = value;
+                    if (_currNum > _maxNum)
+                        _currNum = _maxNum;
                     OnPropertyChanged();
                 }
             }
@@ -70,10 +74,8 @@
         public string CurrNumStr
         {
             get
-
             {
-                int remainLength = _numLength - _currNum.ToString("D").Length;
-                return _currNum.ToString("D" + remainLength.ToString());
+                return _currNum.ToString("D" + _numLength.ToString());
             }
         }
 
@@ -106,10 +108,8 @@
 
         public string PrintValue()
         {
-            int remainLength = _numLength - _currNum.ToString("D").Length;
-            string str = _currNum.ToString("D" + remainLength.ToString());
+            var str = CurrNumStr;
             CurrNum += Increment;
-
             return str;
         }
     }
