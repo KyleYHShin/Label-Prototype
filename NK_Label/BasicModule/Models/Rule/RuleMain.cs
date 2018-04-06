@@ -1,11 +1,11 @@
-﻿using static BasicModule.Models.Rule.RuleRregulation;
-
-namespace BasicModule.Models.Rule
+﻿namespace BasicModule.Models.Rule
 {
-    public class Rule : INotifyProperty, IRuleObject
+    public class RuleMain : NotifyPropertyChanged, IRuleObject
     {
-        private RuleFormat _format;
-        public RuleFormat Format
+        #region Properties
+
+        private RuleRregulation.RuleFormat _format;
+        public RuleRregulation.RuleFormat Format
         {
             get { return _format; }
             set
@@ -18,10 +18,10 @@ namespace BasicModule.Models.Rule
         private string _name; // Prefix && Postfix 미포함
         public string Name
         {
-            get { return RuleNameCombiner(_name); }
+            get { return _name; }
             set
             {
-                if (!string.IsNullOrEmpty(value) && value.Length >= MIN_NAME_LEN)
+                if (!string.IsNullOrEmpty(value) && value.Length >= RuleRregulation.MIN_NAME_LEN)
                 {
                     _name = value;
                     OnPropertyChanged();
@@ -51,22 +51,30 @@ namespace BasicModule.Models.Rule
             }
         }
 
-        public IRuleObject Clone()
-        {
-            Rule rule = new Rule();
-            rule.Format = Format;
-            rule.Name = Name;
-            rule.Description = Description;
-            rule.Content = Content;
+        #endregion
 
-            return rule;
+        public IRuleObject Clone
+        {
+            get
+            {
+                var obj = new RuleMain();
+                obj.Format = Format;
+                obj.Name = Name;
+                obj.Description = Description;
+                obj.Content = Content.Clone;
+
+                return obj;
+            }
         }
 
-        public string PrintValue()
+        public string PrintValue
         {
-            if (Content != null)
-                return Content.PrintValue();
-            return "";
+            get
+            {
+                if (Content != null)
+                    return Content.PrintValue;
+                return "";
+            }
         }
     }
 }

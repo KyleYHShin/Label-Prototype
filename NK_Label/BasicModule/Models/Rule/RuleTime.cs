@@ -2,8 +2,10 @@
 
 namespace BasicModule.Models.Rule
 {
-    public class RuleTime : INotifyProperty, IRuleObject
+    public class RuleTime : NotifyPropertyChanged, IRuleObject
     {
+        #region Properties
+
         private string _pattern;
         public string Pattern
         {
@@ -18,18 +20,20 @@ namespace BasicModule.Models.Rule
             }
         }
 
-        public IRuleObject Clone()
-        {
-            RuleTime rt = new RuleTime();
-            rt.Pattern = Pattern;
+        #endregion
 
-            return rt;
+        public IRuleObject Clone
+        {
+            get
+            {
+                var obj = new RuleTime();
+                obj.Pattern = Pattern;
+
+                return obj;
+            }
         }
 
-        public string PrintValue()
-        {
-            return TimeConversion.DateToString(Pattern);
-        }
+        public string PrintValue => TimeConversion.DateToString(Pattern);
 
     }
 }

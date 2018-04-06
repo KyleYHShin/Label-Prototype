@@ -3,11 +3,11 @@
 namespace BasicModule.Views.Rule
 {
     /// <summary>
-    /// RuleSequentialNumView.xaml에 대한 상호 작용 논리
+    /// RuleEditView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class RuleSequentialNumView : UserControl
+    public partial class RuleListView : UserControl
     {
-        public RuleSequentialNumView()
+        public RuleListView()
         {
             InitializeComponent();
         }

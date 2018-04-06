@@ -17,10 +17,11 @@ namespace BasicModule.Models.Rule
         public enum RuleFormat
         {
             TIME = 1,
-            SEQUENTIAL_NO = 10,
+            SEQUENTIAL_NUM = 10,
             MANUAL_LIST = 20
         }
 
+        //미사용 시 삭제
         public static List<string> TimeFormatList
         {
             get

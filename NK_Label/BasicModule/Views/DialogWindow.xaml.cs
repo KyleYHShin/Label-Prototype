@@ -1,6 +1,7 @@
-﻿using BasicModule.ViewModels.Option;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
+
+using BasicModule.ViewModels.Option;
 
 namespace BasicModule.Views
 {

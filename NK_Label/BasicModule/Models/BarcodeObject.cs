@@ -4,7 +4,7 @@ using ZXing;
 
 namespace BasicModule.Models
 {
-    public class BarcodeObject : BasicObject
+    public class BarcodeObject : BasicObject, IPrintableObject
     {
         #region Barcode Properties
 
@@ -57,7 +57,6 @@ namespace BasicModule.Models
                 }
             }
         }
-        public string OriginText { get; set; }
 
         private int _maxLength = 15;
         public int MaxLength
@@ -170,5 +169,27 @@ namespace BasicModule.Models
 
         #endregion //Control Properties
 
+        public string OriginText { get; set; }
+
+        public IPrintableObject Clone
+        {
+            get
+            {
+                var obj = new BarcodeObject();
+                obj.Name = Name;
+                obj.PosX = PosX;
+                obj.PosY = PosY;
+
+                obj.BarcodeWriter = BarcodeWriter;
+                obj.BarcodeType = BarcodeType;
+                obj.Text = Text;
+                obj.MaxLength = MaxLength;
+                obj.Barcode = Barcode;
+                obj.Width = Width;
+                obj.Height = Height;
+
+                return obj;
+            }
+        }
     }
 }

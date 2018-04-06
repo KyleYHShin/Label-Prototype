@@ -2,7 +2,7 @@
 {
     public interface IRuleObject
     {
-        IRuleObject Clone();
-        string PrintValue();
+        IRuleObject Clone { get; }
+        string PrintValue { get; }
     }
 }

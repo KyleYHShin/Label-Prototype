@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -10,7 +11,7 @@ using BasicModule.Models;
 using BasicModule.Models.Rule;
 using BasicModule.ViewModels.Option;
 using BasicModule.Views.Option;
-using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace BasicModule.ViewModels
 {
@@ -24,7 +25,7 @@ namespace BasicModule.ViewModels
             get { return _filePath; }
             set { SetProperty(ref _filePath, value); }
         }
-
+        
         private LabelObject _label = new LabelObject();
         public LabelObject Label
         {
@@ -39,8 +40,8 @@ namespace BasicModule.ViewModels
             set { SetProperty(ref _objectList, value); }
         }
 
-        private List<Rule> _ruleList;
-        public List<Rule> RuleList
+        private List<RuleMain> _ruleList;
+        public List<RuleMain> RuleList
         {
             get { return _ruleList; }
             set { SetProperty(ref _ruleList, value); }
@@ -55,62 +56,73 @@ namespace BasicModule.ViewModels
         {
             _regionManager = regionManager;
             ObjectList = new ObservableCollection<BasicObject>();
+            RuleList = new List<RuleMain>();
 
             var newView = new OptionLabelView();
             newView.DataContext = new OptionLabelViewModel(_label);
             _regionManager.Regions["OptionRegion"].Add(newView, null, true);
 
             SelectedCommand = new DelegateCommand<object[]>(OnItemSelected);
+            ClickReleaseAll = new DelegateCommand(ReleaseObject);
+
+            TestSource();
         }
 
+        public ICommand ClickReleaseAll { get; private set; }
+        private void ReleaseObject()
+        {
+            SelectedObject = null;
+        }
         #endregion //Constructor
 
         private void TestSource()
         {
-            while (true)
+            RuleMain rt = new RuleMain()
             {
-                Rule r = new Rule()
-                {
-                    Format = RuleRregulation.RuleFormat.MANUAL_LIST,
-                    Name = "Rule1",
-                    Description = "Test Rule"
-                };
+                Format = RuleRregulation.RuleFormat.TIME,
+                Name = "Time",
+                Description = "Test Rule Time"
+            };
+            var rtt = new RuleTime()
+            {
+                Pattern = "yyyy-MM-dd"
+            };
+            rt.Content = rtt;
+            RuleList.Add(rt);
 
-                //List 출력
-                //RuleManualList rml = new RuleManualList()
-                //{
-                //    ContentList = new Dictionary<string, string>()
-                //};
-                //r.Content = rml;
+            RuleMain rl = new RuleMain()
+            {
+                Format = RuleRregulation.RuleFormat.MANUAL_LIST,
+                Name = "List",
+                Description = "Test Rule List"
+            };
+            RuleManualList rml = new RuleManualList()
+            {
+                ContentList = new Dictionary<string, string>()
+            };
+            rml.AddList("key1", "value1");
+            rml.AddList("Key1", "value2");
+            rml.AddList("fda@@", "dfdf");
+            rml.SelectedContent = "value2";
+            rl.Content = rml;
+            RuleList.Add(rl);
 
-                //bool ret = rml.AddList("key1", "value1");
-                //ret = rml.AddList("Key1", "value2");
-                //ret = rml.AddList("fda@@", "dfdf");
-                //rml.SelectedContent = "value2";
+            RuleMain rs = new RuleMain()
+            {
+                Format = RuleRregulation.RuleFormat.SEQUENTIAL_NUM,
+                Name = "Serial",
+                Description = "Test Rule Serial"
+            };
+            var rsn = new RuleSequentialNum()
+            {
+                NumLength = 5,
+                MaxNum = 10,
+                MinNum = 1,
+                Increment = 1
+            };
+            rs.Content = rsn;
+            RuleList.Add(rs);
 
-                //Sequential 출력
-                //var rsn = new RuleSequentialNum()
-                //{
-                //    NumLength = 5,
-                //    MaxNum = 10,
-                //    MinNum = 1,
-                //    Increment = 1
-                //};
-                //r.Content = rsn;
-                //for (var i = rsn.CurrNum; i <= rsn.MaxNum; i += rsn.Increment)
-                //{
-                //    Console.WriteLine(r.PrintValue());
-                //}
-
-                //Time 출력
-                //var rt = new RuleTime()
-                //{
-                //    Pattern = "yyyy-MM-dd : HH:mm:ss"
-                //};
-                //r.Content = rt;
-                //Console.WriteLine(r.PrintValue());
-
-            }
         }
         
         #region Common Event
@@ -181,13 +193,17 @@ namespace BasicModule.ViewModels
             }
         }
 
-        public bool RuleNameDuplicationVerifier(Rule rule)
+        public List<RuleMain> CopiedRuleList
         {
-            foreach (var r in RuleList)
-                if (r.Name.Equals(rule.Name))
-                    return false;
+            get{
 
-            return true;
+                var newList = new List<RuleMain>();
+                foreach (RuleMain r in RuleList)
+                {
+                    newList.Add(r.Clone as RuleMain);
+                }
+                return newList;
+            }
         }
 
         #endregion //Functions

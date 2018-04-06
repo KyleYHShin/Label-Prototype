@@ -24,17 +24,37 @@
                         <ColumnDefinition Width="Auto" MinWidth="80"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Name"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource OptionColumnValue}" Text="{Binding BarcodeObject.Name}"/>
-                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Width"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource OptionColumnValue}" Text="{Binding BarcodeObject.Width}"/>
-                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Height"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource OptionColumnValue}" Text="{Binding BarcodeObject.Height}"/>
-
-                    <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Positon X"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource OptionColumnValue}" Text="{Binding BarcodeObject.PosX}"/>
-                    <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Positon Y"/>
-                    <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource OptionColumnValue}" Text="{Binding BarcodeObject.PosY}"/>
+                    
+                    <TextBlock Grid.Row="0" Grid.Column="0"
+                               Text="Name"
+                               Style="{StaticResource OptionColumnHeader}" />
+                    <TextBox Grid.Row="0" Grid.Column="1"
+                             Text="{Binding BarcodeObject.Name}"
+                             Style="{StaticResource OptionColumnValue}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0"
+                                Text="Width"
+                               Style="{StaticResource OptionColumnHeader}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1"
+                             Text="{Binding BarcodeObject.Width}"
+                             Style="{StaticResource OptionColumnValue}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0"
+                               Text="Height"
+                               Style="{StaticResource OptionColumnHeader}" />
+                    <TextBox Grid.Row="2" Grid.Column="1"
+                             Text="{Binding BarcodeObject.Height}"
+                             Style="{StaticResource OptionColumnValue}"/>
+                    <TextBlock Grid.Row="3" Grid.Column="0"
+                               Text="Positon X"
+                               Style="{StaticResource OptionColumnHeader}" />
+                    <TextBox Grid.Row="3" Grid.Column="1"
+                             Text="{Binding BarcodeObject.PosX}"
+                             Style="{StaticResource OptionColumnValue}"/>
+                    <TextBlock Grid.Row="4" Grid.Column="0" 
+                               Text="Positon Y"
+                               Style="{StaticResource OptionColumnHeader}" />
+                    <TextBox Grid.Row="4" Grid.Column="1"
+                             Text="{Binding BarcodeObject.PosY}"
+                             Style="{StaticResource OptionColumnValue}" />
                 </Grid>
             </GroupBox>
 
@@ -49,17 +69,28 @@
                         <ColumnDefinition Width="Auto" MinWidth="80"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Barcode Type" />
+                    
+                    <TextBlock Grid.Row="0" Grid.Column="0"
+                               Text="Barcode Type"
+                               Style="{StaticResource OptionColumnHeader}"/>
                     <ComboBox Grid.Row="0" Grid.Column="1"
                               ItemsSource="{Binding BarcodeFormatList, Mode=OneWay}"
+                              SelectedValue="{Binding BarcodeObject.BarcodeType, Mode=TwoWay}"
                               DisplayMemberPath="Name"
                               SelectedValuePath="Value"
-                              SelectedValue="{Binding BarcodeObject.BarcodeType, Mode=TwoWay}"
                               Style="{StaticResource OptionComboBoxValue}" />
-                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Text" />
-                    <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource OptionColumnValue}" Text="{Binding BarcodeObject.Text}"/>
-                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Max Length"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource OptionColumnValue}" Text="{Binding BarcodeObject.MaxLength}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0"
+                               Text="Text"
+                               Style="{StaticResource OptionColumnHeader}"  />
+                    <TextBox Grid.Row="1" Grid.Column="1"
+                             Text="{Binding BarcodeObject.Text}"
+                             Style="{StaticResource OptionColumnValue}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0"
+                               Text="Max Length"
+                               Style="{StaticResource OptionColumnHeader}"/>
+                    <TextBox Grid.Row="2" Grid.Column="1"
+                             Text="{Binding BarcodeObject.MaxLength}"
+                             Style="{StaticResource OptionColumnValue}"/>
                 </Grid>
             </GroupBox>
         </StackPanel>

@@ -2,7 +2,7 @@
 
 namespace BasicModule.Models.Rule
 {
-    public class RuleManualList : INotifyProperty, IRuleObject
+    public class RuleManualList : NotifyPropertyChanged, IRuleObject
     {
         private Dictionary<string, string> _contentList;
         public Dictionary<string, string> ContentList
@@ -17,7 +17,16 @@ namespace BasicModule.Models.Rule
             }
         }
 
-        public string SelectedContent { get; set; }
+        private string _selectedContent;
+        public string SelectedContent
+        {
+            get { return _selectedContent; }
+            set
+            {
+                _selectedContent = value;
+                OnPropertyChanged();
+            }
+        }
 
         public bool AddList(string key, string value)
         {
@@ -30,16 +39,16 @@ namespace BasicModule.Models.Rule
             return false;
         }
 
-        public IRuleObject Clone()
+        public IRuleObject Clone
         {
-            RuleManualList rml = new RuleManualList();
-            rml.ContentList = ContentList;
-            return rml;
+            get
+            {
+                var obj = new RuleManualList();
+                obj.ContentList = ContentList;
+                return obj;
+            }
         }
 
-        public string PrintValue()
-        {
-            return SelectedContent;
-        }
+        public string PrintValue => SelectedContent;
     }
 }

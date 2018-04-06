@@ -1,21 +1,17 @@
 ﻿using BasicModule.Models;
 using BasicModule.Models.Rule;
+using BasicModule.Utils;
 using Prism.Mvvm;
-using Prism.Regions;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BasicModule.ViewModels
 {
     public class PrintViewModel : BindableBase
     {
+        #region Properties
 
-        private LabelObject _label = new LabelObject();
+        private LabelObject _label;
         public LabelObject Label
         {
             get { return _label; }
@@ -29,56 +25,59 @@ namespace BasicModule.ViewModels
             set { SetProperty(ref _objectList, value); }
         }
 
-        private List<Rule> _ruleList;
-        public List<Rule> RuleList
+        private List<RuleMain> _ruleList;
+        public List<RuleMain> RuleList
         {
             get { return _ruleList; }
             set { SetProperty(ref _ruleList, value); }
         }
 
-        public PrintViewModel(LabelObject label, ObservableCollection<BasicObject> objectList, List<Rule> ruleList)
+        public int Repetition { get; set; } = 1;
+
+        #endregion
+
+        public PrintViewModel(LabelObject label, ObservableCollection<BasicObject> objectList, List<RuleMain> ruleList)
         {
             Label = label;
-            ObjectList = objectList;
-            foreach(var obj in objectList)
+            ObjectList = new ObservableCollection<BasicObject>();
+            foreach (var obj in objectList)
             {
-                if (obj is TextObject)
-                    (obj as TextObject).OriginText = (obj as TextObject).Text;
-                else if (obj is BarcodeObject)
-                    (obj as BarcodeObject).OriginText = (obj as BarcodeObject).Text;
+                if (obj is IPrintableObject)
+                {
+                    IPrintableObject newObj = (obj as IPrintableObject).Clone;
+                    newObj.OriginText = newObj.Text;
+                    newObj.Text = "";
+                    ObjectList.Add(newObj as BasicObject);
+                }
             }
             RuleList = ruleList;
-            //미사용 규칙 제거
         }
 
-        public bool print()
+        private List<RuleSequentialNum> getRuleSequentialNumList()
         {
-            List<RuleSequentialNum> rsnList = new List<RuleSequentialNum>();
-            foreach(BasicObject obj in ObjectList)
+            var rsnList = new List<RuleSequentialNum>();
+            foreach (var obj in ObjectList)
             {
-                string originText = "";
-                if (obj is TextObject)
-                    originText = (obj as TextObject).OriginText;
-                else if (obj is BarcodeObject)
-                    originText = (obj as BarcodeObject).OriginText;
-
-                if (!string.IsNullOrEmpty(originText))
+                if (obj is IPrintableObject)
                 {
-                    string[] textBlocks = RuleRregulation.RuleNameSeperatorToList(originText);
-                    foreach(var block in textBlocks)
+                    var pObj = obj as IPrintableObject;
+                    if (!string.IsNullOrEmpty(pObj.OriginText))
                     {
-                        if (RuleRregulation.RuleNameVerifier(block))
+                        string[] textBlocks = RuleRregulation.RuleNameSeperatorToList(pObj.OriginText);
+                        foreach (var block in textBlocks)
                         {
-                            var rName = RuleRregulation.RuleNameExtractor(block);
-                            foreach(Rule r in RuleList)
+                            if (RuleRregulation.RuleNameVerifier(block))
                             {
-                                if (r.Name.Equals(rName)&& r.Format == RuleRregulation.RuleFormat.SEQUENTIAL_NO)
+                                foreach (RuleMain r in RuleList)
                                 {
-                                    var rsn = r.Content as RuleSequentialNum;
-                                    if (!rsnList.Contains(rsn))
+                                    if (r.Name.Equals(block) && r.Format == RuleRregulation.RuleFormat.SEQUENTIAL_NUM)
                                     {
-                                        rsnList.Add(rsn);
-                                        break;
+                                        var rsn = r.Content as RuleSequentialNum;
+                                        if (!rsnList.Contains(rsn))
+                                        {
+                                            rsnList.Add(rsn);
+                                            break;
+                                        }
                                     }
                                 }
                             }
@@ -86,29 +85,41 @@ namespace BasicModule.ViewModels
                     }
                 }
             }
+            return rsnList;
+        }
 
-            if(rsnList.Count == 0)
+        public bool print()
+        {
+            List<RuleSequentialNum> rsnList = getRuleSequentialNumList();
+            if (rsnList.Count == 0)
             {
-                //반복 횟수만큼 출력
-                for(var i = 0; i<10; i++)
+                for (var i = 0; i < Repetition; i++)
                 {
                     ConvertRuleToText();
                     //print to window
                     //screenshot
                     //print
                 }
-            }else if (rsnList.Count == 1)
+            }
+            else if (rsnList.Count == 1)
             {
                 RuleSequentialNum rsn = rsnList[0];
                 for (var i = rsn.CurrNum; i <= rsn.MaxNum; i += rsn.Increment)
                 {
+                    rsn.CurrNum = i;
                     ConvertRuleToText();
                     //print to window
                     //screen shot
                     //print
 
-                    //change rsn settings
-                    rsn.CurrNum += rsn.Increment;
+                    ////이미지화
+                    //Bitmap img = null;
+                    //string[] oList = null;
+                    //bool ret = Utils.PrintService.PrintLabel(img, oList);
+                    var ps = new PrintService();
+                    ps.Label = Label;
+                    ps.ObjectList = ObjectList;
+                    ps.PrintLabel();
                 }
             }
             else
@@ -117,47 +128,36 @@ namespace BasicModule.ViewModels
                 return false;
             }
 
-
-            ////이미지화
-            //Bitmap img = null;
-            //string[] oList = null;
-            //bool ret = Utils.PrintService.PrintLabel(img, oList);
-
             return false;
         }
 
         private void ConvertRuleToText()
         {
-            foreach (BasicObject obj in ObjectList)
+            foreach (var obj in ObjectList)
             {
-                string originText = "";
-                if (obj is TextObject)
-                    originText = (obj as TextObject).OriginText;
-                else if (obj is BarcodeObject)
-                    originText = (obj as BarcodeObject).OriginText;
-
-                if (!string.IsNullOrEmpty(originText))
+                if (obj is IPrintableObject)
                 {
-                    string[] textBlocks = RuleRregulation.RuleNameSeperatorToList(originText);
-                    for(int i = 0; i<textBlocks.Length; i++)
+                    var pObj = obj as IPrintableObject;
+                    if (!string.IsNullOrEmpty(pObj.OriginText))
                     {
-                        if (RuleRregulation.RuleNameVerifier(textBlocks[i]))
+                        string[] textBlocks = RuleRregulation.RuleNameSeperatorToList(pObj.OriginText);
+                        for (int i = 0; i < textBlocks.Length; i++)
                         {
-                            var rName = RuleRregulation.RuleNameExtractor(textBlocks[i]);
-                            foreach (Rule r in RuleList)
+                            if (RuleRregulation.RuleNameVerifier(textBlocks[i]))
                             {
-                                if (r.Name.Equals(rName))
+                                var rName = RuleRregulation.RuleNameExtractor(textBlocks[i]);
+                                foreach (RuleMain r in RuleList)
                                 {
-                                    textBlocks[i] = r.PrintValue();
-                                    break;
+                                    if (r.Name.Equals(textBlocks[i]))
+                                    {
+                                        textBlocks[i] = r.PrintValue;
+                                        break;
+                                    }
                                 }
                             }
                         }
+                        pObj.Text = string.Join("", textBlocks);
                     }
-                    if (obj is TextObject)
-                        (obj as TextObject).Text = textBlocks.ToString();
-                    else if (obj is BarcodeObject)
-                        (obj as BarcodeObject).Text = textBlocks.ToString();
                 }
             }
         }

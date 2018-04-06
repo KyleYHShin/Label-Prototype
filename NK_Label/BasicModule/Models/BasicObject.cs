@@ -7,6 +7,8 @@ namespace BasicModule.Models
     public class BasicObject : INotifyPropertyChanged
     {
 
+        #region Properties
+
         private bool _changed = false;
         public bool Changed
         {
@@ -31,6 +33,8 @@ namespace BasicModule.Models
                 }
             }
         }
+
+        #endregion
 
         #region Vector Properties
 

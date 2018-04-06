@@ -55,6 +55,14 @@
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="FontSize" Value="13"/>
     </Style>
+    <Style TargetType="{x:Type TextBlock}"
+           x:Key="OptionColumnValue2" >
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="3,5,3,5"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="FontSize" Value="13"/>
+    </Style>
     <Style TargetType="{x:Type ComboBox}"
            x:Key="OptionComboBoxValue">
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -124,4 +132,6 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+    <!--Rule-->
+    
 </ResourceDictionary>

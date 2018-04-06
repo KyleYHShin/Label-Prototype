@@ -21,12 +21,13 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" MinWidth="80"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     
                     <TextBlock Grid.Row="0" Grid.Column="0"
                                Text="Name"
                                Style="{StaticResource OptionColumnHeader}" />
-                    <TextBox Grid.Row="0" Grid.Column="1"
+                    <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
                              Text="{Binding LabelObject.Name, Mode=TwoWay}"
                              Style="{StaticResource OptionColumnValue}" />
 
@@ -36,6 +37,9 @@
                     <TextBox Grid.Row="1" Grid.Column="1"
                              Text="{Binding LabelObject.Width, Mode=TwoWay}"
                              Style="{StaticResource OptionColumnValue}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="2"
+                             Text="mm"
+                             Style="{StaticResource OptionColumnValue2}"/>
 
                     <TextBlock Grid.Row="2" Grid.Column="0"
                                Text="Height"
@@ -43,6 +47,9 @@
                     <TextBox Grid.Row="2" Grid.Column="1"
                              Text="{Binding LabelObject.Height, Mode=TwoWay}"
                              Style="{StaticResource OptionColumnValue}" />
+                    <TextBlock Grid.Row="2" Grid.Column="2"
+                             Text="mm"
+                             Style="{StaticResource OptionColumnValue2}"/>
                 </Grid>
             </GroupBox>
 

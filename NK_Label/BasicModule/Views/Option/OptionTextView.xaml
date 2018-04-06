@@ -22,13 +22,25 @@
                         <ColumnDefinition Width="Auto" MinWidth="80"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Name"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource OptionColumnValue}" Text="{Binding TextObject.Name}"/>
-
-                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Positon X"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource OptionColumnValue}" Text="{Binding TextObject.PosX}"/>
-                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Positon Y"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource OptionColumnValue}" Text="{Binding TextObject.PosY}"/>
+                    
+                    <TextBlock Grid.Row="0" Grid.Column="0"
+                               Text="Name"
+                               Style="{StaticResource OptionColumnHeader}"/>
+                    <TextBox Grid.Row="0" Grid.Column="1"
+                             Text="{Binding TextObject.Name}"
+                             Style="{StaticResource OptionColumnValue}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0"
+                               Text="Positon X"
+                               Style="{StaticResource OptionColumnHeader}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1"
+                             Text="{Binding TextObject.PosX}"
+                             Style="{StaticResource OptionColumnValue}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0"
+                               Text="Positon Y"
+                               Style="{StaticResource OptionColumnHeader}"/>
+                    <TextBox Grid.Row="2" Grid.Column="1"
+                             Text="{Binding TextObject.PosY}"
+                             Style="{StaticResource OptionColumnValue}"/>
                 </Grid>
             </GroupBox>
 
@@ -43,12 +55,25 @@
                         <ColumnDefinition Width="Auto" MinWidth="80"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Text" />
-                    <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource OptionColumnValue}" Text="{Binding TextObject.Text}"/>
-                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Max Length"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource OptionColumnValue}" Text="{Binding TextObject.MaxLength}"/>
-                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource OptionColumnHeader}" Text="Font Size"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource OptionColumnValue}" Text="{Binding TextObject.FontSize}"/>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0"
+                               Text="Text" 
+                               Style="{StaticResource OptionColumnHeader}"/>
+                    <TextBox Grid.Row="0" Grid.Column="1"
+                             Text="{Binding TextObject.Text}"
+                             Style="{StaticResource OptionColumnValue}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0"
+                               Text="Max Length"
+                               Style="{StaticResource OptionColumnHeader}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1"
+                             Text="{Binding TextObject.MaxLength}"
+                             Style="{StaticResource OptionColumnValue}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0"
+                               Text="Font Size"
+                               Style="{StaticResource OptionColumnHeader}"/>
+                    <TextBox Grid.Row="2" Grid.Column="1"
+                             Text="{Binding TextObject.FontSize}"
+                             Style="{StaticResource OptionColumnValue}"/>
                 </Grid>
             </GroupBox>
         </StackPanel>

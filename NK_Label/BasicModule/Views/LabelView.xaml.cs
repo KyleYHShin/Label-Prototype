@@ -1,4 +1,6 @@
-﻿namespace BasicModule.Views
+﻿using BasicModule.ViewModels;
+
+namespace BasicModule.Views
 {
     /// <summary>
     /// Label.xaml에 대한 상호 작용 논리
@@ -9,5 +11,7 @@
         {
             InitializeComponent();
         }
+
+        public LabelViewModel LabelViewModel { get; set;}
     }
 }

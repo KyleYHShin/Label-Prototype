@@ -1,7 +1,9 @@
 ﻿namespace BasicModule.Models.Rule
 {
-    public class RuleSequentialNum : INotifyProperty, IRuleObject
+    public class RuleSequentialNum : NotifyPropertyChanged, IRuleObject
     {
+        #region Properties
+
         private int _numLength = 2;
         public int NumLength
         {
@@ -93,24 +95,23 @@
             }
         }
 
+        #endregion
 
-        public IRuleObject Clone()
+        public IRuleObject Clone
         {
-            RuleSequentialNum rsn = new RuleSequentialNum();
-            rsn.NumLength = NumLength;
-            rsn.MinNum = MinNum;
-            rsn.MaxNum = MaxNum;
-            rsn.CurrNum = CurrNum;
-            rsn.Increment = Increment;
+            get
+            {
+                var obj = new RuleSequentialNum();
+                obj.NumLength = NumLength;
+                obj.MinNum = MinNum;
+                obj.MaxNum = MaxNum;
+                obj.CurrNum = CurrNum;
+                obj.Increment = Increment;
 
-            return rsn;
+                return obj;
+            }
         }
 
-        public string PrintValue()
-        {
-            var str = CurrNumStr;
-            CurrNum += Increment;
-            return str;
-        }
+        public string PrintValue => CurrNumStr;
     }
 }

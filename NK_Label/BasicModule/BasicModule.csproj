@@ -89,13 +89,14 @@
     <Compile Include="BasicModuleModule.cs" />
     <Compile Include="Models\BarcodeObject.cs" />
     <Compile Include="Models\BasicObject.cs" />
-    <Compile Include="Models\INotifyProperty.cs" />
+    <Compile Include="Models\IPrintableObject.cs" />
     <Compile Include="Models\LabelObject.cs" />
+    <Compile Include="Models\NotifyPropertyChanged.cs" />
     <Compile Include="Models\Option\Option.cs" />
     <Compile Include="Models\Option\PrinterOption.cs" />
     <Compile Include="Models\Rule\IRuleObject.cs" />
     <Compile Include="Models\Rule\RuleManualList.cs" />
-    <Compile Include="Models\Rule\Rule.cs" />
+    <Compile Include="Models\Rule\RuleMain.cs" />
     <Compile Include="Models\Rule\RuleRregulation.cs" />
     <Compile Include="Models\Rule\RuleTime.cs" />
     <Compile Include="Models\Rule\RuleSequentialNum.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="ViewModels\Option\OptionLabelViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionTextViewModel.cs" />
     <Compile Include="ViewModels\PrintViewModel.cs" />
+    <Compile Include="ViewModels\Rule\RuleListViewModel.cs" />
     <Compile Include="Views\DialogWindow.xaml.cs">
       <DependentUpon>DialogWindow.xaml</DependentUpon>
     </Compile>
@@ -142,6 +144,9 @@
     </Compile>
     <Compile Include="Views\Option\OptionTextView.xaml.cs">
       <DependentUpon>OptionTextView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Rule\RuleListView.xaml.cs">
+      <DependentUpon>RuleListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Rule\RuleSequentialNumView.xaml.cs">
       <DependentUpon>RuleSequentialNumView.xaml</DependentUpon>
@@ -184,6 +189,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Rule\RuleListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Rule\RuleSequentialNumView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -199,8 +208,6 @@
       <Name>SmartAdorner</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\Rule\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

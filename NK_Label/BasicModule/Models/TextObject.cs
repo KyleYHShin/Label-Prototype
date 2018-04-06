@@ -2,9 +2,8 @@
 
 namespace BasicModule.Models
 {
-    public class TextObject : BasicObject
+    public class TextObject : BasicObject, IPrintableObject
     {
-
         #region Text Properties
 
         private string _text = "TextBox";
@@ -20,7 +19,6 @@ namespace BasicModule.Models
                 }
             }
         }
-        public string OriginText { get; set; }
 
         private int _maxLength = 15;
         public int MaxLength
@@ -130,5 +128,29 @@ namespace BasicModule.Models
         }
 
         #endregion //Control Properties
+
+        public string OriginText { get; set; }
+
+        public IPrintableObject Clone
+        {
+            get
+            {
+                var obj = new TextObject();
+                obj.Name = Name;
+                obj.Width = Width;
+                obj.Height = Height;
+                obj.PosX = PosX;
+                obj.PosY = PosY;
+
+                obj.Text = Text;
+                obj.MaxLength = MaxLength;
+                obj.FontSize = FontSize;
+                obj.TextAlignHorizen = TextAlignHorizen;
+                obj.TextAlignVertical = TextAlignVertical;
+                obj.Margin = Margin;
+
+                return obj;
+            }
+        }
     }
 }
