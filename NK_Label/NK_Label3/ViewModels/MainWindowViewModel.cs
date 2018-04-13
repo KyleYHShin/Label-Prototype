@@ -146,7 +146,7 @@ namespace NK_Label3.ViewModels
 
         private bool CanCloseCurrentLabel()
         {
-            if (SelectedLabelView.DataContext is LabelViewModel)
+            if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
             {
                 var lvm = SelectedLabelView.LabelViewModel;
                 if (lvm != null && lvm.IsChanged)

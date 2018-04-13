@@ -18,6 +18,7 @@ namespace BasicModule.ViewModels
     public class LabelViewModel : BindableBase
     {
         #region Properties
+        public readonly string LabelVersion = "1.0.0";
 
         private string _filePath;
         public string FilePath
@@ -31,7 +32,7 @@ namespace BasicModule.ViewModels
         {
             get { return _label; }
             set { SetProperty(ref _label, value); }
-        }
+        
 
         private ObservableCollection<BasicObject> _objectList;
         public ObservableCollection<BasicObject> ObjectList
@@ -65,13 +66,9 @@ namespace BasicModule.ViewModels
             SelectedCommand = new DelegateCommand<object[]>(OnItemSelected);
             ClickReleaseAll = new DelegateCommand(ReleaseObject);
 
-            TestSource();
-        }
-
-        public ICommand ClickReleaseAll { get; private set; }
-        private void ReleaseObject()
-        {
-            SelectedObject = null;
+            //TestSource();
+            var pList = new Utils.PrintService().GetPrintNames();
+            Console.WriteLine(pList.ToArray().ToString());
         }
         #endregion //Constructor
 
@@ -124,8 +121,22 @@ namespace BasicModule.ViewModels
             RuleList.Add(rs);
 
         }
-        
+
         #region Common Event
+
+        public ICommand ClickReleaseAll { get; private set; }
+        private void ReleaseObject()
+        {
+            if (SelectedObject != null)
+            {
+                if (SelectedObject is BarcodeObject)
+                    (SelectedObject as BarcodeObject).IsSelected = false;
+                else if (SelectedObject is TextObject)
+                    (SelectedObject as TextObject).IsSelected = false;
+            }
+            SelectedObject = null;
+            ChangeOptionRegion();
+        }
 
         public DelegateCommand<object[]> SelectedCommand { get; private set; }
         private Object _selectedObject;

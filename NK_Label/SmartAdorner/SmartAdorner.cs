@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -12,7 +8,6 @@ namespace SmartAdorner
 {
     public class SmartAdorner : Adorner
     {
-
 
         private static SmartAdorner GetAdorner(DependencyObject obj)
         {
@@ -26,8 +21,7 @@ namespace SmartAdorner
 
         private static readonly DependencyProperty AdornerProperty =
             DependencyProperty.RegisterAttached("Adorner", typeof(SmartAdorner), typeof(SmartAdorner), new PropertyMetadata(null));
-
-
+        
 
         public static DataTemplate GetTemplate(DependencyObject obj)
         {
@@ -50,8 +44,6 @@ namespace SmartAdorner
                 adorner.Template = (DataTemplate)e.NewValue;
             }
         }
-
-
 
         public static DataTemplateSelector GetTemplateSelector(DependencyObject obj)
         {

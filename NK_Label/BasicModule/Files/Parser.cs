@@ -1,4 +1,5 @@
 ﻿using BasicModule.Models;
+using BasicModule.Models.Rule;
 using BasicModule.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -8,58 +9,43 @@ namespace BasicModule.Files
     internal static class Parser
     {
         #region ObjectToFile
+
         internal static Object ObjectToFile(LabelViewModel originData)
         {
             try
             {
-                Data ret = new Data();
-
-                LabelFile label = new LabelFile();
-                label.Name = originData.Label.Name;
-                label.Width = originData.Label.Width;
-                label.Height = originData.Label.Height;
-                label.SelectedPrinter = originData.Label.SelectedPrinter;
-                label.SelectedDpi = originData.Label.SelectedDpi;
-                label.RadiusX = originData.Label.RadiusX;
-                label.RadiusY = originData.Label.RadiusY;
-                ret.Label = label;
-
-                ret.TextList = new List<TextFile>();
-                ret.BarcodeList = new List<BarcodeFile>();
-                foreach (var obj in originData.ObjectList)
+                FileData ret = new FileData()
                 {
-                    if (obj is TextObject)
+                    FileVersion = "1.0.0",
+                    TextList = new List<TextFile>(),
+                    BarcodeList = new List<BarcodeFile>(),
+
+                    RuleSequentialNumList = new List<RuleSeq>(),
+                    RuleTimeList = new List<RuleTi>(),
+                    RuleManualList = new List<RuleManu>()
+                };
+
+                ret.Label = GetLabelFile(originData.Label);
+
+                foreach (var obj in originData.ObjectList)
+                    GetObjectList(obj, ret.TextList, ret.BarcodeList);
+
+                foreach (var rule in originData.RuleList)
+                {
+                    switch (rule.Format)
                     {
-                        var to = obj as TextObject;
-                        TextFile tf = new TextFile();
-                        tf.Name = to.Name;
-                        tf.Width = to.Width;
-                        tf.Height = to.Height;
-                        tf.PosX = to.PosX;
-                        tf.PosY = to.PosY;
-                        tf.Margin = to.Margin;
-                        tf.Text = to.Text;
-                        tf.MaxLength = to.MaxLength;
-                        tf.FontSize = to.FontSize;
-                        tf.TextAlignHorizen = to.TextAlignHorizen;
-                        tf.TextAlignVertical = to.TextAlignVertical;
-                        ret.TextList.Add(tf);
-                    }
-                    else if (obj is BarcodeObject)
-                    {
-                        var bo = obj as BarcodeObject;
-                        BarcodeFile bf = new BarcodeFile();
-                        bf.Name = bo.Name;
-                        bf.Width = bo.Width;
-                        bf.Height = bo.Height;
-                        bf.PosX = bo.PosX;
-                        bf.PosY = bo.PosY;
-                        bf.Text = bo.Text;
-                        bf.MaxLength = bo.MaxLength;
-                        bf.BarcodeType = bo.BarcodeType;
-                        ret.BarcodeList.Add(bf);
+                        case RuleRregulation.RuleFormat.SEQUENTIAL_NUM:
+                            GetRuleSequentialNumList(rule, ret.RuleSequentialNumList);
+                            break;
+                        case RuleRregulation.RuleFormat.TIME:
+                            GetRuleTimeList(rule, ret.RuleTimeList);
+                            break;
+                        case RuleRregulation.RuleFormat.MANUAL_LIST:
+                            GetRuleRuleManualList(rule, ret.RuleManualList);
+                            break;
                     }
                 }
+
                 return ret;
             }
             catch (Exception e)
@@ -69,10 +55,131 @@ namespace BasicModule.Files
             }
         }
 
-        internal static string FileToObject(ref LabelViewModel labelData, Data fileData)
+        private static LabelFile GetLabelFile(LabelObject lo)
+        {
+            return new LabelFile()
+            {
+                Name = lo.Name,
+                Width = lo.Width,
+                Height = lo.Height,
+
+                SelectedPrinter = lo.SelectedPrinter,
+                SelectedDpi = lo.SelectedDpi,
+                RadiusX = lo.RadiusX,
+                RadiusY = lo.RadiusY
+            };
+        }
+
+        private static void GetObjectList(BasicObject obj, List<TextFile> TextList, List<BarcodeFile> BarcodeList)
+        {
+            if (obj is TextObject)
+            {
+                var to = obj as TextObject;
+                TextList.Add(new TextFile()
+                {
+                    Name = to.Name,
+                    Width = to.Width,
+                    Height = to.Height,
+                    PosX = to.PosX,
+                    PosY = to.PosY,
+
+                    Margin = to.Margin,
+
+                    Text = to.Text,
+                    MaxLength = to.MaxLength,
+                    FontSize = to.FontSize,
+                    TextAlignHorizen = to.TextAlignHorizen,
+                    TextAlignVertical = to.TextAlignVertical
+                });
+            }
+            else if (obj is BarcodeObject)
+            {
+                var bo = obj as BarcodeObject;
+                BarcodeList.Add(new BarcodeFile()
+                {
+                    Name = bo.Name,
+                    Width = bo.Width,
+                    Height = bo.Height,
+                    PosX = bo.PosX,
+                    PosY = bo.PosY,
+
+                    Text = bo.Text,
+                    MaxLength = bo.MaxLength,
+                    BarcodeType = bo.BarcodeType
+                });
+            }
+        }
+
+        private static void GetRuleSequentialNumList(RuleMain rm, List<RuleSeq> RuleSequentialNumList)
+        {
+            var rsn = rm.Content as RuleSequentialNum;
+            RuleSequentialNumList.Add(new RuleSeq()
+            {
+                Format = rm.Format,
+                Name = rm.Name,
+                Description = rm.Description,
+                Contents = new RuleSeq.RSContent
+                {
+                    NumLength = rsn.NumLength,
+                    MinNum = rsn.MinNum,
+                    MaxNum = rsn.MaxNum,
+                    CurrNum = rsn.CurrNum,
+                    Increment = rsn.Increment
+                }
+            });
+        }
+        private static void GetRuleTimeList(RuleMain rm, List<RuleTi> RuleTimeList)
+        {
+            var rt = rm.Content as RuleTime;
+            RuleTimeList.Add(new RuleTi()
+            {
+                Format = rm.Format,
+                Name = rm.Name,
+                Description = rm.Description,
+                Contents = new RuleTi.RTContent
+                {
+                    Pattern = rt.Pattern
+                }
+            });
+        }
+        private static void GetRuleRuleManualList(RuleMain rm, List<RuleManu> RuleManualList)
+        {            //RuleManualList.Add(new RuleManu()
+            //{
+            //    Format = rm.Format,
+            //    Name = rm.Name,
+            //    Description = rm.Description,
+            //    Contents = new RuleManu.RMContent
+            //    {
+            //        ContentList = new KeyValuePair<string, string>(),
+            //        SelectedContent = rml.SelectedContent
+            //    }
+            //});
+            var rml = rm.Content as RuleManualList;
+            var r = new RuleManu()
+            {
+                Format = rm.Format,
+                Name = rm.Name,
+                Description = rm.Description,
+                Contents = new RuleManu.RMContent
+                {
+                    ContentList = new List<KeyValuePair<string, string>>(),
+                    SelectedContent = rml.SelectedContent
+                }
+            };
+            foreach (var pair in rml.ContentList)
+            {
+                r.Contents.ContentList.Add(new KeyValuePair<string, string>(pair.Key, pair.Value));
+            }
+            RuleManualList.Add(r);
+        }
+
+        #endregion //ObjectToFile
+
+        internal static string FileToObject(ref LabelViewModel labelData, FileData fileData)
         {
             try
             {
+                labelData.Label = new LabelObject();
                 labelData.Label.Name = fileData.Label.Name;
                 labelData.Label.Width = fileData.Label.Width;
                 labelData.Label.Height = fileData.Label.Height;
@@ -113,7 +220,6 @@ namespace BasicModule.Files
                         BarcodeType = bo.BarcodeType
                     });
                 }
-
                 return null;
             }
             catch (Exception e)
@@ -121,7 +227,5 @@ namespace BasicModule.Files
                 return e.Message;
             }
         }
-
-        #endregion //ObjectToFile
     }
 }

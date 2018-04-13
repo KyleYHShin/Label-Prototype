@@ -1,5 +1,6 @@
 ﻿using BasicModule.Models;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Drawing.Printing;
@@ -10,6 +11,15 @@ namespace BasicModule.Utils
     {
         public LabelObject Label { get; set; }
         public ObservableCollection<BasicObject> ObjectList { get; set; }
+
+        public List<string> GetPrintNames()
+        {
+            var nameList = new List<string>();
+
+            // Connection
+
+            return nameList;
+        }
 
         public bool PrintLabel()
         {

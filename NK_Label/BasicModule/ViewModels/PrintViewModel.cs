@@ -38,8 +38,8 @@ namespace BasicModule.ViewModels
 
         public PrintViewModel(LabelObject label, ObservableCollection<BasicObject> objectList, List<RuleMain> ruleList)
         {
-            Label = label;
-            ObjectList = new ObservableCollection<BasicObject>();
+            Label = label; //swallow copy
+            ObjectList = new ObservableCollection<BasicObject>(); //deep copy
             foreach (var obj in objectList)
             {
                 if (obj is IPrintableObject)
@@ -50,7 +50,7 @@ namespace BasicModule.ViewModels
                     ObjectList.Add(newObj as BasicObject);
                 }
             }
-            RuleList = ruleList;
+            RuleList = ruleList; //swallow copy
         }
 
         private List<RuleSequentialNum> getRuleSequentialNumList()
@@ -64,19 +64,21 @@ namespace BasicModule.ViewModels
                     if (!string.IsNullOrEmpty(pObj.OriginText))
                     {
                         string[] textBlocks = RuleRregulation.RuleNameSeperatorToList(pObj.OriginText);
-                        foreach (var block in textBlocks)
-                        {
-                            if (RuleRregulation.RuleNameVerifier(block))
+                        if(textBlocks != null) {
+                            foreach (var block in textBlocks)
                             {
-                                foreach (RuleMain r in RuleList)
+                                if (RuleRregulation.RuleNameVerifier(block))
                                 {
-                                    if (r.Name.Equals(block) && r.Format == RuleRregulation.RuleFormat.SEQUENTIAL_NUM)
+                                    foreach (RuleMain r in RuleList)
                                     {
-                                        var rsn = r.Content as RuleSequentialNum;
-                                        if (!rsnList.Contains(rsn))
+                                        if (r.Name.Equals(block) && r.Format == RuleRregulation.RuleFormat.SEQUENTIAL_NUM)
                                         {
-                                            rsnList.Add(rsn);
-                                            break;
+                                            var rsn = r.Content as RuleSequentialNum;
+                                            if (!rsnList.Contains(rsn))
+                                            {
+                                                rsnList.Add(rsn);
+                                                break;
+                                            }
                                         }
                                     }
                                 }
@@ -141,22 +143,26 @@ namespace BasicModule.ViewModels
                     if (!string.IsNullOrEmpty(pObj.OriginText))
                     {
                         string[] textBlocks = RuleRregulation.RuleNameSeperatorToList(pObj.OriginText);
-                        for (int i = 0; i < textBlocks.Length; i++)
-                        {
-                            if (RuleRregulation.RuleNameVerifier(textBlocks[i]))
+                        if (textBlocks == null)
+                            pObj.Text = pObj.OriginText.ToString();
+                        else {
+                            for (int i = 0; i < textBlocks.Length; i++)
                             {
-                                var rName = RuleRregulation.RuleNameExtractor(textBlocks[i]);
-                                foreach (RuleMain r in RuleList)
+                                if (RuleRregulation.RuleNameVerifier(textBlocks[i]))
                                 {
-                                    if (r.Name.Equals(textBlocks[i]))
+                                    var rName = RuleRregulation.RuleNameExtractor(textBlocks[i]);
+                                    foreach (RuleMain r in RuleList)
                                     {
-                                        textBlocks[i] = r.PrintValue;
-                                        break;
+                                        if (r.Name.Equals(textBlocks[i]))
+                                        {
+                                            textBlocks[i] = r.PrintValue;
+                                            break;
+                                        }
                                     }
                                 }
                             }
+                            pObj.Text = string.Join("", textBlocks);
                         }
-                        pObj.Text = string.Join("", textBlocks);
                     }
                 }
             }

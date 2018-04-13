@@ -72,5 +72,21 @@
         }
 
         #endregion //Grid Properties
+
+        public LabelObject Clone
+        {
+            get
+            {
+                LabelObject obj = new LabelObject();
+                obj.Name = Name;
+                obj.Width = Width;
+                obj.Height = Height;
+                obj.SelectedPrinter = SelectedPrinter;
+                obj.SelectedDpi = SelectedDpi;
+                obj.RadiusX = RadiusX;
+                obj.RadiusY = RadiusY;
+                return obj;
+            }
+        }
     }
 }

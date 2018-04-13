@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 
@@ -22,7 +18,6 @@ namespace SmartAdorner
             DependencyProperty.Register("X", typeof(double), typeof(DragThumb), new FrameworkPropertyMetadata(0.0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal));
 
 
-
         public double Y
         {
             get { return (double)GetValue(YProperty); }
@@ -31,7 +26,6 @@ namespace SmartAdorner
 
         public static readonly DependencyProperty YProperty =
             DependencyProperty.Register("Y", typeof(double), typeof(DragThumb), new FrameworkPropertyMetadata(0.0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal));
-
 
 
         public double MinX
@@ -45,7 +39,6 @@ namespace SmartAdorner
             DependencyProperty.Register("MinX", typeof(double), typeof(DragThumb), new PropertyMetadata(0.0d));
 
 
-
         public double MinY
         {
             get { return (double)GetValue(MinYProperty); }
@@ -55,7 +48,6 @@ namespace SmartAdorner
         // Using a DependencyProperty as the backing store for MinY.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MinYProperty =
             DependencyProperty.Register("MinY", typeof(double), typeof(DragThumb), new PropertyMetadata(0.0d));
-
 
 
         public double MaxX
@@ -69,7 +61,6 @@ namespace SmartAdorner
             DependencyProperty.Register("MaxX", typeof(double), typeof(DragThumb), new PropertyMetadata(double.MaxValue));
 
 
-
         public double MaxY
         {
             get { return (double)GetValue(MaxYProperty); }
@@ -79,7 +70,6 @@ namespace SmartAdorner
         // Using a DependencyProperty as the backing store for MaxY.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MaxYProperty =
             DependencyProperty.Register("MaxY", typeof(double), typeof(DragThumb), new PropertyMetadata(double.MaxValue));
-
         
 
         public DragThumb()

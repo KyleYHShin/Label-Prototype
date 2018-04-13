@@ -18,9 +18,10 @@ namespace BasicModule.Models.Option
             {
                 return new List<Option>()
                 {
-                    new Option("8dpmm(203 dpi)", 1),
-                    new Option("12dpmm(300 dpi)", 2),
-                    new Option("24dpmm(600 dpi)", 3)
+                    new Option("6dpmm(152 dpi)", 6),
+                    new Option("8dpmm(203 dpi)", 8),
+                    new Option("12dpmm(300 dpi)", 12),
+                    new Option("24dpmm(600 dpi)", 24)
                 };
             }
         }

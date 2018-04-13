@@ -102,7 +102,7 @@ namespace BasicModule.Files
         private static bool OpenLabel_Xml(ref LabelViewModel labelData)
         {
             string msg = "";
-            var obj = XMLSerializer.Deserializer(typeof(Data), labelData.FilePath, ref msg) as Data;
+            var obj = XMLSerializer.Deserializer(typeof(FileData), labelData.FilePath, ref msg) as FileData;
 
             if (!String.IsNullOrEmpty(msg))
             {
@@ -117,7 +117,7 @@ namespace BasicModule.Files
         }
 
         #endregion //Open
-        
+
         private static bool IsValidPath(string filePath)
         {
             try

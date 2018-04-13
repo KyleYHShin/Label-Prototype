@@ -6,6 +6,10 @@
              xmlns:model="clr-namespace:BasicModule.Models"
              xmlns:a="clr-namespace:SmartAdorner;assembly=SmartAdorner" 
              prism:ViewModelLocator.AutoWireViewModel="True">
+
+    <UserControl.InputBindings>
+        <KeyBinding Key="Esc" Command="{Binding ClickReleaseAll}"/>
+    </UserControl.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -25,9 +29,6 @@
                 Stroke="Black"
                 StrokeThickness="1"
                 Fill="White" >
-                <Rectangle.InputBindings>
-                    <MouseBinding Gesture="LeftClick" Command="{Binding ClickReleaseAll}"/>
-                </Rectangle.InputBindings>
             </Rectangle>
         </Canvas>
 
@@ -87,13 +88,14 @@
 
                 <DataTemplate DataType="{x:Type model:BarcodeObject}">
                     <Rectangle
-                    Canvas.Left="{Binding PosX}"
-                    Canvas.Top="{Binding PosY}"
-                    Width="{Binding Width}"
-                    Height="{Binding Height}"
-                    Stroke="Red"
-                    StrokeDashArray="2"
-                    a:SmartAdorner.Visible="{Binding IsSelected}">
+                        Canvas.Left="{Binding PosX}"
+                        Canvas.Top="{Binding PosY}"
+                        Width="{Binding Width}"
+                        Height="{Binding Height}"
+                        HorizontalAlignment="Left"
+                        Stroke="Red"
+                        StrokeDashArray="2"
+                        a:SmartAdorner.Visible="{Binding IsSelected}">
                         <Rectangle.Fill>
                             <ImageBrush ImageSource="{Binding Barcode}" Stretch="None"/>
                         </Rectangle.Fill>
