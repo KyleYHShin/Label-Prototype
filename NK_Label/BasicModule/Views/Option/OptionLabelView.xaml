@@ -68,20 +68,20 @@
                                Text="Printer"
                                Style="{StaticResource OptionColumnHeader}" />
                     <ComboBox Grid.Row="0" Grid.Column="1"
-                              ItemsSource="{Binding PrinterList, Mode=OneWay}"
-                              DisplayMemberPath="Name"
+                              ItemsSource="{Binding PrinterList}"
+                              DisplayMemberPath="Key"
                               SelectedValuePath="Value"
-                              SelectedValue="{Binding LabelObject.SelectedPrinter, Mode=TwoWay}"
+                              SelectedValue="{Binding LabelObject.SelectedPrinter}"
                               Style="{StaticResource OptionComboBoxValue}" />
                     
                     <TextBlock Grid.Row="1" Grid.Column="0"
                                Text="DPI"
                                Style="{StaticResource OptionColumnHeader}" />
                     <ComboBox Grid.Row="1" Grid.Column="1"
-                              ItemsSource="{Binding DpiList, Mode=OneWay}"
-                              DisplayMemberPath="Name"
+                              ItemsSource="{Binding DpiList}"
+                              DisplayMemberPath="Key"
                               SelectedValuePath="Value"
-                              SelectedValue="{Binding LabelObject.SelectedDpi, Mode=TwoWay}"
+                              SelectedValue="{Binding LabelObject.SelectedDpi}"
                               Style="{StaticResource OptionComboBoxValue}" />
                 </Grid>
             </GroupBox>

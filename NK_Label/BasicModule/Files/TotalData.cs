@@ -100,10 +100,11 @@ namespace BasicModule.Files
 
         public class RMContent
         {
-            public IList<string> KeyList { get; set; }
-            public IList<string> ValueList { get; set; }
+            public List<KeyValuePair<string, string>> ContentList { get; set; }
+            //public IList<string> KeyList { get; set; }
+            //public IList<string> ValueList { get; set; }
             public string SelectedContent { get; set; }
         }
     }
-    
+
 }

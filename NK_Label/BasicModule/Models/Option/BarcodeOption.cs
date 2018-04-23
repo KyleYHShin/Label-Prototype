@@ -6,19 +6,13 @@ namespace BasicModule.Models.Option
 {
     public static class BarcodeOption
     {
-        public static IList<KeyValuePair> BarcodeFormatList
+        public static readonly Dictionary<string, BarcodeFormat> BarcodeFormatList = new Dictionary<string, BarcodeFormat>
         {
-            get
-            {
-                return new List<KeyValuePair>()
-                {
-                    new KeyValuePair("DATA MATRIX", BarcodeFormat.DATA_MATRIX)
-                    , new KeyValuePair("PDF 417", BarcodeFormat.PDF_417)
-                    , new KeyValuePair("QR CODE", BarcodeFormat.QR_CODE)
-                    , new KeyValuePair("CODE 128", BarcodeFormat.CODE_128)
-                    , new KeyValuePair("AZTEC", BarcodeFormat.AZTEC)
-                };
-            }
-        }
+            { "DATA MATRIX", BarcodeFormat.DATA_MATRIX }
+            , { "PDF 417", BarcodeFormat.PDF_417 }
+            , { "QR CODE", BarcodeFormat.QR_CODE }
+            , { "CODE 128", BarcodeFormat.CODE_128 }
+            , { "AZTEC", BarcodeFormat.AZTEC }
+        };
     }
 }

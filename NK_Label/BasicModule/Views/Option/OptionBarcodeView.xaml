@@ -74,10 +74,10 @@
                                Text="Barcode Type"
                                Style="{StaticResource OptionColumnHeader}"/>
                     <ComboBox Grid.Row="0" Grid.Column="1"
-                              ItemsSource="{Binding BarcodeFormatList, Mode=OneWay}"
-                              DisplayMemberPath="Name"
+                              ItemsSource="{Binding BarcodeFormatList}"
+                              DisplayMemberPath="Key"
                               SelectedValuePath="Value"
-                              SelectedValue="{Binding BarcodeObject.BarcodeType, Mode=TwoWay}"
+                              SelectedValue="{Binding BarcodeObject.BarcodeType}"
                               Style="{StaticResource OptionComboBoxValue}" />
                     <TextBlock Grid.Row="1" Grid.Column="0"
                                Text="Text"

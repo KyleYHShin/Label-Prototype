@@ -6,7 +6,9 @@ namespace BasicModule.ViewModels.Option
 {
     public class OptionTextViewModel : BindableBase, IOptionViewModel
     {
-        public TextOption TextOptions { get; }
+        public object FontStyleList { get => TextOption.FontStyleList; }
+        public object FontWeightList { get => TextOption.FontWeightList; }
+        public object TextAlignmentList { get => TextOption.TextAlignmentList; }
 
         private TextObject _textObject;
         public TextObject TextObject
@@ -18,7 +20,6 @@ namespace BasicModule.ViewModels.Option
         public OptionTextViewModel(TextObject to)
         {
             TextObject = to;
-            TextOptions = new TextOption();
         }
 
         public bool isRight()

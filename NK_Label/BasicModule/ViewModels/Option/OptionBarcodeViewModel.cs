@@ -8,8 +8,8 @@ namespace BasicModule.ViewModels.Option
     public class OptionBarcodeViewModel : BindableBase, IOptionViewModel
     {
         #region Properties
-
-        public CollectionView BarcodeFormatList { get { return new CollectionView(BarcodeOption.BarcodeFormatList); } }
+        
+        public object BarcodeFormatList { get => BarcodeOption.BarcodeFormatList; }
 
         private BarcodeObject _barcodeObject;
         public BarcodeObject BarcodeObject

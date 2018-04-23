@@ -1,35 +1,20 @@
-﻿using BasicModule.Models.Common;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace BasicModule.Models.Option
 {
     public static class PrinterOption
     {
-        public static IList<KeyValuePair> PrinterList
+        public static readonly Dictionary<string, int> PrinterList = new Dictionary<string, int>
         {
-            get
-            {
-                return new List<KeyValuePair>() { new KeyValuePair("Zebra", 1) };
-            }
-        }
+            { "Zebra", 1 }
+        };
 
-        public static IList<KeyValuePair> DpiList
+        public static readonly Dictionary<string, double> DpiList = new Dictionary<string, double>
         {
-            get
-            {
-                return new List<KeyValuePair>()
-                {
-                    new KeyValuePair("6dpmm(152 dpi)", 0.6),
-                    new KeyValuePair("8dpmm(203 dpi)", 0.8),
-                    new KeyValuePair("12dpmm(300 dpi)", 1.0),
-                    //new BasicOption("24dpmm(600 dpi)", 2.4)
-                };
-            }
-        }
-
-        public static IList<KeyValuePair> LabelTypeList
-        {
-            get { return null; }
-        }
+            { "6dpmm(152 dpi)", 0.6 }
+            , { "8dpmm(203 dpi)", 0.8 }
+            , { "12dpmm(300 dpi)", 1.0 }
+            //, { "24dpmm(600 dpi)", 2.4 }
+        };
     }
 }

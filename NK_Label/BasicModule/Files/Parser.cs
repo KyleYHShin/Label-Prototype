@@ -167,17 +167,18 @@ namespace BasicModule.Files
                 Description = rm.Description,
                 Contents = new RuleManu.RMContent
                 {
-                    //ContentList = new Dictionary<string, string>(),
-                    KeyList = new List<string>(),
-                    ValueList = new List<string>(),
+                    ContentList = new List<KeyValuePair<string, string>>(),
+                    //KeyList = new List<string>(),
+                    //ValueList = new List<string>(),
                     SelectedContent = rml.SelectedContent
                 }
             };
             foreach (var pair in rml.ContentList)
             {
-                //r.Contents.ContentList.Add(new KeyValuePair<string, string>(pair.Key, pair.Value));
-                r.Contents.KeyList.Add(pair.Key);
-                r.Contents.ValueList.Add(pair.Value);
+                r.Contents.ContentList.Add(new KeyValuePair<string, string>(pair.Key, pair.Value));
+
+                //r.Contents.KeyList.Add(pair.Key);
+                //r.Contents.ValueList.Add(pair.Value);
             }
             RuleManualList.Add(r);
         }

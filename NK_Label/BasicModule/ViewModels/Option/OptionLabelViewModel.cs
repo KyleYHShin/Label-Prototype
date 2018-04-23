@@ -1,7 +1,6 @@
 ﻿using BasicModule.Models;
 using BasicModule.Models.Option;
 using Prism.Mvvm;
-using System.Windows.Data;
 
 namespace BasicModule.ViewModels.Option
 {
@@ -9,8 +8,8 @@ namespace BasicModule.ViewModels.Option
     {
         #region Properties
 
-        public CollectionView PrinterList { get { return new CollectionView(PrinterOption.PrinterList); } }
-        public CollectionView DpiList { get { return new CollectionView(PrinterOption.DpiList); } }
+        public object PrinterList { get => PrinterOption.PrinterList; } 
+        public object DpiList { get => PrinterOption.DpiList; } 
 
         private LabelObject _labelObject;
         public LabelObject LabelObject

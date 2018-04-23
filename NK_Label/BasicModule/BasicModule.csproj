@@ -93,7 +93,6 @@
     <Compile Include="Models\Common\IPrintableObject.cs" />
     <Compile Include="Models\LabelObject.cs" />
     <Compile Include="Models\Common\NotifyPropertyChanged.cs" />
-    <Compile Include="Models\Common\KeyValuePair.cs" />
     <Compile Include="Models\Option\PrinterOption.cs" />
     <Compile Include="Models\Option\TextOption.cs" />
     <Compile Include="Models\Rule\IRuleObject.cs" />

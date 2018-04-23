@@ -1,45 +1,26 @@
-﻿using BasicModule.Models.Common;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace BasicModule.Models.Option
 {
-    public class TextOption
+    public static class TextOption
     {
-        public IList<KeyValuePair> FontStyleList
+        public static readonly Dictionary<string, string> FontStyleList = new Dictionary<string, string>
         {
-            get
-            {
-                return new List<KeyValuePair>()
-                {
-                    new KeyValuePair("Normal", "Normal")
-                    , new KeyValuePair("Italic", "Italic")
-                };
-            }
-        }
+            { "Normal", "Normal" }
+            , { "Italic", "Italic" }
+        };
 
-        public IList<KeyValuePair> FontWeightList
+        public static readonly Dictionary<string, string> FontWeightList = new Dictionary<string, string>
         {
-            get
-            {
-                return new List<KeyValuePair>()
-                {
-                    new KeyValuePair("Normal", "Normal")
-                    , new KeyValuePair("Bold", "Bold")
-                };
-            }
-        }
+            { "Normal", "Normal" }
+            , { "Bold", "Bold" }
+        };
 
-        public IList<KeyValuePair> TextAlignmentList
+        public static readonly Dictionary<string, string> TextAlignmentList = new Dictionary<string, string>
         {
-            get
-            {
-                return new List<KeyValuePair>()
-                {
-                    new KeyValuePair("Left", "Left")
-                    , new KeyValuePair("Center", "Center")
-                    , new KeyValuePair("Right", "Right")
-                };
-            }
-        }
+            { "Left", "Left" }
+            , { "Center", "Center" }
+            , { "Right", "Right" }
+        };
     }
 }

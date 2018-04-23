@@ -119,8 +119,8 @@
                                Text="Font Style"
                                Style="{StaticResource OptionColumnHeader}"/>
                     <ComboBox Grid.Row="2" Grid.Column="1"
-                              ItemsSource="{Binding TextOptions.FontStyleList}"
-                              DisplayMemberPath="Name"
+                              ItemsSource="{Binding FontStyleList}"
+                              DisplayMemberPath="Key"
                               SelectedValuePath="Value"
                               SelectedValue="{Binding TextObject.FontStyle}"
                               Style="{StaticResource OptionComboBoxValue}" />
@@ -129,8 +129,8 @@
                                Text="Bold"
                                Style="{StaticResource OptionColumnHeader}"/>
                     <ComboBox Grid.Row="3" Grid.Column="1"
-                              ItemsSource="{Binding TextOptions.FontWeightList}"
-                              DisplayMemberPath="Name"
+                              ItemsSource="{Binding FontWeightList}"
+                              DisplayMemberPath="Key"
                               SelectedValuePath="Value"
                               SelectedValue="{Binding TextObject.FontWeight}"
                               Style="{StaticResource OptionComboBoxValue}" />
@@ -139,8 +139,8 @@
                                Text="Alignment"
                                Style="{StaticResource OptionColumnHeader}"/>
                     <ComboBox Grid.Row="4" Grid.Column="1"
-                              ItemsSource="{Binding TextOptions.TextAlignmentList}"
-                              DisplayMemberPath="Name"
+                              ItemsSource="{Binding TextAlignmentList}"
+                              DisplayMemberPath="Key"
                               SelectedValuePath="Value"
                               SelectedValue="{Binding TextObject.TextAlignment}"
                               Style="{StaticResource OptionComboBoxValue}" />
