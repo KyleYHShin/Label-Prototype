@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace BasicModule.Models
+namespace BasicModule.Models.Common
 {
     public class NotifyPropertyChanged : INotifyPropertyChanged
     {

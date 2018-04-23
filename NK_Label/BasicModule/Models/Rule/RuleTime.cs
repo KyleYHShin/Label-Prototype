@@ -1,4 +1,5 @@
-﻿using BasicModule.Utils;
+﻿using BasicModule.Models.Common;
+using BasicModule.Utils;
 
 namespace BasicModule.Models.Rule
 {

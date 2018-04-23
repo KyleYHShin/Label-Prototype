@@ -11,7 +11,7 @@
 
     <Grid Width="250" Background="White">
         <StackPanel>
-            <GroupBox Header=" Basic Values " Style="{StaticResource OptionGroup}" >
+            <GroupBox Header=" Label " Style="{StaticResource OptionGroup}" >
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -53,12 +53,9 @@
                 </Grid>
             </GroupBox>
 
-            <GroupBox Header=" Label Values " Style="{StaticResource OptionGroup}" >
+            <GroupBox Header=" Printer " Style="{StaticResource OptionGroup}" >
                 <Grid>
                         <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
@@ -86,19 +83,32 @@
                               SelectedValuePath="Value"
                               SelectedValue="{Binding LabelObject.SelectedDpi, Mode=TwoWay}"
                               Style="{StaticResource OptionComboBoxValue}" />
-                    
-                    <TextBlock Grid.Row="2" Grid.Column="0"
-                               Text="Radius X"
+                </Grid>
+            </GroupBox>
+            
+            <GroupBox Header=" View " Style="{StaticResource OptionGroup}" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="80"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0"
+                               Text="Guide Line"
                                Style="{StaticResource OptionColumnHeader}" />
-                    <TextBox Grid.Row="2" Grid.Column="1"
-                             Text="{Binding LabelObject.RadiusX, Mode=TwoWay}"
+                    <TextBox Grid.Row="0" Grid.Column="1"
+                             Text="{Binding LabelObject.Margin, Mode=TwoWay}"
                              Style="{StaticResource OptionColumnValue}" />
-                    
-                    <TextBlock Grid.Row="3" Grid.Column="0"
-                               Text="Radius Y"
+
+                    <TextBlock Grid.Row="1" Grid.Column="0"
+                               Text="Radius"
                                Style="{StaticResource OptionColumnHeader}" />
-                    <TextBox Grid.Row="3" Grid.Column="1"
-                             Text="{Binding LabelObject.RadiusY, Mode=TwoWay}"
+                    <TextBox Grid.Row="1" Grid.Column="1"
+                             Text="{Binding LabelObject.Radius, Mode=TwoWay}"
                              Style="{StaticResource OptionColumnValue}" />
                 </Grid>
             </GroupBox>

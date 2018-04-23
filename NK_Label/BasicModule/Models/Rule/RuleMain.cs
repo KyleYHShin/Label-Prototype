@@ -1,4 +1,6 @@
-﻿namespace BasicModule.Models.Rule
+﻿using BasicModule.Models.Common;
+
+namespace BasicModule.Models.Rule
 {
     public class RuleMain : NotifyPropertyChanged, IRuleObject
     {

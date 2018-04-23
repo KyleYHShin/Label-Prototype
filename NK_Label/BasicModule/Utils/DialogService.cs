@@ -1,41 +1,21 @@
-﻿using BasicModule.Views;
+﻿using BasicModule.Views.Common;
 using System.Windows;
 
 namespace BasicModule.Utils
 {
     public interface IDialogService
     {
-        bool? ShowDialog(object contentView, string title);
-        bool? ShowDialog(Window owner, object contentView, string title);
-        bool? ShowSimpleDialog(Window owner, string title, string content);
+        bool? ShowSimpleTextDialog(Window owner, string title, string content);
+        bool? ShowSimpleSelectDialog(Window owner, string title, string content);
+        bool? ShowSelectDialog(Window owner, object contentView, string title);
+
+        bool? ShowContentDialog(object contentView, string title);
     }
 
     public class DialogService : IDialogService
     {
-        public bool? ShowDialog(object contentView, string title)
-        {
-            var dlWin = new DialogWindow
-            {
-                Title = title
-            };
-            dlWin.PART_ContentControl.Content = contentView;
 
-            return dlWin.ShowDialog();
-        }
-
-        public bool? ShowDialog(Window owner, object contentView, string title)
-        {
-            var dlWin = new DialogWindow
-            {
-                Title = title
-            };
-            dlWin.PART_ContentControl.Content = contentView;
-            dlWin.Owner = owner;
-
-            return dlWin.ShowDialog();
-        }
-
-        public bool? ShowSimpleDialog(Window owner, string title, string content)
+        public bool? ShowSimpleTextDialog(Window owner, string title, string content)
         {
             var stView = new SimpleTextView();
             stView.TextContent.Text = content;
@@ -46,6 +26,45 @@ namespace BasicModule.Utils
             };
             dlWin.PART_ContentControl.Content = stView;
             dlWin.Owner = owner;
+
+            return dlWin.ShowDialog();
+        }
+
+        public bool? ShowSimpleSelectDialog(Window owner, string title, string content)
+        {
+            var stView = new SimpleTextView();
+            stView.TextContent.Text = content;
+
+            var dlWin = new DialogSelectWindow
+            {
+                Title = title
+            };
+            dlWin.PART_ContentControl.Content = stView;
+            dlWin.Owner = owner;
+
+            return dlWin.ShowDialog();
+        }
+
+        public bool? ShowSelectDialog(Window owner, object contentView, string title)
+        {
+            var dlWin = new DialogSelectWindow
+            {
+                Title = title
+            };
+            dlWin.PART_ContentControl.Content = contentView;
+            dlWin.Owner = owner;
+
+            return dlWin.ShowDialog();
+        }
+
+
+        public bool? ShowContentDialog(object contentView, string title)
+        {
+            var dlWin = new DialogSelectWindow
+            {
+                Title = title
+            };
+            dlWin.PART_ContentControl.Content = contentView;
 
             return dlWin.ShowDialog();
         }

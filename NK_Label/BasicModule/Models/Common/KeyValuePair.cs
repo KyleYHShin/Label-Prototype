@@ -1,11 +1,11 @@
-﻿namespace BasicModule.Models.Option
+﻿namespace BasicModule.Models.Common
 {
-    public class Option
+    public class KeyValuePair
     {
         public string Name { get; set; }
         public object Value { get; set; }
 
-        public Option(string name, object value)
+        public KeyValuePair(string name, object value)
         {
             Name = name;
             Value = value;

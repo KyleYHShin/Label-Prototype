@@ -1,4 +1,5 @@
-﻿using BasicModule.Utils;
+﻿using BasicModule.Models.Common;
+using BasicModule.Utils;
 using System.Windows.Media.Imaging;
 using ZXing;
 
@@ -9,14 +10,7 @@ namespace BasicModule.Models
         #region Barcode Properties
 
         private BarcodeWriter _barcodeWriter;
-        public BarcodeWriter BarcodeWriter
-        {
-            get { return _barcodeWriter; }
-            set
-            {
-                _barcodeWriter = value;
-            }
-        }
+        public BarcodeWriter BarcodeWriter { get { return _barcodeWriter; } set { _barcodeWriter = value; } }
 
         private BarcodeFormat _barcodeType;
         public BarcodeFormat BarcodeType
@@ -47,7 +41,7 @@ namespace BasicModule.Models
             get { return _text; }
             set
             {
-                if (value != null && value.Length <= _maxLength)
+                if (value != null)
                 {
                     _text = value;
                     OnPropertyChanged();
@@ -58,28 +52,26 @@ namespace BasicModule.Models
             }
         }
 
-        private int _maxLength = 15;
+        private int _maxLength = 50;
         public int MaxLength
         {
             get { return _maxLength; }
             set
             {
-                if (value > 0)
-                {
-                    _maxLength = value;
-                    OnPropertyChanged();
-                }
+                if (value < 0)
+                    value = 0;
+                else if (value > int.MaxValue)
+                    value = int.MaxValue;
+
+                _maxLength = value;
+                OnPropertyChanged();
             }
         }
 
         private BitmapSource _barcode;
-        public BitmapSource Barcode
-        {
-            get { return _barcode; }
-            set { _barcode = value; OnPropertyChanged(); }
-        }
+        public BitmapSource Barcode { get { return _barcode; } set { _barcode = value; OnPropertyChanged(); } }
 
-        #endregion //Barcode Properties
+        #endregion Barcode Properties
 
         #region Vector Data
 
@@ -127,7 +119,7 @@ namespace BasicModule.Models
             }
         }
 
-        #endregion //Vector Data
+        #endregion Vector Data
 
         #region Decoration Properties
 
@@ -154,20 +146,9 @@ namespace BasicModule.Models
         #region Control Properties
 
         private bool _isSelected;
-        public bool IsSelected
-        {
-            get
-            {
-                return _isSelected;
-            }
-            set
-            {
-                _isSelected = value;
-                OnPropertyChanged();
-            }
-        }
+        public bool IsSelected { get { return _isSelected; } set { _isSelected = value; OnPropertyChanged(); } }
 
-        #endregion //Control Properties
+        #endregion Control Properties
 
         public string OriginText { get; set; }
 

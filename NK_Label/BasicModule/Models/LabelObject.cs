@@ -1,32 +1,97 @@
-﻿namespace BasicModule.Models
+﻿using BasicModule.Models.Common;
+
+namespace BasicModule.Models
 {
     public class LabelObject : BasicObject
     {
         #region Default Properties
 
         private int _selectedPrinter;
-        public int SelectedPrinter
-        {
-            get { return _selectedPrinter; }
-            set
-            {
-                _selectedPrinter = value;
-                OnPropertyChanged();
-            }
-        }
+        public int SelectedPrinter { get { return _selectedPrinter; } set { _selectedPrinter = value; OnPropertyChanged(); } }
 
-        private int _selectedDpi;
-        public int SelectedDpi
+        private double _selectedDpi;
+        public double SelectedDpi
         {
             get { return _selectedDpi; }
             set
             {
                 _selectedDpi = value;
                 OnPropertyChanged();
+                ResetActualSize();
             }
         }
 
-        #endregion //Default Properties
+        #endregion Default Properties
+
+        #region Size
+
+        private double _width;
+        public new double Width
+        {
+            get { return _width; }
+            set
+            {
+                if (value > 0)
+                {
+                    _width = getRound(value, 2);
+                    OnPropertyChanged();
+                    ResetActualSize();
+                }
+            }
+        }
+
+        private double _height;
+        public new double Height
+        {
+            get { return _height; }
+            set
+            {
+                if (value > 0)
+                {
+                    _height = getRound(value, 2);
+                    OnPropertyChanged();
+                    ResetActualSize();
+                }
+            }
+        }
+
+        private int _margin = 10;
+        public int Margin
+        {
+            get { return _margin; }
+            set
+            {
+                if (value >= 0)
+                {
+                    _margin = value;
+                    OnPropertyChanged();
+                    ResetActualSize();
+                }
+            }
+        }
+
+
+        private double _convertedWidth;
+        public double ConvertedWidth { get { return _convertedWidth; } set { _convertedWidth = value; OnPropertyChanged(); } }
+
+        private double _convertedHeight;
+        public double ConvertedHeight { get { return _convertedHeight; } set { _convertedHeight = value; OnPropertyChanged(); } }
+
+        private double _convertedGuideWidth;
+        public double ConvertedGuideWidth { get { return _convertedGuideWidth; } set { _convertedGuideWidth = value; OnPropertyChanged(); } }
+
+        private double _convertedGuideHeight;
+        public double ConvertedGuideHeight { get { return _convertedGuideHeight; } set { _convertedGuideHeight = value; OnPropertyChanged(); } }
+
+        private void ResetActualSize()
+        {
+            ConvertedWidth = Width * 10 * SelectedDpi;
+            ConvertedHeight = Height * 10 * SelectedDpi;
+            ConvertedGuideWidth = (Width * 10 - Margin * 2) * SelectedDpi;
+            ConvertedGuideHeight = (Height * 10 - Margin * 2) * SelectedDpi;
+        }
+
+        #endregion Size
 
         #region Grid Properties
 
@@ -44,34 +109,21 @@
             }
         }
         
-        private double _radiusX = 20;
-        public double RadiusX
+        private double _radius = 10;
+        public double Radius
         {
-            get { return _radiusX; }
+            get { return _radius; }
             set
             {
                 if (value >= 0)
                 {
-                    _radiusX = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        private double _radiusY = 20;
-        public double RadiusY
-        {
-            get { return _radiusY; }
-            set
-            {
-                if (value >= 0)
-                {
-                    _radiusY = value;
+                    _radius = value;
                     OnPropertyChanged();
                 }
             }
         }
 
-        #endregion //Grid Properties
+        #endregion Grid Properties
 
         public LabelObject Clone
         {
@@ -83,8 +135,7 @@
                 obj.Height = Height;
                 obj.SelectedPrinter = SelectedPrinter;
                 obj.SelectedDpi = SelectedDpi;
-                obj.RadiusX = RadiusX;
-                obj.RadiusY = RadiusY;
+                obj.Radius = Radius;
                 return obj;
             }
         }

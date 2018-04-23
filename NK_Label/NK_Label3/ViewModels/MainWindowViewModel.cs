@@ -10,12 +10,15 @@ using Prism.Regions;
 using BasicModule.Files;
 using BasicModule.Models;
 using BasicModule.Utils;
-using BasicModule.ViewModels;
-using BasicModule.ViewModels.Option;
-using BasicModule.ViewModels.Rule;
 using BasicModule.Views;
 using BasicModule.Views.Option;
+using BasicModule.Views.Print;
 using BasicModule.Views.Rule;
+
+using BasicModule.ViewModels;
+using BasicModule.ViewModels.Option;
+using BasicModule.ViewModels.Print;
+using BasicModule.ViewModels.Rule;
 
 using NK_Label3.Models;
 
@@ -26,7 +29,7 @@ namespace NK_Label3.ViewModels
 
         #region System Properties
 
-        private string _title = "NK-Label 1.0";
+        private string _title = "NK-Label 1.0.0";
         public string Title
         {
             get { return _title; }
@@ -62,8 +65,9 @@ namespace NK_Label3.ViewModels
 
         #endregion //System Properties
 
-        #region Tab Contents
         private IDialogService DialogService { get { return new DialogService(); } }
+
+        #region Tab Contents
 
         private ObservableCollection<LabelView> _labelViewList;
         public ObservableCollection<LabelView> LabelViewList
@@ -79,18 +83,14 @@ namespace NK_Label3.ViewModels
             set
             {
                 SetProperty(ref _selectedLabelView, value);
-                try
-                {
-                    if (value is LabelView)
-                    {
-                        (value as LabelView).LabelViewModel.ChangeOptionRegion();
-                    }
-                }
-                catch (Exception e) { }
+                if (value is LabelView)
+                    (value.DataContext as LabelViewModel).ChangeOptionRegion();
             }
         }
 
         #endregion // Tab Contents
+
+        #region Constructor
 
         private readonly IRegionManager _regionManager;
         public MainWindowViewModel(IRegionManager regionManager)
@@ -107,12 +107,16 @@ namespace NK_Label3.ViewModels
 
             ClickAddText = new DelegateCommand(AddTextObject);
             ClickAddBarcode = new DelegateCommand(AddBarcodeObject);
+            ClickDeleteObject = new DelegateCommand(DeleteObject);//Test
             ClickEidtRuleList = new DelegateCommand(EditRuleList);
 
             ClickOpen = new DelegateCommand(Open);
             ClickSave = new DelegateCommand(Save);
             ClickSaveAs = new DelegateCommand(SaveAs);
+            ClickPrintCurrentLabel = new DelegateCommand(PrintCurrentLabel);
         }
+
+        #endregion Constructor
 
         #region Label Control Events
 
@@ -122,7 +126,6 @@ namespace NK_Label3.ViewModels
             {
                 var newView = new LabelView();
                 newView.DataContext = newLVM;
-                newView.LabelViewModel = newLVM;
                 LabelViewList.Add(newView);
                 SelectedLabelView = newView;
             }
@@ -136,7 +139,7 @@ namespace NK_Label3.ViewModels
             var olView = new OptionLabelView();
             olView.DataContext = olViewModel;
 
-            if (DialogService.ShowDialog(Application.Current.MainWindow, olView, "새 라벨 만들기") == true)
+            if (DialogService.ShowSelectDialog(Application.Current.MainWindow, olView, "Create New Label") == true)
             {
                 var newLVM = new LabelViewModel(_regionManager);
                 newLVM.Label = newLabel;
@@ -148,10 +151,10 @@ namespace NK_Label3.ViewModels
         {
             if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
             {
-                var lvm = SelectedLabelView.LabelViewModel;
+                var lvm = SelectedLabelView.DataContext as LabelViewModel;
                 if (lvm != null && lvm.IsChanged)
                 {
-                    if (DialogService.ShowSimpleDialog(Application.Current.MainWindow, "경고", "'" + lvm.Label.Name + "'에 수정된 항목이 있습니다.\n 무시하고 종료하시겠습니까?") == true)
+                    if (DialogService.ShowSimpleSelectDialog(Application.Current.MainWindow, "Warning", "'" + lvm.Label.Name + "'에 수정된 항목이 있습니다.\n 무시하고 종료하시겠습니까?") == true)
                     {
                         _regionManager.Regions["OptionRegion"].RemoveAll();
                         LabelViewList.Remove(SelectedLabelView);
@@ -183,28 +186,28 @@ namespace NK_Label3.ViewModels
                     break;
             }
         }
-        #endregion //Label Control Events
+
+        #endregion Label Control Events
 
         #region Label Object Events
 
         public ICommand ClickAddText { get; private set; }
         private void AddTextObject()
         {
-            var newText = new TextObject();
-            newText.Name = "New Text";
-            newText.PosX = 10;
-            newText.PosY = 10;
-            var optionViewModel = new OptionTextViewModel(newText); ;
-            var optionView = new OptionTextView();
-            optionView.DataContext = optionViewModel;
-
-            if (DialogService.ShowDialog(Application.Current.MainWindow, optionView, "새 텍스트 만들기") == true)
+            if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
             {
-                if (SelectedLabelView.DataContext is LabelViewModel)
+                var newText = new TextObject();
+                newText.Name = "New Text";
+
+                var optionViewModel = new OptionTextViewModel(newText); ;
+                var optionView = new OptionTextView();
+                optionView.DataContext = optionViewModel;
+
+                if (DialogService.ShowSelectDialog(Application.Current.MainWindow, optionView, "Create New Text") == true)
                 {
-                    var thisViewModel = SelectedLabelView.LabelViewModel;
+                    var thisViewModel = SelectedLabelView.DataContext as LabelViewModel;
                     thisViewModel.ObjectList.Add(newText);
-                    thisViewModel.IsChanged = true;
+                    newText.Changed = true;
                 }
             }
         }
@@ -212,25 +215,30 @@ namespace NK_Label3.ViewModels
         public ICommand ClickAddBarcode { get; private set; }
         private void AddBarcodeObject()
         {
-            var newBarcode = new BarcodeObject();
-            newBarcode.Name = "New Barcode";
-            newBarcode.PosX = 10;
-            newBarcode.PosY = 10;
-            var optionViewModel = new OptionBarcodeViewModel(newBarcode); ;
-            var optionView = new OptionBarcodeView();
-            optionView.DataContext = optionViewModel;
-
-            if (DialogService.ShowDialog(Application.Current.MainWindow, optionView, "새 바코드 만들기") == true)
+            if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
             {
-                if (SelectedLabelView.DataContext is LabelViewModel)
+                var newBarcode = new BarcodeObject();
+                newBarcode.Name = "New Barcode";
+
+                var optionViewModel = new OptionBarcodeViewModel(newBarcode); ;
+                var optionView = new OptionBarcodeView();
+                optionView.DataContext = optionViewModel;
+
+                if (DialogService.ShowSelectDialog(Application.Current.MainWindow, optionView, "Create New Barcode") == true)
                 {
-                    var thisViewModel = SelectedLabelView.LabelViewModel;
+                    var thisViewModel = SelectedLabelView.DataContext as LabelViewModel;
                     thisViewModel.ObjectList.Add(newBarcode);
-                    thisViewModel.IsChanged = true;
+                    newBarcode.Changed = true;
                 }
             }
         }
 
+        public ICommand ClickDeleteObject { get; private set; }
+        private void DeleteObject()
+        {
+            if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
+                (SelectedLabelView.DataContext as LabelViewModel).DeleteObject();
+        }
         #endregion // Label Object Events
 
         #region Rule Events
@@ -238,15 +246,18 @@ namespace NK_Label3.ViewModels
         public ICommand ClickEidtRuleList { get; private set; }
         private void EditRuleList()
         {
-            var LVM = SelectedLabelView.LabelViewModel;
-            var CopiedRuleList = LVM.CopiedRuleList;
-            var ruleEditViewModel = new RuleListViewModel(CopiedRuleList);
-            var ruleEditView = new RuleListView();
-            ruleEditView.DataContext = ruleEditViewModel;
-
-            if (DialogService.ShowDialog(Application.Current.MainWindow, ruleEditView, "규칙 편집") == true)
+            if(SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
             {
-                LVM.RuleList = CopiedRuleList;
+                var LVM = SelectedLabelView.DataContext as LabelViewModel;
+                var CopiedRuleList = LVM.CloneRuleList;
+                var ruleEditViewModel = new RuleListViewModel(CopiedRuleList);
+                var ruleEditView = new RuleListView();
+                ruleEditView.DataContext = ruleEditViewModel;
+
+                if (DialogService.ShowSelectDialog(Application.Current.MainWindow, ruleEditView, "Edit Rules") == true)
+                {
+                    LVM.RuleList = CopiedRuleList;
+                }
             }
         }
 
@@ -264,7 +275,7 @@ namespace NK_Label3.ViewModels
                 bool isExist = false;
                 foreach (LabelView lv in LabelViewList)
                 {
-                    var lvm = lv.LabelViewModel;
+                    var lvm = lv.DataContext as LabelViewModel;
                     if (lvm.FilePath.Equals(newPath))
                     {
                         MessageBox.Show("'" + lvm.Label.Name + "' 라벨이 이미 열려있습니다.");
@@ -274,9 +285,6 @@ namespace NK_Label3.ViewModels
                 }
                 if (!isExist)
                     AddLabel(newLVM);
-
-                var pvm = new PrintViewModel(newLVM.Label, newLVM.ObjectList, newLVM.RuleList);
-                pvm.print();
             }
         }
 
@@ -285,7 +293,7 @@ namespace NK_Label3.ViewModels
         {
             if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
             {
-                var labelVM = SelectedLabelView.LabelViewModel;
+                var labelVM = SelectedLabelView.DataContext as LabelViewModel;
                 FileController.SaveLabel(ref labelVM, false);
                 labelVM.IsChanged = false;
             }
@@ -295,12 +303,37 @@ namespace NK_Label3.ViewModels
         {
             if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
             {
-                var labelVM = SelectedLabelView.LabelViewModel;
+                var labelVM = SelectedLabelView.DataContext as LabelViewModel;
                 FileController.SaveLabel(ref labelVM, true);
                 labelVM.IsChanged = false;
             }
         }
 
         #endregion //File Control Events
+                
+        public ICommand ClickPrintCurrentLabel { get; private set; }
+        private void PrintCurrentLabel()
+        {
+            if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
+            {
+                var LVM = SelectedLabelView.DataContext as LabelViewModel;
+                var PVM = new PrintViewModel(LVM.Label, LVM.ObjectList, LVM.RuleList);
+
+                var pLV = new PrintLabelView()
+                {
+                    DataContext = PVM
+                };
+
+                var pWin = new PrintWindow(pLV)
+                {
+                    Title = "Print Label",
+                    DataContext = PVM
+                };
+
+                pWin.Owner = Application.Current.MainWindow;
+                pWin.ShowDialog();
+            }
+        }
+
     }
 }

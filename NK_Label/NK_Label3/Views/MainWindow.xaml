@@ -1,6 +1,7 @@
 ﻿<Window x:Class="NK_Label3.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="{Binding Title}"
@@ -15,7 +16,13 @@
     <Window.Resources>
         <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
     </Window.Resources>
-    
+
+    <!--<i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <command:EventToCommand Command="{Binding WindowClosing}" PassEventArgsToCommand="True" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>-->
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -45,7 +52,7 @@
                 <MenuItem Header="{Binding Language.MenuFileSaveAs}" Command="{Binding ClickSaveAs}"/>
                 <!--<MenuItem Header="{Binding Language.MenuFileSaveAll}" Command="{Binding ClickCloseAllLabel}" IsEnabled="{Binding HasCurrView}"/>-->
                 <Separator />
-                <MenuItem Header="{Binding Language.MenuFilePrint}" Command=""/>
+                <MenuItem Header="{Binding Language.MenuFilePrint}" Command="{Binding ClickPrintCurrentLabel}"/>
                 <Separator />
                 <MenuItem Header="{Binding Language.MenuFileClose}" Command="{Binding ClickCloseCurrentLabel}"/>
                 <MenuItem Header="{Binding Language.MenuFileCloseAll}" Command="{Binding ClickCloseAllLabel}"/>
@@ -54,6 +61,7 @@
             </MenuItem>
 
             <MenuItem Header="{Binding Language.MenuEdit}">
+                <MenuItem Header="선택된 객체 삭제" Command="{Binding ClickDeleteObject}"/>
                 <!--<MenuItem Header="{Binding Language.MenuEditCopy}" Command=""/>
                 <MenuItem Header="{Binding Language.MenuEditTruncate}" Command=""/>
                 <MenuItem Header="{Binding Language.MenuEditPaste}" Command=""/>-->
@@ -111,28 +119,29 @@
             <TextBlock FontWeight="Bold" Width="40">Name : </TextBlock>
             <TextBlock
                 AutomationProperties.AutomationId="SelectedItemTextBlock"
-                Text="{Binding SelectedLabelView.LabelViewModel.SelectedObject.Name}"
+                Text="{Binding SelectedLabelView.DataContext.SelectedObject.Name}"
                 MinWidth="120" />
             <TextBlock FontWeight="Bold" Width="15">X : </TextBlock>
             <TextBlock
                 AutomationProperties.AutomationId="SelectedItemTextBlock"
-                Text="{Binding SelectedLabelView.LabelViewModel.SelectedObject.PosX}"
+                Text="{Binding SelectedLabelView.DataContext.SelectedObject.PosX}"
                 MinWidth="100" />
             <TextBlock FontWeight="Bold" Width="15">Y : </TextBlock>
             <TextBlock
                 AutomationProperties.AutomationId="SelectedItemTextBlock"
-                Text="{Binding SelectedLabelView.LabelViewModel.SelectedObject.PosY}"
+                Text="{Binding SelectedLabelView.DataContext.SelectedObject.PosY}"
                 MinWidth="100" />
             <TextBlock FontWeight="Bold" Width="45">Width : </TextBlock>
             <TextBlock
                 AutomationProperties.AutomationId="SelectedItemTextBlock"
-                Text="{Binding SelectedLabelView.LabelViewModel.SelectedObject.Width}"
+                Text="{Binding SelectedLabelView.DataContext.SelectedObject.Width}"
                 MinWidth="100" />
             <TextBlock FontWeight="Bold" Width="45">Height : </TextBlock>
             <TextBlock
                 AutomationProperties.AutomationId="SelectedItemTextBlock"
-                Text="{Binding SelectedLabelView.LabelViewModel.SelectedObject.Height}"
+                Text="{Binding SelectedLabelView.DataContext.SelectedObject.Height}"
                 MinWidth="100" />
         </StackPanel>
         </Grid>
+    
 </Window>

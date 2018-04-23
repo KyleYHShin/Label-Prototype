@@ -1,0 +1,63 @@
+﻿<Window x:Class="BasicModule.Views.Print.PrintWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner">
+
+    <Window.Resources>
+        <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
+    </Window.Resources>
+
+    <Grid Width="Auto" Height="Auto"
+          Background="Gray">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="0" Grid.Column="0"
+              Margin="10"
+              HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ContentControl x:Name="LABEL_ContentControl" />
+        </Grid>
+        
+        <StackPanel Grid.Row="0" Grid.Column="1">
+            
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="2">
+            
+        </StackPanel>
+
+        <StackPanel
+            Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+            Orientation="Horizontal" HorizontalAlignment="Center">
+
+            <!--Command="{Binding ClickStartPrint}"-->
+            <Button
+                Content="Start"
+                Click="PrintLabel"
+                Background="{StaticResource NKSecondBrush}"
+                BorderBrush="{StaticResource NKSecondBrush}"
+                Style="{StaticResource OptionButton}"
+                Template="{StaticResource OptionApplyButton}"
+                    MinWidth="100"/>
+            <Button
+                Content="Close"
+                Click="Click_Close"
+                VerticalContentAlignment="Bottom"
+                Background="{StaticResource NKThirdBrush}"
+                BorderBrush="{StaticResource NKThirdBrush}"
+                Style="{StaticResource OptionButton}"
+                Template="{StaticResource OptionCancleButton}"
+                    MinWidth="100"/>
+        </StackPanel>
+    </Grid>
+    
+</Window>

@@ -1,4 +1,6 @@
-﻿namespace BasicModule.Models.Rule
+﻿using BasicModule.Models.Common;
+
+namespace BasicModule.Models.Rule
 {
     public class RuleSequentialNum : NotifyPropertyChanged, IRuleObject
     {
@@ -10,7 +12,8 @@
             get { return _numLength; }
             set
             {
-                if (value > 0 && value <= 10)
+                if (value > ulong.MinValue.ToString().Length && value <= ulong.MaxValue.ToString().Length
+                    && value >= MinNum.ToString().Length && value >= MaxNum.ToString().Length)
                 {
                     _numLength = value;
                     OnPropertyChanged();
@@ -18,55 +21,47 @@
             }
         }
 
-        private int _minNum;
-        public int MinNum
+        private ulong _minNum;
+        public ulong MinNum
         {
-            get
-            {
-                if (_minNum > _maxNum)
-                    _minNum = _maxNum;
-                return _minNum;
-            }
+            get { return _minNum; }
             set
             {
-                if (value >= 0 && value <= _maxNum && value.ToString("D").Length <= NumLength)
+                if (value >= ulong.MinValue && value <= MaxNum && value.ToString("D").Length <= NumLength)
                 {
                     _minNum = value;
+                    OnPropertyChanged();
+
                     if (CurrNum < _minNum)
                         CurrNum = _minNum;
-                    OnPropertyChanged();
                 }
             }
         }
 
-        private int _maxNum;
-        public int MaxNum
+        private ulong _maxNum;
+        public ulong MaxNum
         {
-            get
-            {
-                if (_maxNum < _minNum)
-                    _maxNum = _minNum;
-                return _maxNum;
-            }
+            get { return _maxNum; }
             set
             {
-                if (value >= 0 && value >= _minNum && value.ToString("D").Length <= NumLength)
+                if (value >= MinNum && value <= ulong.MaxValue && value.ToString("D").Length <= NumLength)
                 {
                     _maxNum = value;
-                    if (_currNum > _maxNum)
-                        _currNum = _maxNum;
                     OnPropertyChanged();
+
+                    if (CurrNum > _maxNum)
+                        CurrNum = _maxNum;
                 }
             }
         }
 
-        private int _currNum;
-        public int CurrNum
+        private ulong _currNum;
+        public ulong CurrNum
         {
             get { return _currNum; }
             set
             {
-                if (value >= _minNum && value <= _maxNum)
+                if (value >= MinNum && value <= MaxNum)
                 {
                     _currNum = value;
                     OnPropertyChanged();
@@ -81,13 +76,13 @@
             }
         }
 
-        private int _increment = 1;
-        public int Increment
+        private ulong _increment = 1;
+        public ulong Increment
         {
             get { return _increment; }
             set
             {
-                if (value > 0)
+                if (value > ulong.MinValue && value < ulong.MaxValue)
                 {
                     _increment = value;
                     OnPropertyChanged();

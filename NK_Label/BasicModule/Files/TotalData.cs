@@ -22,12 +22,11 @@ namespace BasicModule.Files
         public string Name { get; set; }
         public double Width { get; set; }
         public double Height { get; set; }
+        public int Margin { get; set; }
 
         public int SelectedPrinter { get; set; }
-        public int SelectedDpi { get; set; }
-        public double RadiusX { get; set; }
-        public double RadiusY { get; set; }
-
+        public double SelectedDpi { get; set; }
+        public double Radius { get; set; }
     }
 
     public class TextFile
@@ -38,13 +37,14 @@ namespace BasicModule.Files
         public double PosX { get; set; }
         public double PosY { get; set; }
 
-        public System.Windows.Thickness Margin { get; set; }
-
         public string Text { get; set; }
         public int MaxLength { get; set; }
+
         public double FontSize { get; set; }
-        public string TextAlignHorizen { get; set; }
-        public string TextAlignVertical { get; set; }
+        public string FontFamily { get; set; }
+        public string FontStyle { get; set; }
+        public string FontWeight { get; set; }
+        public string TextAlignment { get; set; }
     }
 
     public class BarcodeFile
@@ -71,10 +71,10 @@ namespace BasicModule.Files
         public class RSContent
         {
             public int NumLength { get; set; }
-            public int MinNum { get; set; }
-            public int MaxNum { get; set; }
-            public int CurrNum { get; set; }
-            public int Increment { get; set; }
+            public ulong MinNum { get; set; }
+            public ulong MaxNum { get; set; }
+            public ulong CurrNum { get; set; }
+            public ulong Increment { get; set; }
         }
     }
 
@@ -100,7 +100,8 @@ namespace BasicModule.Files
 
         public class RMContent
         {
-            public List<KeyValuePair<string, string>> ContentList { get; set; }
+            public IList<string> KeyList { get; set; }
+            public IList<string> ValueList { get; set; }
             public string SelectedContent { get; set; }
         }
     }

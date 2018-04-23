@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace BasicModule.Models
+namespace BasicModule.Models.Common
 {
     public class BasicObject : INotifyPropertyChanged
     {
@@ -10,15 +10,7 @@ namespace BasicModule.Models
         #region Properties
 
         private bool _changed = false;
-        public bool Changed
-        {
-            get { return _changed; }
-            set
-            {
-                _changed = value;
-                OnPropertyChanged();
-            }
-        }
+        public bool Changed { get { return _changed; } set { _changed = value; OnPropertyChanged(); } }
 
         private string _name;
         public string Name
@@ -34,7 +26,7 @@ namespace BasicModule.Models
             }
         }
 
-        #endregion
+        #endregion Properties
 
         #region Vector Properties
 
@@ -66,7 +58,7 @@ namespace BasicModule.Models
             }
         }
 
-        private double _posX = 0;
+        private double _posX = 10;
         public double PosX
         {
             get { return _posX; }
@@ -77,7 +69,7 @@ namespace BasicModule.Models
             }
         }
 
-        private double _posY = 0;
+        private double _posY = 10;
         public double PosY
         {
             get { return _posY; }
@@ -88,7 +80,7 @@ namespace BasicModule.Models
             }
         }
 
-        #endregion //Vector Properties
+        #endregion Vector Properties
 
         protected double getRound(double original, int point)
         {
@@ -105,7 +97,7 @@ namespace BasicModule.Models
                 Changed = true;
         }
 
-        #endregion //INotifyPropertyChanged
+        #endregion INotifyPropertyChanged
 
     }
 }

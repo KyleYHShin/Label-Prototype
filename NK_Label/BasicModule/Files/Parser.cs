@@ -1,6 +1,8 @@
 ﻿using BasicModule.Models;
+using BasicModule.Models.Common;
 using BasicModule.Models.Rule;
 using BasicModule.ViewModels;
+
 using System;
 using System.Collections.Generic;
 
@@ -62,11 +64,11 @@ namespace BasicModule.Files
                 Name = lo.Name,
                 Width = lo.Width,
                 Height = lo.Height,
+                Margin = lo.Margin,
 
                 SelectedPrinter = lo.SelectedPrinter,
                 SelectedDpi = lo.SelectedDpi,
-                RadiusX = lo.RadiusX,
-                RadiusY = lo.RadiusY
+                Radius = lo.Radius
             };
         }
 
@@ -83,13 +85,14 @@ namespace BasicModule.Files
                     PosX = to.PosX,
                     PosY = to.PosY,
 
-                    Margin = to.Margin,
-
                     Text = to.Text,
                     MaxLength = to.MaxLength,
+
                     FontSize = to.FontSize,
-                    TextAlignHorizen = to.TextAlignHorizen,
-                    TextAlignVertical = to.TextAlignVertical
+                    FontFamily = to.FontFamily,
+                    FontStyle = to.FontStyle,
+                    FontWeight = to.FontWeight,
+                    TextAlignment = to.TextAlignment
                 });
             }
             else if (obj is BarcodeObject)
@@ -103,9 +106,9 @@ namespace BasicModule.Files
                     PosX = bo.PosX,
                     PosY = bo.PosY,
 
-                    Text = bo.Text,
                     MaxLength = bo.MaxLength,
-                    BarcodeType = bo.BarcodeType
+                    BarcodeType = bo.BarcodeType,
+                    Text = bo.Text
                 });
             }
         }
@@ -128,6 +131,7 @@ namespace BasicModule.Files
                 }
             });
         }
+
         private static void GetRuleTimeList(RuleMain rm, List<RuleTi> RuleTimeList)
         {
             var rt = rm.Content as RuleTime;
@@ -142,6 +146,7 @@ namespace BasicModule.Files
                 }
             });
         }
+
         private static void GetRuleRuleManualList(RuleMain rm, List<RuleManu> RuleManualList)
         {            //RuleManualList.Add(new RuleManu()
             //{
@@ -162,13 +167,17 @@ namespace BasicModule.Files
                 Description = rm.Description,
                 Contents = new RuleManu.RMContent
                 {
-                    ContentList = new List<KeyValuePair<string, string>>(),
+                    //ContentList = new Dictionary<string, string>(),
+                    KeyList = new List<string>(),
+                    ValueList = new List<string>(),
                     SelectedContent = rml.SelectedContent
                 }
             };
             foreach (var pair in rml.ContentList)
             {
-                r.Contents.ContentList.Add(new KeyValuePair<string, string>(pair.Key, pair.Value));
+                //r.Contents.ContentList.Add(new KeyValuePair<string, string>(pair.Key, pair.Value));
+                r.Contents.KeyList.Add(pair.Key);
+                r.Contents.ValueList.Add(pair.Value);
             }
             RuleManualList.Add(r);
         }
@@ -183,10 +192,10 @@ namespace BasicModule.Files
                 labelData.Label.Name = fileData.Label.Name;
                 labelData.Label.Width = fileData.Label.Width;
                 labelData.Label.Height = fileData.Label.Height;
+                labelData.Label.Margin = fileData.Label.Margin;
                 labelData.Label.SelectedPrinter = fileData.Label.SelectedPrinter;
                 labelData.Label.SelectedDpi = fileData.Label.SelectedDpi;
-                labelData.Label.RadiusX = fileData.Label.RadiusX;
-                labelData.Label.RadiusY = fileData.Label.RadiusY;
+                labelData.Label.Radius = fileData.Label.Radius;
 
                 foreach (var to in fileData.TextList)
                 {
@@ -197,12 +206,15 @@ namespace BasicModule.Files
                         Height = to.Height,
                         PosX = to.PosX,
                         PosY = to.PosY,
-                        Margin = to.Margin,
+
                         Text = to.Text,
                         MaxLength = to.MaxLength,
+
                         FontSize = to.FontSize,
-                        TextAlignHorizen = to.TextAlignHorizen,
-                        TextAlignVertical = to.TextAlignVertical
+                        FontFamily = to.FontFamily,
+                        FontStyle = to.FontStyle,
+                        FontWeight = to.FontWeight,
+                        TextAlignment = to.TextAlignment
                     });
                 }
 
@@ -215,9 +227,9 @@ namespace BasicModule.Files
                         Height = bo.Height,
                         PosX = bo.PosX,
                         PosY = bo.PosY,
-                        Text = bo.Text,
                         MaxLength = bo.MaxLength,
-                        BarcodeType = bo.BarcodeType
+                        BarcodeType = bo.BarcodeType,
+                        Text = bo.Text
                     });
                 }
                 return null;

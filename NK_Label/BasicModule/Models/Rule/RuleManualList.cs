@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using BasicModule.Models.Common;
+using System.Collections.Generic;
 
 namespace BasicModule.Models.Rule
 {

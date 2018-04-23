@@ -1,4 +1,5 @@
 ﻿using BasicModule.Models;
+using BasicModule.Models.Common;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,15 +13,30 @@ namespace BasicModule.Utils
         public LabelObject Label { get; set; }
         public ObservableCollection<BasicObject> ObjectList { get; set; }
 
-        public List<string> GetPrintNames()
+        public List<string> GetPrinterList()
         {
-            var nameList = new List<string>();
+            var pNameList = new List<string>();
+            
+            foreach (string printer in PrinterSettings.InstalledPrinters)
+            {
+                pNameList.Add(printer);
+                Console.WriteLine(printer);
+            }
 
-            // Connection
-
-            return nameList;
+            return pNameList;
         }
 
+        public void PrintZebraProduct(string printerName, string zplCode)
+        {
+            printerName = "ZDesigner GT800-300dpi EPL";//추후 삭제
+
+            PrintDocument pd = new PrintDocument();
+            pd.PrinterSettings = new PrinterSettings();
+            pd.PrinterSettings.PrinterName = printerName;
+
+            RawPrinterHelper.SendStringToPrinter(pd.PrinterSettings.PrinterName, zplCode);
+        }
+        
         public bool PrintLabel()
         {
             try

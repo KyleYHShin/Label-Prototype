@@ -1,4 +1,4 @@
-﻿using System.Windows;
+﻿using BasicModule.Models.Common;
 
 namespace BasicModule.Models
 {
@@ -12,7 +12,7 @@ namespace BasicModule.Models
             get { return _text; }
             set
             {
-                if (value != null && value.Length <= _maxLength)
+                if (value != null)
                 {
                     _text = value;
                     OnPropertyChanged();
@@ -20,21 +20,67 @@ namespace BasicModule.Models
             }
         }
 
-        private int _maxLength = 15;
+        private int _maxLength = 20;
         public int MaxLength
         {
             get { return _maxLength; }
             set
             {
+                if (value < 0)
+                    value = 0;
+                else if (value > int.MaxValue)
+                    value = int.MaxValue;
+
+                _maxLength = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion //Text Properties
+
+        #region Vector Properties
+
+
+        private double _width = 100;
+        public new double Width
+        {
+            get { return _width; }
+            set
+            {
                 if (value > 0)
                 {
-                    _maxLength = value;
+                    _width = getRound(value, 2);
                     OnPropertyChanged();
+                    ConvertedWidth = _width + 10;
                 }
             }
         }
 
-        private double _fontSize = 14;
+        private double _height = 35;
+        public new double Height
+        {
+            get { return _height; }
+            set
+            {
+                if (value > 0)
+                {
+                    _height = getRound(value, 2);
+                    OnPropertyChanged();
+                    ConvertedHeight = _height + 6;
+                }
+            }
+        }
+
+        private double _convertedWidth = 110;
+        public double ConvertedWidth { get { return _convertedWidth; } set { _convertedWidth = value; OnPropertyChanged(); } }
+        private double _convertedHeight = 41;
+        public double ConvertedHeight { get { return _convertedHeight; } set { _convertedHeight = value; OnPropertyChanged(); } }
+
+        #endregion Vector Properties
+
+        #region Font Style Properties
+
+        private double _fontSize = 25;
         public double FontSize
         {
             get { return _fontSize; }
@@ -48,86 +94,38 @@ namespace BasicModule.Models
             }
         }
 
-        private string _textAlignHorizen = "Left";
-        public string TextAlignHorizen
-        {
-            get { return _textAlignHorizen; }
-            set
-            {
-                if (value != null)
-                {
-                    _textAlignHorizen = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        private string _fontFamily = "Arial";
+        public string FontFamily { get { return _fontFamily; } set { _fontFamily = value; OnPropertyChanged(); } }
 
-        private string _textAlignVertical = "Top";
-        public string TextAlignVertical
-        {
-            get { return _textAlignVertical; }
-            set
-            {
-                if (value != null)
-                {
-                    _textAlignVertical = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        private string _fontStyle = "Normal";
+        public string FontStyle { get { return _fontStyle; } set { _fontStyle = value; OnPropertyChanged(); } }
 
-        #endregion //Text Properties
-        
-        #region Vector Properties
+        private string _fontWeight = "Normal";
+        public string FontWeight { get { return _fontWeight; } set { _fontWeight = value; OnPropertyChanged(); } }
 
-        public double ActualPosX { get { return PosX - 10; } }
-        public double ActualPosY { get { return PosY - 10; } }
+        private string _textAlignment = "Left";
+        public string TextAlignment { get { return _textAlignment; } set { _textAlignment = value; OnPropertyChanged(); } }
 
-        private Thickness _margin = new Thickness();
-        public Thickness Margin
-        {
-            get { return _margin; }
-            set
-            {
-                _margin = value;
-                OnPropertyChanged();
-            }
-        }
-
-        #endregion //Vector Properties
-
-        #region Decoration Properties
-
-        //private string _borderColor = "Transparent";
-        //public string BorderColor
-        //{
-        //    get { return _borderColor; }
-        //    set { _borderColor = value; OnPropertyChanged(); }
-        //}
-
-        #endregion //Decoration Properties
+        #endregion Font Style Properties
 
         #region Control Properties
 
         private bool _isSelected;
         public bool IsSelected
         {
-            get
-            {
-                return _isSelected;
-            }
+            get { return _isSelected; }
             set
             {
                 _isSelected = value;
+                Visibility = IsSelected ? "Hidden" : "Visible";
                 OnPropertyChanged();
-                //if (value)
-                //    BorderColor = "Red";
-                //else
-                //    BorderColor = "Transparent";
             }
         }
 
-        #endregion //Control Properties
+        private string _visibility = "Visible";
+        public string Visibility { get { return _visibility; } set { _visibility = value; OnPropertyChanged(); } }
+
+        #endregion Control Properties
 
         public string OriginText { get; set; }
 
@@ -144,10 +142,12 @@ namespace BasicModule.Models
 
                 obj.Text = Text;
                 obj.MaxLength = MaxLength;
+
                 obj.FontSize = FontSize;
-                obj.TextAlignHorizen = TextAlignHorizen;
-                obj.TextAlignVertical = TextAlignVertical;
-                obj.Margin = Margin;
+                obj.FontFamily = FontFamily;
+                obj.FontStyle = FontStyle;
+                obj.FontWeight = FontWeight;
+                obj.TextAlignment = TextAlignment;
 
                 return obj;
             }

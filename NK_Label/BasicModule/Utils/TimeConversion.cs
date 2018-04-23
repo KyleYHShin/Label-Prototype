@@ -5,8 +5,6 @@ namespace BasicModule.Utils
 {
     public static class TimeConversion
     {
-
-
         public static string DateToString(string pattern)
         {
             try
@@ -16,7 +14,9 @@ namespace BasicModule.Utils
                 // InstalledUICulture : 운영 체제에 설치된 문화권
                 // CurrentUICulture : 리소스 관리자가 런타임에 문화권 관련 리소스를 찾기 위해 사용하는 문화권
                 // CurrentCulture : 현재 스레드에서 사용하는 문화권
-                return DateTime.Now.ToString(pattern, CultureInfo.DefaultThreadCurrentCulture);
+
+                //return DateTime.Now.ToString(pattern, CultureInfo.DefaultThreadCurrentCulture);
+                return DateTime.Now.ToString(pattern, CultureInfo.CreateSpecificCulture("en-US"));
             }
             catch (Exception e)
             {

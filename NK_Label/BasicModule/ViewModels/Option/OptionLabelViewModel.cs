@@ -33,8 +33,8 @@ namespace BasicModule.ViewModels.Option
                 && _labelObject.Height > 0
                 && _labelObject.SelectedPrinter > 0
                 && _labelObject.SelectedDpi > 0
-                && _labelObject.RadiusX >= 0
-                && _labelObject.RadiusY >= 0;
+                && _labelObject.Margin >= 0
+                && _labelObject.Radius >= 0;
             if (ret)
                 _labelObject.Changed = true;
 

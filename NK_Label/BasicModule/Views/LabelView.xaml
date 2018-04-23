@@ -9,36 +9,33 @@
 
     <UserControl.InputBindings>
         <KeyBinding Key="Esc" Command="{Binding ClickReleaseAll}"/>
+        <KeyBinding Key="Delete" Command="{Binding ClickDeleteObject}"/>
     </UserControl.InputBindings>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
         <Canvas
             x:Name="CanvasLabel"
-            Grid.Column="0"
-            DataContext="{Binding Label, Mode=TwoWay}"
-            Width="{Binding Width, Mode=OneWay}"
-            Height="{Binding Height, Mode=OneWay}">
+            DataContext="{Binding Label}"
+            Background="White"
+            Width="{Binding ConvertedWidth}"
+            Height="{Binding ConvertedHeight}">
             <Rectangle
-                Width="{Binding ElementName=CanvasLabel, Path=ActualWidth, Mode=OneWay}"
-                Height="{Binding ElementName=CanvasLabel, Path=ActualHeight, Mode=OneWay}"
-                RadiusX="{Binding RadiusX, Mode=OneWay}"
-                RadiusY="{Binding RadiusY, Mode=OneWay}"
-                Stroke="Black"
+                Width="{Binding ConvertedGuideWidth}"
+                Height="{Binding ConvertedGuideHeight}"
+                RadiusX="{Binding Radius}"
+                RadiusY="{Binding Radius}"
+                Margin="{Binding Margin}"
+                Stroke="Red"
+                StrokeDashArray="5"
                 StrokeThickness="1"
-                Fill="White" >
-            </Rectangle>
+                Fill="White"/>
         </Canvas>
-
+        
         <ListBox
-            Grid.Column="0"
-            ItemsSource="{Binding ObjectList, Mode=TwoWay}"
+            ItemsSource="{Binding ObjectList}"
             Background="Transparent"
             BorderThickness="0"
-            Width="{Binding ElementName=CanvasLabel, Path=ActualWidth, Mode=OneWay}"
-            Height="{Binding ElementName=CanvasLabel, Path=ActualHeight, Mode=OneWay}">
+            Width="{Binding ElementName=CanvasLabel, Path=ActualWidth}"
+            Height="{Binding ElementName=CanvasLabel, Path=ActualHeight}">
             <ListBox.Resources>
                 <ControlTemplate x:Key="itemTemplate" TargetType="{x:Type ListBoxItem}">
                     <ContentPresenter/>
@@ -46,40 +43,46 @@
 
                 <DataTemplate DataType="{x:Type model:TextObject}">
                     <Canvas
-                    Canvas.Left="{Binding PosX, Mode=OneWay}"
-                    Canvas.Top="{Binding PosY, Mode=OneWay}"
-                    Width="{Binding Width, Mode=OneWay}"
-                    Height="{Binding Height, Mode=OneWay}"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    a:SmartAdorner.Visible="{Binding IsSelected}">
+                        Canvas.Left="{Binding PosX}"
+                        Canvas.Top="{Binding PosY}"
+                        Width="{Binding Width}"
+                        Height="{Binding Height}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        a:SmartAdorner.Visible="{Binding IsSelected}">
                         <TextBlock
-                        Text="{Binding Text, Mode=OneWay}"
-                        FontSize="{Binding FontSize, Mode=OneWay}"
-                        HorizontalAlignment="{Binding TextAlignHorizen, Mode=OneWay}"
-                        VerticalAlignment="{Binding TextAlignVertical, Mode=OneWay}"
-                        />
+                            Width="{Binding Width}"
+                            Height="{Binding Height}"
+                            Text="{Binding Text}"
+                            FontSize="{Binding FontSize}"
+                            FontFamily="{Binding FontFamily}"
+                            FontStyle="{Binding FontStyle}"
+                            FontWeight="{Binding FontWeight}"
+                            TextAlignment="{Binding TextAlignment}"
+                            Visibility="{Binding Visibility}"/>
                         <a:SmartAdorner.Template>
-                            <DataTemplate DataType="{x:Type model:TextObject}" >
+                            <DataTemplate DataType="{x:Type model:TextObject}">
                                 <Canvas>
                                     <a:DragThumb
-                                    Name="TextThumb"
-                                    Canvas.Left="-11"
-                                    Canvas.Top="-9"
-                                    X="{Binding PosX}"
-                                    Y="{Binding PosY}"
-                                    Width="12"
-                                    Height="12"
-                                    Panel.ZIndex="1"
-                                    />
+                                        Name="TextThumb"
+                                        Canvas.Left="-11"
+                                        Canvas.Top="-9"
+                                        X="{Binding PosX}"
+                                        Y="{Binding PosY}"
+                                        Width="12"
+                                        Height="12"
+                                        Panel.ZIndex="1"/>
                                     <TextBox
-                                    Canvas.Left="-5"
-                                    Canvas.Top="-3"
-                                    Text="{Binding Text, Mode=TwoWay}"
-                                    FontSize="{Binding FontSize, Mode=TwoWay}"
-                                    HorizontalAlignment="{Binding TextAlignHorizen}"
-                                    VerticalAlignment="{Binding TextAlignVertical}"
-                                    />
+                                        Canvas.Left="-5"
+                                        Canvas.Top="-3"
+                                        Width="{Binding ConvertedWidth}"
+                                        Height="{Binding ConvertedHeight}"
+                                        Text="{Binding Text}"
+                                        FontSize="{Binding FontSize}"
+                                        FontFamily="{Binding FontFamily}"
+                                        FontStyle="{Binding FontStyle}"
+                                        FontWeight="{Binding FontWeight}"
+                                        TextAlignment="{Binding TextAlignment}"/>
                                 </Canvas>
                             </DataTemplate>
                         </a:SmartAdorner.Template>
@@ -93,27 +96,28 @@
                         Width="{Binding Width}"
                         Height="{Binding Height}"
                         HorizontalAlignment="Left"
-                        Stroke="Red"
-                        StrokeDashArray="2"
+                        Stroke="#25d92e"
+                        StrokeDashArray="4"
+                        StrokeThickness="1"
                         a:SmartAdorner.Visible="{Binding IsSelected}">
                         <Rectangle.Fill>
-                            <ImageBrush ImageSource="{Binding Barcode}" Stretch="None"/>
+                            <ImageBrush ImageSource="{Binding Barcode}"/>
                         </Rectangle.Fill>
                         <a:SmartAdorner.Template>
                             <DataTemplate DataType="{x:Type model:BarcodeObject}" >
                                 <a:ResizingAdorner
-                                X="{Binding PosX}"
-                                Y="{Binding PosY}"
-                                Width="{Binding Width}"
-                                Height="{Binding Height}"
-                                MinWidth="20"
-                                MinHeight="10"/>
+                                    X="{Binding PosX}"
+                                    Y="{Binding PosY}"
+                                    Width="{Binding Width}"
+                                    Height="{Binding Height}"
+                                    MinWidth="20"
+                                    MinHeight="10"/>
                             </DataTemplate>
                         </a:SmartAdorner.Template>
                     </Rectangle>
                 </DataTemplate>
             </ListBox.Resources>
-            
+
             <ListBox.ItemContainerStyle>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="Template" Value="{StaticResource itemTemplate}" />
@@ -131,7 +135,9 @@
 
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
-                    <prism:InvokeCommandAction Command="{Binding SelectedCommand}" TriggerParameterPath="AddedItems" />
+                    <prism:InvokeCommandAction
+                        Command="{Binding SelectedCommand}"
+                        TriggerParameterPath="AddedItems" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </ListBox>

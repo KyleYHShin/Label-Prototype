@@ -3,17 +3,17 @@ using System.Windows.Controls;
 
 using BasicModule.ViewModels.Option;
 
-namespace BasicModule.Views
+namespace BasicModule.Views.Common
 {
     /// <summary>
     /// ChildWindow.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class DialogWindow : Window
+    public partial class DialogSelectWindow : Window
     {
-        public DialogWindow()
+        public DialogSelectWindow()
         {
             InitializeComponent();
-            this.SizeToContent = SizeToContent.WidthAndHeight;
+            SizeToContent = SizeToContent.WidthAndHeight;
         }
 
         private void Ok_Click(object sender, RoutedEventArgs e)
@@ -21,10 +21,10 @@ namespace BasicModule.Views
             var content = PART_ContentControl.Content;
             if (content is UserControl)
             {
-                var iViewModel = (content as UserControl).DataContext as IOptionViewModel;
-                if (iViewModel != null && iViewModel is IOptionViewModel)
+                var dataContext = (content as UserControl).DataContext;
+                if (dataContext is IOptionViewModel)
                 {
-                    if(iViewModel.isRight())
+                    if ((dataContext as IOptionViewModel).isRight())
                         DialogResult = true;
                 }
                 else

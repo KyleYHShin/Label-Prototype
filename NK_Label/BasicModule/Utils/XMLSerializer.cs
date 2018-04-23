@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using System.Runtime.InteropServices;
 using System.IO;
 
-namespace BasicModule.Files
+namespace BasicModule.Utils
 {
     internal class XMLSerializer
     {

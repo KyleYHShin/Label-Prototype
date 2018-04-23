@@ -5,12 +5,13 @@ namespace BasicModule.Models.Rule
 {
     public static class RuleRregulation
     {
-        private static char Symbol = '*';
+        private static char SymbolStart = '*';
         private static char SymbolPre = '{';
         private static char SymbolPost = '}';
+        private static char SymbolEnd = '*';
 
-        public static string Prefix = Symbol.ToString() + SymbolPre.ToString();
-        public static string Postfix = SymbolPost.ToString() + Symbol.ToString();
+        public static string Prefix = SymbolStart.ToString() + SymbolPre.ToString();
+        public static string Postfix = SymbolPost.ToString() + SymbolEnd.ToString();
 
         public static int MIN_NAME_LEN = 2;
 
@@ -20,16 +21,25 @@ namespace BasicModule.Models.Rule
             SEQUENTIAL_NUM = 10,
             MANUAL_LIST = 20
         }
-
-        //미사용 시 삭제
-        public static List<string> TimeFormatList
+        
+        public static Dictionary<string, string> TimeFormatList
         {
             get
             {
-                return new List<string>()
+                // 사용 불가 목록 : %
+                return new Dictionary<string, string>()
                 {
-                    "yyyy", "yy", "MM", "dd"
-                    , "hh", "HH", "mm", "ss"
+                    { "yyyy" , "4자리 연도"}
+                    , { "yy" , "2자리 연도"}
+                    , { "MM" , "월 (숫자)"}
+                    , { "MMM" , "월 (약식 문자)"}
+                    , { "MMMM" , "월 (전체 문자)"}
+                    , { "dd" , "일"}
+                    , { "hh" , "시 (12시간 형식)"}
+                    , { "HH" , "시 (24시간 형식)"}
+                    , { "tt" , "AM / PM"}
+                    , { "mm" , "분"}
+                    , { "ss" , "초"}
                 };
             }
         }
@@ -73,65 +83,65 @@ namespace BasicModule.Models.Rule
                 return "";
         }
 
-        public static string[] RuleNameSeperatorToList(string originText)
+        private static int GetNextStartIndex(int startIndex, string text)
         {
+            string str = text.Substring(startIndex);
+            int ret = str.IndexOf(Prefix);
+          
+            return ret;
+        }
+
+        public static List<string> RuleNameSeperatorToList(string text)
+        {
+            List<string> wordList = new List<string>();
             try
             {
-                List<int> startIndex = new List<int>();
-                List<int> endIndex = new List<int>();
-                int blockCount = 0;
-                for (int i = 0; i < originText.Length; i++)
+                while (true)
                 {
-                    if (originText[i] == Symbol && i + 1 < originText.Length - 1 && originText[i + 1] == SymbolPre)
-                    {
-                        startIndex.Add(i);
-                        blockCount++;
-                    }
-                    else if (originText[i] == Symbol && i - 1 >= 0 && originText[i - 1] == SymbolPost)
-                    {
-                        endIndex.Add(i);
-                        blockCount++;
-                    }
-                }
-                if (startIndex.Count != endIndex.Count)
-                    throw new Exception();
+                    int startIndex;
+                    int endIndex;
 
-                string[] blocks = new string[blockCount + 1];
-                int blockIndex = 0;
-                int prevIndex = 0;
-                for (int i = 0; i < originText.Length; i++)
-                {
-                    if (startIndex[0] == i)
+                    int x = text.IndexOf(Prefix);
+                    if (x >= 0)
+                        startIndex = x;
+                    else
                     {
-                        if (i > 0)
-                        {
-                            blocks[blockIndex] = originText.Substring(prevIndex, i - prevIndex);
-                            blockIndex++;
-                        }
-                        var ruleName = originText.Substring(i, endIndex[0] - i + 1);
-                        if (!RuleNameVerifier(ruleName))
-                            throw new Exception();
-                        blocks[blockIndex] = ruleName;
-                        blockIndex++;
-
-                        prevIndex = endIndex[0] + 1;
-                        i = endIndex[0] + 1;
-                        startIndex.RemoveAt(0);
-                        endIndex.RemoveAt(0);
-                    }
-                    if (endIndex.Count == 0 && i < originText.Length - 1)
-                    {
-                        blocks[blockIndex] = originText.Substring(i, originText.Length - i);
+                        wordList.Add(text);
                         break;
                     }
+
+                    x = text.IndexOf(Postfix);
+                    if (x >= 0)
+                        endIndex = x;
+                    else
+                    {
+                        wordList.Add(text);
+                        break;
+                    }
+
+                    if (startIndex > endIndex)
+                    {
+                        wordList.Add(text.Substring(0, startIndex));
+                        text = text.Substring(startIndex);
+                    }
+                    else
+                    {
+                        if (startIndex > 0)
+                            wordList.Add(text.Substring(0, startIndex));
+
+                        wordList.Add(text.Substring(startIndex, endIndex - startIndex + Postfix.Length));
+                        text = text.Substring(endIndex + Postfix.Length);
+                    }
+                    if (string.IsNullOrEmpty(text))
+                        break;
                 }
-                return blocks;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.StackTrace);
-                return null;
+                wordList.Clear();
             }
+            return wordList;
         }
 
     }
