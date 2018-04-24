@@ -1,6 +1,7 @@
 ﻿using BasicModule.Models;
 using BasicModule.Models.Common;
 using BasicModule.Models.Rule;
+using BasicModule.Utils;
 using BasicModule.ViewModels;
 
 using System;
@@ -27,23 +28,23 @@ namespace BasicModule.Files
                     RuleManualList = new List<RuleManu>()
                 };
 
-                ret.Label = GetLabelFile(originData.Label);
+                ret.Label = LabelToFile(originData.Label);
 
                 foreach (var obj in originData.ObjectList)
-                    GetObjectList(obj, ret.TextList, ret.BarcodeList);
+                    ObjectListToFile(obj, ret.TextList, ret.BarcodeList);
 
                 foreach (var rule in originData.RuleList)
                 {
                     switch (rule.Format)
                     {
                         case RuleRregulation.RuleFormat.SEQUENTIAL_NUM:
-                            GetRuleSequentialNumList(rule, ret.RuleSequentialNumList);
+                            RuleSequentialNumToFile(rule, ret.RuleSequentialNumList);
                             break;
                         case RuleRregulation.RuleFormat.TIME:
-                            GetRuleTimeList(rule, ret.RuleTimeList);
+                            RuleTimeToFile(rule, ret.RuleTimeList);
                             break;
                         case RuleRregulation.RuleFormat.MANUAL_LIST:
-                            GetRuleRuleManualList(rule, ret.RuleManualList);
+                            RuleManualListToFile(rule, ret.RuleManualList);
                             break;
                     }
                 }
@@ -57,7 +58,7 @@ namespace BasicModule.Files
             }
         }
 
-        private static LabelFile GetLabelFile(LabelObject lo)
+        private static LabelFile LabelToFile(LabelObject lo)
         {
             return new LabelFile()
             {
@@ -72,7 +73,7 @@ namespace BasicModule.Files
             };
         }
 
-        private static void GetObjectList(BasicObject obj, List<TextFile> TextList, List<BarcodeFile> BarcodeList)
+        private static void ObjectListToFile(BasicObject obj, List<TextFile> TextList, List<BarcodeFile> BarcodeList)
         {
             if (obj is TextObject)
             {
@@ -113,7 +114,7 @@ namespace BasicModule.Files
             }
         }
 
-        private static void GetRuleSequentialNumList(RuleMain rm, List<RuleSeq> RuleSequentialNumList)
+        private static void RuleSequentialNumToFile(RuleMain rm, List<RuleSeq> RuleSequentialNumList)
         {
             var rsn = rm.Content as RuleSequentialNum;
             RuleSequentialNumList.Add(new RuleSeq()
@@ -132,7 +133,7 @@ namespace BasicModule.Files
             });
         }
 
-        private static void GetRuleTimeList(RuleMain rm, List<RuleTi> RuleTimeList)
+        private static void RuleTimeToFile(RuleMain rm, List<RuleTi> RuleTimeList)
         {
             var rt = rm.Content as RuleTime;
             RuleTimeList.Add(new RuleTi()
@@ -147,43 +148,20 @@ namespace BasicModule.Files
             });
         }
 
-        private static void GetRuleRuleManualList(RuleMain rm, List<RuleManu> RuleManualList)
-        {            //RuleManualList.Add(new RuleManu()
-            //{
-            //    Format = rm.Format,
-            //    Name = rm.Name,
-            //    Description = rm.Description,
-            //    Contents = new RuleManu.RMContent
-            //    {
-            //        ContentList = new KeyValuePair<string, string>(),
-            //        SelectedContent = rml.SelectedContent
-            //    }
-            //});
+        private static void RuleManualListToFile(RuleMain rm, List<RuleManu> RuleManualList)
+        {
             var rml = rm.Content as RuleManualList;
-            var r = new RuleManu()
+            RuleManualList.Add(new RuleManu()
             {
                 Format = rm.Format,
                 Name = rm.Name,
                 Description = rm.Description,
-                Contents = new RuleManu.RMContent
-                {
-                    ContentList = new List<KeyValuePair<string, string>>(),
-                    //KeyList = new List<string>(),
-                    //ValueList = new List<string>(),
-                    SelectedContent = rml.SelectedContent
-                }
-            };
-            foreach (var pair in rml.ContentList)
-            {
-                r.Contents.ContentList.Add(new KeyValuePair<string, string>(pair.Key, pair.Value));
-
-                //r.Contents.KeyList.Add(pair.Key);
-                //r.Contents.ValueList.Add(pair.Value);
-            }
-            RuleManualList.Add(r);
+                Contents = XMLSerializer.DictionaryToXml(rml.ContentList),
+                SelectedContent = rml.SelectedContent
+            });
         }
 
-        #endregion //ObjectToFile
+        #endregion ObjectToFile
 
         internal static string FileToObject(ref LabelViewModel labelData, FileData fileData)
         {
@@ -233,11 +211,61 @@ namespace BasicModule.Files
                         Text = bo.Text
                     });
                 }
+
+                foreach (var file in fileData.RuleSequentialNumList)
+                {
+                    var rsn = new RuleSequentialNum()
+                    {
+                        NumLength = file.Contents.NumLength,
+                        MinNum = file.Contents.MinNum,
+                        MaxNum = file.Contents.MaxNum,
+                        CurrNum = file.Contents.CurrNum,
+                        Increment = file.Contents.Increment,
+                    };
+                    labelData.RuleList.Add(new RuleMain()
+                    {
+                        Format = file.Format,
+                        Name = file.Name,
+                        Description = file.Description,
+                        Content = rsn
+                    });
+
+                }
+                foreach (var file in fileData.RuleTimeList)
+                {
+                    var rt = new RuleTime()
+                    {
+                        Pattern = file.Contents.Pattern
+                    };
+                    labelData.RuleList.Add(new RuleMain()
+                    {
+                        Format = file.Format,
+                        Name = file.Name,
+                        Description = file.Description,
+                        Content = rt
+                    });
+                }
+                foreach (var file in fileData.RuleManualList)
+                {
+                    var rml = new RuleManualList()
+                    {
+                        ContentList = XMLSerializer.XmlToDictionary(file.Contents),
+                        SelectedContent = file.SelectedContent
+                    };
+                    labelData.RuleList.Add(new RuleMain()
+                    {
+                        Format = file.Format,
+                        Name = file.Name,
+                        Description = file.Description,
+                        Content = rml
+                    });
+                }
                 return null;
             }
             catch (Exception e)
             {
-                return e.Message;
+                Console.WriteLine(e.Message);
+                return null;
             }
         }
     }

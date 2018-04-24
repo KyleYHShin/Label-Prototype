@@ -96,15 +96,8 @@ namespace BasicModule.Files
         public RuleRregulation.RuleFormat Format { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public RMContent Contents { get; set; }
-
-        public class RMContent
-        {
-            public List<KeyValuePair<string, string>> ContentList { get; set; }
-            //public IList<string> KeyList { get; set; }
-            //public IList<string> ValueList { get; set; }
-            public string SelectedContent { get; set; }
-        }
+        public System.Xml.Linq.XElement Contents { get; set; }
+        public string SelectedContent { get; set; }
     }
 
 }

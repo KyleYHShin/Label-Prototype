@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -82,7 +81,7 @@ namespace BasicModule.ViewModels
             ClickReleaseAll = new DelegateCommand(ReleaseObject);
             ClickDeleteObject = new DelegateCommand(DeleteObject);
             
-            TestSource();
+            //TestSource();
         }
         #endregion //Constructor
 

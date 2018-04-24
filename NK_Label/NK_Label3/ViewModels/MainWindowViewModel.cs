@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -239,7 +238,8 @@ namespace NK_Label3.ViewModels
             if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
                 (SelectedLabelView.DataContext as LabelViewModel).DeleteObject();
         }
-        #endregion // Label Object Events
+
+        #endregion Label Object Events
 
         #region Rule Events
 
@@ -261,7 +261,7 @@ namespace NK_Label3.ViewModels
             }
         }
 
-        #endregion //Rule Events
+        #endregion Rule Events
 
         #region File Control Events
 

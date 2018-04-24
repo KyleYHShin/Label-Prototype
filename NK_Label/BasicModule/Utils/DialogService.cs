@@ -57,7 +57,6 @@ namespace BasicModule.Utils
             return dlWin.ShowDialog();
         }
 
-
         public bool? ShowContentDialog(object contentView, string title)
         {
             var dlWin = new DialogSelectWindow

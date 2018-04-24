@@ -1,12 +1,19 @@
 ﻿using System;
-using System.Xml;
-using System.Xml.Serialization;
+using System.Collections.Generic;
 using System.IO;
+using System.Xml;
+using System.Xml.Linq;
 
+using System.Xml.Serialization;
 namespace BasicModule.Utils
 {
     internal class XMLSerializer
     {
+        static readonly string DICTIONARY = "Dictionary";
+        static readonly string KEY = "Key";
+        static readonly string VALUE = "Value";
+        static readonly string KEYVALUEPAIR = KEY+VALUE+ "Pair";
+
         #region Save
 
         internal static bool Serialize(object obj, string path, ref string message)
@@ -29,7 +36,20 @@ namespace BasicModule.Utils
             return false;
         }
 
-        #endregion //Save
+        public static XElement DictionaryToXml(Dictionary<string, string> inputDictionary)
+        {
+            var ret = new XElement(DICTIONARY);
+            foreach (var pair in inputDictionary)
+            {
+                XElement inner = new XElement(KEYVALUEPAIR);
+                inner.Add(new XAttribute(KEY, pair.Key));
+                inner.Add(new XAttribute(VALUE, pair.Value));
+                ret.Add(inner);
+            }
+            return ret;
+        }
+
+        #endregion Save
 
         #region Open
 
@@ -50,6 +70,16 @@ namespace BasicModule.Utils
             return null;
         }
 
-        #endregion //Open
+        public static Dictionary<string, string> XmlToDictionary(XElement inputXElement)
+        {
+            var ret = new Dictionary<string, string>();
+
+            foreach (XElement element in inputXElement.Elements())
+                ret.Add(element.Attribute(KEY).Value, element.Attribute(VALUE).Value);
+
+            return ret;
+        }
+
+        #endregion Open
     }
 }
