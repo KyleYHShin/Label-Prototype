@@ -20,7 +20,8 @@ namespace BasicModule.Views.Print
             var content = LABEL_ContentControl.Content;
             if (DataContext is PrintViewModel && content is PrintLabelView)
             {
-                (DataContext as PrintViewModel).TestZebraPrint(content as PrintLabelView);
+                //(DataContext as PrintViewModel).ZebraPrinter(content as PrintLabelView);
+                (DataContext as PrintViewModel).StartPrint(content as PrintLabelView);
             }
         }
 

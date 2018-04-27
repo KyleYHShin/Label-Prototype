@@ -36,8 +36,7 @@ namespace BasicModule.Files
             bool ret;
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "XML-File | *.xml";
-            //saveFileDialog.Filter = "NK Label-File | *.nkl";
+            saveFileDialog.Filter = "NK Label-File | *.nkl";
             saveFileDialog.Title = "Save a Label File";
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
@@ -51,15 +50,17 @@ namespace BasicModule.Files
         private static bool SaveLabel_Xml(ref LabelViewModel labelData, string newPath = null)
         {
             string msg = "";
-            var ret = false;
-            var obj = Parser.ObjectToFile(labelData);
+            bool ret = false;
 
-            if (String.IsNullOrEmpty(newPath))
-                ret = XMLSerializer.Serialize(obj, labelData.FilePath, ref msg);
-            else
-            {
-                ret = XMLSerializer.Serialize(obj, newPath, ref msg);
+            if (!String.IsNullOrEmpty(newPath))
                 labelData.FilePath = newPath;
+
+            switch (labelData.FileVersion)
+            {
+                case 1:
+                    var obj_1 = Parser.ObjectToFile_1(labelData);
+                    ret = XMLSerializer.Serialize(obj_1, labelData.FilePath, ref msg);
+                    break;
             }
 
             if (!ret)
@@ -68,9 +69,10 @@ namespace BasicModule.Files
             return ret;
         }
 
-        #endregion //Save
+        #endregion Save
 
         #region Open
+
         public static LabelViewModel OpenLabel(IRegionManager regionManager)
         {
             string path = OpenLabel_FileDialog();
@@ -90,8 +92,7 @@ namespace BasicModule.Files
         private static string OpenLabel_FileDialog()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "XML-File | *.xml";
-            //openFileDialog.Filter = "NK Label-File | *.nkl";
+            openFileDialog.Filter = "NK Label-File | *.nkl";
             openFileDialog.Title = "Select a Label File";
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -103,7 +104,22 @@ namespace BasicModule.Files
         private static bool OpenLabel_Xml(ref LabelViewModel labelData)
         {
             string msg = "";
-            var obj = XMLSerializer.Deserializer(typeof(FileData), labelData.FilePath, ref msg) as FileData;
+            bool ret = false;
+
+            int FileVersion = XMLSerializer.GetFileVersion(labelData.FilePath, ref msg);
+            if (!String.IsNullOrEmpty(msg))
+            {
+                MessageBox.Show("파일 열기 실패\n" + msg);
+                return false;
+            }
+
+            switch (FileVersion)
+            {
+                case 1:
+                    var obj_1 = XMLSerializer.Deserializer(typeof(FileData_1), labelData.FilePath, ref msg) as FileData_1;
+                    ret = Parser.FileToObject_1(ref labelData, obj_1);
+                    break;
+            }
 
             if (!String.IsNullOrEmpty(msg))
             {
@@ -111,13 +127,10 @@ namespace BasicModule.Files
                 return false;
             }
 
-            if (!String.IsNullOrEmpty(Parser.FileToObject(ref labelData, obj)))
-                return false;
-
-            return true;
+            return ret;
         }
 
-        #endregion //Open
+        #endregion Open
 
         private static bool IsValidPath(string filePath)
         {

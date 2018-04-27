@@ -53,6 +53,30 @@ namespace BasicModule.Utils
 
         #region Open
 
+        internal static int GetFileVersion(string path, ref string message)
+        {
+            try
+            {
+                using (StreamReader reader = new StreamReader(path))
+                {
+                    reader.ReadLine();
+                    var line = reader.ReadLine();
+
+                    XmlDocument xmlDoc = new XmlDocument();
+                    xmlDoc.LoadXml(line);
+
+                    var dataList = xmlDoc.GetElementsByTagName("FileVersion");
+                    return int.Parse(dataList[0].InnerXml); ;
+                }
+            }
+            catch (Exception e)
+            {
+                message = e.Message;
+            }
+
+            return 0;
+        }
+
         internal static object Deserializer(Type type, string path, ref string message)
         {
             try

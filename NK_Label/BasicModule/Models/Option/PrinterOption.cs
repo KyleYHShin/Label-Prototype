@@ -4,9 +4,15 @@ namespace BasicModule.Models.Option
 {
     public static class PrinterOption
     {
-        public static readonly Dictionary<string, int> PrinterList = new Dictionary<string, int>
+
+        public enum PrinterType
         {
-            { "Zebra", 1 }
+            ZEBRA = 1
+        }
+
+        public static readonly Dictionary<string, PrinterType> PrinterList = new Dictionary<string, PrinterType>
+        {
+            { "Zebra", PrinterType.ZEBRA }
         };
 
         public static readonly Dictionary<string, double> DpiList = new Dictionary<string, double>

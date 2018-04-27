@@ -3,7 +3,6 @@ using BasicModule.Views;
 using Prism.Modularity;
 using Prism.Regions;
 using Prism.Unity;
-using System;
 
 namespace BasicModule
 {

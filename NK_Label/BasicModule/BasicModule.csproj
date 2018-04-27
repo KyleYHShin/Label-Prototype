@@ -116,6 +116,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Models\Option\BarcodeOption.cs" />
+    <Compile Include="Common\Region.cs" />
     <Compile Include="Utils\BitmapConversion.cs" />
     <Compile Include="Files\FileController.cs" />
     <Compile Include="Files\Parser.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="ViewModels\Option\OptionLabelViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionTextViewModel.cs" />
     <Compile Include="ViewModels\Print\PrintViewModel.cs" />
+    <Compile Include="ViewModels\Rule\RuleEditorViewModel.cs" />
     <Compile Include="ViewModels\Rule\RuleListViewModel.cs" />
     <Compile Include="Views\Common\DialogSelectWindow.xaml.cs">
       <DependentUpon>DialogSelectWindow.xaml</DependentUpon>
@@ -157,14 +159,29 @@
     <Compile Include="Views\Print\PrintWindow.xaml.cs">
       <DependentUpon>PrintWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Rule\EditOrDeleteButtonView.xaml.cs">
+      <DependentUpon>EditOrDeleteButtonView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Rule\RuleCommonView.xaml.cs">
+      <DependentUpon>RuleCommonView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Rule\RuleEditView.xaml.cs">
+      <DependentUpon>RuleEditView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Rule\RuleListView.xaml.cs">
       <DependentUpon>RuleListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Rule\RuleManualListView.xaml.cs">
+      <DependentUpon>RuleManualListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Rule\RuleSequentialNumView.xaml.cs">
       <DependentUpon>RuleSequentialNumView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Common\SimpleTextView.xaml.cs">
       <DependentUpon>SimpleTextView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Rule\RuleTimeView.xaml.cs">
+      <DependentUpon>RuleTimeView.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -213,7 +230,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Rule\EditOrDeleteButtonView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Rule\RuleCommonView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Rule\RuleEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Rule\RuleListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Rule\RuleManualListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -222,6 +255,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Common\SimpleTextView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Rule\RuleTimeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

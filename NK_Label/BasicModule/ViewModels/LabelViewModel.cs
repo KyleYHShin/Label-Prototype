@@ -21,7 +21,7 @@ namespace BasicModule.ViewModels
     {
         #region Properties
 
-        public readonly string LabelVersion = "1.0.0";
+        public readonly int FileVersion = 1;
 
         private string _filePath;
         public string FilePath
@@ -80,16 +80,17 @@ namespace BasicModule.ViewModels
             SelectedCommand = new DelegateCommand<object[]>(OnItemSelected);
             ClickReleaseAll = new DelegateCommand(ReleaseObject);
             ClickDeleteObject = new DelegateCommand(DeleteObject);
-            
+
             //TestSource();
         }
-        #endregion //Constructor
+
+        #endregion Constructor
 
         private void TestSource()
         {
             RuleMain rt = new RuleMain()
             {
-                Format = RuleRregulation.RuleFormat.TIME,
+                Format = RuleRegulation.RuleFormat.TIME,
                 Name = "Time",
                 Description = "Test Rule Time"
             };
@@ -102,7 +103,7 @@ namespace BasicModule.ViewModels
 
             RuleMain rl = new RuleMain()
             {
-                Format = RuleRregulation.RuleFormat.MANUAL_LIST,
+                Format = RuleRegulation.RuleFormat.MANUAL_LIST,
                 Name = "List",
                 Description = "Test Rule List"
             };
@@ -119,7 +120,7 @@ namespace BasicModule.ViewModels
 
             RuleMain rs = new RuleMain()
             {
-                Format = RuleRregulation.RuleFormat.SEQUENTIAL_NUM,
+                Format = RuleRegulation.RuleFormat.SEQUENTIAL_NUM,
                 Name = "Serial",
                 Description = "Test Rule Serial"
             };

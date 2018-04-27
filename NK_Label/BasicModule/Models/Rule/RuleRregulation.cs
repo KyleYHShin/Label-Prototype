@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BasicModule.Models.Rule
 {
-    public static class RuleRregulation
+    public static class RuleRegulation
     {
         private static char SymbolStart = '*';
         private static char SymbolPre = '{';
@@ -21,7 +21,14 @@ namespace BasicModule.Models.Rule
             SEQUENTIAL_NUM = 10,
             MANUAL_LIST = 20
         }
-        
+
+        public static readonly Dictionary<string, RuleFormat> BarcodeFormatList = new Dictionary<string, RuleFormat>
+        {
+            { "Time", RuleFormat.TIME }
+            , { "Sequential Number", RuleFormat.SEQUENTIAL_NUM }
+            , { "Manual List", RuleFormat.MANUAL_LIST }
+        };
+
         public static Dictionary<string, string> TimeFormatList
         {
             get

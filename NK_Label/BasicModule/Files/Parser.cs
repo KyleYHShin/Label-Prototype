@@ -11,40 +11,40 @@ namespace BasicModule.Files
 {
     internal static class Parser
     {
-        #region ObjectToFile
+        #region Version 1
 
-        internal static Object ObjectToFile(LabelViewModel originData)
+        internal static Object ObjectToFile_1(LabelViewModel originData)
         {
             try
             {
-                FileData ret = new FileData()
+                FileData_1 ret = new FileData_1()
                 {
-                    FileVersion = "1.0.0",
-                    TextList = new List<TextFile>(),
-                    BarcodeList = new List<BarcodeFile>(),
+                    FileVersion = originData.FileVersion,
+                    TextList = new List<TextFile_1>(),
+                    BarcodeList = new List<BarcodeFile_1>(),
 
-                    RuleSequentialNumList = new List<RuleSeq>(),
-                    RuleTimeList = new List<RuleTi>(),
-                    RuleManualList = new List<RuleManu>()
+                    RuleSequentialNumList = new List<RuleSequFile_1>(),
+                    RuleTimeList = new List<RuleTimeFile_1>(),
+                    RuleManualList = new List<RuleManuFile_1>()
                 };
 
-                ret.Label = LabelToFile(originData.Label);
+                ret.Label = LabelToFile_1(originData.Label);
 
                 foreach (var obj in originData.ObjectList)
-                    ObjectListToFile(obj, ret.TextList, ret.BarcodeList);
+                    ObjectListToFile_1(obj, ret.TextList, ret.BarcodeList);
 
                 foreach (var rule in originData.RuleList)
                 {
                     switch (rule.Format)
                     {
-                        case RuleRregulation.RuleFormat.SEQUENTIAL_NUM:
-                            RuleSequentialNumToFile(rule, ret.RuleSequentialNumList);
+                        case RuleRegulation.RuleFormat.SEQUENTIAL_NUM:
+                            RuleSequentialNumToFile_1(rule, ret.RuleSequentialNumList);
                             break;
-                        case RuleRregulation.RuleFormat.TIME:
-                            RuleTimeToFile(rule, ret.RuleTimeList);
+                        case RuleRegulation.RuleFormat.TIME:
+                            RuleTimeToFile_1(rule, ret.RuleTimeList);
                             break;
-                        case RuleRregulation.RuleFormat.MANUAL_LIST:
-                            RuleManualListToFile(rule, ret.RuleManualList);
+                        case RuleRegulation.RuleFormat.MANUAL_LIST:
+                            RuleManualListToFile_1(rule, ret.RuleManualList);
                             break;
                     }
                 }
@@ -58,9 +58,9 @@ namespace BasicModule.Files
             }
         }
 
-        private static LabelFile LabelToFile(LabelObject lo)
+        private static LabelFile_1 LabelToFile_1(LabelObject lo)
         {
-            return new LabelFile()
+            return new LabelFile_1()
             {
                 Name = lo.Name,
                 Width = lo.Width,
@@ -73,12 +73,12 @@ namespace BasicModule.Files
             };
         }
 
-        private static void ObjectListToFile(BasicObject obj, List<TextFile> TextList, List<BarcodeFile> BarcodeList)
+        private static void ObjectListToFile_1(BasicObject obj, List<TextFile_1> TextList, List<BarcodeFile_1> BarcodeList)
         {
             if (obj is TextObject)
             {
                 var to = obj as TextObject;
-                TextList.Add(new TextFile()
+                TextList.Add(new TextFile_1()
                 {
                     Name = to.Name,
                     Width = to.Width,
@@ -99,7 +99,7 @@ namespace BasicModule.Files
             else if (obj is BarcodeObject)
             {
                 var bo = obj as BarcodeObject;
-                BarcodeList.Add(new BarcodeFile()
+                BarcodeList.Add(new BarcodeFile_1()
                 {
                     Name = bo.Name,
                     Width = bo.Width,
@@ -114,15 +114,15 @@ namespace BasicModule.Files
             }
         }
 
-        private static void RuleSequentialNumToFile(RuleMain rm, List<RuleSeq> RuleSequentialNumList)
+        private static void RuleSequentialNumToFile_1(RuleMain rm, List<RuleSequFile_1> RuleSequentialNumList)
         {
             var rsn = rm.Content as RuleSequentialNum;
-            RuleSequentialNumList.Add(new RuleSeq()
+            RuleSequentialNumList.Add(new RuleSequFile_1()
             {
                 Format = rm.Format,
                 Name = rm.Name,
                 Description = rm.Description,
-                Contents = new RuleSeq.RSContent
+                Contents = new RuleSequFile_1.RSContent
                 {
                     NumLength = rsn.NumLength,
                     MinNum = rsn.MinNum,
@@ -133,25 +133,25 @@ namespace BasicModule.Files
             });
         }
 
-        private static void RuleTimeToFile(RuleMain rm, List<RuleTi> RuleTimeList)
+        private static void RuleTimeToFile_1(RuleMain rm, List<RuleTimeFile_1> RuleTimeList)
         {
             var rt = rm.Content as RuleTime;
-            RuleTimeList.Add(new RuleTi()
+            RuleTimeList.Add(new RuleTimeFile_1()
             {
                 Format = rm.Format,
                 Name = rm.Name,
                 Description = rm.Description,
-                Contents = new RuleTi.RTContent
+                Contents = new RuleTimeFile_1.RTContent
                 {
                     Pattern = rt.Pattern
                 }
             });
         }
 
-        private static void RuleManualListToFile(RuleMain rm, List<RuleManu> RuleManualList)
+        private static void RuleManualListToFile_1(RuleMain rm, List<RuleManuFile_1> RuleManualList)
         {
             var rml = rm.Content as RuleManualList;
-            RuleManualList.Add(new RuleManu()
+            RuleManualList.Add(new RuleManuFile_1()
             {
                 Format = rm.Format,
                 Name = rm.Name,
@@ -160,10 +160,8 @@ namespace BasicModule.Files
                 SelectedContent = rml.SelectedContent
             });
         }
-
-        #endregion ObjectToFile
-
-        internal static string FileToObject(ref LabelViewModel labelData, FileData fileData)
+               
+        internal static bool FileToObject_1(ref LabelViewModel labelData, FileData_1 fileData)
         {
             try
             {
@@ -260,13 +258,16 @@ namespace BasicModule.Files
                         Content = rml
                     });
                 }
-                return null;
+                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return null;
+                return false;
             }
         }
+
+        #endregion Version 1
+
     }
 }

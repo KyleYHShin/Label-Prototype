@@ -6,14 +6,21 @@ namespace BasicModule.Models.Rule
     {
         #region Properties
 
-        private RuleRregulation.RuleFormat _format;
-        public RuleRregulation.RuleFormat Format
+        private RuleRegulation.RuleFormat _format;
+        public RuleRegulation.RuleFormat Format
         {
             get { return _format; }
             set
             {
                 _format = value;
                 OnPropertyChanged();
+
+                if (_format == RuleRegulation.RuleFormat.TIME && !(Content is RuleTime))
+                    Content = new RuleTime();
+                else if (_format == RuleRegulation.RuleFormat.SEQUENTIAL_NUM && !(Content is RuleSequentialNum))
+                    Content = new RuleSequentialNum();
+                else if (_format == RuleRegulation.RuleFormat.MANUAL_LIST && !(Content is RuleManualList))
+                    Content = new RuleManualList();
             }
         }
 
@@ -23,7 +30,7 @@ namespace BasicModule.Models.Rule
             get { return _name; }
             set
             {
-                if (!string.IsNullOrEmpty(value) && value.Length >= RuleRregulation.MIN_NAME_LEN)
+                if (!string.IsNullOrEmpty(value) && value.Length >= RuleRegulation.MIN_NAME_LEN)
                 {
                     _name = value;
                     OnPropertyChanged();

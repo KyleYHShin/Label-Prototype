@@ -1,21 +1,20 @@
 ﻿using BasicModule.Models;
 using BasicModule.Models.Common;
+using BasicModule.Models.Option;
 using BasicModule.Models.Rule;
 using BasicModule.Utils;
 using BasicModule.Views.Print;
-using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Input;
 
 namespace BasicModule.ViewModels.Print
 {
     public class PrintViewModel : BindableBase
     {
-        #region Properties
+        #region Label Properties
 
         private LabelObject _label;
         public LabelObject Label { get { return _label; } set { SetProperty(ref _label, value); } }
@@ -26,17 +25,34 @@ namespace BasicModule.ViewModels.Print
         private List<RuleMain> _ruleList;
         public List<RuleMain> RuleList { get { return _ruleList; } set { SetProperty(ref _ruleList, value); } }
 
-        public int Repetition { get; set; } = 1;
+        private List<RuleSequentialNum> UsingRuleSequentialNumList;
+
+        #endregion Label Properties
+
+        #region Printer Properties
+
+        private PrintService pService;
+
+        private bool _repetable;
+        public bool Repetable { get { return _repetable; } set { SetProperty(ref _repetable, value); } }
+
+        private int _repetition = 1;
+        public int Repetition { get { return _repetition; } set { SetProperty(ref _repetition, value); } }
+
         public List<string> _printerList;
         public List<string> PrinterList { get { return _printerList; } set { SetProperty(ref _printerList, value); } }
 
-        private PrintService pService = new PrintService();
+        private string _selectedPrinterName;
+        public string SelectedPrinterName { get { return _selectedPrinterName; } set { SetProperty(ref _selectedPrinterName, value); } }
+        
         private int _offsetX;
         public int OffsetX { get { return _offsetX; } set { SetProperty(ref _offsetX, value); } }
         private int _offsetY;
         public int OffsetY { get { return _offsetY; } set { SetProperty(ref _offsetY, value); } }
 
-        #endregion
+        #endregion Printer Properties
+
+        #region Constructor
 
         public PrintViewModel(LabelObject label, ObservableCollection<BasicObject> objectList, List<RuleMain> ruleList)
         {
@@ -54,141 +70,154 @@ namespace BasicModule.ViewModels.Print
             }
             RuleList = ruleList; //swallow copy
 
+            pService = new PrintService();
             PrinterList = pService.GetPrinterList();
-            ConvertRuleToText();
+            if (PrinterList.Count > 0)
+                SelectedPrinterName = PrinterList[0];
+            SelectedPrinterName = "ZDesigner GT800-300dpi EPL";// Test
 
-            ClickStartPrint = new DelegateCommand(StartPrint);
+            UsingRuleSequentialNumList = GetRuleSequentialNumList();
+            if (UsingRuleSequentialNumList.Count > 0)
+                Repetable = false;
+            else
+                Repetable = true;
+
+            ConvertRuleToText();
         }
+
+        #endregion Constructor
+
+        #region Functions
 
         private List<RuleSequentialNum> GetRuleSequentialNumList()
         {
             var rsnList = new List<RuleSequentialNum>();
             foreach (var obj in ObjectList)
             {
-                if (obj is IPrintableObject)
-                {
-                    var pObj = obj as IPrintableObject;
-                    if (!string.IsNullOrEmpty(pObj.OriginText))
-                    {
-                        var wordList = RuleRregulation.RuleNameSeperatorToList(pObj.OriginText);
-                        foreach (var word in wordList)
-                        {
-                            if (RuleRregulation.RuleNameVerifier(word))
-                            {
-                                foreach (RuleMain r in RuleList)
-                                {
-                                    if (r.Name.Equals(word) && r.Format == RuleRregulation.RuleFormat.SEQUENTIAL_NUM)
-                                    {
-                                        var rsn = r.Content as RuleSequentialNum;
-                                        if (!rsnList.Contains(rsn))
-                                        {
-                                            rsnList.Add(rsn);
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                if (!(obj is IPrintableObject))
+                    continue;
+
+                var pObj = obj as IPrintableObject;
+                if (string.IsNullOrEmpty(pObj.OriginText))
+                    continue;
+
+                var rsn = GetRuleSequentialNum(pObj.OriginText);
+                if (rsn != null && !rsnList.Contains(rsn))
+                    rsnList.Add(rsn);
             }
             return rsnList;
         }
 
-        public ICommand ClickStartPrint { get; private set; }
-        public void StartPrint()
+        private RuleSequentialNum GetRuleSequentialNum(string originText)
         {
-            List<RuleSequentialNum> rsnList = GetRuleSequentialNumList();
-            if (rsnList.Count == 0)
-            {
-                for (var i = 0; i < Repetition; i++)
-                {
-                    ConvertRuleToText();
-                    //print to window
-                    //screenshot
-                    //print
-                }
-            }
-            else if (rsnList.Count == 1)
-            {
-                RuleSequentialNum rsn = rsnList[0];
-                for (var i = rsn.CurrNum; i <= rsn.MaxNum; i += rsn.Increment)
-                {
-                    rsn.CurrNum = i;
-                    ConvertRuleToText();
-                    //print to window
-                    //screen shot
-                    //print
+            var wordList = RuleRegulation.RuleNameSeperatorToList(originText);
 
-                    ////이미지화
-                    //Bitmap img = null;
-                    //string[] oList = null;
-                    //bool ret = Utils.PrintService.PrintLabel(img, oList);
-                    var ps = new PrintService();
-                    ps.Label = Label;
-                    ps.ObjectList = ObjectList;
-                    ps.PrintLabel();
+            foreach (var word in wordList)
+            {
+                if (!RuleRegulation.RuleNameVerifier(word))
+                    continue;
+
+                var rName = RuleRegulation.RuleNameExtractor(word);
+                foreach (RuleMain r in RuleList)
+                {
+                    if (r.Name.Equals(rName) && r.Format == RuleRegulation.RuleFormat.SEQUENTIAL_NUM)
+                        return r.Content as RuleSequentialNum;
                 }
             }
-            else
-            {
-                // 오류! -> Dialog window
-            }
+            return null;
         }
 
         private void ConvertRuleToText()
         {
             foreach (var obj in ObjectList)
             {
-                if (obj is IPrintableObject)
-                {
-                    var pObj = obj as IPrintableObject;
-                    if (!string.IsNullOrEmpty(pObj.OriginText))
-                    {
-                        var wordList = RuleRregulation.RuleNameSeperatorToList(pObj.OriginText);
+                if (!(obj is IPrintableObject))
+                    continue;
 
-                        for (int i = 0; i < wordList.Count; i++)
+                var pObj = obj as IPrintableObject;
+                if (string.IsNullOrEmpty(pObj.OriginText))
+                    continue;
+
+                var wordList = RuleRegulation.RuleNameSeperatorToList(pObj.OriginText);
+                for (int i = 0; i < wordList.Count; i++)
+                {
+                    if (RuleRegulation.RuleNameVerifier(wordList[i]))
+                    {
+                        var rName = RuleRegulation.RuleNameExtractor(wordList[i]);
+                        foreach (RuleMain r in RuleList)
                         {
-                            if (RuleRregulation.RuleNameVerifier(wordList[i]))
+                            if (r.Name.Equals(rName))
                             {
-                                var rName = RuleRregulation.RuleNameExtractor(wordList[i]);
-                                foreach (RuleMain r in RuleList)
-                                {
-                                    if (r.Name.Equals(rName))
-                                    {
-                                        wordList[i] = r.PrintValue;
-                                        break;
-                                    }
-                                }
+                                wordList[i] = r.PrintValue;
+                                break;
                             }
                         }
-                        pObj.Text = string.Join("", wordList.ToArray());
-                        if (pObj.Text.Length > pObj.MaxLength)
-                            pObj.Text = pObj.Text.Substring(0, pObj.MaxLength);
                     }
                 }
+
+                pObj.Text = string.Join("", wordList.ToArray());
+                if (pObj.Text.Length > pObj.MaxLength)
+                    pObj.Text = pObj.Text.Substring(0, pObj.MaxLength);
             }
         }
 
-        public void TestZebraPrint(PrintLabelView PLView)
+        #endregion Functions
+        
+        #region Print
+
+        public void StartPrint(PrintLabelView PLView)
         {
             try
             {
-                var ZPLCommand = new System.Text.StringBuilder();
-
-                ZPLCommand.AppendFormat("^XA");
-                ZPLCommand.AppendFormat("^FO{0},{1}", OffsetX, OffsetY);
-                ZPLCommand.AppendFormat("{0}", BitmapConversion.ConvertImageToZPLString(PLView));
-                ZPLCommand.AppendFormat("^FS");
-                ZPLCommand.AppendFormat("^XZ");
-
-                Console.WriteLine(ZPLCommand);
-                pService.PrintZebraProduct("", ZPLCommand.ToString());
+                switch (UsingRuleSequentialNumList.Count)
+                {
+                    case 0:
+                        for (var i = 0; i < Repetition; i++)
+                        {
+                            ConvertRuleToText();
+                            System.Threading.Thread.Sleep(1000);
+                            Print(PLView);
+                        }
+                        break;
+                    case 1:
+                        RuleSequentialNum rsn = UsingRuleSequentialNumList[0];
+                        for (var i = rsn.CurrNum; i <= rsn.MaxNum; i += rsn.Increment)
+                        {
+                            rsn.CurrNum = i;
+                            ConvertRuleToText();
+                            System.Threading.Thread.Sleep(1000);
+                            Print(PLView);
+                        }
+                        break;
+                    default:
+                        new DialogService().ShowSimpleTextDialog(Application.Current.MainWindow, "Exception", "There are a lot of Serial Rules.");
+                        break;
+                }
             }
             catch (Exception ex)
             {
                 new DialogService().ShowSimpleTextDialog(Application.Current.MainWindow, "Exception", ex.Source + ex.Message + "\n" + ex.StackTrace);
             }
         }
+
+        private void Print(PrintLabelView PLView)
+        {
+            switch (Label.SelectedPrinter)
+            {
+                case PrinterOption.PrinterType.ZEBRA:
+                    var zplCode = new System.Text.StringBuilder();
+                    zplCode.AppendFormat("^XA");
+                    zplCode.AppendFormat("^FO{0},{1}", OffsetX, OffsetY);
+                    zplCode.AppendFormat("{0}", BitmapConversion.ConvertImageToZPLString(PLView));
+                    zplCode.AppendFormat("^FS");
+                    zplCode.AppendFormat("^XZ");
+
+                    Console.WriteLine(zplCode);
+                    pService.PrintZebraProduct(SelectedPrinterName, zplCode.ToString());
+                    break;
+            }
+        }
+
+        #endregion Print
     }
 }

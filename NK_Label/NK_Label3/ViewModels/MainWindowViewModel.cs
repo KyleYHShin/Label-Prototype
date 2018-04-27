@@ -6,6 +6,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 
+using BasicModule.Common;
 using BasicModule.Files;
 using BasicModule.Models;
 using BasicModule.Utils;
@@ -155,14 +156,14 @@ namespace NK_Label3.ViewModels
                 {
                     if (DialogService.ShowSimpleSelectDialog(Application.Current.MainWindow, "Warning", "'" + lvm.Label.Name + "'에 수정된 항목이 있습니다.\n 무시하고 종료하시겠습니까?") == true)
                     {
-                        _regionManager.Regions["OptionRegion"].RemoveAll();
+                        _regionManager.Regions[RegionNames.OptionRegion].RemoveAll();
                         LabelViewList.Remove(SelectedLabelView);
                         return true;
                     }
                 }
                 else
                 {
-                    _regionManager.Regions["OptionRegion"].RemoveAll();
+                    _regionManager.Regions[RegionNames.OptionRegion].RemoveAll();
                     LabelViewList.Remove(SelectedLabelView);
                     return true;
                 }
@@ -250,9 +251,8 @@ namespace NK_Label3.ViewModels
             {
                 var LVM = SelectedLabelView.DataContext as LabelViewModel;
                 var CopiedRuleList = LVM.CloneRuleList;
-                var ruleEditViewModel = new RuleListViewModel(CopiedRuleList);
-                var ruleEditView = new RuleListView();
-                ruleEditView.DataContext = ruleEditViewModel;
+                var ruleEditView = new RuleListView(_regionManager);
+                (ruleEditView.DataContext as RuleListViewModel).RuleList = CopiedRuleList;
 
                 if (DialogService.ShowSelectDialog(Application.Current.MainWindow, ruleEditView, "Edit Rules") == true)
                 {

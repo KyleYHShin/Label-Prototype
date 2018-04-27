@@ -1,4 +1,5 @@
 ﻿using BasicModule.Models.Common;
+using BasicModule.Models.Option;
 
 namespace BasicModule.Models
 {
@@ -6,8 +7,8 @@ namespace BasicModule.Models
     {
         #region Default Properties
 
-        private int _selectedPrinter;
-        public int SelectedPrinter { get { return _selectedPrinter; } set { _selectedPrinter = value; OnPropertyChanged(); } }
+        private PrinterOption.PrinterType _selectedPrinter;
+        public PrinterOption.PrinterType SelectedPrinter { get { return _selectedPrinter; } set { _selectedPrinter = value; OnPropertyChanged(); } }
 
         private double _selectedDpi;
         public double SelectedDpi

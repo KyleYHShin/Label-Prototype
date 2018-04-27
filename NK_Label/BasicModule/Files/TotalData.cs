@@ -4,32 +4,32 @@ using ZXing;
 
 namespace BasicModule.Files
 {
-    public class FileData
+    public class FileData_1
     {
-        public string FileVersion { get; set; }
+        public int FileVersion { get; set; }
 
-        public LabelFile Label { get; set; }
-        public List<TextFile> TextList { get; set; }
-        public List<BarcodeFile> BarcodeList { get; set; }
+        public LabelFile_1 Label { get; set; }
+        public List<TextFile_1> TextList { get; set; }
+        public List<BarcodeFile_1> BarcodeList { get; set; }
 
-        public List<RuleSeq> RuleSequentialNumList { get; set; }
-        public List<RuleTi> RuleTimeList { get; set; }
-        public List<RuleManu> RuleManualList { get; set; }
+        public List<RuleSequFile_1> RuleSequentialNumList { get; set; }
+        public List<RuleTimeFile_1> RuleTimeList { get; set; }
+        public List<RuleManuFile_1> RuleManualList { get; set; }
     }
 
-    public class LabelFile
+    public class LabelFile_1
     {
         public string Name { get; set; }
         public double Width { get; set; }
         public double Height { get; set; }
         public int Margin { get; set; }
 
-        public int SelectedPrinter { get; set; }
+        public Models.Option.PrinterOption.PrinterType SelectedPrinter { get; set; }
         public double SelectedDpi { get; set; }
         public double Radius { get; set; }
     }
 
-    public class TextFile
+    public class TextFile_1
     {
         public string Name { get; set; }
         public double Width { get; set; }
@@ -47,7 +47,7 @@ namespace BasicModule.Files
         public string TextAlignment { get; set; }
     }
 
-    public class BarcodeFile
+    public class BarcodeFile_1
     {
         public string Name { get; set; }
         public double Width { get; set; }
@@ -61,9 +61,9 @@ namespace BasicModule.Files
     }
 
 
-    public class RuleSeq
+    public class RuleSequFile_1
     {
-        public RuleRregulation.RuleFormat Format { get; set; }
+        public RuleRegulation.RuleFormat Format { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public RSContent Contents { get; set; }
@@ -78,9 +78,9 @@ namespace BasicModule.Files
         }
     }
 
-    public class RuleTi
+    public class RuleTimeFile_1
     {
-        public RuleRregulation.RuleFormat Format { get; set; }
+        public RuleRegulation.RuleFormat Format { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public RTContent Contents { get; set; }
@@ -91,9 +91,9 @@ namespace BasicModule.Files
         }
     }
 
-    public class RuleManu
+    public class RuleManuFile_1
     {
-        public RuleRregulation.RuleFormat Format { get; set; }
+        public RuleRegulation.RuleFormat Format { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public System.Xml.Linq.XElement Contents { get; set; }
