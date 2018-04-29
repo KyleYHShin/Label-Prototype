@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="BasicModule.Views.Rule.EditOrDeleteButtonView"
+﻿<UserControl x:Class="BasicModule.Views.Rule.CompleteOrCancleButtonView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -15,8 +15,8 @@
             HorizontalAlignment="Center">
 
             <Button
-                Content=" Edit Rule "
-                Command="{Binding Edit}"
+                Content=" Edit Complete "
+                Command="{Binding Complete}"
                 Background="{StaticResource NKSecondBrush}"
                 BorderBrush="{StaticResource NKSecondBrush}"
                 Style="{StaticResource OptionButton}"
@@ -24,8 +24,8 @@
                 MinWidth="90"/>
 
             <Button
-                Content="Delete Rule"
-                Command="{Binding Delete}"
+                Content=" Edit Cancle"
+                Command="{Binding Cancle}"
                 Background="{StaticResource NKThirdBrush}"
                 BorderBrush="{StaticResource NKThirdBrush}"
                 Style="{StaticResource OptionButton}"

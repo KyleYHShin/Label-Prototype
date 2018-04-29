@@ -40,6 +40,7 @@
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="FontFamily" Value="Pescadero"/>
     </Style>
+    
     <Style TargetType="{x:Type TextBlock}"
            x:Key="OptionColumnHeader">
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -63,6 +64,7 @@
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="FontSize" Value="13"/>
     </Style>
+    
     <Style TargetType="{x:Type ComboBox}"
            x:Key="OptionComboBoxValue">
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -70,6 +72,7 @@
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="Margin" Value="1"/>
     </Style>
+    
     <Style TargetType="{x:Type Button}"
            x:Key="OptionButton">
         <Setter Property="Height" Value="35"/>
@@ -133,5 +136,12 @@
     </ControlTemplate>
 
     <!--Rule-->
-    
+    <Style TargetType="{x:Type Button}"
+           x:Key="ExampleButton">
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="FontFamily" Value="Pescadero"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
+
 </ResourceDictionary>

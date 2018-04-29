@@ -39,26 +39,10 @@ namespace BasicModule.Models.Rule
         }
 
         private string _description;
-        public string Description
-        {
-            get { return _description; }
-            set
-            {
-                _description = value;
-                OnPropertyChanged();
-            }
-        }
+        public string Description { get { return _description; } set { _description = value; OnPropertyChanged(); } }
 
         private IRuleObject _content;
-        public IRuleObject Content
-        {
-            get { return _content; }
-            set
-            {
-                _content = value;
-                OnPropertyChanged();
-            }
-        }
+        public IRuleObject Content { get { return _content; } set { _content = value; OnPropertyChanged(); } }
 
         #endregion
 

@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicModuleModule.cs" />
+    <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Models\BarcodeObject.cs" />
     <Compile Include="Models\Common\BasicObject.cs" />
     <Compile Include="Models\Common\IPrintableObject.cs" />
@@ -159,14 +160,14 @@
     <Compile Include="Views\Print\PrintWindow.xaml.cs">
       <DependentUpon>PrintWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Rule\CompleteOrCancleButtonView.xaml.cs">
+      <DependentUpon>CompleteOrCancleButtonView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Rule\EditOrDeleteButtonView.xaml.cs">
       <DependentUpon>EditOrDeleteButtonView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Rule\RuleCommonView.xaml.cs">
       <DependentUpon>RuleCommonView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Rule\RuleEditView.xaml.cs">
-      <DependentUpon>RuleEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Rule\RuleListView.xaml.cs">
       <DependentUpon>RuleListView.xaml</DependentUpon>
@@ -230,15 +231,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Rule\CompleteOrCancleButtonView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Rule\EditOrDeleteButtonView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Rule\RuleCommonView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Rule\RuleEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

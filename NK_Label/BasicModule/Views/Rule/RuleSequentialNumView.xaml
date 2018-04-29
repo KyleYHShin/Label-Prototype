@@ -9,87 +9,87 @@
         <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
     </UserControl.Resources>
 
-    <Grid Width="Auto">
-        <StackPanel>
-            <GroupBox
-                Header=" Rule Sequential Number "
-                Style="{StaticResource OptionGroup}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" MinWidth="100"/>
-                        <ColumnDefinition Width="*" MinWidth="200"/>
-                    </Grid.ColumnDefinitions>
+    <Grid Width="410">
+        <GroupBox
+            Header=" Rule Sequential Number "
+            Style="{StaticResource OptionGroup}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" MinWidth="100"/>
+                    <ColumnDefinition Width="*" MinWidth="200"/>
+                </Grid.ColumnDefinitions>
 
-                    <TextBlock
-                        Grid.Row="0" Grid.Column="0"
-                        Text="Number Length"
-                        Style="{StaticResource OptionColumnHeader}"/>
-                    <TextBox
-                        Grid.Row="0" Grid.Column="1"
-                        Text="{Binding Rule.Content.NumLength}"
-                        Style="{StaticResource OptionColumnValue}"
-                        IsEnabled="{Binding IsEditMode}"/>
+                <TextBlock
+                    Grid.Row="0" Grid.Column="0"
+                    Text="Number Length"
+                    Style="{StaticResource OptionColumnHeader}"/>
+                <TextBox
+                    Grid.Row="0" Grid.Column="1"
+                    Text="{Binding Rule.Content.NumLength}"
+                    Style="{StaticResource OptionColumnValue}"
+                    IsEnabled="{Binding IsEditMode}"/>
 
-                    <TextBlock
-                        Grid.Row="1" Grid.Column="0"
-                        Text="Minimum Number"
-                        Style="{StaticResource OptionColumnHeader}"/>
-                    <TextBox
-                        Grid.Row="1" Grid.Column="1"
-                        Text="{Binding Rule.Content.MinNum}"
-                        Style="{StaticResource OptionColumnValue}"
-                        IsEnabled="{Binding IsEditMode}"/>
+                <TextBlock
+                    Grid.Row="1" Grid.Column="0"
+                    Text="Maximum Number"
+                    Style="{StaticResource OptionColumnHeader}" />
+                <TextBox
+                    Grid.Row="1" Grid.Column="1"
+                    Text="{Binding Rule.Content.MaxNum}"
+                    Style="{StaticResource OptionColumnValue}"
+                    IsEnabled="{Binding IsEditMode}"/>
 
-                    <TextBlock
-                        Grid.Row="2" Grid.Column="0"
-                        Text="Current Number"
-                        Style="{StaticResource OptionColumnHeader}" />
-                    <TextBox
-                        Grid.Row="2" Grid.Column="1"
-                        Text="{Binding Rule.Content.CurrNum}"
-                        Style="{StaticResource OptionColumnValue}"
-                        IsEnabled="{Binding IsEditMode}"/>
+                <TextBlock
+                    Grid.Row="2" Grid.Column="0"
+                    Text="Minimum Number"
+                    Style="{StaticResource OptionColumnHeader}"/>
+                <TextBox
+                    Grid.Row="2" Grid.Column="1"
+                    Text="{Binding Rule.Content.MinNum}"
+                    Style="{StaticResource OptionColumnValue}"
+                    IsEnabled="{Binding IsEditMode}"/>
 
-                    <TextBlock
-                        Grid.Row="3" Grid.Column="0"
-                        Text="Maximum Number"
-                        Style="{StaticResource OptionColumnHeader}" />
-                    <TextBox
-                        Grid.Row="3" Grid.Column="1"
-                        Text="{Binding Rule.Content.MaxNum}"
-                        Style="{StaticResource OptionColumnValue}"
-                        IsEnabled="{Binding IsEditMode}"/>
+                <TextBlock
+                    Grid.Row="3" Grid.Column="0"
+                    Text="Increment"
+                    Style="{StaticResource OptionColumnHeader}" />
+                <TextBox
+                    Grid.Row="3" Grid.Column="1"
+                    Text="{Binding Rule.Content.Increment}"
+                    Style="{StaticResource OptionColumnValue}"
+                    IsEnabled="{Binding IsEditMode}"/>
 
-                    <TextBlock
-                        Grid.Row="4" Grid.Column="0"
-                        Text="Increment"
-                        Style="{StaticResource OptionColumnHeader}" />
-                    <TextBox
-                        Grid.Row="4" Grid.Column="1"
-                        Text="{Binding Rule.Content.Increment}"
-                        Style="{StaticResource OptionColumnValue}"
-                        IsEnabled="{Binding IsEditMode}"/>
+                <TextBlock
+                    Grid.Row="4" Grid.Column="0"
+                    Text="Current Number"
+                    Style="{StaticResource OptionColumnHeader}" />
+                <TextBox
+                    Grid.Row="4" Grid.Column="1"
+                    Text="{Binding Rule.Content.CurrNum}"
+                    Style="{StaticResource OptionColumnValue}"
+                    IsEnabled="{Binding IsEditMode}"/>
 
-                    <TextBlock
-                        Grid.Row="5" Grid.Column="0"
-                        Text="Example"
-                        Style="{StaticResource OptionColumnHeader}" />
-                    <TextBox
-                        Grid.Row="5" Grid.Column="1"
-                        Text="{Binding Rule.Content.PrintValue, Mode=OneWay}"
-                        Style="{StaticResource OptionColumnValue}"
-                        IsReadOnly="True"/>
-                </Grid>
-            </GroupBox>
-        </StackPanel>
+                <Button
+                    Grid.Row="5" Grid.Column="0"
+                    Content="Example"
+                    Command="{Binding PrintExample}"
+                    Style="{StaticResource ExampleButton}"
+                    IsEnabled="{Binding IsEditMode}"/>
+                <TextBox
+                    Grid.Row="5" Grid.Column="1"
+                    Text="{Binding Example, Mode=OneWay}"
+                    Style="{StaticResource OptionColumnValue}"
+                    IsReadOnly="True"/>
+            </Grid>
+        </GroupBox>
     </Grid>
 
 </UserControl>

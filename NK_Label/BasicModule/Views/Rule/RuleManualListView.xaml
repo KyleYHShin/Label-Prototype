@@ -4,7 +4,118 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" >
-    <Grid>
-            
+
+    <UserControl.Resources>
+        <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
+    </UserControl.Resources>
+
+    <Grid Width="410">
+        <GroupBox
+            Header=" Rule Manual List "
+            Style="{StaticResource OptionGroup}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" HorizontalAlignment="Center">
+                    <DataGrid
+                        ItemsSource="{Binding Rule.Content.ContentList}" 
+                        SelectedItem="{Binding SelectedManualContent}"
+                        
+                        ScrollViewer.CanContentScroll="True" 
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        
+                        SelectionMode="Single"
+                        AutoGenerateColumns="False"
+                        CanUserResizeColumns="True"
+                        CanUserSortColumns="True"
+                        
+                        HorizontalAlignment="Left"
+                        Height="180"
+                        Width="360"
+                        Margin="10"
+                        FontWeight="Normal" FontSize="14"
+                        IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn
+                                Header="Print Value"
+                                Binding="{Binding Path=Key}"
+                                FontWeight="Bold"
+                                Width="Auto" MinWidth="100"
+                                CanUserResize="True"/>
+                            <DataGridTextColumn
+                                Header="Description"
+                                Binding="{Binding Path=Value}"
+                                FontWeight="Normal"
+                                Width="Auto" MinWidth="200"
+                                CanUserResize="True"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+
+                <GroupBox
+                    Grid.Row="1"
+                    Header=" Edit "
+                    Style="{StaticResource OptionGroup}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0" HorizontalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <TextBox
+                                Grid.Column="0"
+                                Text="{Binding EditKey}"
+                                Style="{StaticResource OptionColumnValue}"
+                                Width="100"
+                                IsEnabled="{Binding IsEditMode}"/>
+                            <TextBox
+                                Grid.Column="1"
+                                Text="{Binding EditValue}"
+                                Style="{StaticResource OptionColumnValue}"
+                                Width="235"
+                                IsEnabled="{Binding IsEditMode}"/>
+                        </Grid>
+
+                        <StackPanel
+                            Grid.Row="1"
+                            Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button
+                                Content="Add"
+                                Command="{Binding AddToList}"
+                                Height="30"
+                                MinWidth="90"
+                                Margin="10,0"
+                                IsEnabled="{Binding IsEditMode}"/>
+                            <Button
+                                Content="Edit Description" 
+                                Command="{Binding UpdateList}"
+                                Height="30"
+                                MinWidth="90"
+                                Margin="10,0"
+                                IsEnabled="{Binding IsEditMode}"/>
+                            <Button
+                                Content="Remove" 
+                                Command="{Binding RemoveFromList}"
+                                Height="30"
+                                MinWidth="90"
+                                Margin="10,0"
+                                IsEnabled="{Binding IsEditMode}"/>
+                        </StackPanel>
+                    </Grid>
+                </GroupBox>
+                
+            </Grid>
+        </GroupBox>
+        
     </Grid>
 </UserControl>

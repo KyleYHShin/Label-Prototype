@@ -10,7 +10,9 @@
     </UserControl.Resources>
 
     <Grid Width="Auto">
-        <GroupBox Style="{StaticResource OptionGroup}" Header=" Rule Common ">
+        <GroupBox
+            Header=" Rule Common "
+            Style="{StaticResource OptionGroup}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -51,7 +53,7 @@
                     ItemsSource="{Binding RuleFormatList}"
                     DisplayMemberPath="Key"
                     SelectedValuePath="Value"
-                    SelectedValue="{Binding Rule.Format}"
+                    SelectedValue="{Binding SelectedRuleFormat}"
                     Style="{StaticResource OptionComboBoxValue}"
                     IsEnabled="{Binding IsEditMode}"/>
             </Grid>

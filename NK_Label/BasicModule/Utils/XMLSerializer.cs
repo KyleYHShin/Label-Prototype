@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BasicModule.Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
@@ -36,7 +37,7 @@ namespace BasicModule.Utils
             return false;
         }
 
-        public static XElement DictionaryToXml(Dictionary<string, string> inputDictionary)
+        public static XElement DictionaryToXml(ObservableDictionary<string, string> inputDictionary)
         {
             var ret = new XElement(DICTIONARY);
             foreach (var pair in inputDictionary)
@@ -94,9 +95,9 @@ namespace BasicModule.Utils
             return null;
         }
 
-        public static Dictionary<string, string> XmlToDictionary(XElement inputXElement)
+        public static ObservableDictionary<string, string> XmlToDictionary(XElement inputXElement)
         {
-            var ret = new Dictionary<string, string>();
+            var ret = new ObservableDictionary<string, string>();
 
             foreach (XElement element in inputXElement.Elements())
                 ret.Add(element.Attribute(KEY).Value, element.Attribute(VALUE).Value);

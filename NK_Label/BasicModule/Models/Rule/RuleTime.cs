@@ -7,7 +7,7 @@ namespace BasicModule.Models.Rule
     {
         #region Properties
 
-        private string _pattern;
+        private string _pattern = "yyyy-MM-dd";
         public string Pattern
         {
             get { return _pattern; }

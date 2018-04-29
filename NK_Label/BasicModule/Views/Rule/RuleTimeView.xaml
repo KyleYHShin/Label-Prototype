@@ -9,8 +9,10 @@
         <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
     </UserControl.Resources>
 
-    <Grid Width="Auto">
-        <GroupBox Style="{StaticResource OptionGroup}" Header=" Rule Sequential Number ">
+    <Grid Width="410">
+        <GroupBox
+            Header=" Rule Sequential Number "
+            Style="{StaticResource OptionGroup}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -24,7 +26,7 @@
 
                 <TextBlock
                     Grid.Row="0" Grid.Column="0"
-                    Text="Time Patterns"
+                    Text="Patterns"
                     Style="{StaticResource OptionColumnHeader}"/>
                 <TextBox
                     Grid.Row="0" Grid.Column="1"
@@ -43,13 +45,15 @@
                     Style="{StaticResource OptionColumnValue}"
                     IsEnabled="{Binding IsEditMode}"/>
 
-                <TextBlock
+                <Button
                     Grid.Row="2" Grid.Column="0"
-                    Text="Example"
-                    Style="{StaticResource OptionColumnHeader}" />
+                    Content="Example"
+                    Command="{Binding PrintExample}"
+                    Style="{StaticResource ExampleButton}"
+                    IsEnabled="{Binding IsEditMode}"/>
                 <TextBox
                     Grid.Row="2" Grid.Column="1"
-                    Text="{Binding Rule.Content.PrintValue, Mode=OneWay}"
+                    Text="{Binding Example, Mode=OneWay}"
                     Style="{StaticResource OptionColumnValue}"
                     IsReadOnly="True"/>
             </Grid>

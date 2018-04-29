@@ -14,6 +14,7 @@ using BasicModule.ViewModels.Option;
 using BasicModule.Views.Option;
 using BasicModule.Utils;
 using System.Windows;
+using BasicModule.Common;
 
 namespace BasicModule.ViewModels
 {
@@ -109,7 +110,7 @@ namespace BasicModule.ViewModels
             };
             RuleManualList rml = new RuleManualList()
             {
-                ContentList = new Dictionary<string, string>()
+                ContentList = new ObservableDictionary<string, string>()
             };
             rml.AddList("key1", "Description1");
             rml.AddList("Key2", "Description2");

@@ -1,12 +1,13 @@
-﻿using BasicModule.Models.Common;
+﻿using BasicModule.Common;
+using BasicModule.Models.Common;
 using System.Collections.Generic;
 
 namespace BasicModule.Models.Rule
 {
     public class RuleManualList : NotifyPropertyChanged, IRuleObject
     {
-        private Dictionary<string, string> _contentList;
-        public Dictionary<string, string> ContentList
+        private ObservableDictionary<string, string> _contentList;
+        public ObservableDictionary<string, string> ContentList
         {
             get { return _contentList; }
             set
@@ -32,9 +33,32 @@ namespace BasicModule.Models.Rule
         public bool AddList(string key, string value)
         {
             if (!string.IsNullOrEmpty(key) && !string.IsNullOrWhiteSpace(key)
-                && !string.IsNullOrEmpty(value) && !string.IsNullOrWhiteSpace(value))
+                && !string.IsNullOrEmpty(value) && !string.IsNullOrWhiteSpace(value)
+                && ContentList != null && !ContentList.ContainsKey(key))
             {
                 ContentList.Add(key, value);
+                return true;
+            }
+            return false;
+        }
+        public bool UpdateList(string key, string value)
+        {
+            if (!string.IsNullOrEmpty(key) && !string.IsNullOrWhiteSpace(key)
+                && ContentList != null && ContentList.ContainsKey(key))
+            {
+                ContentList[key] = value;
+                return true;
+            }
+            return false;
+        }
+
+        public bool RemoveList(string key)
+        {
+            if (!string.IsNullOrEmpty(key) && !string.IsNullOrWhiteSpace(key)
+                && ContentList != null && ContentList.ContainsKey(key))
+            {
+                ContentList.Remove(key);
+                OnPropertyChanged("ContentList");
                 return true;
             }
             return false;
