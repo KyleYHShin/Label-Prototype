@@ -50,6 +50,7 @@
             <!--Click="Add_Rule"-->
             <Button
                 Content=" Create New Rule " 
+                Command="{Binding Create}"
                 Background="{StaticResource NKSecondBrush}"
                 BorderBrush="{StaticResource NKSecondBrush}"
                 Style="{StaticResource OptionButton}"

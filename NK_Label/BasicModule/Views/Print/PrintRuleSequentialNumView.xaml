@@ -1,0 +1,110 @@
+﻿<UserControl x:Class="BasicModule.Views.Print.PrintRuleSequentialNumView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" >
+
+    <UserControl.Resources>
+        <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <ListBox
+            ItemsSource="{Binding SeqRuleList}"
+            Background="Transparent"
+            BorderBrush="Black"
+            BorderThickness="1">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid
+                        Margin="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="Auto" MinWidth="100"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="Auto" MinWidth="100"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Grid.Row="0" Grid.Column="0"
+                            Text="Rule Name : " 
+                            Style="{StaticResource RuleColumnHeader}"/>
+                        <TextBlock
+                            Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"
+                            Text="{Binding Name}"
+                            Style="{StaticResource RuleColumnValue}"/>
+
+                        <TextBlock
+                            Grid.Row="1" Grid.Column="0"
+                            Text="Description : "
+                            Style="{StaticResource RuleColumnHeader}"/>
+                        <TextBlock 
+                            Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
+                            Text="{Binding Description}"
+                            Style="{StaticResource RuleColumnValue}"/>
+
+                        <TextBlock
+                            Grid.Row="2" Grid.Column="0"
+                            Text="Max : "
+                            Style="{StaticResource RuleColumnHeader}"/>
+                        <TextBlock
+                            Grid.Row="2" Grid.Column="1"
+                            Text="{Binding Content.MaxNum}"
+                            Style="{StaticResource RuleColumnValue}"/>
+                        <TextBlock
+                            Grid.Row="2" Grid.Column="2"
+                            Text="Min : "
+                            Style="{StaticResource RuleColumnHeader}"/>
+                        <TextBlock
+                            Grid.Row="2" Grid.Column="3"
+                            Text="{Binding Content.MinNum}"
+                            Style="{StaticResource RuleColumnValue}"/>
+
+                        <TextBlock
+                            Grid.Row="3" Grid.Column="0"
+                            Text="Inc : "
+                            Style="{StaticResource RuleColumnHeader}"/>
+                        <TextBlock
+                            Grid.Row="3" Grid.Column="1"
+                            Text="{Binding Content.Increment}"
+                            Style="{StaticResource RuleColumnValue}"/>
+                        <TextBlock
+                            Grid.Row="3" Grid.Column="2"
+                            Text="Length : "
+                            Style="{StaticResource RuleColumnHeader}"/>
+                        <TextBlock
+                            Grid.Row="3" Grid.Column="3"
+                            Text="{Binding Content.NumLength}"
+                            Style="{StaticResource RuleColumnValue}"/>
+
+                        <TextBlock
+                            Grid.Row="4" Grid.Column="0"
+                            Text="Current : "
+                            Style="{StaticResource RuleColumnHeader}"
+                            Foreground="Red"/>
+                        <TextBox
+                            Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3"
+                            Text="{Binding Content.CurrNum}"
+                            Style="{StaticResource OptionColumnValue}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+            <!--Block Highlight-->
+            <ListBox.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+            </ListBox.Resources>
+        </ListBox>
+
+    </Grid>
+</UserControl>

@@ -1,11 +1,12 @@
 ﻿using BasicModule.Common;
 using BasicModule.Models.Rule;
+using BasicModule.Utils;
 using BasicModule.Views.Rule;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
-using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace BasicModule.ViewModels.Rule
@@ -14,9 +15,9 @@ namespace BasicModule.ViewModels.Rule
     {
         #region Rule Properties
 
-        private readonly List<RuleMain> RuleList;
+        private readonly ObservableCollection<RuleMain> OriginalRuleList;
+        private RuleMain OriginalRule;
 
-        private RuleMain CopiedRule;
         private RuleMain _rule;
         public RuleMain Rule { get { return _rule; } set { SetProperty(ref _rule, value); } }
 
@@ -117,16 +118,17 @@ namespace BasicModule.ViewModels.Rule
 
 
         private readonly IRegionManager RegionManager;
-        public RuleEditorViewModel(IRegionManager regionManager, List<RuleMain> originalRuleList, RuleMain originalRule)
+        public RuleEditorViewModel(IRegionManager regionManager, ObservableCollection<RuleMain> originalRuleList, RuleMain originalRule)
         {
             RegionManager = regionManager;
             RegionManager.Regions[RegionNames.RuleCommon].RemoveAll();
             RegionManager.Regions[RegionNames.RuleContent].RemoveAll();
             RegionManager.Regions[RegionNames.RuleButton].RemoveAll();
+            
+            OriginalRuleList = originalRuleList;
+            OriginalRule = originalRule;
 
-            RuleList = originalRuleList;
             Rule = originalRule.Clone as RuleMain;
-
             SelectedRuleFormat = Rule.Format;
 
             var topView = new RuleCommonView();
@@ -200,34 +202,64 @@ namespace BasicModule.ViewModels.Rule
         public ICommand Edit { get; private set; }
         private void IntoEditMode()
         {
-            CopiedRule = Rule.Clone as RuleMain;
             IsEditMode = true;
         }
 
         public ICommand Delete { get; private set; }
         private void DeleteRule()
         {
-            Console.WriteLine("Delete this rule");
+            if (DialogService.ShowSimpleSelectDialog("Alarm", "'" + Rule.Name + "'을 삭제하시겠습니까?") == true)
+            {
+                OriginalRuleList.Remove(OriginalRule);
+                RegionManager.Regions[RegionNames.RuleCommon].RemoveAll();
+                RegionManager.Regions[RegionNames.RuleContent].RemoveAll();
+                RegionManager.Regions[RegionNames.RuleButton].RemoveAll();
+            }
         }
 
         public ICommand Complete { get; private set; }
         private void EditComplete()
         {
-
+            if (ErrorMsg != null)
+            {
+                DialogService.ShowSimpleTextDialog("Warning", ErrorMsg);
+            }
+            else
+            {
+                var index = OriginalRuleList.IndexOf(OriginalRule);
+                OriginalRuleList.RemoveAt(index);
+                OriginalRuleList.Insert(index, Rule.Clone as RuleMain);
+                IsEditMode = false;
+            }
         }
-        private bool Verifier()
+        private string ErrorMsg
         {
-            foreach (var r in RuleList)
-                if (r.Name.Equals(Rule.Name))
-                    return false;
-            // 기타 규칙 일치하는지 확인 후 리턴
-            return true;
+            get
+            {
+                if (string.IsNullOrEmpty(Rule.Name) || string.IsNullOrWhiteSpace(Rule.Name))
+                    return "규칙 명이 비었습니다.";
+
+                if (string.IsNullOrEmpty(Rule.Description) || string.IsNullOrWhiteSpace(Rule.Description))
+                    return "규칙에 대한 설명이 비었습니다.";
+
+                if (!RuleRegulation.BarcodeFormatList.ContainsValue(SelectedRuleFormat))
+                    return "규칙 타입이 올바르지 않습니다.";
+
+                foreach (var r in OriginalRuleList)
+                {
+                    if (r.Equals(OriginalRule))
+                        continue;
+                    if (r.Name.Equals(Rule.Name))
+                        return "중복된 규칙명이 존재합니다";
+                }
+                return null;
+            }
         }
 
         public ICommand Cancle { get; private set; }
         private void EditCancle()
         {
-            Rule = CopiedRule;
+            Rule = OriginalRule.Clone as RuleMain;
             SelectedRuleFormat = Rule.Format;
             IsEditMode = false;
         }

@@ -14,6 +14,11 @@ namespace BasicModule.Common
         public static string RuleContent => "RuleContent";
         public static string RuleButton => "RuleButton";
 
+        // PrintWindow
+        public static string PrintLabelView => "PrintLabelView";
+        public static string PrintRuleSeq => "PrintRuleSeq";
+        public static string PrintRuleManu => "PrintRuleManu";
+        public static string PrintRuleTime => "PrintRuleTime";
     }
 
     public static class RegionController

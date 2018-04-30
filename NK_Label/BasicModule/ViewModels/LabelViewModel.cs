@@ -172,8 +172,8 @@ namespace BasicModule.ViewModels
                         + "\nText : " + bo.Text
                         + "\n\n을(를) 삭제하시겠습니까?";
                 }
-
-                if (new DialogService().ShowSimpleSelectDialog(Application.Current.MainWindow, "Alarm", msg) == true)
+                
+                if (DialogService.ShowSimpleSelectDialog(Application.Current.MainWindow, "Alarm", msg) == true)
                 {
                     ObjectList.Remove(SelectedObject);
                     SelectedObject = null;
@@ -239,11 +239,11 @@ namespace BasicModule.ViewModels
             }
         }
 
-        public List<RuleMain> CloneRuleList
+        public ObservableCollection<RuleMain> CloneObservableRuleList
         {
             get{
 
-                var newList = new List<RuleMain>();
+                var newList = new ObservableCollection<RuleMain>();
                 foreach (RuleMain r in RuleList)
                 {
                     newList.Add(r.Clone as RuleMain);

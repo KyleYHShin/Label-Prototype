@@ -1,14 +1,16 @@
 ﻿using BasicModule.Models.Rule;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace BasicModule.ViewModels.Rule
 {
     public class RuleListViewModel : BindableBase
     {
-        private List<RuleMain> _ruleList;
-        public List<RuleMain> RuleList { get { return _ruleList; } set { SetProperty(ref _ruleList, value); } }
+        private ObservableCollection<RuleMain> _ruleList;
+        public ObservableCollection<RuleMain> RuleList { get { return _ruleList; } set { SetProperty(ref _ruleList, value); } }
 
         private RuleMain _selectedRule;
         public RuleMain SelectedRule {
@@ -19,7 +21,7 @@ namespace BasicModule.ViewModels.Rule
 
                 if (_selectedRule == null)
                     return;
-                new RuleEditorViewModel(RegionManager, RuleList, _selectedRule);
+                new RuleEditorViewModel(RegionManager, RuleList, SelectedRule);
             }
         }
 
@@ -27,7 +29,31 @@ namespace BasicModule.ViewModels.Rule
         public RuleListViewModel(IRegionManager regionManager)
         {
             RegionManager = regionManager;
+
+            Create = new DelegateCommand(CreateNewRule);
         }
-        
+
+        public ICommand Create { get; private set; }
+        private void CreateNewRule()
+        {
+            var newRule = new RuleMain();
+            string newName = "New Rule ";
+            int addNum = 1;
+            foreach(var r in RuleList)
+            {
+                if(r.Name.Equals(newName + addNum.ToString()))
+                {
+                    addNum++;
+                }
+            }
+            newRule.Name = newName + addNum.ToString();
+            newRule.Format = RuleRegulation.RuleFormat.SEQUENTIAL_NUM;
+
+            RuleList.Add(newRule);
+            SetProperty(ref _selectedRule, newRule);
+
+            var reVM = new RuleEditorViewModel(RegionManager, RuleList, SelectedRule);
+            reVM.IsEditMode = true;
+        }
     }
 }

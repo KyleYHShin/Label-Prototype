@@ -1,6 +1,5 @@
 ﻿using BasicModule.Common;
 using BasicModule.Models.Common;
-using System.Collections.Generic;
 
 namespace BasicModule.Models.Rule
 {
@@ -14,8 +13,6 @@ namespace BasicModule.Models.Rule
             {
                 _contentList = value;
                 OnPropertyChanged();
-                //개별 추가(or 데이터 변경) 시 화면갱신 되는지 확인
-                //안될경우 메서드 작성 후 onpropertychanged 호출
             }
         }
 
@@ -69,7 +66,12 @@ namespace BasicModule.Models.Rule
             get
             {
                 var obj = new RuleManualList();
-                obj.ContentList = ContentList;
+                obj.ContentList = new ObservableDictionary<string, string>();
+                foreach (var c in ContentList)
+                {
+                    obj.AddList(c.Key, c.Value);
+                }
+                obj.SelectedContent = SelectedContent;
                 return obj;
             }
         }

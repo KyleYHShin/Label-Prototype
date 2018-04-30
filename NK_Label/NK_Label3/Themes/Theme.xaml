@@ -1,4 +1,5 @@
 ﻿<!--Source for Release-->
+<!--Source for Develope-->
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
@@ -142,6 +143,25 @@
         <Setter Property="FontFamily" Value="Pescadero"/>
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="FontSize" Value="14"/>
+    </Style>
+
+    <Style TargetType="{x:Type TextBlock}"
+           x:Key="RuleColumnHeader">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Margin" Value="3,5,5,5"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="FontFamily" Value="Pescadero"/>
+    </Style>
+    <Style TargetType="{x:Type TextBlock}"
+           x:Key="RuleColumnValue">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Margin" Value="5,5,3,5"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Pescadero"/>
     </Style>
 
 </ResourceDictionary>

@@ -12,7 +12,7 @@ namespace BasicModule.Utils
         public LabelObject Label { get; set; }
         public ObservableCollection<BasicObject> ObjectList { get; set; }
 
-        public List<string> GetPrinterList()
+        public List<string> GetUsablePrinterList()
         {
             var pNameList = new List<string>();
             

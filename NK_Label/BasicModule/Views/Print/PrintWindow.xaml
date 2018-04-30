@@ -3,6 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner">
 
@@ -10,44 +12,125 @@
         <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
     </Window.Resources>
 
-    <Grid Width="Auto" Height="Auto"
-          Background="Gray">
+    <Grid
+        Width="Auto" MaxWidth="1280"
+        Height="Auto" MaxHeight="700"
+        Background="Gray">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Row="0" Grid.Column="0"
               Margin="10"
               HorizontalAlignment="Center" VerticalAlignment="Center">
-            <ContentControl x:Name="LABEL_ContentControl" />
+            <ContentControl x:Name="PrintLabelView" />
         </Grid>
-        
-        <StackPanel Grid.Row="0" Grid.Column="1">
+
+        <Grid Grid.Row="1" Grid.Column="0"
+              Margin="10"
+              Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                Grid.Row="0" Grid.Column="0"
+                Text="Printer : "
+                Style="{StaticResource RuleColumnHeader}"/>
+            <ComboBox
+                Grid.Row="0" Grid.Column="1"
+                ItemsSource="{Binding PrinterList}"
+                DisplayMemberPath="Key"
+                SelectedValuePath="Value"
+                SelectedValue="{Binding Label.SelectedPrinter}"
+                Style="{StaticResource OptionComboBoxValue}" />
+            <TextBlock
+                Grid.Row="0" Grid.Column="2"
+                Text="DPI : "
+                Style="{StaticResource RuleColumnHeader}"/>
+            <ComboBox
+                Grid.Row="0" Grid.Column="3"
+                ItemsSource="{Binding DpiList}"
+                DisplayMemberPath="Key"
+                SelectedValuePath="Value"
+                SelectedValue="{Binding Label.SelectedDpi}"
+                Style="{StaticResource OptionComboBoxValue}"/>
             
-        </StackPanel>
-        <StackPanel Grid.Row="0" Grid.Column="2">
-            
-        </StackPanel>
+            <TextBlock
+                Grid.Row="1" Grid.Column="0"
+                Text="Printer : "
+                Style="{StaticResource RuleColumnHeader}"/>
+            <ComboBox
+                Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
+                ItemsSource="{Binding UsablePrinterList}"
+                SelectedValue="{Binding SelectedPrinterName}"
+                Style="{StaticResource OptionComboBoxValue}" />
+
+            <TextBlock
+                Grid.Row="2" Grid.Column="0"
+                Text="Offset X : "
+                Style="{StaticResource RuleColumnHeader}"/>
+            <TextBox 
+                Grid.Row="2" Grid.Column="1"
+                Text="{Binding OffsetX}"
+                Style="{StaticResource OptionColumnValue}"/>
+            <TextBlock
+                Grid.Row="2" Grid.Column="2"
+                Text="Offset Y : "
+                Style="{StaticResource RuleColumnHeader}"/>
+            <TextBox 
+                Grid.Row="2" Grid.Column="3"
+                Text="{Binding OffsetY}"
+                Style="{StaticResource OptionColumnValue}"/>
+
+            <TextBlock
+                Grid.Row="3" Grid.Column="2"
+                Text="Repetition : "
+                Style="{StaticResource RuleColumnHeader}"/>
+            <TextBox 
+                Grid.Row="3" Grid.Column="3"
+                Text="{Binding Repetition}"
+                Style="{StaticResource OptionColumnValue}"
+                IsEnabled="{Binding Repetable}"/>
+
+        </Grid>
 
         <StackPanel
-            Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+            Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
             Orientation="Horizontal" HorizontalAlignment="Center">
 
             <!--Command="{Binding ClickStartPrint}"-->
             <Button
                 Content="Start"
                 Click="PrintLabel"
+                Background="{StaticResource NKFirstBrush}"
+                BorderBrush="{StaticResource NKFirstBrush}"
+                Style="{StaticResource OptionButton}"
+                Template="{StaticResource OptionApplyButton}"
+                MinWidth="100"/>
+            <Button
+                Content="Refresh"
+                Command="{Binding Refresh}"
                 Background="{StaticResource NKSecondBrush}"
                 BorderBrush="{StaticResource NKSecondBrush}"
                 Style="{StaticResource OptionButton}"
                 Template="{StaticResource OptionApplyButton}"
-                    MinWidth="100"/>
+                MinWidth="100"/>
             <Button
                 Content="Close"
                 Click="Click_Close"
@@ -56,8 +139,25 @@
                 BorderBrush="{StaticResource NKThirdBrush}"
                 Style="{StaticResource OptionButton}"
                 Template="{StaticResource OptionCancleButton}"
-                    MinWidth="100"/>
+                MinWidth="100"/>
         </StackPanel>
+
+        <ScrollViewer
+            Grid.Row="0" Grid.RowSpan="2" Grid.Column="1"
+            MaxWidth="1000"
+            MaxHeight="720"
+            Margin="0,10,10,10"
+            Background="White"
+            VerticalScrollBarVisibility="Auto"
+            HorizontalScrollBarVisibility="Auto"
+            CanContentScroll="True">
+            <StackPanel Orientation="Vertical" >
+                <ContentControl x:Name="PrintRuleSeq"/>
+                <ContentControl x:Name="PrintRuleManu"/>
+                <ContentControl x:Name="PrintRuleTime"/>
+            </StackPanel>
+        </ScrollViewer>
+        
     </Grid>
     
 </Window>

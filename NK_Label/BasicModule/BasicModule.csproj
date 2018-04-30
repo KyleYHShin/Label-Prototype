@@ -133,7 +133,7 @@
     <Compile Include="ViewModels\Option\OptionBarcodeViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionLabelViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionTextViewModel.cs" />
-    <Compile Include="ViewModels\Print\PrintViewModel.cs" />
+    <Compile Include="ViewModels\Print\PrintWindowViewModel.cs" />
     <Compile Include="ViewModels\Rule\RuleEditorViewModel.cs" />
     <Compile Include="ViewModels\Rule\RuleListViewModel.cs" />
     <Compile Include="Views\Common\DialogSelectWindow.xaml.cs">
@@ -156,6 +156,15 @@
     </Compile>
     <Compile Include="Views\Print\PrintLabelView.xaml.cs">
       <DependentUpon>PrintLabelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Print\PrintRuleManualListView.xaml.cs">
+      <DependentUpon>PrintRuleManualListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Print\PrintRuleSequentialNumView.xaml.cs">
+      <DependentUpon>PrintRuleSequentialNumView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Print\PrintRuleTimeView.xaml.cs">
+      <DependentUpon>PrintRuleTimeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Print\PrintWindow.xaml.cs">
       <DependentUpon>PrintWindow.xaml</DependentUpon>
@@ -224,6 +233,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Print\PrintLabelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Print\PrintRuleManualListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Print\PrintRuleSequentialNumView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Print\PrintRuleTimeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

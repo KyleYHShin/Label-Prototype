@@ -34,7 +34,7 @@
                         CanUserSortColumns="True"
                         
                         HorizontalAlignment="Left"
-                        Height="180"
+                        Height="170"
                         Width="360"
                         Margin="10"
                         FontWeight="Normal" FontSize="14"

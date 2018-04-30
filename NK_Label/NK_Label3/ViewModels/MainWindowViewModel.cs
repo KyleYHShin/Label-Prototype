@@ -14,7 +14,6 @@ using BasicModule.Views;
 using BasicModule.Views.Option;
 using BasicModule.Views.Print;
 using BasicModule.Views.Rule;
-
 using BasicModule.ViewModels;
 using BasicModule.ViewModels.Option;
 using BasicModule.ViewModels.Print;
@@ -63,10 +62,8 @@ namespace NK_Label3.ViewModels
             set { SetProperty(ref _language, value); }
         }
 
-        #endregion //System Properties
-
-        private IDialogService DialogService { get { return new DialogService(); } }
-
+        #endregion System Properties
+        
         #region Tab Contents
 
         private ObservableCollection<LabelView> _labelViewList;
@@ -92,10 +89,10 @@ namespace NK_Label3.ViewModels
 
         #region Constructor
 
-        private readonly IRegionManager _regionManager;
+        private readonly IRegionManager RegionManager;
         public MainWindowViewModel(IRegionManager regionManager)
         {
-            _regionManager = regionManager;
+            RegionManager = regionManager;
 
             Language = new SystemLanguage();
             //language.Load();
@@ -141,7 +138,7 @@ namespace NK_Label3.ViewModels
 
             if (DialogService.ShowSelectDialog(Application.Current.MainWindow, olView, "Create New Label") == true)
             {
-                var newLVM = new LabelViewModel(_regionManager);
+                var newLVM = new LabelViewModel(RegionManager);
                 newLVM.Label = newLabel;
                 AddLabel(newLVM);
             }
@@ -156,14 +153,14 @@ namespace NK_Label3.ViewModels
                 {
                     if (DialogService.ShowSimpleSelectDialog(Application.Current.MainWindow, "Warning", "'" + lvm.Label.Name + "'에 수정된 항목이 있습니다.\n 무시하고 종료하시겠습니까?") == true)
                     {
-                        _regionManager.Regions[RegionNames.OptionRegion].RemoveAll();
+                        RegionManager.Regions[RegionNames.OptionRegion].RemoveAll();
                         LabelViewList.Remove(SelectedLabelView);
                         return true;
                     }
                 }
                 else
                 {
-                    _regionManager.Regions[RegionNames.OptionRegion].RemoveAll();
+                    RegionManager.Regions[RegionNames.OptionRegion].RemoveAll();
                     LabelViewList.Remove(SelectedLabelView);
                     return true;
                 }
@@ -250,13 +247,14 @@ namespace NK_Label3.ViewModels
             if(SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
             {
                 var LVM = SelectedLabelView.DataContext as LabelViewModel;
-                var CopiedRuleList = LVM.CloneRuleList;
-                var ruleEditView = new RuleListView(_regionManager);
-                (ruleEditView.DataContext as RuleListViewModel).RuleList = CopiedRuleList;
+                var ruleEditView = new RuleListView(RegionManager);
+                (ruleEditView.DataContext as RuleListViewModel).RuleList = LVM.CloneObservableRuleList;
 
                 if (DialogService.ShowSelectDialog(Application.Current.MainWindow, ruleEditView, "Edit Rules") == true)
                 {
-                    LVM.RuleList = CopiedRuleList;
+                    LVM.RuleList.Clear();
+                    foreach(var cr in (ruleEditView.DataContext as RuleListViewModel).RuleList)
+                        LVM.RuleList.Add(cr);
                 }
             }
         }
@@ -268,7 +266,7 @@ namespace NK_Label3.ViewModels
         public ICommand ClickOpen { get; private set; }
         private void Open()
         {
-            LabelViewModel newLVM = FileController.OpenLabel(_regionManager);
+            LabelViewModel newLVM = FileController.OpenLabel(RegionManager);
             if (newLVM != null)
             {
                 var newPath = newLVM.FilePath;
@@ -309,7 +307,7 @@ namespace NK_Label3.ViewModels
             }
         }
 
-        #endregion //File Control Events
+        #endregion File Control Events
                 
         public ICommand ClickPrintCurrentLabel { get; private set; }
         private void PrintCurrentLabel()
@@ -317,18 +315,20 @@ namespace NK_Label3.ViewModels
             if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
             {
                 var LVM = SelectedLabelView.DataContext as LabelViewModel;
-                var PVM = new PrintViewModel(LVM.Label, LVM.ObjectList, LVM.RuleList);
 
-                var pLV = new PrintLabelView()
+                // force to AutoWireViewModel for RegionManager
+                var pWin = new PrintWindow(RegionManager)
                 {
-                    DataContext = PVM
+                    Title = "Print Label"
                 };
+                var pVM = pWin.DataContext as PrintWindowViewModel;
+                pVM.Initialize(LVM.Label, LVM.ObjectList, LVM.RuleList);
 
-                var pWin = new PrintWindow(pLV)
-                {
-                    Title = "Print Label",
-                    DataContext = PVM
-                };
+                //var pLV = new PrintLabelView()
+                //{
+                //    DataContext = pVM
+                //};
+                //pWin.SetPrintLabelView(pLV);
 
                 pWin.Owner = Application.Current.MainWindow;
                 pWin.ShowDialog();
