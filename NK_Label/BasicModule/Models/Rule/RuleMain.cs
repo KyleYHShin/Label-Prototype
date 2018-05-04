@@ -5,6 +5,9 @@ namespace BasicModule.Models.Rule
     public class RuleMain : NotifyPropertyChanged, IRuleObject
     {
         #region Properties
+        
+        private bool _isChanged = false;
+        public bool IsChanged { get { return _isChanged; } set { _isChanged = value; OnPropertyChanged(); } }
 
         private RuleRegulation.RuleFormat _format;
         public RuleRegulation.RuleFormat Format
@@ -21,6 +24,8 @@ namespace BasicModule.Models.Rule
                     Content = new RuleSequentialNum();
                 else if (_format == RuleRegulation.RuleFormat.MANUAL_LIST && !(Content is RuleManualList))
                     Content = new RuleManualList();
+                else if (_format == RuleRegulation.RuleFormat.INPUT && !(Content is RuleInput))
+                    Content = new RuleInput();
             }
         }
 
@@ -51,6 +56,7 @@ namespace BasicModule.Models.Rule
             get
             {
                 var obj = new RuleMain();
+                obj.IsChanged = IsChanged;
                 obj.Format = Format;
                 obj.Name = Name;
                 obj.Description = Description;
@@ -64,9 +70,9 @@ namespace BasicModule.Models.Rule
         {
             get
             {
-                if (Content != null)
-                    return Content.PrintValue;
-                return "";
+                if (Content == null)
+                    return "";
+                return Content.PrintValue;
             }
         }
     }

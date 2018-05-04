@@ -229,6 +229,10 @@ namespace BasicModule.ViewModels
                     if (obj.Changed)
                         return true;
 
+                foreach (var rule in RuleList)
+                    if (rule.IsChanged)
+                        return true;
+
                 return false;
             }
             set
@@ -236,6 +240,9 @@ namespace BasicModule.ViewModels
                 Label.Changed = value;
                 foreach (var obj in ObjectList)
                     obj.Changed = value;
+
+                foreach (var rule in RuleList)
+                    rule.IsChanged = value;
             }
         }
 

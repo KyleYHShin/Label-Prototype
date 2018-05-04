@@ -9,10 +9,18 @@ namespace NK_Label3
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e);
-
-            var bootstrapper = new Bootstrapper();
-            bootstrapper.Run();
+            var today = System.DateTime.Now;
+            if (today.Year == 2018 && today.Month == 5 && today.Day > 1 && today.Day <= 31)
+            {
+                base.OnStartup(e);
+                var bootstrapper = new Bootstrapper();
+                bootstrapper.Run();
+            }
+            else
+            {
+                BasicModule.Utils.DialogService.ShowSimpleTextDialog("Warning", "테스트 기간이 만료되었습니다.");
+                base.Shutdown();
+            }
         }
     }
 }

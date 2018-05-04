@@ -25,7 +25,8 @@ namespace BasicModule.Files
 
                     RuleSequentialNumList = new List<RuleSequFile_1>(),
                     RuleTimeList = new List<RuleTimeFile_1>(),
-                    RuleManualList = new List<RuleManuFile_1>()
+                    RuleManualList = new List<RuleManuFile_1>(),
+                    RuleInputList = new List<RuleInputFile_1>()
                 };
 
                 ret.Label = LabelToFile_1(originData.Label);
@@ -45,6 +46,9 @@ namespace BasicModule.Files
                             break;
                         case RuleRegulation.RuleFormat.MANUAL_LIST:
                             RuleManualListToFile_1(rule, ret.RuleManualList);
+                            break;
+                        case RuleRegulation.RuleFormat.INPUT:
+                            RuleInputListToFile_1(rule, ret.RuleInputList);
                             break;
                     }
                 }
@@ -160,7 +164,26 @@ namespace BasicModule.Files
                 SelectedContent = rml.SelectedContent
             });
         }
-               
+
+        private static void RuleInputListToFile_1(RuleMain rm, List<RuleInputFile_1> RuleInputList)
+        {
+            var ri = rm.Content as RuleInput;
+            RuleInputList.Add(new RuleInputFile_1()
+            {
+                Format = rm.Format,
+                Name = rm.Name,
+                Description = rm.Description,
+                Contents = new RuleInputFile_1.RIContent
+                {
+                    Order = ri.Order,
+                    StartIndex = ri.StartIndex,
+                    Length = ri.Length,
+                    InputData = ri.InputData
+                }
+            });
+        }
+
+
         internal static bool FileToObject_1(ref LabelViewModel labelData, FileData_1 fileData)
         {
             try
@@ -256,6 +279,23 @@ namespace BasicModule.Files
                         Name = file.Name,
                         Description = file.Description,
                         Content = rml
+                    });
+                }
+                foreach(var file in fileData.RuleInputList)
+                {
+                    var ri = new RuleInput()
+                    {
+                        Order = file.Contents.Order,
+                        StartIndex = file.Contents.StartIndex,
+                        Length = file.Contents.Length,
+                        InputData = file.Contents.InputData
+                    };
+                    labelData.RuleList.Add(new RuleMain()
+                    {
+                        Format = file.Format,
+                        Name = file.Name,
+                        Description = file.Description,
+                        Content = ri
                     });
                 }
                 return true;

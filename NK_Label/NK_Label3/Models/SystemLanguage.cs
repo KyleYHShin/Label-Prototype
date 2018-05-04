@@ -37,14 +37,18 @@
         public string MenuWindow { get; set; }
         public string MenuWindowPreference { get; set; }
 
-        #endregion //Menu
+        public string MenuHelp { get; set; }
+        public string MenuHelpVersion { get; set; }
+        public string MenuHelpManual { get; set; }
+
+        #endregion Menu
 
 
-        #region SystemMent
+        #region System Comment
 
         public string SystemMentExit { get; set; }
 
-        #endregion //SystemMent
+        #endregion System Comment
 
 
         public SystemLanguage()
@@ -52,14 +56,14 @@
             #region Initialize Test Source
 
             MenuFile = "파일";
-            MenuFileNew = "새 라벨 만들기";
+            MenuFileNew = "새 라벨 디자인 만들기";
             MenuFileLoad = "열기";
             MenuFileSave = "저장";
             MenuFileSaveAs = "다른 이름으로 저장";
             MenuFileSaveAll = "모두 저장";
             MenuFilePrint = "인쇄";
-            MenuFileClose = "창 닫기";
-            MenuFileCloseAll = "창 모두 닫기";
+            MenuFileClose = "디자인 창 닫기";
+            MenuFileCloseAll = "디자인 창 모두 닫기";
             MenuFileProgramExit = "종료";
 
             MenuEdit = "편집";
@@ -84,11 +88,13 @@
             MenuWindow = "창";
             MenuWindowPreference = "창 설정";
 
+            MenuHelp = "도움말";
+            MenuHelpVersion = "버전 정보";
+            MenuHelpManual = "메뉴얼";
+
             SystemMentExit = "프로그램을 종료하시겠습니까?";
 
-            #endregion // Initialize Test Source
-
-            //Original : Load languages from specific file
+            #endregion Initialize Test Source
         }
     }
 }

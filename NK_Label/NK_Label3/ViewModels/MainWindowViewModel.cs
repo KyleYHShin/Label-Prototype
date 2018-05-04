@@ -28,50 +28,27 @@ namespace NK_Label3.ViewModels
 
         #region System Properties
 
-        private string _title = "NK-Label 1.0.0";
-        public string Title
-        {
-            get { return _title; }
-            set { SetProperty(ref _title, value); }
-        }
+        private string _title = "NK-Label 1.0.0 Beta 1";
+        public string Title { get { return _title; } set { SetProperty(ref _title, value); } }
 
         private double _width = 1280;
+        public double Width { get { return _width; } set { SetProperty(ref _width, value); } }
+
         private double _height = 720;
-        public double Width
-        {
-            get { return _width; }
-            set { SetProperty(ref _width, value); }
-        }
-        public double Height
-        {
-            get { return _height; }
-            set { SetProperty(ref _height, value); }
-        }
+        public double Height { get { return _height; } set { SetProperty(ref _height, value); } }
 
         private string _background = "#FFDEDEDE";
-        public string Background
-        {
-            get { return _background; }
-            set { SetProperty(ref _background, value); }
-        }
+        public string Background { get { return _background; } set { SetProperty(ref _background, value); } }
 
         private SystemLanguage _language;
-        public SystemLanguage Language
-        {
-            get { return _language; }
-            set { SetProperty(ref _language, value); }
-        }
+        public SystemLanguage Language { get { return _language; } set { SetProperty(ref _language, value); } }
 
         #endregion System Properties
-        
+
         #region Tab Contents
 
         private ObservableCollection<LabelView> _labelViewList;
-        public ObservableCollection<LabelView> LabelViewList
-        {
-            get { return _labelViewList; }
-            set { SetProperty(ref _labelViewList, value); }
-        }
+        public ObservableCollection<LabelView> LabelViewList { get { return _labelViewList; } set { SetProperty(ref _labelViewList, value); } }
 
         private LabelView _selectedLabelView;
         public LabelView SelectedLabelView
@@ -81,11 +58,21 @@ namespace NK_Label3.ViewModels
             {
                 SetProperty(ref _selectedLabelView, value);
                 if (value is LabelView)
+                {
                     (value.DataContext as LabelViewModel).ChangeOptionRegion();
+                    HasLabel = true;
+                }
+                else
+                {
+                    HasLabel = false;
+                }
             }
         }
 
-        #endregion // Tab Contents
+        private bool _hasLabel;
+        public bool HasLabel { get { return _hasLabel; } set { SetProperty(ref _hasLabel, value); } }
+
+        #endregion Tab Contents
 
         #region Constructor
 
@@ -94,28 +81,112 @@ namespace NK_Label3.ViewModels
         {
             RegionManager = regionManager;
 
+            //Load System Properties (system.ini)
+            //Load Theme (\Theme 폴더\Theme.xml) 
+            //Load SystemLanguage  (\Language 폴더\Korean.ini) 
             Language = new SystemLanguage();
-            //language.Load();
+
             LabelViewList = new ObservableCollection<LabelView>();
 
             ClickAddNewLabel = new DelegateCommand(AddNewLabel);
-            ClickCloseCurrentLabel = new DelegateCommand(CloseCurrentLabel);
-            ClickCloseAllLabel = new DelegateCommand(CloseAllLabel);
-
-            ClickAddText = new DelegateCommand(AddTextObject);
-            ClickAddBarcode = new DelegateCommand(AddBarcodeObject);
-            ClickDeleteObject = new DelegateCommand(DeleteObject);//Test
-            ClickEidtRuleList = new DelegateCommand(EditRuleList);
-
             ClickOpen = new DelegateCommand(Open);
             ClickSave = new DelegateCommand(Save);
             ClickSaveAs = new DelegateCommand(SaveAs);
             ClickPrintCurrentLabel = new DelegateCommand(PrintCurrentLabel);
+            ClickCloseCurrentLabel = new DelegateCommand(CloseCurrentLabel);
+            ClickCloseAllLabel = new DelegateCommand(CloseAllLabel);
+            ClickCloseWindow = new DelegateCommand(CloseWindow);
+            //ClickCloseWindow = new DelegateCommand(Application.Current.Shutdown);
+            //Application.Current.MainWindow.Closing += new System.ComponentModel.CancelEventHandler(MainWindow_Closing);
+
+            ClickAddText = new DelegateCommand(AddTextObject);
+            ClickAddBarcode = new DelegateCommand(AddBarcodeObject);
+            ClickDeleteObject = new DelegateCommand(DeleteObject);
+            ClickEidtRuleList = new DelegateCommand(EditRuleList);
+
+            ClickShowVersion = new DelegateCommand(ShowVersion);
         }
 
         #endregion Constructor
 
-        #region Label Control Events
+        #region Label Window Control Events
+
+        //private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        //{
+        //    var ret =CanCloseAllLabel();
+        //    if (ret)
+        //        e.Cancel = false;
+        //    else
+        //        e.Cancel = true;
+        //    //if ((DataContext as MainWindowViewModel).CanCloseAllLabel())
+        //    //{
+        //    //    e.Cancel = true;
+        //    //}
+        //}
+
+        public ICommand ClickCloseWindow { get; private set; }
+        private void CloseWindow()
+        {
+            if(CanCloseAllLabel())
+                Application.Current.Shutdown();
+        }
+
+        public ICommand ClickCloseCurrentLabel { get; private set; }
+        private void CloseCurrentLabel()
+        {
+            CanCloseCurrentLabel();
+        }
+
+        public ICommand ClickCloseAllLabel { get; private set; }
+        private void CloseAllLabel()
+        {
+            CanCloseAllLabel();
+        }
+
+        private bool CanCloseCurrentLabel()
+        {
+            if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
+            {
+                var lvm = SelectedLabelView.DataContext as LabelViewModel;
+                if (lvm.IsChanged)
+                {
+                    if (DialogService.ShowSimpleSelectDialog(Application.Current.MainWindow, "Warning", "'" + lvm.Label.Name + "'에 수정된 항목이 있습니다.\n 무시하고 종료하시겠습니까?") == true)
+                    {
+                        CloseLabel();
+                        return true;
+                    }
+                }
+                else
+                {
+                    CloseLabel();
+                    return true;
+                }
+            }
+            return false;
+        }
+        public bool CanCloseAllLabel()
+        {
+            while (LabelViewList.Count > 0 && SelectedLabelView != null)
+            {
+                if (!CanCloseCurrentLabel())
+                    return false;
+            }
+            return true;
+        }
+
+        private void CloseLabel()
+        {
+            RegionManager.Regions[RegionNames.OptionRegion].RemoveAll();
+            LabelViewList.Remove(SelectedLabelView);
+            if (LabelViewList.Count > 0)
+                SelectedLabelView = LabelViewList[LabelViewList.Count - 1];
+            else
+                SelectedLabelView = null;
+        }
+
+        #endregion Label Window Control Events
+
+        #region Label Object Events
 
         private void AddLabel(LabelViewModel newLVM)
         {
@@ -143,50 +214,6 @@ namespace NK_Label3.ViewModels
                 AddLabel(newLVM);
             }
         }
-
-        private bool CanCloseCurrentLabel()
-        {
-            if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
-            {
-                var lvm = SelectedLabelView.DataContext as LabelViewModel;
-                if (lvm != null && lvm.IsChanged)
-                {
-                    if (DialogService.ShowSimpleSelectDialog(Application.Current.MainWindow, "Warning", "'" + lvm.Label.Name + "'에 수정된 항목이 있습니다.\n 무시하고 종료하시겠습니까?") == true)
-                    {
-                        RegionManager.Regions[RegionNames.OptionRegion].RemoveAll();
-                        LabelViewList.Remove(SelectedLabelView);
-                        return true;
-                    }
-                }
-                else
-                {
-                    RegionManager.Regions[RegionNames.OptionRegion].RemoveAll();
-                    LabelViewList.Remove(SelectedLabelView);
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public ICommand ClickCloseCurrentLabel { get; private set; }
-        private void CloseCurrentLabel()
-        {
-            CanCloseCurrentLabel();
-        }
-
-        public ICommand ClickCloseAllLabel { get; private set; }
-        private void CloseAllLabel()
-        {
-            while (LabelViewList.Count > 0 && SelectedLabelView != null)
-            {
-                if (!CanCloseCurrentLabel())
-                    break;
-            }
-        }
-
-        #endregion Label Control Events
-
-        #region Label Object Events
 
         public ICommand ClickAddText { get; private set; }
         private void AddTextObject()
@@ -314,26 +341,33 @@ namespace NK_Label3.ViewModels
         {
             if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
             {
+                var pWin = new PrintWindow(RegionManager) { Title = "Print Label" };
+
                 var LVM = SelectedLabelView.DataContext as LabelViewModel;
-
-                // force to AutoWireViewModel for RegionManager
-                var pWin = new PrintWindow(RegionManager)
-                {
-                    Title = "Print Label"
-                };
                 var pVM = pWin.DataContext as PrintWindowViewModel;
-                pVM.Initialize(LVM.Label, LVM.ObjectList, LVM.RuleList);
+                if(pVM.Initialize(LVM.Label, LVM.ObjectList, LVM.RuleList))
+                {
+                    var pLV = new PrintLabelView() { DataContext = pVM };
+                    pWin.SetPrintLabelView(pLV);
 
-                //var pLV = new PrintLabelView()
-                //{
-                //    DataContext = pVM
-                //};
-                //pWin.SetPrintLabelView(pLV);
+                    pWin.Owner = Application.Current.MainWindow;
+                    pWin.ShowDialog();
+                }
+                else
+                    DialogService.ShowSimpleTextDialog(Application.Current.MainWindow, "Warning", "너무 많은 Serial 규칙을 사용하고 있습니다.");
 
-                pWin.Owner = Application.Current.MainWindow;
-                pWin.ShowDialog();
             }
         }
 
+
+        public ICommand ClickShowVersion { get; private set; }
+        private void ShowVersion()
+        {
+            string msg = "Product Name: \tNK-Label";
+            msg += "\nVersion : \t1.0.0 Beta 1";
+            msg += "\nRelease : \t2018.05.03";
+            msg += "\n\nDeveloped by NAMKANG HI-TECH CO., LTD.";
+            DialogService.ShowSimpleTextDialog(Application.Current.MainWindow, "Version Information", msg);
+        }
     }
 }

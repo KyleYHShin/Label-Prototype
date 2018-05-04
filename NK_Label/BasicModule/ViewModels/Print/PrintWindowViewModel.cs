@@ -16,9 +16,9 @@ using System.Windows.Input;
 
 namespace BasicModule.ViewModels.Print
 {
+
     public class PrintWindowViewModel : BindableBase
     {
-        private readonly string PRINT_VIEW_NAME = "pView";
         #region Label Properties
 
         private LabelObject _label;
@@ -26,9 +26,8 @@ namespace BasicModule.ViewModels.Print
 
         private ObservableCollection<BasicObject> _objectList;
         public ObservableCollection<BasicObject> ObjectList { get { return _objectList; } set { SetProperty(ref _objectList, value); } }
-
-        private List<RuleMain> _ruleList;
-        public List<RuleMain> RuleList { get { return _ruleList; } set { SetProperty(ref _ruleList, value); } }
+        
+        private List<RuleMain> UsingRuleList { get; set; }
 
         private ObservableCollection<RuleMain> _seqRuleList;
         public ObservableCollection<RuleMain> SeqRuleList { get { return _seqRuleList; } set { SetProperty(ref _seqRuleList, value); } }
@@ -39,6 +38,12 @@ namespace BasicModule.ViewModels.Print
         private ObservableCollection<RuleMain> _timeRuleList;
         public ObservableCollection<RuleMain> TimeRuleList { get { return _timeRuleList; } set { SetProperty(ref _timeRuleList, value); } }
 
+        private ObservableCollection<RuleMain> _inputRuleList;
+        public ObservableCollection<RuleMain> InputRuleList { get { return _inputRuleList; } set { SetProperty(ref _inputRuleList, value); } }
+
+        private ObservableCollection<RuleMain> _inComRuleList;
+        public ObservableCollection<RuleMain> InCombRuleList { get { return _inComRuleList; } set { SetProperty(ref _inComRuleList, value); } }
+        
         #endregion Label Properties
 
         #region Printer Properties
@@ -89,6 +94,23 @@ namespace BasicModule.ViewModels.Print
             }
         }
 
+        private bool _isAbleToUI = true;
+        public bool IsAbleToUI
+        {
+            get { return _isAbleToUI; }
+            set
+            {
+                SetProperty(ref _isAbleToUI, value);
+                if (value)
+                {
+                    if (SeqRuleList.Count > 0)
+                        Repetable = false;
+                    else
+                        Repetable = true;
+                }
+            }
+        }
+
         #endregion Printer Properties
 
         #region Constructor
@@ -98,13 +120,23 @@ namespace BasicModule.ViewModels.Print
         {
             RegionManager = regionManager;
 
-            Refresh = new DelegateCommand(RefreshView);
+            Refresh = new DelegateCommand(ConvertRuleToText);
+            CloseCommand = new DelegateCommand(CanClose);
+        }
+
+        public ICommand CloseCommand { get; private set; }
+        public void CanClose()
+        {
+            if(!IsAbleToUI)
+                DialogService.ShowSimpleTextDialog(Application.Current.MainWindow, "Warning","프린터 항목이 남아있습니다.");
+            // how to prevent close window
         }
 
         #endregion Constructor
+
         #region Functions
 
-        public void Initialize(LabelObject label, ObservableCollection<BasicObject> originalObjectList, List<RuleMain> originalRuleList)
+        public bool Initialize(LabelObject label, ObservableCollection<BasicObject> originalObjectList, List<RuleMain> originalRuleList)
         {
             Label = label; //swallow copy
 
@@ -121,24 +153,34 @@ namespace BasicModule.ViewModels.Print
             }
 
             InitializeRuleData(originalRuleList);
+            
+            if (SeqRuleList.Count > 1 || InCombRuleList.Count > 1)
+                return false;
+
+            switch (SeqRuleList.Count)
+            {
+                case 0:
+                    Repetable = true;
+                    break;
+                case 1:
+                    Repetable = false;
+                    break;
+            }
+
+            ConvertRuleToText();
 
             pService = new PrintService();
             UsablePrinterList = pService.GetUsablePrinterList();
             if (UsablePrinterList.Count > 0)
                 SelectedPrinterName = UsablePrinterList[0];
 
-            if (SeqRuleList.Count > 0)
-                Repetable = false;
-            else
-                Repetable = true;
-
-            RefreshLabelView();
+            return true;
         }
 
         private void InitializeRuleData(List<RuleMain> originalRuleList)
         {
             // swallow copy only used Rule
-            RuleList = new List<RuleMain>();
+            UsingRuleList = new List<RuleMain>();
             foreach (var obj in ObjectList)
             {
                 if (!(obj is IPrintableObject))
@@ -156,9 +198,9 @@ namespace BasicModule.ViewModels.Print
                     var rName = RuleRegulation.RuleNameExtractor(word);
                     foreach (var r in originalRuleList)
                     {
-                        if (r.Name.Equals(rName) && !RuleList.Contains(r))
+                        if (r.Name.Equals(rName) && !UsingRuleList.Contains(r))
                         {
-                            RuleList.Add(r);
+                            UsingRuleList.Add(r);
                             break;
                         }
                     }
@@ -168,19 +210,43 @@ namespace BasicModule.ViewModels.Print
             SeqRuleList = new ObservableCollection<RuleMain>();
             ManuRuleList = new ObservableCollection<RuleMain>();
             TimeRuleList = new ObservableCollection<RuleMain>();
-            foreach (var r in RuleList)
+            InputRuleList = new ObservableCollection<RuleMain>();
+            var sortingInputRuleList = new List<RuleMain>();
+            InCombRuleList = new ObservableCollection<RuleMain>();
+
+            foreach (var r in UsingRuleList)
             {
-                if (r.Content is RuleSequentialNum)
-                    SeqRuleList.Add(r);
-                else if (r.Content is RuleManualList)
-                    ManuRuleList.Add(r);
-                else if (r.Content is RuleTime)
-                    TimeRuleList.Add(r);
+                switch (r.Format)
+                {
+                    case RuleRegulation.RuleFormat.SEQUENTIAL_NUM:
+                        SeqRuleList.Add(r);
+                        break;
+                    case RuleRegulation.RuleFormat.MANUAL_LIST:
+                        ManuRuleList.Add(r);
+                        break;
+                    case RuleRegulation.RuleFormat.TIME:
+                        TimeRuleList.Add(r);
+                        break;
+                    case RuleRegulation.RuleFormat.INPUT:
+                        sortingInputRuleList.Add(r);
+                        break;
+                    case RuleRegulation.RuleFormat.INPUT_COMBINE:
+                        InCombRuleList.Add(r);
+                        break;
+                }
+            }
+
+            sortingInputRuleList.Sort((x, y) => (x.Content as RuleInput).Order.CompareTo((y.Content as RuleInput).Order));
+            foreach(var r in sortingInputRuleList)
+            {
+                InputRuleList.Add(r);
             }
 
             RegionManager.Regions[RegionNames.PrintRuleSeq].RemoveAll();
             RegionManager.Regions[RegionNames.PrintRuleManu].RemoveAll();
             RegionManager.Regions[RegionNames.PrintRuleTime].RemoveAll();
+            RegionManager.Regions[RegionNames.PrintRuleInput].RemoveAll();
+            RegionManager.Regions[RegionNames.PrintRuleInputCombine].RemoveAll();
 
             var seqListView = new PrintRuleSequentialNumView();
             seqListView.DataContext = this;
@@ -193,33 +259,19 @@ namespace BasicModule.ViewModels.Print
             var timeListView = new PrintRuleTimeView();
             timeListView.DataContext = this;
             RegionManager.Regions[RegionNames.PrintRuleTime].Add(timeListView, null, true);
+
+            var inputListView = new PrintRuleInputView();
+            inputListView.DataContext = this;
+            RegionManager.Regions[RegionNames.PrintRuleInput].Add(inputListView, null, true);
+
+            //var inputCombListView = new PrintRuleInputCombineView();
+            //inputCombListView.DataContext = this;
+            //RegionManager.Regions[RegionNames.PrintRuleInputCombine].Add(inputCombListView, null, true);
         }
 
-        private List<RuleMain> RuleListInText(List<RuleMain> originalRuleList, string text)
-        {
-            var ret = new List<RuleMain>();
+        public ICommand Refresh { get; private set; }
 
-            var wordList = RuleRegulation.RuleNameSeperatorToList(text);
-            foreach (var word in wordList)
-            {
-                if (!RuleRegulation.RuleNameVerifier(word))
-                    continue;
-
-                var rName = RuleRegulation.RuleNameExtractor(word);
-                foreach (var r in originalRuleList)
-                {
-                    if (r.Name.Equals(rName) && !ret.Contains(r) && !RuleList.Contains(r))
-                    {
-                        ret.Add(r);
-                        break;
-                    }
-                }
-            }
-
-            return ret;
-        }
-
-        private void ConvertRuleToText()
+        public void ConvertRuleToText()
         {
             foreach (var obj in ObjectList)
             {
@@ -236,7 +288,7 @@ namespace BasicModule.ViewModels.Print
                     if (RuleRegulation.RuleNameVerifier(wordList[i]))
                     {
                         var rName = RuleRegulation.RuleNameExtractor(wordList[i]);
-                        foreach (RuleMain r in RuleList)
+                        foreach (RuleMain r in UsingRuleList)
                         {
                             if (r.Name.Equals(rName))
                             {
@@ -247,74 +299,35 @@ namespace BasicModule.ViewModels.Print
                     }
                 }
 
-                pObj.Text = string.Join("", wordList.ToArray());
-                if (pObj.Text.Length > pObj.MaxLength)
-                    pObj.Text = pObj.Text.Substring(0, pObj.MaxLength);
+                var changedText = string.Join("", wordList.ToArray());
+                if (changedText.Length > pObj.MaxLength)
+                    changedText = changedText.Substring(0, pObj.MaxLength);
+
+                if (obj is TextObject)
+                    (obj as TextObject).Text = changedText;
+                else if (obj is BarcodeObject)
+                    (obj as BarcodeObject).Text = changedText;
             }
-        }
-        
-        public ICommand Refresh { get; private set; }
-        private void RefreshView()
-        {
-            RefreshLabelView();
-        }
-        private PrintLabelView RefreshLabelView()
-        {
-            RegionManager.Regions[RegionNames.PrintLabelView].RemoveAll();
-
-            ConvertRuleToText();
-
-            var pLabelView = new PrintLabelView();
-            pLabelView.DataContext = this;
-            RegionManager.Regions[RegionNames.PrintLabelView].Add(pLabelView, PRINT_VIEW_NAME);
-
-            return pLabelView;
         }
 
         #endregion Functions
 
-        #region Print
-        private void EnableAllControls(bool canUse)
+        public void Print(PrintLabelView PLView)
         {
-            //
-        }
-
-        public void StartPrint(PrintLabelView PLView)
-        {
-            EnableAllControls(false);
             try
             {
-                switch (SeqRuleList.Count)
+                switch (Label.SelectedPrinter)
                 {
-                    case 0:
-                        for (var i = 0; i < Repetition; i++)
-                        {
-                            //ConvertRuleToText();
-                            RefreshLabelView();
-                            Print(PLView);
-                        }
-                        break;
-                    case 1:
-                        RuleSequentialNum rsn = SeqRuleList[0].Content as RuleSequentialNum;
-                        for (var i = rsn.CurrNum; i <= rsn.MaxNum; i += rsn.Increment)
-                        {
-                            rsn.CurrNum = i;
-                            //ConvertRuleToText();
-                            var asfdaview = RefreshLabelView();
-                            Print(asfdaview);
-                            //var view = RegionManager.Regions[RegionNames.PrintLabelView].GetView(PRINT_VIEW_NAME);
-                            //if (view is PrintLabelView)
-                            //{
-                            //    PrintLabelView nView = view as PrintLabelView;
-                            //    Print(view as PrintLabelView);
-                            //}
+                    case PrinterOption.PrinterType.ZEBRA:
+                        var zplCode = new System.Text.StringBuilder();
+                        zplCode.AppendFormat("^XA");
+                        zplCode.AppendFormat("^FO{0},{1}", OffsetX, OffsetY);
+                        zplCode.AppendFormat("{0}", BitmapConversion.ConvertImageToZPLString(PLView));
+                        zplCode.AppendFormat("^FS");
+                        zplCode.AppendFormat("^XZ");
 
-                            //System.Threading.Thread.Sleep(500);
-                            //Print(PLView);
-                        }
-                        break;
-                    default:
-                        DialogService.ShowSimpleTextDialog(Application.Current.MainWindow, "Exception", "There are a lot of Serial Rules.");
+                        Console.WriteLine(zplCode);
+                        //pService.PrintZebraProduct(SelectedPrinterName, zplCode.ToString());
                         break;
                 }
             }
@@ -322,27 +335,7 @@ namespace BasicModule.ViewModels.Print
             {
                 DialogService.ShowSimpleTextDialog(Application.Current.MainWindow, "Exception", ex.Source + ex.Message + "\n" + ex.StackTrace);
             }
-            EnableAllControls(true);
         }
 
-        private void Print(PrintLabelView PLView)
-        {
-            switch (Label.SelectedPrinter)
-            {
-                case PrinterOption.PrinterType.ZEBRA:
-                    var zplCode = new System.Text.StringBuilder();
-                    zplCode.AppendFormat("^XA");
-                    zplCode.AppendFormat("^FO{0},{1}", OffsetX, OffsetY);
-                    zplCode.AppendFormat("{0}", BitmapConversion.ConvertImageToZPLString(PLView));
-                    zplCode.AppendFormat("^FS");
-                    zplCode.AppendFormat("^XZ");
-
-                    Console.WriteLine(zplCode);
-                    //pService.PrintZebraProduct(SelectedPrinterName, zplCode.ToString());
-                    break;
-            }
-        }
-
-        #endregion Print
     }
 }

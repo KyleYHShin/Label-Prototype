@@ -1,9 +1,9 @@
-﻿using Microsoft.Practices.Unity;
+﻿using BasicModule;
+using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Unity;
 using NK_Label3.Views;
 using System.Windows;
-using BasicModule;
 
 namespace NK_Label3
 {
