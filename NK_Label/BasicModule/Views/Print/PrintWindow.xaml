@@ -3,15 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner"
+        Closing="Click_Close" >
 
     <Window.Resources>
         <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
     </Window.Resources>
-
+        
     <Grid
         Width="Auto" MaxWidth="1280"
         Height="Auto" MaxHeight="700"
@@ -32,9 +34,10 @@
             <ContentControl x:Name="PrintLabelView" />
         </Grid>
 
-        <Grid Grid.Row="1" Grid.Column="0"
-              Margin="10"
-              Background="White">
+        <Grid
+            Grid.Row="1" Grid.Column="0"
+            Margin="10"
+            Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -58,7 +61,8 @@
                 DisplayMemberPath="Key"
                 SelectedValuePath="Value"
                 SelectedValue="{Binding Label.SelectedPrinter}"
-                Style="{StaticResource OptionComboBoxValue}" />
+                Style="{StaticResource OptionComboBoxValue}"
+                IsEnabled="{Binding IsAbleToUI}"/>
             <TextBlock
                 Grid.Row="0" Grid.Column="2"
                 Text="DPI : "
@@ -69,8 +73,9 @@
                 DisplayMemberPath="Key"
                 SelectedValuePath="Value"
                 SelectedValue="{Binding Label.SelectedDpi}"
-                Style="{StaticResource OptionComboBoxValue}"/>
-            
+                Style="{StaticResource OptionComboBoxValue}"
+                IsEnabled="{Binding IsAbleToUI}"/>
+
             <TextBlock
                 Grid.Row="1" Grid.Column="0"
                 Text="Printer : "
@@ -79,7 +84,8 @@
                 Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
                 ItemsSource="{Binding UsablePrinterList}"
                 SelectedValue="{Binding SelectedPrinterName}"
-                Style="{StaticResource OptionComboBoxValue}" />
+                Style="{StaticResource OptionComboBoxValue}"
+                IsEnabled="{Binding IsAbleToUI}"/>
 
             <TextBlock
                 Grid.Row="2" Grid.Column="0"
@@ -88,7 +94,8 @@
             <TextBox 
                 Grid.Row="2" Grid.Column="1"
                 Text="{Binding OffsetX}"
-                Style="{StaticResource OptionColumnValue}"/>
+                Style="{StaticResource OptionColumnValue}"
+                IsEnabled="{Binding IsAbleToUI}"/>
             <TextBlock
                 Grid.Row="2" Grid.Column="2"
                 Text="Offset Y : "
@@ -96,7 +103,8 @@
             <TextBox 
                 Grid.Row="2" Grid.Column="3"
                 Text="{Binding OffsetY}"
-                Style="{StaticResource OptionColumnValue}"/>
+                Style="{StaticResource OptionColumnValue}"
+                IsEnabled="{Binding IsAbleToUI}"/>
 
             <TextBlock
                 Grid.Row="3" Grid.Column="2"
@@ -122,7 +130,8 @@
                 BorderBrush="{StaticResource NKFirstBrush}"
                 Style="{StaticResource OptionButton}"
                 Template="{StaticResource OptionApplyButton}"
-                MinWidth="100"/>
+                MinWidth="100"
+                IsEnabled="{Binding IsAbleToUI}"/>
             <Button
                 Content="Refresh"
                 Command="{Binding Refresh}"
@@ -130,10 +139,12 @@
                 BorderBrush="{StaticResource NKSecondBrush}"
                 Style="{StaticResource OptionButton}"
                 Template="{StaticResource OptionApplyButton}"
-                MinWidth="100"/>
+                MinWidth="100"
+                IsEnabled="{Binding IsAbleToUI}"/>
+            <!--Command="{Binding CloseCommand}"-->
             <Button
-                Content="Close"
-                Click="Click_Close"
+                Content="Stop"
+                Click="Click_Stop"
                 VerticalContentAlignment="Bottom"
                 Background="{StaticResource NKThirdBrush}"
                 BorderBrush="{StaticResource NKThirdBrush}"
@@ -144,20 +155,23 @@
 
         <ScrollViewer
             Grid.Row="0" Grid.RowSpan="2" Grid.Column="1"
-            MaxWidth="1000"
+            MaxWidth="900"
             MaxHeight="720"
             Margin="0,10,10,10"
             Background="White"
             VerticalScrollBarVisibility="Auto"
             HorizontalScrollBarVisibility="Auto"
-            CanContentScroll="True">
+            CanContentScroll="True"
+            IsEnabled="{Binding IsAbleToUI}">
             <StackPanel Orientation="Vertical" >
                 <ContentControl x:Name="PrintRuleSeq"/>
                 <ContentControl x:Name="PrintRuleManu"/>
                 <ContentControl x:Name="PrintRuleTime"/>
+                <ContentControl x:Name="PrintRuleInput"/>
+                <ContentControl x:Name="PrintRuleInputCombine"/>
             </StackPanel>
         </ScrollViewer>
-        
+
     </Grid>
-    
+
 </Window>

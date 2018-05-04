@@ -15,6 +15,7 @@ namespace BasicModule.Files
         public List<RuleSequFile_1> RuleSequentialNumList { get; set; }
         public List<RuleTimeFile_1> RuleTimeList { get; set; }
         public List<RuleManuFile_1> RuleManualList { get; set; }
+        public List<RuleInputFile_1> RuleInputList { get; set; }
     }
 
     public class LabelFile_1
@@ -98,6 +99,22 @@ namespace BasicModule.Files
         public string Description { get; set; }
         public System.Xml.Linq.XElement Contents { get; set; }
         public string SelectedContent { get; set; }
+    }
+
+    public class RuleInputFile_1
+    {
+        public RuleRegulation.RuleFormat Format { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public RIContent Contents { get; set; }
+
+        public class RIContent
+        {
+            public int Order { get; set; }
+            public int StartIndex { get; set; }
+            public int Length { get; set; }
+            public string InputData { get; set; }
+        }
     }
 
 }

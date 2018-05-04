@@ -12,6 +12,7 @@
         Height="{Binding Height}"
         MinHeight="300"
         Background="{Binding Background}">
+    <!--Closing="Click_Close"-->
 
     <Window.Resources>
         <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
@@ -41,21 +42,43 @@
             <MenuItem Header="{Binding Language.MenuFile}">
                 <MenuItem Header="{Binding Language.MenuFileNew}" Command="{Binding ClickAddNewLabel}"/>
                 <Separator />
-                <MenuItem Header="{Binding Language.MenuFileLoad}" Command="{Binding ClickOpen}"/>
-                <MenuItem Header="{Binding Language.MenuFileSave}" Command="{Binding ClickSave}"/>
-                <MenuItem Header="{Binding Language.MenuFileSaveAs}" Command="{Binding ClickSaveAs}"/>
+                <MenuItem
+                    Header="{Binding Language.MenuFileLoad}"
+                    Command="{Binding ClickOpen}"/>
+                <MenuItem
+                    Header="{Binding Language.MenuFileSave}"
+                    Command="{Binding ClickSave}"
+                    IsEnabled="{Binding HasLabel}"/>
+                <MenuItem
+                    Header="{Binding Language.MenuFileSaveAs}"
+                    Command="{Binding ClickSaveAs}"
+                    IsEnabled="{Binding HasLabel}"/>
                 <!--<MenuItem Header="{Binding Language.MenuFileSaveAll}" Command="{Binding ClickCloseAllLabel}" IsEnabled="{Binding HasCurrView}"/>-->
                 <Separator />
-                <MenuItem Header="{Binding Language.MenuFilePrint}" Command="{Binding ClickPrintCurrentLabel}"/>
+                <MenuItem
+                    Header="{Binding Language.MenuFilePrint}"
+                    Command="{Binding ClickPrintCurrentLabel}"
+                    IsEnabled="{Binding HasLabel}"/>
                 <Separator />
-                <MenuItem Header="{Binding Language.MenuFileClose}" Command="{Binding ClickCloseCurrentLabel}"/>
-                <MenuItem Header="{Binding Language.MenuFileCloseAll}" Command="{Binding ClickCloseAllLabel}"/>
+                <MenuItem
+                    Header="{Binding Language.MenuFileClose}"
+                    Command="{Binding ClickCloseCurrentLabel}"
+                    IsEnabled="{Binding HasLabel}"/>
+                <MenuItem
+                    Header="{Binding Language.MenuFileCloseAll}"
+                    Command="{Binding ClickCloseAllLabel}"
+                    IsEnabled="{Binding HasLabel}"/>
                 <Separator />
-                <MenuItem Header="{Binding Language.MenuFileProgramExit}" Command=""/>
+                <MenuItem
+                    Header="{Binding Language.MenuFileProgramExit}"
+                    Command="{Binding ClickCloseWindow}"/>
             </MenuItem>
 
             <MenuItem Header="{Binding Language.MenuEdit}">
-                <MenuItem Header="선택된 객체 삭제" Command="{Binding ClickDeleteObject}"/>
+                <MenuItem
+                    Header="선택된 객체 삭제"
+                    Command="{Binding ClickDeleteObject}"
+                    IsEnabled="{Binding HasLabel}"/>
                 <!--<MenuItem Header="{Binding Language.MenuEditCopy}" Command=""/>
                 <MenuItem Header="{Binding Language.MenuEditTruncate}" Command=""/>
                 <MenuItem Header="{Binding Language.MenuEditPaste}" Command=""/>-->
@@ -72,17 +95,31 @@
             </MenuItem>-->
 
             <MenuItem Header="{Binding Language.MenuTool}">
-                <MenuItem Header="{Binding Language.MenuToolText}" Command="{Binding ClickAddText}"/>
-                <MenuItem Header="{Binding Language.MenuToolBarcode}" Command="{Binding ClickAddBarcode}"/>
+                <MenuItem
+                    Header="{Binding Language.MenuToolText}"
+                    Command="{Binding ClickAddText}"
+                    IsEnabled="{Binding HasLabel}"/>
+                <MenuItem
+                    Header="{Binding Language.MenuToolBarcode}"
+                    Command="{Binding ClickAddBarcode}"
+                    IsEnabled="{Binding HasLabel}"/>
                 <!--<Separator />
                 <MenuItem Header="{Binding Language.MenuToolLine}" Command=""/>
                 <MenuItem Header="{Binding Language.MenuToolImage}" Command=""/>-->
                 <Separator />
-                <MenuItem Header="{Binding Language.MenuToolRuleManager}" Command="{Binding ClickEidtRuleList}"/>
+                <MenuItem
+                    Header="{Binding Language.MenuToolRuleManager}"
+                    Command="{Binding ClickEidtRuleList}"
+                    IsEnabled="{Binding HasLabel}"/>
             </MenuItem>
 
-            <MenuItem Header="{Binding Language.MenuWindow}">
+            <!--<MenuItem Header="{Binding Language.MenuWindow}">
                 <MenuItem Header="{Binding Language.MenuWindowPreference}" Command=""/>
+            </MenuItem>-->
+
+            <MenuItem Header="{Binding Language.MenuHelp}">
+                <MenuItem Header="{Binding Language.MenuHelpVersion}" Command="{Binding ClickShowVersion}"/>
+                <!--<MenuItem Header="{Binding Language.MenuHelpManual}" Command=""/>-->
             </MenuItem>
         </Menu>
 
@@ -110,7 +147,7 @@
             
         <StackPanel
             Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,5,20,10" Orientation="Horizontal" MinHeight="15">
-            <TextBlock FontWeight="Bold" Width="40">Name : </TextBlock>
+            <TextBlock FontWeight="Bold" Width="40" Height="16" VerticalAlignment="Bottom">Name : </TextBlock>
             <TextBlock
                 AutomationProperties.AutomationId="SelectedItemTextBlock"
                 Text="{Binding SelectedLabelView.DataContext.SelectedObject.Name}"

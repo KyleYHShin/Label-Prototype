@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\StudyC#\PrismWPF\Label-Prototype\WPFMwiWindows\WPFMwiWindows\obj\Debug\
+C:\Work\Label-Prototype\SampleEtc\WPFMwiWindows\WPFMwiWindows\obj\Debug\
 WPFMwiWindows
 none
 false
 DEBUG;TRACE
-C:\StudyC#\PrismWPF\Label-Prototype\WPFMwiWindows\WPFMwiWindows\App.xaml
+C:\Work\Label-Prototype\SampleEtc\WPFMwiWindows\WPFMwiWindows\App.xaml
 4200340790
 
 11-1865317549
-17-2000560390
+17-2145398431
 Controls\AttachableWindow.xaml;Controls\MwiWindow.xaml;Controls\MwiChild.xaml;Window1.xaml;
 
-True
+False
 

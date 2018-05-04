@@ -6,29 +6,16 @@ namespace BasicModule.Models.Rule
     public class RuleManualList : NotifyPropertyChanged, IRuleObject
     {
         private ObservableDictionary<string, string> _contentList;
-        public ObservableDictionary<string, string> ContentList
-        {
-            get { return _contentList; }
-            set
-            {
-                _contentList = value;
-                OnPropertyChanged();
-            }
-        }
+        public ObservableDictionary<string, string> ContentList { get { return _contentList; } set { _contentList = value; OnPropertyChanged(); } }
 
         private string _selectedContent;
-        public string SelectedContent
-        {
-            get { return _selectedContent; }
-            set
-            {
-                _selectedContent = value;
-                OnPropertyChanged();
-            }
-        }
+        public string SelectedContent { get { return _selectedContent; } set { _selectedContent = value; OnPropertyChanged(); } }
 
         public bool AddList(string key, string value)
         {
+            if (ContentList == null)
+                ContentList = new ObservableDictionary<string, string>();
+
             if (!string.IsNullOrEmpty(key) && !string.IsNullOrWhiteSpace(key)
                 && !string.IsNullOrEmpty(value) && !string.IsNullOrWhiteSpace(value)
                 && ContentList != null && !ContentList.ContainsKey(key))
@@ -55,7 +42,7 @@ namespace BasicModule.Models.Rule
                 && ContentList != null && ContentList.ContainsKey(key))
             {
                 ContentList.Remove(key);
-                OnPropertyChanged("ContentList");
+                OnPropertyChanged();
                 return true;
             }
             return false;

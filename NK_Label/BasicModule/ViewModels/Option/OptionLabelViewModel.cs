@@ -18,7 +18,7 @@ namespace BasicModule.ViewModels.Option
             set { SetProperty(ref _labelObject, value); }
         }
 
-        #endregion //Properties
+        #endregion Properties
 
         public OptionLabelViewModel(LabelObject lo)
         {

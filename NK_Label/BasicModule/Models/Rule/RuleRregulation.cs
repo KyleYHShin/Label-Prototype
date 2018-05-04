@@ -19,7 +19,9 @@ namespace BasicModule.Models.Rule
         {
             TIME = 1,
             SEQUENTIAL_NUM = 10,
-            MANUAL_LIST = 20
+            MANUAL_LIST = 20,
+            INPUT = 30,
+            INPUT_COMBINE = 40
         }
 
         public static readonly Dictionary<string, RuleFormat> BarcodeFormatList = new Dictionary<string, RuleFormat>
@@ -27,6 +29,8 @@ namespace BasicModule.Models.Rule
             { "Time", RuleFormat.TIME }
             , { "Sequential Number", RuleFormat.SEQUENTIAL_NUM }
             , { "Manual List", RuleFormat.MANUAL_LIST }
+            , { "Input", RuleFormat.INPUT }
+            , { "Input Combine", RuleFormat.INPUT_COMBINE }
         };
 
         public static Dictionary<string, string> TimeFormatList

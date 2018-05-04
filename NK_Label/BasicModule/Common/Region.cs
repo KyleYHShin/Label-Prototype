@@ -19,6 +19,8 @@ namespace BasicModule.Common
         public static string PrintRuleSeq => "PrintRuleSeq";
         public static string PrintRuleManu => "PrintRuleManu";
         public static string PrintRuleTime => "PrintRuleTime";
+        public static string PrintRuleInput => "PrintRuleInput";
+        public static string PrintRuleInputCombine => "PrintRuleInputCombine";
     }
 
     public static class RegionController

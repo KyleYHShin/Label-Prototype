@@ -17,6 +17,7 @@ namespace BasicModule.ViewModels.Rule
 
         private readonly ObservableCollection<RuleMain> OriginalRuleList;
         private RuleMain OriginalRule;
+        private readonly List<RuleInput> OtherRuleInputList;
 
         private RuleMain _rule;
         public RuleMain Rule { get { return _rule; } set { SetProperty(ref _rule, value); } }
@@ -63,6 +64,11 @@ namespace BasicModule.ViewModels.Rule
                         var timeView = new RuleTimeView();
                         timeView.DataContext = this;
                         RegionManager.Regions[RegionNames.RuleContent].Add(timeView, null, true);
+                        break;
+                    case RuleRegulation.RuleFormat.INPUT:
+                        var inputView = new RuleInputView();
+                        inputView.DataContext = this;
+                        RegionManager.Regions[RegionNames.RuleContent].Add(inputView, null, true);
                         break;
                 }
 
@@ -127,6 +133,13 @@ namespace BasicModule.ViewModels.Rule
             
             OriginalRuleList = originalRuleList;
             OriginalRule = originalRule;
+
+            OtherRuleInputList = new List<RuleInput>();
+            foreach(var r in OriginalRuleList)
+            {
+                if (r.Content is RuleInput && r != OriginalRule)
+                    OtherRuleInputList.Add(r.Content as RuleInput);
+            }
 
             Rule = originalRule.Clone as RuleMain;
             SelectedRuleFormat = Rule.Format;
@@ -211,6 +224,9 @@ namespace BasicModule.ViewModels.Rule
             if (DialogService.ShowSimpleSelectDialog("Alarm", "'" + Rule.Name + "'을 삭제하시겠습니까?") == true)
             {
                 OriginalRuleList.Remove(OriginalRule);
+                foreach (var r in OriginalRuleList)
+                    r.IsChanged = true;
+
                 RegionManager.Regions[RegionNames.RuleCommon].RemoveAll();
                 RegionManager.Regions[RegionNames.RuleContent].RemoveAll();
                 RegionManager.Regions[RegionNames.RuleButton].RemoveAll();
@@ -226,9 +242,17 @@ namespace BasicModule.ViewModels.Rule
             }
             else
             {
+                Rule.IsChanged = true;
+                if (Rule.Content is RuleInput)
+                    (Rule.Content as RuleInput).Refresh();
+                //if (Rule.Content is RuleInputCombine)
+                //    (Rule.Content as RuleInputCombine).Refresh();
+
                 var index = OriginalRuleList.IndexOf(OriginalRule);
                 OriginalRuleList.RemoveAt(index);
-                OriginalRuleList.Insert(index, Rule.Clone as RuleMain);
+                OriginalRuleList.Insert(index, Rule);
+                OriginalRule = Rule;
+                Rule = OriginalRule.Clone as RuleMain; ;
                 IsEditMode = false;
             }
         }
@@ -245,15 +269,38 @@ namespace BasicModule.ViewModels.Rule
                 if (!RuleRegulation.BarcodeFormatList.ContainsValue(SelectedRuleFormat))
                     return "규칙 타입이 올바르지 않습니다.";
 
-                foreach (var r in OriginalRuleList)
-                {
-                    if (r.Equals(OriginalRule))
-                        continue;
-                    if (r.Name.Equals(Rule.Name))
-                        return "중복된 규칙명이 존재합니다";
-                }
+                string msg = CheckRuleNameDuplication();
+                if (!string.IsNullOrEmpty(msg))
+                    return msg;
+
+                if (Rule.Content is RuleInput)
+                    return CheckInputOrderDuplication();
+
                 return null;
             }
+        }
+
+        private string CheckRuleNameDuplication()
+        {
+            foreach (var r in OriginalRuleList)
+            {
+                if (r.Equals(OriginalRule))
+                    break;
+                if (r.Name.Equals(Rule.Name))
+                    return "중복된 규칙명이 존재합니다";
+            }
+            return null;
+        }
+
+        private string CheckInputOrderDuplication()
+        {
+            var newRule = Rule.Content as RuleInput;
+            foreach (var r in OtherRuleInputList)
+            {
+                if (r.Order == newRule.Order)
+                    return "중복된 순번이 존재합니다";
+            }
+            return null;
         }
 
         public ICommand Cancle { get; private set; }

@@ -1,16 +1,10 @@
-﻿using BasicModule.Models;
-using BasicModule.Models.Common;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.Drawing.Printing;
 
 namespace BasicModule.Utils
 {
     public class PrintService
     {
-        public LabelObject Label { get; set; }
-        public ObservableCollection<BasicObject> ObjectList { get; set; }
 
         public List<string> GetUsablePrinterList()
         {
@@ -19,7 +13,6 @@ namespace BasicModule.Utils
             foreach (string printer in PrinterSettings.InstalledPrinters)
             {
                 pNameList.Add(printer);
-                Console.WriteLine(printer);
             }
 
             return pNameList;
@@ -33,5 +26,6 @@ namespace BasicModule.Utils
 
             RawPrinterHelper.SendStringToPrinter(pd.PrinterSettings.PrinterName, zplCode);
         }
+
     }
 }
