@@ -2,6 +2,7 @@
 using BasicModule.ViewModels.Print;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace BasicModule.Views.Print
@@ -15,31 +16,40 @@ namespace BasicModule.Views.Print
         {
             InitializeComponent();
             SizeToContent = SizeToContent.WidthAndHeight;
+            InputBox.Focus();
         }
-
-        public PrintWindowViewModel pWinVM { get; set; }
         
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
-            var obj = sender; //check
-
             if (e.Key == Key.Return || e.Key == Key.Tab)
             {
-                if (IsNoEmptyInput)
+                if (noEmptyInputs)
                     DialogResult = true;
             }
         }
 
-        private bool IsNoEmptyInput
+        private bool noEmptyInputs
         {
             get
             {
-                foreach (var r in pWinVM.InputRuleList)
+                if (string.IsNullOrEmpty(InputBox.Text))
+                    return false;
+
+                for (int i = 0; i < InputList.Items.Count; i++)
                 {
-                    if (string.IsNullOrEmpty((r.Content as RuleInput).InputData))
+                    var ri = (InputList.Items[i] as RuleMain).Content as RuleInput;
+                    if (string.IsNullOrEmpty(ri.InputData))
                     {
-                        //해당 칸에 커서 이동
-                        return false;
+                        ri.InputData = InputBox.Text;
+
+                        if (i == InputList.Items.Count - 1)
+                            return true;
+                        else
+                        {
+                            InputBox.Text = string.Empty;
+                            InputBox.Focus();
+                            return false;
+                        }
                     }
                 }
                 return true;

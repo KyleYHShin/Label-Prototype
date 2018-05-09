@@ -98,8 +98,8 @@ namespace BasicModule.Models.Rule
             {
                 var obj = new RuleSequentialNum();
                 obj.NumLength = NumLength;
-                obj.MinNum = MinNum;
                 obj.MaxNum = MaxNum;
+                obj.MinNum = MinNum;
                 obj.CurrNum = CurrNum;
                 obj.Increment = Increment;
 

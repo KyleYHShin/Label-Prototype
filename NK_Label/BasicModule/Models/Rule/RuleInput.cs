@@ -16,9 +16,9 @@ namespace BasicModule.Models.Rule
         private string _inputData = "";
         public string InputData { get { return _inputData; } set { _inputData = value; OnPropertyChanged(); } }
 
-        public void Refresh()
+        public void InputRefresh()
         {
-            InputData = "";
+            InputData = string.Empty;
         }
 
         public IRuleObject Clone

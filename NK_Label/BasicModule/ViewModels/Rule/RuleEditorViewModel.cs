@@ -244,7 +244,7 @@ namespace BasicModule.ViewModels.Rule
             {
                 Rule.IsChanged = true;
                 if (Rule.Content is RuleInput)
-                    (Rule.Content as RuleInput).Refresh();
+                    (Rule.Content as RuleInput).InputRefresh();
                 //if (Rule.Content is RuleInputCombine)
                 //    (Rule.Content as RuleInputCombine).Refresh();
 

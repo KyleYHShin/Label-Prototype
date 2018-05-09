@@ -327,7 +327,7 @@ namespace BasicModule.ViewModels.Print
                         zplCode.AppendFormat("^XZ");
 
                         Console.WriteLine(zplCode);
-                        //pService.PrintZebraProduct(SelectedPrinterName, zplCode.ToString());
+                        pService.PrintZebraProduct(SelectedPrinterName, zplCode.ToString());
                         break;
                 }
             }
