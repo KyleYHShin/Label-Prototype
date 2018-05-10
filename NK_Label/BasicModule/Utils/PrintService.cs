@@ -11,9 +11,7 @@ namespace BasicModule.Utils
             var pNameList = new List<string>();
             
             foreach (string printer in PrinterSettings.InstalledPrinters)
-            {
                 pNameList.Add(printer);
-            }
 
             return pNameList;
         }

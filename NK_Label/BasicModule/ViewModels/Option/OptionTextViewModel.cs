@@ -1,21 +1,17 @@
-﻿using BasicModule.Models;
+﻿using BasicModule.Common;
+using BasicModule.Models;
 using BasicModule.Models.Option;
-using Prism.Mvvm;
 
 namespace BasicModule.ViewModels.Option
 {
-    public class OptionTextViewModel : BindableBase, IOptionViewModel
+    public class OptionTextViewModel : NotifyPropertyChanged, IOptionViewModel
     {
         public object FontStyleList { get => TextOption.FontStyleList; }
         public object FontWeightList { get => TextOption.FontWeightList; }
         public object TextAlignmentList { get => TextOption.TextAlignmentList; }
 
         private TextObject _textObject;
-        public TextObject TextObject
-        {
-            get { return _textObject; }
-            set { SetProperty(ref _textObject, value); }
-        }
+        public TextObject TextObject { get { return _textObject; } set { _textObject = value; OnPropertyChanged(); } }
 
         public OptionTextViewModel(TextObject to)
         {
@@ -40,7 +36,7 @@ namespace BasicModule.ViewModels.Option
                 && !string.IsNullOrEmpty(TextObject.TextAlignment);
 
             if (ret)
-                TextObject.Changed = true;
+                TextObject.IsChanged = true;
             return ret;
         }
     }

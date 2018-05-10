@@ -1,7 +1,6 @@
-﻿using System.Windows;
+﻿using BasicModule.ViewModels.Option;
+using System.Windows;
 using System.Windows.Controls;
-
-using BasicModule.ViewModels.Option;
 
 namespace BasicModule.Views.Common
 {
@@ -26,6 +25,8 @@ namespace BasicModule.Views.Common
                 {
                     if ((dataContext as IOptionViewModel).isRight())
                         DialogResult = true;
+                    //else
+                    //    오류창 띄우기
                 }
                 else
                     DialogResult = true;

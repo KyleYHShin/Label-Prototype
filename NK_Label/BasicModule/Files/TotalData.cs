@@ -1,5 +1,6 @@
 ﻿using BasicModule.Models.Rule;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using ZXing;
 
 namespace BasicModule.Files
@@ -16,6 +17,7 @@ namespace BasicModule.Files
         public List<RuleTimeFile_1> RuleTimeList { get; set; }
         public List<RuleManuFile_1> RuleManualList { get; set; }
         public List<RuleInputFile_1> RuleInputList { get; set; }
+        public List<RuleInputCombineFile_1> RuleInputCombineList { get; set; }
     }
 
     public class LabelFile_1
@@ -23,11 +25,18 @@ namespace BasicModule.Files
         public string Name { get; set; }
         public double Width { get; set; }
         public double Height { get; set; }
+
         public int Margin { get; set; }
+        public double Radius { get; set; }
 
         public Models.Option.PrinterOption.PrinterType SelectedPrinter { get; set; }
         public double SelectedDpi { get; set; }
-        public double Radius { get; set; }
+        public int OffsetX { get; set; }
+        public int OffsetY { get; set; }
+        public bool Sequentiable { get; set; }
+        public int SerialNumberStartIndex { get; set; }
+        public int SerialNumberLength { get; set; }
+        public string LastSerialNumber { get; set; }
     }
 
     public class TextFile_1
@@ -117,4 +126,19 @@ namespace BasicModule.Files
         }
     }
 
+    public class RuleInputCombineFile_1
+    {
+        public RuleRegulation.RuleFormat Format { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public RICContent Contents { get; set; }
+
+        public class RICContent
+        {
+            public string Seperator { get; set; }
+            public int StartIndex { get; set; }
+            public int Length { get; set; }
+            public ObservableCollection<string> InputList { get; set; }
+        }
+    }
 }

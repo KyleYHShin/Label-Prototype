@@ -1,12 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Input;
-
-using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Regions;
-
-using BasicModule.Common;
+﻿using BasicModule.Common;
 using BasicModule.Files;
 using BasicModule.Models;
 using BasicModule.Utils;
@@ -18,37 +10,42 @@ using BasicModule.ViewModels;
 using BasicModule.ViewModels.Option;
 using BasicModule.ViewModels.Print;
 using BasicModule.ViewModels.Rule;
-
 using NK_Label3.Models;
+using Prism.Commands;
+using Prism.Regions;
+using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Input;
+
 
 namespace NK_Label3.ViewModels
 {
-    public class MainWindowViewModel : BindableBase
+    public class MainWindowViewModel : NotifyPropertyChanged
     {
 
         #region System Properties
 
         private string _title = "NK-Label 1.0.0 Beta 1";
-        public string Title { get { return _title; } set { SetProperty(ref _title, value); } }
+        public string Title { get { return _title; } set { _title = value; OnPropertyChanged(); } }
 
         private double _width = 1280;
-        public double Width { get { return _width; } set { SetProperty(ref _width, value); } }
+        public double Width { get { return _width; } set { _width = value; OnPropertyChanged(); } }
 
         private double _height = 720;
-        public double Height { get { return _height; } set { SetProperty(ref _height, value); } }
+        public double Height { get { return _height; } set { _height = value; OnPropertyChanged(); } }
 
         private string _background = "#FFDEDEDE";
-        public string Background { get { return _background; } set { SetProperty(ref _background, value); } }
+        public string Background { get { return _background; } set { _background = value; OnPropertyChanged(); } }
 
         private SystemLanguage _language;
-        public SystemLanguage Language { get { return _language; } set { SetProperty(ref _language, value); } }
+        public SystemLanguage Language { get { return _language; } set { _language = value; OnPropertyChanged(); } }
 
         #endregion System Properties
 
         #region Tab Contents
 
         private ObservableCollection<LabelView> _labelViewList;
-        public ObservableCollection<LabelView> LabelViewList { get { return _labelViewList; } set { SetProperty(ref _labelViewList, value); } }
+        public ObservableCollection<LabelView> LabelViewList { get { return _labelViewList; } set { _labelViewList = value; OnPropertyChanged(); } }
 
         private LabelView _selectedLabelView;
         public LabelView SelectedLabelView
@@ -56,7 +53,7 @@ namespace NK_Label3.ViewModels
             get { return _selectedLabelView; }
             set
             {
-                SetProperty(ref _selectedLabelView, value);
+                _selectedLabelView = value; OnPropertyChanged();
                 if (value is LabelView)
                 {
                     (value.DataContext as LabelViewModel).ChangeOptionRegion();
@@ -70,7 +67,7 @@ namespace NK_Label3.ViewModels
         }
 
         private bool _hasLabel;
-        public bool HasLabel { get { return _hasLabel; } set { SetProperty(ref _hasLabel, value); } }
+        public bool HasLabel { get { return _hasLabel; } set { _hasLabel = value; OnPropertyChanged(); } }
 
         #endregion Tab Contents
 
@@ -127,7 +124,7 @@ namespace NK_Label3.ViewModels
         public ICommand ClickCloseWindow { get; private set; }
         private void CloseWindow()
         {
-            if(CanCloseAllLabel())
+            if (CanCloseAllLabel())
                 Application.Current.Shutdown();
         }
 
@@ -231,7 +228,7 @@ namespace NK_Label3.ViewModels
                 {
                     var thisViewModel = SelectedLabelView.DataContext as LabelViewModel;
                     thisViewModel.ObjectList.Add(newText);
-                    newText.Changed = true;
+                    newText.IsChanged = true;
                 }
             }
         }
@@ -252,7 +249,7 @@ namespace NK_Label3.ViewModels
                 {
                     var thisViewModel = SelectedLabelView.DataContext as LabelViewModel;
                     thisViewModel.ObjectList.Add(newBarcode);
-                    newBarcode.Changed = true;
+                    newBarcode.IsChanged = true;
                 }
             }
         }
@@ -271,7 +268,7 @@ namespace NK_Label3.ViewModels
         public ICommand ClickEidtRuleList { get; private set; }
         private void EditRuleList()
         {
-            if(SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
+            if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
             {
                 var LVM = SelectedLabelView.DataContext as LabelViewModel;
                 var ruleEditView = new RuleListView(RegionManager);
@@ -280,7 +277,7 @@ namespace NK_Label3.ViewModels
                 if (DialogService.ShowSelectDialog(Application.Current.MainWindow, ruleEditView, "Edit Rules") == true)
                 {
                     LVM.RuleList.Clear();
-                    foreach(var cr in (ruleEditView.DataContext as RuleListViewModel).RuleList)
+                    foreach (var cr in (ruleEditView.DataContext as RuleListViewModel).RuleList)
                         LVM.RuleList.Add(cr);
                 }
             }
@@ -335,7 +332,7 @@ namespace NK_Label3.ViewModels
         }
 
         #endregion File Control Events
-                
+
         public ICommand ClickPrintCurrentLabel { get; private set; }
         private void PrintCurrentLabel()
         {
@@ -345,7 +342,7 @@ namespace NK_Label3.ViewModels
 
                 var LVM = SelectedLabelView.DataContext as LabelViewModel;
                 var pVM = pWin.DataContext as PrintWindowViewModel;
-                if(pVM.Initialize(LVM.Label, LVM.ObjectList, LVM.RuleList))
+                if (pVM.Initialize(LVM.Label, LVM.ObjectList, LVM.RuleList))
                 {
                     var pLV = new PrintLabelView() { DataContext = pVM };
                     pWin.SetPrintLabelView(pLV);

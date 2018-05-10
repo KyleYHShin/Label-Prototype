@@ -1,24 +1,19 @@
-﻿using BasicModule.Models;
+﻿using BasicModule.Common;
+using BasicModule.Models;
 using BasicModule.Models.Option;
-using Prism.Mvvm;
-using System.Windows.Data;
 
 namespace BasicModule.ViewModels.Option
 {
-    public class OptionBarcodeViewModel : BindableBase, IOptionViewModel
+    public class OptionBarcodeViewModel : NotifyPropertyChanged, IOptionViewModel
     {
         #region Properties
         
         public object BarcodeFormatList { get => BarcodeOption.BarcodeFormatList; }
 
         private BarcodeObject _barcodeObject;
-        public BarcodeObject BarcodeObject
-        {
-            get { return _barcodeObject; }
-            set { SetProperty(ref _barcodeObject, value); }
-        }
+        public BarcodeObject BarcodeObject { get { return _barcodeObject; } set { _barcodeObject = value; OnPropertyChanged(); } }
 
-        #endregion //Properties
+        #endregion Properties
 
         public OptionBarcodeViewModel(BarcodeObject bo)
         {
@@ -27,14 +22,16 @@ namespace BasicModule.ViewModels.Option
 
         public bool isRight()
         {
-            bool ret = !string.IsNullOrWhiteSpace(_barcodeObject.Name)
-                && _barcodeObject.Width > 0
-                && _barcodeObject.Height > 0
-                && _barcodeObject.PosX >= 0
-                && _barcodeObject.PosY >= 0
-                && _barcodeObject.BarcodeType > 0;
+            bool ret = !string.IsNullOrWhiteSpace(BarcodeObject.Name)
+                && BarcodeObject.Width > 0
+                && BarcodeObject.Height > 0
+                && BarcodeObject.PosX >= 0
+                && BarcodeObject.PosY >= 0
+                && BarcodeObject.BarcodeType > 0
+                && !string.IsNullOrEmpty(BarcodeObject.Text)
+                && BarcodeObject.MaxLength > 0;
             if (ret)
-                _barcodeObject.Changed = true;
+                BarcodeObject.IsChanged = true;
 
             return ret;
         }

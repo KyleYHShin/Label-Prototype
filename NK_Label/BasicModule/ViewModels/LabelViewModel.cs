@@ -1,48 +1,40 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows.Input;
-
-using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Regions;
-
+﻿using BasicModule.Common;
 using BasicModule.Models;
 using BasicModule.Models.Common;
 using BasicModule.Models.Rule;
+using BasicModule.Utils;
 using BasicModule.ViewModels.Option;
 using BasicModule.Views.Option;
-using BasicModule.Utils;
+using Prism.Commands;
+using Prism.Regions;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
-using BasicModule.Common;
+using System.Windows.Input;
 
 namespace BasicModule.ViewModels
 {
-    public class LabelViewModel : BindableBase
+    public class LabelViewModel : NotifyPropertyChanged
     {
         #region Properties
 
         public readonly int FileVersion = 1;
 
         private string _filePath;
-        public string FilePath
-        {
-            get { return _filePath; }
-            set { SetProperty(ref _filePath, value); }
-        }
-        
+        public string FilePath { get { return _filePath; } set { _filePath = value; OnPropertyChanged(); } }
+
         private LabelObject _label = new LabelObject();
         public LabelObject Label
         {
             get { return _label; }
-            set { SetProperty(ref _label, value); }
+            set { _label = value; OnPropertyChanged(); }
         }
 
         private ObservableCollection<BasicObject> _objectList;
         public ObservableCollection<BasicObject> ObjectList
         {
             get { return _objectList; }
-            set { SetProperty(ref _objectList, value); }
+            set { _objectList = value; OnPropertyChanged(); }
         }
 
         private BasicObject _selectedObject;
@@ -51,7 +43,7 @@ namespace BasicModule.ViewModels
             get { return _selectedObject; }
             set
             {
-                SetProperty(ref _selectedObject, value);
+                _selectedObject = value; OnPropertyChanged();
                 ChangeOptionRegion();
             }
         }
@@ -60,7 +52,7 @@ namespace BasicModule.ViewModels
         public List<RuleMain> RuleList
         {
             get { return _ruleList; }
-            set { SetProperty(ref _ruleList, value); }
+            set { _ruleList = value; OnPropertyChanged(); }
         }
 
         #endregion Properties
@@ -82,60 +74,10 @@ namespace BasicModule.ViewModels
             ClickReleaseAll = new DelegateCommand(ReleaseObject);
             ClickDeleteObject = new DelegateCommand(DeleteObject);
 
-            //TestSource();
         }
 
         #endregion Constructor
 
-        private void TestSource()
-        {
-            RuleMain rt = new RuleMain()
-            {
-                Format = RuleRegulation.RuleFormat.TIME,
-                Name = "Time",
-                Description = "Test Rule Time"
-            };
-            var rtt = new RuleTime()
-            {
-                Pattern = "MMM dd(hh:mm tt)"
-            };
-            rt.Content = rtt;
-            RuleList.Add(rt);
-
-            RuleMain rl = new RuleMain()
-            {
-                Format = RuleRegulation.RuleFormat.MANUAL_LIST,
-                Name = "List",
-                Description = "Test Rule List"
-            };
-            RuleManualList rml = new RuleManualList()
-            {
-                ContentList = new ObservableDictionary<string, string>()
-            };
-            rml.AddList("key1", "Description1");
-            rml.AddList("Key2", "Description2");
-            rml.AddList("Key3", "Description3");
-            rml.SelectedContent = "Key2";
-            rl.Content = rml;
-            RuleList.Add(rl);
-
-            RuleMain rs = new RuleMain()
-            {
-                Format = RuleRegulation.RuleFormat.SEQUENTIAL_NUM,
-                Name = "Serial",
-                Description = "Test Rule Serial"
-            };
-            var rsn = new RuleSequentialNum()
-            {
-                NumLength = 5,
-                MaxNum = 10,
-                MinNum = 1,
-                Increment = 1
-            };
-            rs.Content = rsn;
-            RuleList.Add(rs);
-
-        }
 
         #region Common Event
 
@@ -158,13 +100,14 @@ namespace BasicModule.ViewModels
             if (SelectedObject != null)
             {
                 var msg = "";
-                if(SelectedObject is TextObject)
+                if (SelectedObject is TextObject)
                 {
                     var to = SelectedObject as TextObject;
                     msg = "Name : " + to.Name
-                        + "\nText : " + to.Text 
+                        + "\nText : " + to.Text
                         + "\n\n을(를) 삭제하시겠습니까?";
-                }else if(SelectedObject is BarcodeObject)
+                }
+                else if (SelectedObject is BarcodeObject)
                 {
                     var bo = SelectedObject as BarcodeObject;
                     msg = "Name : " + bo.Name
@@ -172,7 +115,7 @@ namespace BasicModule.ViewModels
                         + "\nText : " + bo.Text
                         + "\n\n을(를) 삭제하시겠습니까?";
                 }
-                
+
                 if (DialogService.ShowSimpleSelectDialog(Application.Current.MainWindow, "Alarm", msg) == true)
                 {
                     ObjectList.Remove(SelectedObject);
@@ -184,7 +127,7 @@ namespace BasicModule.ViewModels
         public DelegateCommand<object[]> SelectedCommand { get; private set; }
         public void OnItemSelected(object[] selectedItems)
         {
-            if (selectedItems != null && selectedItems.Count() > 0)
+            if (selectedItems != null && selectedItems.Length > 0)
             {
                 SelectedObject = selectedItems[0] as BasicObject;
             }
@@ -217,16 +160,16 @@ namespace BasicModule.ViewModels
         #endregion Common Events
 
         #region Functions
-        
+
         public bool IsChanged
         {
             get
             {
-                if (Label.Changed)
+                if (Label.IsChanged)
                     return true;
 
                 foreach (var obj in ObjectList)
-                    if (obj.Changed)
+                    if (obj.IsChanged)
                         return true;
 
                 foreach (var rule in RuleList)
@@ -237,9 +180,9 @@ namespace BasicModule.ViewModels
             }
             set
             {
-                Label.Changed = value;
+                Label.IsChanged = value;
                 foreach (var obj in ObjectList)
-                    obj.Changed = value;
+                    obj.IsChanged = value;
 
                 foreach (var rule in RuleList)
                     rule.IsChanged = value;
@@ -248,8 +191,8 @@ namespace BasicModule.ViewModels
 
         public ObservableCollection<RuleMain> CloneObservableRuleList
         {
-            get{
-
+            get
+            {
                 var newList = new ObservableCollection<RuleMain>();
                 foreach (RuleMain r in RuleList)
                 {

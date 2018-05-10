@@ -1,23 +1,23 @@
-﻿using BasicModule.Models.Rule;
+﻿using BasicModule.Common;
+using BasicModule.Models.Rule;
 using Prism.Commands;
-using Prism.Mvvm;
 using Prism.Regions;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace BasicModule.ViewModels.Rule
 {
-    public class RuleListViewModel : BindableBase
+    public class RuleListViewModel : NotifyPropertyChanged
     {
         private ObservableCollection<RuleMain> _ruleList;
-        public ObservableCollection<RuleMain> RuleList { get { return _ruleList; } set { SetProperty(ref _ruleList, value); } }
+        public ObservableCollection<RuleMain> RuleList { get { return _ruleList; } set {  _ruleList = value; OnPropertyChanged(); } }
 
         private RuleMain _selectedRule;
         public RuleMain SelectedRule {
             get { return _selectedRule; }
             set 
             {
-                SetProperty(ref _selectedRule, value);
+                 _selectedRule = value; OnPropertyChanged();
 
                 if (_selectedRule == null)
                     return;
@@ -42,18 +42,15 @@ namespace BasicModule.ViewModels.Rule
             foreach(var r in RuleList)
             {
                 if(r.Name.Equals(newName + addNum.ToString()))
-                {
                     addNum++;
-                }
             }
             newRule.Name = newName + addNum.ToString();
             newRule.Format = RuleRegulation.RuleFormat.SEQUENTIAL_NUM;
 
-            RuleList.Add(newRule);
-            SetProperty(ref _selectedRule, newRule);
-
-            var reVM = new RuleEditorViewModel(RegionManager, RuleList, SelectedRule);
-            reVM.IsEditMode = true;
+            new RuleEditorViewModel(RegionManager, RuleList, newRule)
+            {
+                IsEditMode = true
+            };
         }
     }
 }

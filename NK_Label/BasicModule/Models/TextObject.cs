@@ -4,42 +4,7 @@ namespace BasicModule.Models
 {
     public class TextObject : BasicObject, IPrintableObject
     {
-        #region Text Properties
-
-        private string _text = "TextBox";
-        public string Text
-        {
-            get { return _text; }
-            set
-            {
-                if (value != null)
-                {
-                    _text = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private int _maxLength = 20;
-        public int MaxLength
-        {
-            get { return _maxLength; }
-            set
-            {
-                if (value < 0)
-                    value = 0;
-                else if (value > int.MaxValue)
-                    value = int.MaxValue;
-
-                _maxLength = value;
-                OnPropertyChanged();
-            }
-        }
-
-        #endregion //Text Properties
-
         #region Vector Properties
-
 
         private double _width = 100;
         public new double Width
@@ -47,12 +12,9 @@ namespace BasicModule.Models
             get { return _width; }
             set
             {
-                if (value > 0)
-                {
-                    _width = getRound(value, 2);
-                    OnPropertyChanged();
-                    ConvertedWidth = _width + 10;
-                }
+                _width = getRound(value, 2);
+                OnPropertyChanged();
+                ConvertedWidth = _width + 10;
             }
         }
 
@@ -62,12 +24,9 @@ namespace BasicModule.Models
             get { return _height; }
             set
             {
-                if (value > 0)
-                {
-                    _height = getRound(value, 2);
-                    OnPropertyChanged();
-                    ConvertedHeight = _height + 6;
-                }
+                _height = getRound(value, 2);
+                OnPropertyChanged();
+                ConvertedHeight = _height + 6;
             }
         }
 
@@ -78,21 +37,20 @@ namespace BasicModule.Models
 
         #endregion Vector Properties
 
+        #region Text Properties
+
+        private string _text = "TextBox";
+        public string Text { get { return _text; } set {  _text = value; OnPropertyChanged(); } }
+
+        private int _maxLength = 20;
+        public int MaxLength { get { return _maxLength; } set { _maxLength = value; OnPropertyChanged(); } }
+
+        #endregion Text Properties
+
         #region Font Style Properties
 
         private double _fontSize = 25;
-        public double FontSize
-        {
-            get { return _fontSize; }
-            set
-            {
-                if (value >= 0)
-                {
-                    _fontSize = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        public double FontSize { get { return _fontSize; } set { _fontSize = value; OnPropertyChanged(); } }
 
         private string _fontFamily = "Arial";
         public string FontFamily { get { return _fontFamily; } set { _fontFamily = value; OnPropertyChanged(); } }
@@ -111,21 +69,11 @@ namespace BasicModule.Models
         #region Control Properties
 
         private bool _isSelected;
-        public bool IsSelected
-        {
-            get { return _isSelected; }
-            set
-            {
-                _isSelected = value;
-                Visibility = IsSelected ? "Hidden" : "Visible";
-                OnPropertyChanged();
-            }
-        }
-
-        private string _visibility = "Visible";
-        public string Visibility { get { return _visibility; } set { _visibility = value; OnPropertyChanged(); } }
+        public bool IsSelected { get { return _isSelected; } set { _isSelected = value; OnPropertyChanged(); } }
 
         #endregion Control Properties
+
+        #region Print Properties
 
         public string OriginText { get; set; }
 
@@ -152,5 +100,7 @@ namespace BasicModule.Models
                 return obj;
             }
         }
+
+        #endregion Print Properties
     }
 }

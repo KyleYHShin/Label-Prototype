@@ -1,6 +1,5 @@
 ﻿using BasicModule.Common;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -10,10 +9,10 @@ namespace BasicModule.Utils
 {
     internal class XMLSerializer
     {
-        static readonly string DICTIONARY = "Dictionary";
-        static readonly string KEY = "Key";
-        static readonly string VALUE = "Value";
-        static readonly string KEYVALUEPAIR = KEY+VALUE+ "Pair";
+        private static readonly string DICTIONARY = "Dictionary";
+        private static readonly string KEY = "Key";
+        private  static readonly string VALUE = "Value";
+        private static readonly string KEYVALUEPAIR = KEY+VALUE+ "Pair";
 
         #region Save
 

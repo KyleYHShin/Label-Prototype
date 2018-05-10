@@ -1,6 +1,6 @@
-﻿using BasicModule.Models.Common;
+﻿using BasicModule.Common;
 
-namespace BasicModule.Models.Rule
+namespace BasicModule.Models.Rule.Content
 {
     public class RuleSequentialNum : NotifyPropertyChanged, IRuleObject
     {
@@ -68,13 +68,6 @@ namespace BasicModule.Models.Rule
                 }
             }
         }
-        public string CurrNumStr
-        {
-            get
-            {
-                return _currNum.ToString("D" + _numLength.ToString());
-            }
-        }
 
         private ulong _increment = 1;
         public ulong Increment
@@ -90,7 +83,9 @@ namespace BasicModule.Models.Rule
             }
         }
 
-        #endregion
+        #endregion Properties
+
+        #region Rule Common
 
         public IRuleObject Clone
         {
@@ -107,6 +102,8 @@ namespace BasicModule.Models.Rule
             }
         }
 
-        public string PrintValue => CurrNumStr;
+        public string PrintValue => CurrNum.ToString("D" + _numLength.ToString());
+
+        #endregion Rule Common
     }
 }

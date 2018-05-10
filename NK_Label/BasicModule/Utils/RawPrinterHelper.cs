@@ -34,8 +34,7 @@ public class RawPrinterHelper
     public static extern bool WritePrinter(IntPtr hPrinter, IntPtr pBytes, Int32 dwCount, out Int32 dwWritten);
 
     // SendBytesToPrinter()
-    // When the function is given a printer name and an unmanaged array
-    // of bytes, the function sends those bytes to the print queue.
+    // When the function is given a printer name and an unmanaged array of bytes, the function sends those bytes to the print queue.
     // Returns true on success, false on failure.
     public static bool SendBytesToPrinter(string szPrinterName, IntPtr pBytes, Int32 dwCount)
     {
@@ -46,17 +45,13 @@ public class RawPrinterHelper
 
         di.pDocName = "My C#.NET RAW Document";
         di.pDataType = "RAW";
-
-        // Open the printer.
+        
         if (OpenPrinter(szPrinterName.Normalize(), out hPrinter, IntPtr.Zero))
         {
-            // Start a document.
             if (StartDocPrinter(hPrinter, 1, di))
             {
-                // Start a page.
                 if (StartPagePrinter(hPrinter))
                 {
-                    // Write your bytes.
                     bSuccess = WritePrinter(hPrinter, pBytes, dwCount, out dwWritten);
                     EndPagePrinter(hPrinter);
                 }
@@ -64,12 +59,10 @@ public class RawPrinterHelper
             }
             ClosePrinter(hPrinter);
         }
-        // If you did not succeed, GetLastError may give more information
-        // about why not.
+        // If you did not succeed, GetLastError may give more information about why not.
         if (bSuccess == false)
-        {
             dwError = Marshal.GetLastWin32Error();
-        }
+
         return bSuccess;
     }
 
@@ -99,6 +92,7 @@ public class RawPrinterHelper
         Marshal.FreeCoTaskMem(pUnmanagedBytes);
         return bSuccess;
     }
+
     public static bool SendStringToPrinter(string szPrinterName, string szString)
     {
         IntPtr pBytes;

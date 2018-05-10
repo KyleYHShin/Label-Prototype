@@ -5,26 +5,7 @@ namespace BasicModule.Models
 {
     public class LabelObject : BasicObject
     {
-        #region Default Properties
-
-        private PrinterOption.PrinterType _selectedPrinter;
-        public PrinterOption.PrinterType SelectedPrinter { get { return _selectedPrinter; } set { _selectedPrinter = value; OnPropertyChanged(); } }
-
-        private double _selectedDpi;
-        public double SelectedDpi
-        {
-            get { return _selectedDpi; }
-            set
-            {
-                _selectedDpi = value;
-                OnPropertyChanged();
-                ResetActualSize();
-            }
-        }
-
-        #endregion Default Properties
-
-        #region Size
+        #region Vector Properties
 
         private double _width;
         public new double Width
@@ -32,12 +13,9 @@ namespace BasicModule.Models
             get { return _width; }
             set
             {
-                if (value > 0)
-                {
-                    _width = getRound(value, 2);
-                    OnPropertyChanged();
-                    ResetActualSize();
-                }
+                _width = getRound(value, 2);
+                OnPropertyChanged();
+                ResetActualSize();
             }
         }
 
@@ -47,30 +25,11 @@ namespace BasicModule.Models
             get { return _height; }
             set
             {
-                if (value > 0)
-                {
-                    _height = getRound(value, 2);
-                    OnPropertyChanged();
-                    ResetActualSize();
-                }
+                _height = getRound(value, 2);
+                OnPropertyChanged();
+                ResetActualSize();
             }
         }
-
-        private int _margin = 10;
-        public int Margin
-        {
-            get { return _margin; }
-            set
-            {
-                if (value >= 0)
-                {
-                    _margin = value;
-                    OnPropertyChanged();
-                    ResetActualSize();
-                }
-            }
-        }
-
 
         private double _convertedWidth;
         public double ConvertedWidth { get { return _convertedWidth; } set { _convertedWidth = value; OnPropertyChanged(); } }
@@ -92,39 +51,88 @@ namespace BasicModule.Models
             ConvertedGuideHeight = (Height * 10 - Margin * 2) * SelectedDpi;
         }
 
-        #endregion Size
+        #endregion Vector Properties
 
-        #region Grid Properties
+        #region View Properties
 
-        private double _viewSize = 1;
-        public double ViewSize
+        private int _margin = 10;
+        public int Margin
         {
-            get { return _viewSize; }
-            set
-            {
-                if (value > 0)
-                {
-                    _viewSize = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        
-        private double _radius = 10;
-        public double Radius
-        {
-            get { return _radius; }
+            get { return _margin; }
             set
             {
                 if (value >= 0)
                 {
-                    _radius = value;
+                    _margin = value;
                     OnPropertyChanged();
+                    ResetActualSize();
                 }
             }
         }
 
-        #endregion Grid Properties
+        private double _radius = 10;
+        public double Radius { get { return _radius; } set { _radius = value; OnPropertyChanged(); } }
+
+        private double _viewSize = 1;
+        public double ViewSize { get { return _viewSize; } set { _viewSize = value; OnPropertyChanged(); } }
+
+        #endregion View Properties
+
+        #region Print Properties
+
+        private PrinterOption.PrinterType _selectedPrinter;
+        public PrinterOption.PrinterType SelectedPrinter { get { return _selectedPrinter; } set { _selectedPrinter = value; OnPropertyChanged(); } }
+
+        private double _selectedDpi;
+        public double SelectedDpi
+        {
+            get { return _selectedDpi; }
+            set
+            {
+                _selectedDpi = value;
+                OnPropertyChanged();
+                ResetActualSize();
+            }
+        }
+
+        private int _offsetX;
+        public int OffsetX { get { return _offsetX; } set { _offsetX = value; OnPropertyChanged(); } }
+
+        private int _offsetY;
+        public int OffsetY { get { return _offsetY; } set { _offsetY = value; } }
+
+        private bool _sequentiable = false;
+        public bool Sequentiable { get { return _sequentiable; } set { _sequentiable = value; OnPropertyChanged(); } }
+
+        private int _serialNumberStartIndex;
+        public int SerialNumberStartIndex { get { return _serialNumberStartIndex + 1; } set { _serialNumberStartIndex = value - 1; OnPropertyChanged(); } }
+
+        private int _serialNumberLength;
+        public int SerialNumberLength
+        {
+            get { return _serialNumberLength; }
+            set
+            {
+                _serialNumberLength = value;
+                OnPropertyChanged();
+                LastSerialNumber = string.Empty.PadLeft(_serialNumberLength, '0');
+            }
+        }
+
+        private string _lastSerialNumber;
+        public string LastSerialNumber
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_lastSerialNumber))
+                    _lastSerialNumber = string.Empty.PadLeft(_serialNumberLength, '0');
+
+                return _lastSerialNumber;
+            }
+            set { _lastSerialNumber = value; OnPropertyChanged(); }
+        }
+
+        #endregion Print Properties
 
         public LabelObject Clone
         {

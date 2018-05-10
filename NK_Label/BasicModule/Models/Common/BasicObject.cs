@@ -6,11 +6,8 @@ namespace BasicModule.Models.Common
 {
     public class BasicObject : INotifyPropertyChanged
     {
-
-        #region Properties
-
-        private bool _changed = false;
-        public bool Changed { get { return _changed; } set { _changed = value; OnPropertyChanged(); } }
+        private bool _isChanged = false;
+        public bool IsChanged { get { return _isChanged; } set { _isChanged = value; OnPropertyChanged(); } }
 
         private string _name;
         public string Name
@@ -25,10 +22,6 @@ namespace BasicModule.Models.Common
                 }
             }
         }
-
-        #endregion Properties
-
-        #region Vector Properties
 
         private double _width;
         public double Width
@@ -80,24 +73,18 @@ namespace BasicModule.Models.Common
             }
         }
 
-        #endregion Vector Properties
-
         protected double getRound(double original, int point)
         {
             return Math.Round(original, point);
         }
 
-        #region INotifyPropertyChanged
-
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName]string propertyname = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyname));
-            if (propertyname != "Changed")
-                Changed = true;
+            if (propertyname != "IsChanged")
+                IsChanged = true;
         }
-
-        #endregion INotifyPropertyChanged
 
     }
 }

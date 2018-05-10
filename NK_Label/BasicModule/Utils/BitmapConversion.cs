@@ -60,7 +60,6 @@ namespace BasicModule.Utils
             return rtb;
         }
 
-
         private static Bitmap RenderTargetBitmapToBitmap(object obj)
         {
             var bitmapSource = obj as BitmapSource;

@@ -1,15 +1,18 @@
 ﻿using BasicModule.Common;
-using BasicModule.Models.Common;
 
-namespace BasicModule.Models.Rule
+namespace BasicModule.Models.Rule.Content
 {
     public class RuleManualList : NotifyPropertyChanged, IRuleObject
     {
+        #region Properties
+
         private ObservableDictionary<string, string> _contentList;
         public ObservableDictionary<string, string> ContentList { get { return _contentList; } set { _contentList = value; OnPropertyChanged(); } }
 
         private string _selectedContent;
         public string SelectedContent { get { return _selectedContent; } set { _selectedContent = value; OnPropertyChanged(); } }
+
+        #endregion Properties
 
         public bool AddList(string key, string value)
         {
@@ -25,6 +28,7 @@ namespace BasicModule.Models.Rule
             }
             return false;
         }
+
         public bool UpdateList(string key, string value)
         {
             if (!string.IsNullOrEmpty(key) && !string.IsNullOrWhiteSpace(key)
@@ -48,6 +52,8 @@ namespace BasicModule.Models.Rule
             return false;
         }
 
+        #region Rule Common
+
         public IRuleObject Clone
         {
             get
@@ -64,5 +70,7 @@ namespace BasicModule.Models.Rule
         }
 
         public string PrintValue => SelectedContent;
+
+        #endregion Rule Common
     }
 }

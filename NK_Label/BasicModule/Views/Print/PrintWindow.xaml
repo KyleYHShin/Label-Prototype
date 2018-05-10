@@ -12,7 +12,7 @@
     <Window.Resources>
         <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
     </Window.Resources>
-        
+
     <Grid
         Width="Auto" MaxWidth="1280"
         Height="Auto" MaxHeight="700"
@@ -36,8 +36,11 @@
         <Grid
             Grid.Row="1" Grid.Column="0"
             Margin="10"
-            Background="White">
+            Background="White"
+            IsEnabled="{Binding IsAbleToAction}">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -60,8 +63,7 @@
                 DisplayMemberPath="Key"
                 SelectedValuePath="Value"
                 SelectedValue="{Binding Label.SelectedPrinter}"
-                Style="{StaticResource OptionComboBoxValue}"
-                IsEnabled="{Binding IsAbleToUI}"/>
+                Style="{StaticResource OptionComboBoxValue}"/>
             <TextBlock
                 Grid.Row="0" Grid.Column="2"
                 Text="DPI : "
@@ -72,8 +74,7 @@
                 DisplayMemberPath="Key"
                 SelectedValuePath="Value"
                 SelectedValue="{Binding Label.SelectedDpi}"
-                Style="{StaticResource OptionComboBoxValue}"
-                IsEnabled="{Binding IsAbleToUI}"/>
+                Style="{StaticResource OptionComboBoxValue}"/>
 
             <TextBlock
                 Grid.Row="1" Grid.Column="0"
@@ -83,8 +84,7 @@
                 Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
                 ItemsSource="{Binding UsablePrinterList}"
                 SelectedValue="{Binding SelectedPrinterName}"
-                Style="{StaticResource OptionComboBoxValue}"
-                IsEnabled="{Binding IsAbleToUI}"/>
+                Style="{StaticResource OptionComboBoxValue}"/>
 
             <TextBlock
                 Grid.Row="2" Grid.Column="0"
@@ -92,28 +92,79 @@
                 Style="{StaticResource RuleColumnHeader}"/>
             <TextBox 
                 Grid.Row="2" Grid.Column="1"
-                Text="{Binding OffsetX}"
-                Style="{StaticResource OptionColumnValue}"
-                IsEnabled="{Binding IsAbleToUI}"/>
+                Text="{Binding Label.OffsetX}"
+                Style="{StaticResource OptionColumnValue}"/>
             <TextBlock
                 Grid.Row="2" Grid.Column="2"
                 Text="Offset Y : "
                 Style="{StaticResource RuleColumnHeader}"/>
             <TextBox 
                 Grid.Row="2" Grid.Column="3"
-                Text="{Binding OffsetY}"
-                Style="{StaticResource OptionColumnValue}"
-                IsEnabled="{Binding IsAbleToUI}"/>
+                Text="{Binding Label.OffsetY}"
+                Style="{StaticResource OptionColumnValue}"/>
 
             <TextBlock
                 Grid.Row="3" Grid.Column="2"
                 Text="Repetition : "
-                Style="{StaticResource RuleColumnHeader}"/>
+                Style="{StaticResource RuleColumnHeader}"
+                Visibility="{Binding Repeatable}"/>
             <TextBox 
                 Grid.Row="3" Grid.Column="3"
                 Text="{Binding Repetition}"
                 Style="{StaticResource OptionColumnValue}"
-                IsEnabled="{Binding Repetable}"/>
+                Visibility="{Binding Repeatable}"/>
+
+            <CheckBox
+                Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4"
+                IsChecked="{Binding Label.Sequentiable}"
+                Visibility="{Binding Sequentiable}">
+                <TextBlock
+                    Text="Sequentiable"
+                    Style="{StaticResource RuleColumnHeader}"/>
+            </CheckBox>
+            <Grid
+                Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4"
+                Visibility="{Binding Sequentiable}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="65"/>
+                    <ColumnDefinition Width="35"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    Grid.Column="0"
+                    Text="Start Index : "
+                    Style="{StaticResource RuleColumnHeader}" Grid.ColumnSpan="2" Margin="3,8,0,7"/>
+                <TextBox 
+                    Grid.Column="2"
+                    Text="{Binding Label.SerialNumberStartIndex}"
+                    Style="{StaticResource OptionColumnValue}"
+                    IsEnabled="{Binding Label.Sequentiable}" Margin="3,5,3,4"/>
+
+                <TextBlock
+                    Grid.Column="3"
+                    Text="Length : "
+                    Style="{StaticResource RuleColumnHeader}" Margin="3,8,0,7"/>
+                <TextBox 
+                    Grid.Column="4"
+                    Text="{Binding Label.SerialNumberLength}"
+                    Style="{StaticResource OptionColumnValue}"
+                    IsEnabled="{Binding Label.Sequentiable}" Margin="3,5,3,4"/>
+
+                <TextBlock
+                    Grid.Column="5"
+                    Text="Last Number : "
+                    Style="{StaticResource RuleColumnHeader}" Margin="3,8,0,7"/>
+                <TextBox 
+                    Grid.Column="6"
+                    Text="{Binding Label.LastSerialNumber}"
+                    Style="{StaticResource OptionColumnValue}"
+                    IsEnabled="{Binding Label.Sequentiable}" Margin="3,5,3,4"/>
+            </Grid>
 
         </Grid>
 
@@ -130,7 +181,7 @@
                 Style="{StaticResource OptionButton}"
                 Template="{StaticResource OptionApplyButton}"
                 MinWidth="100"
-                IsEnabled="{Binding IsAbleToUI}"/>
+                IsEnabled="{Binding IsAbleToAction}"/>
             <Button
                 Content="Refresh"
                 Command="{Binding Refresh}"
@@ -139,8 +190,7 @@
                 Style="{StaticResource OptionButton}"
                 Template="{StaticResource OptionApplyButton}"
                 MinWidth="100"
-                IsEnabled="{Binding IsAbleToUI}"/>
-            <!--Command="{Binding CloseCommand}"-->
+                IsEnabled="{Binding IsAbleToAction}"/>
             <Button
                 Content="Stop"
                 Click="Click_Stop"
@@ -161,7 +211,7 @@
             VerticalScrollBarVisibility="Auto"
             HorizontalScrollBarVisibility="Auto"
             CanContentScroll="True"
-            IsEnabled="{Binding IsAbleToUI}">
+            IsEnabled="{Binding IsAbleToAction}">
             <StackPanel Orientation="Vertical" >
                 <ContentControl x:Name="PrintRuleSeq"/>
                 <ContentControl x:Name="PrintRuleManu"/>

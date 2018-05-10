@@ -1,17 +1,17 @@
-﻿<UserControl x:Class="BasicModule.Views.Rule.RuleCommonView"
+﻿<UserControl x:Class="BasicModule.Views.Rule.Content.RuleTimeView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d">
-    
+             mc:Ignorable="d" >
+
     <UserControl.Resources>
         <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
     </UserControl.Resources>
 
-    <Grid Width="Auto">
+    <Grid Width="410">
         <GroupBox
-            Header=" Rule Common "
+            Header=" Rule Sequential Number "
             Style="{StaticResource OptionGroup}">
             <Grid>
                 <Grid.RowDefinitions>
@@ -26,36 +26,36 @@
 
                 <TextBlock
                     Grid.Row="0" Grid.Column="0"
-                    Text="Name"
+                    Text="Patterns"
                     Style="{StaticResource OptionColumnHeader}"/>
                 <TextBox
                     Grid.Row="0" Grid.Column="1"
-                    Text="{Binding EditingRule.Name}"
+                    Text="{Binding TimeFormatList, Mode=OneWay}"
                     Style="{StaticResource OptionColumnValue}"
-                    IsEnabled="{Binding IsEditMode}"/>
-                    
+                    TextAlignment="Left"
+                    IsReadOnly="True"/>
+
                 <TextBlock
                     Grid.Row="1" Grid.Column="0"
-                    Text="Description"
+                    Text="User's Pattern"
                     Style="{StaticResource OptionColumnHeader}"/>
                 <TextBox
                     Grid.Row="1" Grid.Column="1"
-                    Text="{Binding EditingRule.Description}"
+                    Text="{Binding EditingRule.Content.Pattern}"
                     Style="{StaticResource OptionColumnValue}"
                     IsEnabled="{Binding IsEditMode}"/>
-                    
-                <TextBlock
+
+                <Button
                     Grid.Row="2" Grid.Column="0"
-                    Text="Format"
-                    Style="{StaticResource OptionColumnHeader}" />
-                <ComboBox
-                    Grid.Row="2" Grid.Column="1"
-                    ItemsSource="{Binding RuleFormatList}"
-                    DisplayMemberPath="Key"
-                    SelectedValuePath="Value"
-                    SelectedValue="{Binding SelectedRuleFormat}"
-                    Style="{StaticResource OptionComboBoxValue}"
+                    Content="Example"
+                    Command="{Binding PrintExample}"
+                    Style="{StaticResource ExampleButton}"
                     IsEnabled="{Binding IsEditMode}"/>
+                <TextBox
+                    Grid.Row="2" Grid.Column="1"
+                    Text="{Binding Example, Mode=OneWay}"
+                    Style="{StaticResource OptionColumnValue}"
+                    IsReadOnly="True"/>
             </Grid>
         </GroupBox>
     </Grid>

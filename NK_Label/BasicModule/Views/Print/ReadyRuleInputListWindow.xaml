@@ -17,9 +17,11 @@
         Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        
         <TextBox
             Grid.Row="0"
             Name="InputBox"
@@ -27,7 +29,33 @@
             KeyDown="OnKeyDownHandler"/>
 
         <Grid
-            Grid.Row="1">
+            Grid.Row="1"
+            Name="CheckSequentialBlock"
+            Height="30"
+            VerticalAlignment="Center"
+            Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                Grid.Column="0"
+                Text="Last Serial Number : "
+                FontWeight="Bold"
+                TextAlignment="Left"
+                VerticalAlignment="Center"/>
+            <TextBlock
+                Grid.Column="1"
+                Name="LastSerialNumber"
+                Text="{Binding Label.LastSerialNumber}"
+                FontWeight="Bold"
+                Foreground="Red"
+                TextAlignment="Center"
+                VerticalAlignment="Center"/>
+        </Grid>
+
+        <Grid
+            Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="*"/>
@@ -56,7 +84,7 @@
         </Grid>
 
         <StackPanel
-            Grid.Row="2"
+            Grid.Row="3"
             Orientation="Horizontal" HorizontalAlignment="Center" >
             <Button
                 Content="Print"

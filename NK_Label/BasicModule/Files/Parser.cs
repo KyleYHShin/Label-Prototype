@@ -1,6 +1,7 @@
 ﻿using BasicModule.Models;
 using BasicModule.Models.Common;
 using BasicModule.Models.Rule;
+using BasicModule.Models.Rule.Content;
 using BasicModule.Utils;
 using BasicModule.ViewModels;
 
@@ -26,7 +27,8 @@ namespace BasicModule.Files
                     RuleSequentialNumList = new List<RuleSequFile_1>(),
                     RuleTimeList = new List<RuleTimeFile_1>(),
                     RuleManualList = new List<RuleManuFile_1>(),
-                    RuleInputList = new List<RuleInputFile_1>()
+                    RuleInputList = new List<RuleInputFile_1>(),
+                    RuleInputCombineList = new List<RuleInputCombineFile_1>()
                 };
 
                 ret.Label = LabelToFile_1(originData.Label);
@@ -50,6 +52,9 @@ namespace BasicModule.Files
                         case RuleRegulation.RuleFormat.INPUT:
                             RuleInputListToFile_1(rule, ret.RuleInputList);
                             break;
+                        case RuleRegulation.RuleFormat.INPUT_COMBINE:
+                            RuleInputCombineFile_1(rule, ret.RuleInputCombineList);
+                            break;
                     }
                 }
 
@@ -69,11 +74,18 @@ namespace BasicModule.Files
                 Name = lo.Name,
                 Width = lo.Width,
                 Height = lo.Height,
+
                 Margin = lo.Margin,
+                Radius = lo.Radius,
 
                 SelectedPrinter = lo.SelectedPrinter,
                 SelectedDpi = lo.SelectedDpi,
-                Radius = lo.Radius
+                OffsetX = lo.OffsetX,
+                OffsetY = lo.OffsetY,
+                Sequentiable = lo.Sequentiable,
+                SerialNumberStartIndex = lo.SerialNumberStartIndex,
+                SerialNumberLength = lo.SerialNumberLength,
+                LastSerialNumber = lo.LastSerialNumber
             };
         }
 
@@ -183,6 +195,24 @@ namespace BasicModule.Files
             });
         }
 
+        private static void RuleInputCombineFile_1(RuleMain rm, List<RuleInputCombineFile_1> RuleInputCombineList)
+        {
+            var ric = rm.Content as RuleInputCombine;
+            RuleInputCombineList.Add(new Files.RuleInputCombineFile_1()
+            {
+                Format = rm.Format,
+                Name = rm.Name,
+                Description = rm.Description,
+                Contents = new RuleInputCombineFile_1.RICContent
+                {
+                    Seperator = ric.Seperator,
+                    StartIndex = ric.StartIndex,
+                    Length = ric.Length,
+                    InputList = ric.InputList
+                }
+            });
+        }
+
 
         internal static bool FileToObject_1(ref LabelViewModel labelData, FileData_1 fileData)
         {
@@ -192,11 +222,19 @@ namespace BasicModule.Files
                 labelData.Label.Name = fileData.Label.Name;
                 labelData.Label.Width = fileData.Label.Width;
                 labelData.Label.Height = fileData.Label.Height;
+
                 labelData.Label.Margin = fileData.Label.Margin;
-                labelData.Label.SelectedPrinter = fileData.Label.SelectedPrinter;
-                labelData.Label.SelectedDpi = fileData.Label.SelectedDpi;
                 labelData.Label.Radius = fileData.Label.Radius;
 
+                labelData.Label.SelectedPrinter = fileData.Label.SelectedPrinter;
+                labelData.Label.SelectedDpi = fileData.Label.SelectedDpi;
+                labelData.Label.OffsetX = fileData.Label.OffsetX;
+                labelData.Label.OffsetY = fileData.Label.OffsetY;
+                labelData.Label.Sequentiable = fileData.Label.Sequentiable;
+                labelData.Label.SerialNumberStartIndex = fileData.Label.SerialNumberStartIndex;
+                labelData.Label.SerialNumberLength = fileData.Label.SerialNumberLength;
+                labelData.Label.LastSerialNumber = fileData.Label.LastSerialNumber;
+                
                 foreach (var to in fileData.TextList)
                 {
                     labelData.ObjectList.Add(new TextObject()
@@ -296,6 +334,23 @@ namespace BasicModule.Files
                         Name = file.Name,
                         Description = file.Description,
                         Content = ri
+                    });
+                }
+                foreach(var file in fileData.RuleInputCombineList)
+                {
+                    var ric = new RuleInputCombine()
+                    {
+                        Seperator = file.Contents.Seperator,
+                        StartIndex = file.Contents.StartIndex,
+                        Length = file.Contents.Length,
+                        InputList = file.Contents.InputList
+                    };
+                    labelData.RuleList.Add(new RuleMain()
+                    {
+                        Format = file.Format,
+                        Name = file.Name,
+                        Description = file.Description,
+                        Content = ric
                     });
                 }
                 return true;

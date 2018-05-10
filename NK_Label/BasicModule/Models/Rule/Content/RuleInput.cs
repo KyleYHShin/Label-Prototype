@@ -1,9 +1,11 @@
-﻿using BasicModule.Models.Common;
+﻿using BasicModule.Common;
 
-namespace BasicModule.Models.Rule
+namespace BasicModule.Models.Rule.Content
 {
     public class RuleInput : NotifyPropertyChanged, IRuleObject
     {
+        #region Properties
+
         private int _order = 1;
         public int Order { get { return _order; } set { _order = value; OnPropertyChanged(); } }
 
@@ -13,13 +15,17 @@ namespace BasicModule.Models.Rule
         private int _length = 1;
         public int Length { get { return _length; } set { _length = value; OnPropertyChanged(); } }
 
-        private string _inputData = "";
+        private string _inputData = string.Empty;
         public string InputData { get { return _inputData; } set { _inputData = value; OnPropertyChanged(); } }
+        
+        #endregion Properties
 
         public void InputRefresh()
         {
             InputData = string.Empty;
         }
+
+        #region Rule Common
 
         public IRuleObject Clone
         {
@@ -39,7 +45,7 @@ namespace BasicModule.Models.Rule
             get
             {
                 if (StartIndex<= 0 || Length <= 0 || StartIndex > InputData.Length)
-                    return "";
+                    return string.Empty;
 
                 if (StartIndex + Length-1 >= InputData.Length)
                     return InputData.Substring(_startIndex);
@@ -48,5 +54,6 @@ namespace BasicModule.Models.Rule
             }
         }
 
+        #endregion Rule Common
     }
 }

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="BasicModule.Views.Print.PrintRuleInputView"
+﻿<UserControl x:Class="BasicModule.Views.Print.Content.PrintRuleInputCombineView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,10 +8,10 @@
     <UserControl.Resources>
         <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
     </UserControl.Resources>
-    
+
     <Grid>
         <ListBox
-            ItemsSource="{Binding InputRuleList}"
+            ItemsSource="{Binding InCombRuleList}"
             Background="Transparent"
             BorderBrush="Black"
             BorderThickness="1">
@@ -55,11 +55,11 @@
 
                         <TextBlock
                             Grid.Row="2" Grid.Column="0"
-                            Text="Order : "
+                            Text="Seperator : "
                             Style="{StaticResource RuleColumnHeader}"/>
                         <TextBlock
                             Grid.Row="2" Grid.Column="1"
-                            Text="{Binding Content.Order}"
+                            Text="{Binding Content.Seperator}"
                             Style="{StaticResource RuleColumnValue}"/>
                         <TextBlock
                             Grid.Row="2" Grid.Column="2"

@@ -1,22 +1,18 @@
-﻿using BasicModule.Models;
+﻿using BasicModule.Common;
+using BasicModule.Models;
 using BasicModule.Models.Option;
-using Prism.Mvvm;
 
 namespace BasicModule.ViewModels.Option
 {
-    public class OptionLabelViewModel : BindableBase, IOptionViewModel
+    public class OptionLabelViewModel : NotifyPropertyChanged, IOptionViewModel
     {
         #region Properties
 
-        public object PrinterList { get => PrinterOption.PrinterList; } 
-        public object DpiList { get => PrinterOption.DpiList; } 
+        public object PrinterList { get => PrinterOption.PrinterList; }
+        public object DpiList { get => PrinterOption.DpiList; }
 
         private LabelObject _labelObject;
-        public LabelObject LabelObject
-        {
-            get { return _labelObject; }
-            set { SetProperty(ref _labelObject, value); }
-        }
+        public LabelObject LabelObject { get { return _labelObject; } set { _labelObject = value; OnPropertyChanged(); } }
 
         #endregion Properties
 
@@ -27,15 +23,17 @@ namespace BasicModule.ViewModels.Option
 
         public bool isRight()
         {
-            bool ret = !string.IsNullOrWhiteSpace(_labelObject.Name)
-                && _labelObject.Width > 0
-                && _labelObject.Height > 0
-                && _labelObject.SelectedPrinter > 0
-                && _labelObject.SelectedDpi > 0
-                && _labelObject.Margin >= 0
-                && _labelObject.Radius >= 0;
+            bool ret = !string.IsNullOrWhiteSpace(LabelObject.Name)
+                && LabelObject.Width > 0
+                && LabelObject.Height > 0
+                && LabelObject.Margin >= 0
+                && LabelObject.Radius >= 0
+                && LabelObject.SelectedPrinter > 0
+                && LabelObject.SelectedDpi > 0
+                && LabelObject.OffsetX > 0
+                && LabelObject.OffsetY > 0;
             if (ret)
-                _labelObject.Changed = true;
+                LabelObject.IsChanged = true;
 
             return ret;
         }

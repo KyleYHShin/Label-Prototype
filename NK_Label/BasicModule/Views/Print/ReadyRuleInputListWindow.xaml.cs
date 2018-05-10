@@ -1,8 +1,8 @@
 ﻿using BasicModule.Models.Rule;
+using BasicModule.Models.Rule.Content;
 using BasicModule.ViewModels.Print;
-using System.Text;
+using System;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace BasicModule.Views.Print
@@ -12,13 +12,31 @@ namespace BasicModule.Views.Print
     /// </summary>
     public partial class ReadyRuleInputListWindow : Window
     {
+        private PrintWindowViewModel thisDataContext;
+        
+        private int startIndex;
+        private int length;
+
         public ReadyRuleInputListWindow()
         {
             InitializeComponent();
             SizeToContent = SizeToContent.WidthAndHeight;
+
             InputBox.Focus();
         }
-        
+
+        public void InitializeDataContext()
+        {
+            thisDataContext = DataContext as PrintWindowViewModel;
+
+            if (thisDataContext.Label.Sequentiable)
+            {
+                CheckSequentialBlock.Visibility = thisDataContext.Sequentiable;
+                startIndex = thisDataContext.Label.SerialNumberStartIndex - 1;
+                length = thisDataContext.Label.SerialNumberLength;
+            }
+        }
+
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return || e.Key == Key.Tab)
@@ -35,21 +53,36 @@ namespace BasicModule.Views.Print
                 if (string.IsNullOrEmpty(InputBox.Text))
                     return false;
 
+                if (thisDataContext.Label.Sequentiable)
+                {
+                    int newInputNum;
+                    int lastInputNum;
+                    if (Int32.TryParse(InputBox.Text.Substring(startIndex, length), out newInputNum)
+                        && Int32.TryParse(LastSerialNumber.Text, out lastInputNum)
+                        && lastInputNum+1 == newInputNum)
+                    {
+                       thisDataContext.Label.LastSerialNumber = InputBox.Text.Substring(startIndex, length);
+                    }
+                    else
+                    {
+                        InputBox.SelectAll();
+                        return false;
+                    }
+                }
+
                 for (int i = 0; i < InputList.Items.Count; i++)
                 {
                     var ri = (InputList.Items[i] as RuleMain).Content as RuleInput;
                     if (string.IsNullOrEmpty(ri.InputData))
                     {
                         ri.InputData = InputBox.Text;
+                        InputBox.Text = string.Empty;
+                        InputBox.Focus();
 
                         if (i == InputList.Items.Count - 1)
                             return true;
                         else
-                        {
-                            InputBox.Text = string.Empty;
-                            InputBox.Focus();
                             return false;
-                        }
                     }
                 }
                 return true;

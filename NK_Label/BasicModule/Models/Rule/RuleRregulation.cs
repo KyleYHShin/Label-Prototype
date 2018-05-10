@@ -13,7 +13,7 @@ namespace BasicModule.Models.Rule
         public static string Prefix = SymbolStart.ToString() + SymbolPre.ToString();
         public static string Postfix = SymbolPost.ToString() + SymbolEnd.ToString();
 
-        public static int MIN_NAME_LEN = 2;
+        public static int NAME_MIN_LENGTH = 2;
 
         public enum RuleFormat
         {
@@ -65,7 +65,7 @@ namespace BasicModule.Models.Rule
 
                 string symbols = @"[~!@\#$%^&*\()\=+|\\/:;?""<>']";
                 if (combinedName.StartsWith(Prefix) && combinedName.EndsWith(Postfix)
-                    && !string.IsNullOrEmpty(name) && name.Length >= MIN_NAME_LEN
+                    && !string.IsNullOrEmpty(name) && name.Length >= NAME_MIN_LENGTH
                     && !new System.Text.RegularExpressions.Regex(symbols).IsMatch(name)) //특수기호 없이 문자와 숫자로만 된
                     return true;
 

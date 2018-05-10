@@ -1,7 +1,9 @@
 ﻿using BasicModule.Common;
 using BasicModule.Models.Rule;
+using BasicModule.Models.Rule.Content;
 using BasicModule.ViewModels.Print;
 using Prism.Regions;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Forms;
@@ -13,7 +15,7 @@ namespace BasicModule.Views.Print
     /// </summary>
     public partial class PrintWindow : Window
     {
-        private PrintWindowViewModel pWinVM;
+        private PrintWindowViewModel thisDataContext;
 
         public PrintWindow(IRegionManager regionManager)
         {
@@ -29,7 +31,7 @@ namespace BasicModule.Views.Print
             }
 
             SizeToContent = SizeToContent.WidthAndHeight;
-            pWinVM = DataContext as PrintWindowViewModel;
+            thisDataContext = DataContext as PrintWindowViewModel;
         }
 
         public void SetPrintLabelView(PrintLabelView plv)
@@ -46,7 +48,7 @@ namespace BasicModule.Views.Print
         {
             if (isConverted && readyToPrint)
             {
-                pWinVM.Print(PrintLabelView.Content as PrintLabelView);
+                thisDataContext.Print(PrintLabelView.Content as PrintLabelView);
                 repeat--;
                 isConverted = false;
                 readyToPrint = false;
@@ -64,33 +66,62 @@ namespace BasicModule.Views.Print
                 }
                 else
                 {
+                    if (thisDataContext.InCombRuleList.Count > 0)
+                    {
+                        var combRule = thisDataContext.InCombRuleList[0].Content as RuleInputCombine;
+                        foreach (var r in thisDataContext.InputRuleList)
+                        {
+                            combRule.AddInput((r.Content as RuleInput).InputData);
+                        }
+                    }
+
                     isConverted = true;
                     readyToPrint = false;
                     inputTimer.Start();
                 }
             }
-            pWinVM.ConvertRuleToText();
+            thisDataContext.ConvertRuleToText();
         }
 
         private bool ShowInputWindowAndGetCommand
         {
             get
             {
-                if (pWinVM.InputRuleList.Count > 0)
+                if (thisDataContext.InputRuleList.Count > 0)
                 {
-                    foreach (var r in pWinVM.InputRuleList)
+                    string tempLastSerialNumber = thisDataContext.Label.LastSerialNumber;
+
+                    var tempInputRuleList = new List<IRuleObject>();
+                    foreach (var r in thisDataContext.InputRuleList)
                     {
+                        tempInputRuleList.Add(r.Content.Clone);
                         (r.Content as RuleInput).InputData = string.Empty;
+                    }
+                    IRuleObject tempInputCombRule = null;
+                    if (thisDataContext.InCombRuleList.Count > 0)
+                    {
+                        tempInputCombRule = thisDataContext.InCombRuleList[0].Content.Clone;
+                        (thisDataContext.InCombRuleList[0].Content as RuleInputCombine).InputRefresh();
                     }
 
                     var dlWin = new ReadyRuleInputListWindow
                     {
                         Title = "Ready to Manual Input",
-                        DataContext = pWinVM
+                        DataContext = thisDataContext
                     };
-
+                    dlWin.InitializeDataContext();
                     dlWin.Owner = System.Windows.Application.Current.MainWindow;
                     bool? ret = dlWin.ShowDialog();
+
+                    if (!ret.HasValue || !(bool)ret)
+                    {
+                        thisDataContext.Label.LastSerialNumber = tempLastSerialNumber;
+                        for(int i = 0; i<tempInputRuleList.Count; i++)
+                            thisDataContext.InputRuleList[i].Content = tempInputRuleList[i].Clone;
+
+                        if (tempInputCombRule != null)
+                            thisDataContext.InCombRuleList[0].Content = tempInputCombRule;
+                    }
 
                     return !ret.HasValue ? false : (bool)ret;
                 }
@@ -100,14 +131,19 @@ namespace BasicModule.Views.Print
 
         private void TerminateInputTimer()
         {
-            inputTimer.Dispose();
-            inputTimer = null;
+            if (inputTimer != null)
+            {
+                inputTimer.Stop();
+                inputTimer.Dispose();
+                inputTimer = null;
+            }
 
             isConverted = false;
             readyToPrint = false;
             repeat = 0;
 
-            pWinVM.IsAbleToUI = true;
+            thisDataContext.ConvertRuleToText();
+            thisDataContext.IsAbleToAction = true;
         }
 
         #endregion
@@ -119,33 +155,16 @@ namespace BasicModule.Views.Print
         private bool isTurnToPrint = false;
         private Timer seqTimer;
 
-        private void TerminateSeqTimer()
-        {
-            rsn = null;
-            currNum = 0;
-            isTurnToPrint = false;
-
-            if (seqTimer != null)
-            {
-                seqTimer.Stop();
-                seqTimer.Dispose();
-                seqTimer = null;
-            }
-
-            pWinVM.ConvertRuleToText();
-            pWinVM.IsAbleToUI = true;
-        }
-
         private void SeqTimer_Tick(object sender, System.EventArgs e)
         {
-            pWinVM.ConvertRuleToText();
+            thisDataContext.ConvertRuleToText();
 
             if (currNum > rsn.MaxNum)
                 TerminateSeqTimer();
 
             if (isTurnToPrint)
             {
-                pWinVM.Print(PrintLabelView.Content as PrintLabelView);
+                thisDataContext.Print(PrintLabelView.Content as PrintLabelView);
                 currNum++;
                 rsn.CurrNum = currNum;
                 isTurnToPrint = false;
@@ -154,30 +173,47 @@ namespace BasicModule.Views.Print
                 isTurnToPrint = true;
         }
 
+        private void TerminateSeqTimer()
+        {
+            if (seqTimer != null)
+            {
+                seqTimer.Stop();
+                seqTimer.Dispose();
+                seqTimer = null;
+            }
+
+            rsn = null;
+            currNum = 0;
+            isTurnToPrint = false;
+
+            thisDataContext.ConvertRuleToText();
+            thisDataContext.IsAbleToAction = true;
+        }
+
         #endregion SeqPrinting
 
 
 
         private void PrintLabel(object sender, RoutedEventArgs e)
         {
-            pWinVM.ConvertRuleToText();
+            thisDataContext.ConvertRuleToText();
 
-            bool hasSequentialRule = pWinVM.SeqRuleList.Count > 0 ? true : false;
-            bool hasInputRule = pWinVM.InputRuleList.Count > 0 ? true : false;
+            bool hasSequentialRule = thisDataContext.SeqRuleList.Count > 0 ? true : false;
+            bool hasInputRule = thisDataContext.InputRuleList.Count > 0 ? true : false;
 
             if (!hasSequentialRule && !hasInputRule)
             {
-                pWinVM.IsAbleToUI = false;
-                for (var i = 0; i < pWinVM.Repetition; i++)
+                thisDataContext.IsAbleToAction = false;
+                for (var i = 0; i < thisDataContext.Repetition; i++)
                 {
-                    pWinVM.Print(PrintLabelView.Content as PrintLabelView);
+                    thisDataContext.Print(PrintLabelView.Content as PrintLabelView);
                 }
-                pWinVM.IsAbleToUI = true;
+                thisDataContext.IsAbleToAction = true;
             }
             else if (hasSequentialRule && !hasInputRule)
             {
-                pWinVM.IsAbleToUI = false;
-                rsn = pWinVM.SeqRuleList[0].Content as RuleSequentialNum;
+                thisDataContext.IsAbleToAction = false;
+                rsn = thisDataContext.SeqRuleList[0].Content as RuleSequentialNum;
                 currNum = rsn.CurrNum;
                 isTurnToPrint = false;
 
@@ -188,10 +224,10 @@ namespace BasicModule.Views.Print
             }
             else if (!hasSequentialRule && hasInputRule)
             {
-                pWinVM.IsAbleToUI = false;
+                thisDataContext.IsAbleToAction = false;
                 isConverted = false;
                 readyToPrint = false;
-                repeat = pWinVM.Repetition;
+                repeat = thisDataContext.Repetition;
 
                 inputTimer = new Timer();
                 inputTimer.Interval = 200;
@@ -200,10 +236,10 @@ namespace BasicModule.Views.Print
             }
             else if (hasSequentialRule && hasInputRule)
             {
-                pWinVM.IsAbleToUI = false;
+                thisDataContext.IsAbleToAction = false;
                 isConverted = false;
                 readyToPrint = false;
-                rsn = pWinVM.SeqRuleList[0].Content as RuleSequentialNum;
+                rsn = thisDataContext.SeqRuleList[0].Content as RuleSequentialNum;
                 currNum = rsn.CurrNum;
 
                 multiTimer = new Timer();
@@ -213,14 +249,12 @@ namespace BasicModule.Views.Print
             }
         }
 
-
-
         private Timer multiTimer;
         private void MultiTimer_Tick(object sender, System.EventArgs e)
         {
             if (isConverted && readyToPrint)
             {
-                pWinVM.Print(PrintLabelView.Content as PrintLabelView);
+                thisDataContext.Print(PrintLabelView.Content as PrintLabelView);
                 repeat--;
                 isConverted = false;
                 readyToPrint = false;
@@ -243,25 +277,39 @@ namespace BasicModule.Views.Print
                 }
                 else
                 {
+                    if (thisDataContext.InCombRuleList.Count > 0)
+                    {
+                        var combRule = thisDataContext.InCombRuleList[0].Content as RuleInputCombine;
+                        foreach (var r in thisDataContext.InputRuleList)
+                        {
+                            combRule.AddInput((r.Content as RuleInput).InputData);
+                        }
+                    }
+
                     isConverted = true;
                     readyToPrint = false;
                     multiTimer.Start();
                 }
             }
-            pWinVM.ConvertRuleToText();
+            thisDataContext.ConvertRuleToText();
         }
 
         private void TerminateMultiTimer()
         {
-            multiTimer.Dispose();
-            multiTimer = null;
+            if (multiTimer != null)
+            {
+                multiTimer.Stop();
+                multiTimer.Dispose();
+                multiTimer = null;
+            }
 
             isConverted = false;
             readyToPrint = false;
             rsn = null;
             currNum = 0;
-
-            pWinVM.IsAbleToUI = true;
+            
+            thisDataContext.ConvertRuleToText();
+            thisDataContext.IsAbleToAction = true;
         }
 
 
@@ -269,11 +317,13 @@ namespace BasicModule.Views.Print
         private void Click_Stop(object sender, RoutedEventArgs e)
         {
             TerminateSeqTimer();
+            TerminateInputTimer();
+            TerminateMultiTimer();
         }
 
         private void Click_Close(object sender, CancelEventArgs e)
         {
-            if (!pWinVM.IsAbleToUI || seqTimer != null)
+            if (!thisDataContext.IsAbleToAction || seqTimer != null)
             {
                 Utils.DialogService.ShowSimpleTextDialog(this, "Warning", "프린터 항목이 남아있습니다.");
                 e.Cancel = true;

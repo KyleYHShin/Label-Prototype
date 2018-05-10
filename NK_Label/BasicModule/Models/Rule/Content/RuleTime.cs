@@ -1,7 +1,7 @@
-﻿using BasicModule.Models.Common;
+﻿using BasicModule.Common;
 using BasicModule.Utils;
 
-namespace BasicModule.Models.Rule
+namespace BasicModule.Models.Rule.Content
 {
     public class RuleTime : NotifyPropertyChanged, IRuleObject
     {
@@ -21,7 +21,9 @@ namespace BasicModule.Models.Rule
             }
         }
 
-        #endregion
+        #endregion Properties
+
+        #region Rule Common
 
         public IRuleObject Clone
         {
@@ -35,6 +37,7 @@ namespace BasicModule.Models.Rule
         }
 
         public string PrintValue => TimeConversion.DateToString(Pattern);
-
+        
+        #endregion Rule Common
     }
 }

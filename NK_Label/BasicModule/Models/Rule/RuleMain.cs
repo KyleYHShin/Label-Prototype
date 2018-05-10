@@ -1,4 +1,5 @@
-﻿using BasicModule.Models.Common;
+﻿using BasicModule.Common;
+using BasicModule.Models.Rule.Content;
 
 namespace BasicModule.Models.Rule
 {
@@ -26,6 +27,8 @@ namespace BasicModule.Models.Rule
                     Content = new RuleManualList();
                 else if (_format == RuleRegulation.RuleFormat.INPUT && !(Content is RuleInput))
                     Content = new RuleInput();
+                else if (_format == RuleRegulation.RuleFormat.INPUT_COMBINE && !(Content is RuleInputCombine))
+                    Content = new RuleInputCombine();
             }
         }
 
@@ -35,7 +38,7 @@ namespace BasicModule.Models.Rule
             get { return _name; }
             set
             {
-                if (!string.IsNullOrEmpty(value) && value.Length >= RuleRegulation.MIN_NAME_LEN)
+                if (!string.IsNullOrEmpty(value) && value.Length >= RuleRegulation.NAME_MIN_LENGTH)
                 {
                     _name = value;
                     OnPropertyChanged();
@@ -49,7 +52,9 @@ namespace BasicModule.Models.Rule
         private IRuleObject _content;
         public IRuleObject Content { get { return _content; } set { _content = value; OnPropertyChanged(); } }
 
-        #endregion
+        #endregion Properties
+
+        #region Rule Common
 
         public IRuleObject Clone
         {
@@ -71,9 +76,12 @@ namespace BasicModule.Models.Rule
             get
             {
                 if (Content == null)
-                    return "";
+                    return string.Empty;
                 return Content.PrintValue;
             }
         }
+
+        #endregion Rule Common
+        
     }
 }

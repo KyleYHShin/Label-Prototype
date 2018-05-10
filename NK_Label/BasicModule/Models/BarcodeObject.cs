@@ -7,6 +7,49 @@ namespace BasicModule.Models
 {
     public class BarcodeObject : BasicObject, IPrintableObject
     {
+        #region Vector Properties
+
+        private double _width = 100;
+        public new double Width
+        {
+            get { return _width; }
+            set
+            {
+                _width = getRound(value, 2);
+                OnPropertyChanged();
+
+                if (BarcodeWriter != null)
+                {
+                    BarcodeWriter.Options.Width = (int)_width;
+                    BarcodeWriter.Options.Height = (int)_height;
+                    if (BarcodeWriter != null && !string.IsNullOrEmpty(_text))
+                        Barcode = BitmapConversion.BitmapToBitmapSource(BarcodeWriter.Write(_text));
+                }
+            }
+        }
+
+        private double _height = 30;
+        public new double Height
+        {
+            get { return _height; }
+            set
+            {
+                _height = getRound(value, 2);
+                OnPropertyChanged();
+
+                if (BarcodeWriter != null)
+                {
+                    BarcodeWriter.Options.Width = (int)_width;
+                    BarcodeWriter.Options.Height = (int)_height;
+                    if (BarcodeWriter != null && !string.IsNullOrEmpty(_text))
+                        Barcode = BitmapConversion.BitmapToBitmapSource(BarcodeWriter.Write(_text));
+                }
+
+            }
+        }
+
+        #endregion Vector Properties
+
         #region Barcode Properties
 
         private BarcodeWriter _barcodeWriter;
@@ -53,74 +96,13 @@ namespace BasicModule.Models
         }
 
         private int _maxLength = 50;
-        public int MaxLength
-        {
-            get { return _maxLength; }
-            set
-            {
-                if (value < 0)
-                    value = 0;
-                else if (value > int.MaxValue)
-                    value = int.MaxValue;
-
-                _maxLength = value;
-                OnPropertyChanged();
-            }
-        }
+        public int MaxLength { get { return _maxLength; } set { _maxLength = value; OnPropertyChanged(); } }
 
         private BitmapSource _barcode;
         public BitmapSource Barcode { get { return _barcode; } set { _barcode = value; OnPropertyChanged(); } }
 
         #endregion Barcode Properties
-
-        #region Vector Data
-
-        private double _width = 100;
-        public new double Width
-        {
-            get { return _width; }
-            set
-            {
-                if (value > 0)
-                {
-                    _width = getRound(value, 2);
-                    OnPropertyChanged();
-
-                    if (BarcodeWriter != null)
-                    {
-                        BarcodeWriter.Options.Width = (int)_width;
-                        BarcodeWriter.Options.Height = (int)_height;
-                        if (BarcodeWriter != null && !string.IsNullOrEmpty(_text))
-                            Barcode = BitmapConversion.BitmapToBitmapSource(BarcodeWriter.Write(_text));
-                    }
-                }
-            }
-        }
-
-        private double _height = 30;
-        public new double Height
-        {
-            get { return _height; }
-            set
-            {
-                if (value > 0)
-                {
-                    _height = getRound(value, 2);
-                    OnPropertyChanged();
-
-                    if (BarcodeWriter != null)
-                    {
-                        BarcodeWriter.Options.Width = (int)_width;
-                        BarcodeWriter.Options.Height = (int)_height;
-                        if (BarcodeWriter != null && !string.IsNullOrEmpty(_text))
-                            Barcode = BitmapConversion.BitmapToBitmapSource(BarcodeWriter.Write(_text));
-                    }
-                }
-            }
-        }
-
-        #endregion Vector Data
-
+        
         #region Decoration Properties
 
         //private string _borderBrush = "Transparent";
@@ -141,7 +123,7 @@ namespace BasicModule.Models
         //    set { _borderColor = value; OnPropertyChanged(); }
         //}
 
-        #endregion //Decoration Properties
+        #endregion Decoration Properties
 
         #region Control Properties
 
@@ -149,6 +131,8 @@ namespace BasicModule.Models
         public bool IsSelected { get { return _isSelected; } set { _isSelected = value; OnPropertyChanged(); } }
 
         #endregion Control Properties
+
+        #region Print Properties
 
         public string OriginText { get; set; }
 
@@ -158,6 +142,8 @@ namespace BasicModule.Models
             {
                 var obj = new BarcodeObject();
                 obj.Name = Name;
+                obj.Width = Width;
+                obj.Height = Height;
                 obj.PosX = PosX;
                 obj.PosY = PosY;
 
@@ -166,11 +152,11 @@ namespace BasicModule.Models
                 obj.Text = Text;
                 obj.MaxLength = MaxLength;
                 obj.Barcode = Barcode;
-                obj.Width = Width;
-                obj.Height = Height;
 
                 return obj;
             }
         }
+
+        #endregion Print Properties
     }
 }
