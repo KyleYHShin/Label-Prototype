@@ -16,7 +16,7 @@ using Prism.Regions;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
-
+using BasicModule.Models.Common;
 
 namespace NK_Label3.ViewModels
 {
@@ -229,6 +229,15 @@ namespace NK_Label3.ViewModels
                     var thisViewModel = SelectedLabelView.DataContext as LabelViewModel;
                     thisViewModel.ObjectList.Add(newText);
                     newText.IsChanged = true;
+                    
+                    foreach (var obj in thisViewModel.ObjectList)
+                    {
+                        if (obj is BarcodeObject)
+                            (obj as BarcodeObject).IsSelected = false;
+                        else if (obj is TextObject)
+                            (obj as TextObject).IsSelected = false;
+                    }
+                    newText.IsSelected = true;
                 }
             }
         }
@@ -250,6 +259,15 @@ namespace NK_Label3.ViewModels
                     var thisViewModel = SelectedLabelView.DataContext as LabelViewModel;
                     thisViewModel.ObjectList.Add(newBarcode);
                     newBarcode.IsChanged = true;
+
+                    foreach (var obj in thisViewModel.ObjectList)
+                    {
+                        if (obj is BarcodeObject)
+                            (obj as BarcodeObject).IsSelected = false;
+                        else if (obj is TextObject)
+                            (obj as TextObject).IsSelected = false;
+                    }
+                    newBarcode.IsSelected = true;
                 }
             }
         }

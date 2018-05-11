@@ -31,8 +31,8 @@ namespace BasicModule.Files
 
         public Models.Option.PrinterOption.PrinterType SelectedPrinter { get; set; }
         public double SelectedDpi { get; set; }
-        public int OffsetX { get; set; }
-        public int OffsetY { get; set; }
+        public ushort OffsetX { get; set; }
+        public ushort OffsetY { get; set; }
         public bool Sequentiable { get; set; }
         public int SerialNumberStartIndex { get; set; }
         public int SerialNumberLength { get; set; }
@@ -80,11 +80,11 @@ namespace BasicModule.Files
 
         public class RSContent
         {
-            public int NumLength { get; set; }
+            public byte NumLength { get; set; }
             public ulong MinNum { get; set; }
             public ulong MaxNum { get; set; }
             public ulong CurrNum { get; set; }
-            public ulong Increment { get; set; }
+            public uint Increment { get; set; }
         }
     }
 
@@ -121,7 +121,7 @@ namespace BasicModule.Files
         {
             public int Order { get; set; }
             public int StartIndex { get; set; }
-            public int Length { get; set; }
+            public byte CharLength { get; set; }
             public string InputData { get; set; }
         }
     }

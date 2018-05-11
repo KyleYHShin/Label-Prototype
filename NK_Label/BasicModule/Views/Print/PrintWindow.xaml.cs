@@ -192,62 +192,7 @@ namespace BasicModule.Views.Print
 
         #endregion SeqPrinting
 
-
-
-        private void PrintLabel(object sender, RoutedEventArgs e)
-        {
-            thisDataContext.ConvertRuleToText();
-
-            bool hasSequentialRule = thisDataContext.SeqRuleList.Count > 0 ? true : false;
-            bool hasInputRule = thisDataContext.InputRuleList.Count > 0 ? true : false;
-
-            if (!hasSequentialRule && !hasInputRule)
-            {
-                thisDataContext.IsAbleToAction = false;
-                for (var i = 0; i < thisDataContext.Repetition; i++)
-                {
-                    thisDataContext.Print(PrintLabelView.Content as PrintLabelView);
-                }
-                thisDataContext.IsAbleToAction = true;
-            }
-            else if (hasSequentialRule && !hasInputRule)
-            {
-                thisDataContext.IsAbleToAction = false;
-                rsn = thisDataContext.SeqRuleList[0].Content as RuleSequentialNum;
-                currNum = rsn.CurrNum;
-                isTurnToPrint = false;
-
-                seqTimer = new Timer();
-                seqTimer.Interval = 200;
-                seqTimer.Tick += new System.EventHandler(SeqTimer_Tick);
-                seqTimer.Start();
-            }
-            else if (!hasSequentialRule && hasInputRule)
-            {
-                thisDataContext.IsAbleToAction = false;
-                isConverted = false;
-                readyToPrint = false;
-                repeat = thisDataContext.Repetition;
-
-                inputTimer = new Timer();
-                inputTimer.Interval = 200;
-                inputTimer.Tick += new System.EventHandler(InputTimer_Tick);
-                inputTimer.Start();
-            }
-            else if (hasSequentialRule && hasInputRule)
-            {
-                thisDataContext.IsAbleToAction = false;
-                isConverted = false;
-                readyToPrint = false;
-                rsn = thisDataContext.SeqRuleList[0].Content as RuleSequentialNum;
-                currNum = rsn.CurrNum;
-
-                multiTimer = new Timer();
-                multiTimer.Interval = 200;
-                multiTimer.Tick += new System.EventHandler(MultiTimer_Tick);
-                multiTimer.Start();
-            }
-        }
+        #region MultiPrinting
 
         private Timer multiTimer;
         private void MultiTimer_Tick(object sender, System.EventArgs e)
@@ -307,9 +252,67 @@ namespace BasicModule.Views.Print
             readyToPrint = false;
             rsn = null;
             currNum = 0;
-            
+
             thisDataContext.ConvertRuleToText();
             thisDataContext.IsAbleToAction = true;
+        }
+
+        #endregion MultiPrinting
+
+
+        private void PrintLabel(object sender, RoutedEventArgs e)
+        {
+            thisDataContext.ConvertRuleToText();
+
+            bool hasSequentialRule = thisDataContext.SeqRuleList.Count > 0 ? true : false;
+            bool hasInputRule = thisDataContext.InputRuleList.Count > 0 ? true : false;
+
+            if (!hasSequentialRule && !hasInputRule)
+            {
+                thisDataContext.IsAbleToAction = false;
+                for (var i = 0; i < thisDataContext.Repetition; i++)
+                {
+                    thisDataContext.Print(PrintLabelView.Content as PrintLabelView);
+                }
+                thisDataContext.IsAbleToAction = true;
+            }
+            else if (hasSequentialRule && !hasInputRule)
+            {
+                thisDataContext.IsAbleToAction = false;
+                rsn = thisDataContext.SeqRuleList[0].Content as RuleSequentialNum;
+                currNum = rsn.CurrNum;
+                isTurnToPrint = false;
+
+                seqTimer = new Timer();
+                seqTimer.Interval = 200;
+                seqTimer.Tick += new System.EventHandler(SeqTimer_Tick);
+                seqTimer.Start();
+            }
+            else if (!hasSequentialRule && hasInputRule)
+            {
+                thisDataContext.IsAbleToAction = false;
+                isConverted = false;
+                readyToPrint = false;
+                repeat = thisDataContext.Repetition;
+
+                inputTimer = new Timer();
+                inputTimer.Interval = 200;
+                inputTimer.Tick += new System.EventHandler(InputTimer_Tick);
+                inputTimer.Start();
+            }
+            else if (hasSequentialRule && hasInputRule)
+            {
+                thisDataContext.IsAbleToAction = false;
+                isConverted = false;
+                readyToPrint = false;
+                rsn = thisDataContext.SeqRuleList[0].Content as RuleSequentialNum;
+                currNum = rsn.CurrNum;
+
+                multiTimer = new Timer();
+                multiTimer.Interval = 200;
+                multiTimer.Tick += new System.EventHandler(MultiTimer_Tick);
+                multiTimer.Start();
+            }
         }
 
 

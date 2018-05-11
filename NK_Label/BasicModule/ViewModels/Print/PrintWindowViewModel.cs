@@ -299,6 +299,8 @@ namespace BasicModule.ViewModels.Print
 
                         Console.WriteLine(zplCode);
                         //pService.PrintZebraProduct(SelectedPrinterName, zplCode.ToString());
+                        Clipboard.Clear();
+                        Clipboard.SetText(zplCode.ToString());
                         break;
                 }
             }

@@ -76,7 +76,7 @@
 
             <MenuItem Header="{Binding Language.MenuEdit}">
                 <MenuItem
-                    Header="선택된 객체 삭제"
+                    Header="선택한 객체 삭제"
                     Command="{Binding ClickDeleteObject}"
                     IsEnabled="{Binding HasLabel}"/>
                 <!--<MenuItem Header="{Binding Language.MenuEditCopy}" Command=""/>

@@ -15,36 +15,41 @@ namespace BasicModule.Models
             get { return _width; }
             set
             {
-                _width = getRound(value, 2);
-                OnPropertyChanged();
-
-                if (BarcodeWriter != null)
+                if (value >= 45)
                 {
-                    BarcodeWriter.Options.Width = (int)_width;
-                    BarcodeWriter.Options.Height = (int)_height;
-                    if (BarcodeWriter != null && !string.IsNullOrEmpty(_text))
-                        Barcode = BitmapConversion.BitmapToBitmapSource(BarcodeWriter.Write(_text));
+                    _width = getRound(value, 2);
+                    OnPropertyChanged();
+
+                    if (BarcodeWriter != null)
+                    {
+                        BarcodeWriter.Options.Width = (int)_width;
+                        BarcodeWriter.Options.Height = (int)_height;
+                        if (BarcodeWriter != null && !string.IsNullOrEmpty(_text))
+                            Barcode = BitmapConversion.BitmapToBitmapSource(BarcodeWriter.Write(_text));
+                    }
                 }
             }
         }
 
-        private double _height = 30;
+        private double _height = 100;
         public new double Height
         {
             get { return _height; }
             set
             {
-                _height = getRound(value, 2);
-                OnPropertyChanged();
-
-                if (BarcodeWriter != null)
+                if (value >= 45)
                 {
-                    BarcodeWriter.Options.Width = (int)_width;
-                    BarcodeWriter.Options.Height = (int)_height;
-                    if (BarcodeWriter != null && !string.IsNullOrEmpty(_text))
-                        Barcode = BitmapConversion.BitmapToBitmapSource(BarcodeWriter.Write(_text));
-                }
+                    _height = getRound(value, 2);
+                    OnPropertyChanged();
 
+                    if (BarcodeWriter != null)
+                    {
+                        BarcodeWriter.Options.Width = (int)_width;
+                        BarcodeWriter.Options.Height = (int)_height;
+                        if (BarcodeWriter != null && !string.IsNullOrEmpty(_text))
+                            Barcode = BitmapConversion.BitmapToBitmapSource(BarcodeWriter.Write(_text));
+                    }
+                }
             }
         }
 
@@ -78,31 +83,39 @@ namespace BasicModule.Models
             }
         }
 
-        private string _text;
+        private string _text = string.Empty;
         public string Text
         {
             get { return _text; }
             set
             {
-                if (value != null)
-                {
-                    _text = value;
-                    OnPropertyChanged();
+                _text = value;
+                OnPropertyChanged();
 
-                    if (BarcodeWriter != null && !string.IsNullOrEmpty(_text))
-                        Barcode = BitmapConversion.BitmapToBitmapSource(_barcodeWriter.Write(_text));
-                }
+                if (BarcodeWriter != null && !string.IsNullOrEmpty(_text))
+                    Barcode = BitmapConversion.BitmapToBitmapSource(_barcodeWriter.Write(_text));
             }
         }
 
         private int _maxLength = 50;
-        public int MaxLength { get { return _maxLength; } set { _maxLength = value; OnPropertyChanged(); } }
+        public int MaxLength
+        {
+            get { return _maxLength; }
+            set
+            {
+                if (value > 0)
+                {
+                    _maxLength = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private BitmapSource _barcode;
         public BitmapSource Barcode { get { return _barcode; } set { _barcode = value; OnPropertyChanged(); } }
 
         #endregion Barcode Properties
-        
+
         #region Decoration Properties
 
         //private string _borderBrush = "Transparent";

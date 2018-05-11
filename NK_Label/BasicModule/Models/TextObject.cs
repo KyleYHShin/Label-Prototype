@@ -6,51 +6,87 @@ namespace BasicModule.Models
     {
         #region Vector Properties
 
-        private double _width = 100;
+        private double _width = 150;
         public new double Width
         {
             get { return _width; }
             set
             {
-                _width = getRound(value, 2);
-                OnPropertyChanged();
-                ConvertedWidth = _width + 10;
+                if (value >= 50)
+                {
+                    _width = getRound(value, 2);
+                    OnPropertyChanged();
+                    ConvertedWidth = _width + 10;
+                }
             }
         }
 
-        private double _height = 35;
+        private double _height = 25;
         public new double Height
         {
             get { return _height; }
             set
             {
-                _height = getRound(value, 2);
-                OnPropertyChanged();
-                ConvertedHeight = _height + 6;
+                if (value >= 15)
+                {
+                    _height = getRound(value, 2);
+                    OnPropertyChanged();
+                    ConvertedHeight = _height + 6;
+                }
             }
         }
 
-        private double _convertedWidth = 110;
+        private double _convertedWidth = 160;
         public double ConvertedWidth { get { return _convertedWidth; } set { _convertedWidth = value; OnPropertyChanged(); } }
-        private double _convertedHeight = 41;
+        private double _convertedHeight = 31;
         public double ConvertedHeight { get { return _convertedHeight; } set { _convertedHeight = value; OnPropertyChanged(); } }
 
         #endregion Vector Properties
 
         #region Text Properties
 
-        private string _text = "TextBox";
-        public string Text { get { return _text; } set {  _text = value; OnPropertyChanged(); } }
+        private string _text = "Text Contents";
+        public string Text
+        {
+            get { return _text; }
+            set
+            {
+                _text = value;
+                OnPropertyChanged();
+            }
+        }
 
         private int _maxLength = 20;
-        public int MaxLength { get { return _maxLength; } set { _maxLength = value; OnPropertyChanged(); } }
+        public int MaxLength
+        {
+            get { return _maxLength; }
+            set
+            {
+                if (value > 0)
+                {
+                    _maxLength = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         #endregion Text Properties
 
         #region Font Style Properties
 
-        private double _fontSize = 25;
-        public double FontSize { get { return _fontSize; } set { _fontSize = value; OnPropertyChanged(); } }
+        private double _fontSize = 20;
+        public double FontSize
+        {
+            get { return _fontSize; }
+            set
+            {
+                if (value >= 10)
+                {
+                    _fontSize = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private string _fontFamily = "Arial";
         public string FontFamily { get { return _fontFamily; } set { _fontFamily = value; OnPropertyChanged(); } }

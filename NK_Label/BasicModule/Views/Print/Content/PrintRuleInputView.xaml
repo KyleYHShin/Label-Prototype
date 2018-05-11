@@ -75,7 +75,7 @@
                             Style="{StaticResource RuleColumnHeader}"/>
                         <TextBlock
                             Grid.Row="2" Grid.Column="5"
-                            Text="{Binding Content.Length}"
+                            Text="{Binding Content.CharLength}"
                             Style="{StaticResource RuleColumnValue}"/>
                     </Grid>
                 </DataTemplate>

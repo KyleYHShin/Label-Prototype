@@ -21,12 +21,34 @@ namespace BasicModule.Models.Rule.Content
                 }
             }
         }
-        
-        private int _startIndex;
-        public int StartIndex { get { return _startIndex + 1; } set { _startIndex = value - 1; OnPropertyChanged(); } }
 
-        private int _length = 99;
-        public int Length { get { return _length; } set { _length = value; OnPropertyChanged(); } }
+        private int _startIndex;
+        public int StartIndex
+        {
+            get { return _startIndex + 1; }
+            set
+            {
+                if (value > 0)
+                {
+                    _startIndex = value - 1;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private int _length = 100;
+        public int Length
+        {
+            get { return _length; }
+            set
+            {
+                if (value > 0)
+                {
+                    _length = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private ObservableCollection<string> _inputList;
         public ObservableCollection<string> InputList { get { return _inputList; } set { _inputList = value; OnPropertyChanged(); } }

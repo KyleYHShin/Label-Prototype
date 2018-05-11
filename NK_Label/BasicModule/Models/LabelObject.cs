@@ -13,9 +13,12 @@ namespace BasicModule.Models
             get { return _width; }
             set
             {
-                _width = getRound(value, 2);
-                OnPropertyChanged();
-                ResetActualSize();
+                if (value >= 10)
+                {
+                    _width = getRound(value, 2);
+                    OnPropertyChanged();
+                    ResetActualSize();
+                }
             }
         }
 
@@ -25,9 +28,12 @@ namespace BasicModule.Models
             get { return _height; }
             set
             {
-                _height = getRound(value, 2);
-                OnPropertyChanged();
-                ResetActualSize();
+                if (value >= 10)
+                {
+                    _height = getRound(value, 2);
+                    OnPropertyChanged();
+                    ResetActualSize();
+                }
             }
         }
 
@@ -71,10 +77,32 @@ namespace BasicModule.Models
         }
 
         private double _radius = 10;
-        public double Radius { get { return _radius; } set { _radius = value; OnPropertyChanged(); } }
+        public double Radius
+        {
+            get { return _radius; }
+            set
+            {
+                if (value >= 0)
+                {
+                    _radius = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private double _viewSize = 1;
-        public double ViewSize { get { return _viewSize; } set { _viewSize = value; OnPropertyChanged(); } }
+        public double ViewSize
+        {
+            get { return _viewSize; }
+            set
+            {
+                if (value > 0)
+                {
+                    _viewSize = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         #endregion View Properties
 
@@ -89,33 +117,50 @@ namespace BasicModule.Models
             get { return _selectedDpi; }
             set
             {
-                _selectedDpi = value;
-                OnPropertyChanged();
-                ResetActualSize();
+                if (value > 0)
+                {
+                    _selectedDpi = value;
+                    OnPropertyChanged();
+                    ResetActualSize();
+                }
             }
         }
 
-        private int _offsetX;
-        public int OffsetX { get { return _offsetX; } set { _offsetX = value; OnPropertyChanged(); } }
+        private ushort _offsetX;
+        public ushort OffsetX { get { return _offsetX; } set { _offsetX = value; OnPropertyChanged(); } }
 
-        private int _offsetY;
-        public int OffsetY { get { return _offsetY; } set { _offsetY = value; } }
+        private ushort _offsetY;
+        public ushort OffsetY { get { return _offsetY; } set { _offsetY = value; } }
 
         private bool _sequentiable = false;
         public bool Sequentiable { get { return _sequentiable; } set { _sequentiable = value; OnPropertyChanged(); } }
 
         private int _serialNumberStartIndex;
-        public int SerialNumberStartIndex { get { return _serialNumberStartIndex + 1; } set { _serialNumberStartIndex = value - 1; OnPropertyChanged(); } }
+        public int SerialNumberStartIndex
+        {
+            get { return _serialNumberStartIndex + 1; }
+            set
+            {
+                if (value > 0)
+                {
+                    _serialNumberStartIndex = value - 1;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
-        private int _serialNumberLength;
+        private int _serialNumberLength = 1;
         public int SerialNumberLength
         {
             get { return _serialNumberLength; }
             set
             {
-                _serialNumberLength = value;
-                OnPropertyChanged();
-                LastSerialNumber = string.Empty.PadLeft(_serialNumberLength, '0');
+                if (value > 0)
+                {
+                    _serialNumberLength = value;
+                    OnPropertyChanged();
+                    LastSerialNumber = string.Empty.PadLeft(_serialNumberLength, '0');
+                }
             }
         }
 
@@ -129,7 +174,14 @@ namespace BasicModule.Models
 
                 return _lastSerialNumber;
             }
-            set { _lastSerialNumber = value; OnPropertyChanged(); }
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    _lastSerialNumber = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         #endregion Print Properties

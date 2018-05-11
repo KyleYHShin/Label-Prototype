@@ -2,6 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:common="clr-namespace:BasicModule.Common"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d">
 
@@ -23,20 +25,29 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <TextBlock Grid.Row="0" Grid.Column="0"
                                Text="Name"
                                Style="{StaticResource OptionColumnHeader}" />
                     <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
                              Text="{Binding LabelObject.Name, Mode=TwoWay}"
-                             Style="{StaticResource OptionColumnValue}" />
+                             Style="{StaticResource OptionColumnValue}" >
+                        <i:Interaction.Behaviors>
+                            <common:TextBoxNameBehaviour/>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
 
                     <TextBlock Grid.Row="1" Grid.Column="0"
                                Text="Width"
                                Style="{StaticResource OptionColumnHeader}" />
                     <TextBox Grid.Row="1" Grid.Column="1"
                              Text="{Binding LabelObject.Width, Mode=TwoWay}"
-                             Style="{StaticResource OptionColumnValue}"/>
+                             Style="{StaticResource OptionColumnValue}" >
+                        <i:Interaction.Behaviors>
+                            <common:TextBoxNumberBehaviour/>
+                            <!--<common:TextBoxNumberBehaviour/>-->
+                        </i:Interaction.Behaviors>
+                    </TextBox>
                     <TextBlock Grid.Row="1" Grid.Column="2"
                              Text="mm"
                              Style="{StaticResource OptionColumnValue2}"/>
@@ -46,7 +57,11 @@
                                Style="{StaticResource OptionColumnHeader}" />
                     <TextBox Grid.Row="2" Grid.Column="1"
                              Text="{Binding LabelObject.Height, Mode=TwoWay}"
-                             Style="{StaticResource OptionColumnValue}" />
+                             Style="{StaticResource OptionColumnValue}" >
+                        <i:Interaction.Behaviors>
+                            <common:TextBoxNumberBehaviour/>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
                     <TextBlock Grid.Row="2" Grid.Column="2"
                              Text="mm"
                              Style="{StaticResource OptionColumnValue2}"/>
@@ -55,7 +70,7 @@
 
             <GroupBox Header=" Printer " Style="{StaticResource OptionGroup}" >
                 <Grid>
-                        <Grid.RowDefinitions>
+                    <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
@@ -63,9 +78,9 @@
                         <ColumnDefinition Width="Auto" MinWidth="80"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <TextBlock Grid.Row="0" Grid.Column="0"
-                               Text="Printer"
+                               Text="Manufacturer"
                                Style="{StaticResource OptionColumnHeader}" />
                     <ComboBox Grid.Row="0" Grid.Column="1"
                               ItemsSource="{Binding PrinterList}"
@@ -73,7 +88,7 @@
                               SelectedValuePath="Value"
                               SelectedValue="{Binding LabelObject.SelectedPrinter}"
                               Style="{StaticResource OptionComboBoxValue}" />
-                    
+
                     <TextBlock Grid.Row="1" Grid.Column="0"
                                Text="DPI"
                                Style="{StaticResource OptionColumnHeader}" />
@@ -85,7 +100,7 @@
                               Style="{StaticResource OptionComboBoxValue}" />
                 </Grid>
             </GroupBox>
-            
+
             <GroupBox Header=" View " Style="{StaticResource OptionGroup}" >
                 <Grid>
                     <Grid.RowDefinitions>
@@ -102,14 +117,22 @@
                                Style="{StaticResource OptionColumnHeader}" />
                     <TextBox Grid.Row="0" Grid.Column="1"
                              Text="{Binding LabelObject.Margin, Mode=TwoWay}"
-                             Style="{StaticResource OptionColumnValue}" />
+                             Style="{StaticResource OptionColumnValue}" >
+                        <i:Interaction.Behaviors>
+                            <common:TextBoxNumberBehaviour/>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
 
                     <TextBlock Grid.Row="1" Grid.Column="0"
                                Text="Radius"
                                Style="{StaticResource OptionColumnHeader}" />
                     <TextBox Grid.Row="1" Grid.Column="1"
                              Text="{Binding LabelObject.Radius, Mode=TwoWay}"
-                             Style="{StaticResource OptionColumnValue}" />
+                             Style="{StaticResource OptionColumnValue}" >
+                        <i:Interaction.Behaviors>
+                            <common:TextBoxNumberBehaviour/>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
                 </Grid>
             </GroupBox>
         </StackPanel>

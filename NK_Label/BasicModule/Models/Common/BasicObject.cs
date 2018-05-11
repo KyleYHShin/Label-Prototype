@@ -57,8 +57,11 @@ namespace BasicModule.Models.Common
             get { return _posX; }
             set
             {
-                _posX = getRound(value, 2);
-                OnPropertyChanged();
+                if (value > 0)
+                {
+                    _posX = getRound(value, 2);
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -68,8 +71,11 @@ namespace BasicModule.Models.Common
             get { return _posY; }
             set
             {
-                _posY = getRound(value, 2);
-                OnPropertyChanged();
+                if (value > 0)
+                {
+                    _posY = getRound(value, 2);
+                    OnPropertyChanged();
+                }
             }
         }
 

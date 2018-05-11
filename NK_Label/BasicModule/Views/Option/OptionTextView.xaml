@@ -2,6 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:common="clr-namespace:BasicModule.Common"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d">
 
@@ -30,31 +32,51 @@
                                Style="{StaticResource OptionColumnHeader}"/>
                     <TextBox Grid.Row="0" Grid.Column="1"
                              Text="{Binding TextObject.Name}"
-                             Style="{StaticResource OptionColumnValue}"/>
+                             Style="{StaticResource OptionColumnValue}">
+                        <i:Interaction.Behaviors>
+                            <common:TextBoxNameBehaviour/>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
                     <TextBlock Grid.Row="1" Grid.Column="0"
                                 Text="Width"
                                Style="{StaticResource OptionColumnHeader}"/>
                     <TextBox Grid.Row="1" Grid.Column="1"
                              Text="{Binding TextObject.Width}"
-                             Style="{StaticResource OptionColumnValue}"/>
+                             Style="{StaticResource OptionColumnValue}">
+                        <i:Interaction.Behaviors>
+                            <common:TextBoxNumberBehaviour/>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
                     <TextBlock Grid.Row="2" Grid.Column="0"
                                Text="Height"
                                Style="{StaticResource OptionColumnHeader}" />
                     <TextBox Grid.Row="2" Grid.Column="1"
                              Text="{Binding TextObject.Height}"
-                             Style="{StaticResource OptionColumnValue}"/>
+                             Style="{StaticResource OptionColumnValue}">
+                        <i:Interaction.Behaviors>
+                            <common:TextBoxNumberBehaviour/>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
                     <TextBlock Grid.Row="3" Grid.Column="0"
                                Text="Positon X"
                                Style="{StaticResource OptionColumnHeader}"/>
                     <TextBox Grid.Row="3" Grid.Column="1"
                              Text="{Binding TextObject.PosX}"
-                             Style="{StaticResource OptionColumnValue}"/>
+                             Style="{StaticResource OptionColumnValue}">
+                        <i:Interaction.Behaviors>
+                            <common:TextBoxNumberBehaviour/>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
                     <TextBlock Grid.Row="4" Grid.Column="0"
                                Text="Positon Y"
                                Style="{StaticResource OptionColumnHeader}"/>
                     <TextBox Grid.Row="4" Grid.Column="1"
                              Text="{Binding TextObject.PosY}"
-                             Style="{StaticResource OptionColumnValue}"/>
+                             Style="{StaticResource OptionColumnValue}">
+                        <i:Interaction.Behaviors>
+                            <common:TextBoxNumberBehaviour/>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
                 </Grid>
             </GroupBox>
 
@@ -80,7 +102,11 @@
                                Style="{StaticResource OptionColumnHeader}"/>
                     <TextBox Grid.Row="1" Grid.Column="1"
                              Text="{Binding TextObject.MaxLength}"
-                             Style="{StaticResource OptionColumnValue}"/>
+                             Style="{StaticResource OptionColumnValue}">
+                        <i:Interaction.Behaviors>
+                            <common:TextBoxNumberBehaviour/>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
                 </Grid>
             </GroupBox>
 
@@ -103,7 +129,11 @@
                                Style="{StaticResource OptionColumnHeader}"/>
                     <TextBox Grid.Row="0" Grid.Column="1"
                              Text="{Binding TextObject.FontSize}"
-                             Style="{StaticResource OptionColumnValue}"/>
+                             Style="{StaticResource OptionColumnValue}">
+                        <i:Interaction.Behaviors>
+                            <common:TextBoxNumberBehaviour/>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
                     
                     <TextBlock Grid.Row="1" Grid.Column="0"
                                Text="Font"

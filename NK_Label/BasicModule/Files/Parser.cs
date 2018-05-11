@@ -189,7 +189,7 @@ namespace BasicModule.Files
                 {
                     Order = ri.Order,
                     StartIndex = ri.StartIndex,
-                    Length = ri.Length,
+                    CharLength = ri.CharLength,
                     InputData = ri.InputData
                 }
             });
@@ -325,7 +325,7 @@ namespace BasicModule.Files
                     {
                         Order = file.Contents.Order,
                         StartIndex = file.Contents.StartIndex,
-                        Length = file.Contents.Length,
+                        CharLength = file.Contents.CharLength,
                         InputData = file.Contents.InputData
                     };
                     labelData.RuleList.Add(new RuleMain()

@@ -3,6 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:common="clr-namespace:BasicModule.Common"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
@@ -47,15 +49,15 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="115"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="115"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <TextBlock
                 Grid.Row="0" Grid.Column="0"
-                Text="Printer : "
+                Text="Manufacturer : "
                 Style="{StaticResource RuleColumnHeader}"/>
             <ComboBox
                 Grid.Row="0" Grid.Column="1"
@@ -93,7 +95,11 @@
             <TextBox 
                 Grid.Row="2" Grid.Column="1"
                 Text="{Binding Label.OffsetX}"
-                Style="{StaticResource OptionColumnValue}"/>
+                Style="{StaticResource OptionColumnValue}">
+                <i:Interaction.Behaviors>
+                    <common:TextBoxNumberBehaviour/>
+                </i:Interaction.Behaviors>
+            </TextBox>
             <TextBlock
                 Grid.Row="2" Grid.Column="2"
                 Text="Offset Y : "
@@ -101,7 +107,11 @@
             <TextBox 
                 Grid.Row="2" Grid.Column="3"
                 Text="{Binding Label.OffsetY}"
-                Style="{StaticResource OptionColumnValue}"/>
+                Style="{StaticResource OptionColumnValue}">
+                <i:Interaction.Behaviors>
+                    <common:TextBoxNumberBehaviour/>
+                </i:Interaction.Behaviors>
+            </TextBox>
 
             <TextBlock
                 Grid.Row="3" Grid.Column="2"
@@ -112,7 +122,11 @@
                 Grid.Row="3" Grid.Column="3"
                 Text="{Binding Repetition}"
                 Style="{StaticResource OptionColumnValue}"
-                Visibility="{Binding Repeatable}"/>
+                Visibility="{Binding Repeatable}">
+                <i:Interaction.Behaviors>
+                    <common:TextBoxNumberBehaviour/>
+                </i:Interaction.Behaviors>
+            </TextBox>
 
             <CheckBox
                 Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4"
@@ -143,7 +157,11 @@
                     Grid.Column="2"
                     Text="{Binding Label.SerialNumberStartIndex}"
                     Style="{StaticResource OptionColumnValue}"
-                    IsEnabled="{Binding Label.Sequentiable}" Margin="3,5,3,4"/>
+                    IsEnabled="{Binding Label.Sequentiable}" Margin="3,5,3,4">
+                    <i:Interaction.Behaviors>
+                        <common:TextBoxNumberBehaviour/>
+                    </i:Interaction.Behaviors>
+                </TextBox>
 
                 <TextBlock
                     Grid.Column="3"
@@ -153,7 +171,11 @@
                     Grid.Column="4"
                     Text="{Binding Label.SerialNumberLength}"
                     Style="{StaticResource OptionColumnValue}"
-                    IsEnabled="{Binding Label.Sequentiable}" Margin="3,5,3,4"/>
+                    IsEnabled="{Binding Label.Sequentiable}" Margin="3,5,3,4">
+                    <i:Interaction.Behaviors>
+                        <common:TextBoxNumberBehaviour/>
+                    </i:Interaction.Behaviors>
+                </TextBox>
 
                 <TextBlock
                     Grid.Column="5"
@@ -163,7 +185,11 @@
                     Grid.Column="6"
                     Text="{Binding Label.LastSerialNumber}"
                     Style="{StaticResource OptionColumnValue}"
-                    IsEnabled="{Binding Label.Sequentiable}" Margin="3,5,3,4"/>
+                    IsEnabled="{Binding Label.Sequentiable}" Margin="3,5,3,4">
+                    <i:Interaction.Behaviors>
+                        <common:TextBoxNumberBehaviour/>
+                    </i:Interaction.Behaviors>
+                </TextBox>
             </Grid>
 
         </Grid>
@@ -172,7 +198,6 @@
             Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
             Orientation="Horizontal" HorizontalAlignment="Center">
 
-            <!--Command="{Binding ClickStartPrint}"-->
             <Button
                 Content="Start"
                 Click="PrintLabel"

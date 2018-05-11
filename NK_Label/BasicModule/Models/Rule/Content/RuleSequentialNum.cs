@@ -6,14 +6,13 @@ namespace BasicModule.Models.Rule.Content
     {
         #region Properties
 
-        private int _numLength = 2;
-        public int NumLength
+        private byte _numLength = 2;
+        public byte NumLength
         {
             get { return _numLength; }
             set
             {
-                if (value > ulong.MinValue.ToString().Length && value <= ulong.MaxValue.ToString().Length
-                    && value >= MinNum.ToString().Length && value >= MaxNum.ToString().Length)
+                if (value >= ulong.MinValue.ToString("D").Length && value <= ulong.MaxValue.ToString("D").Length)
                 {
                     _numLength = value;
                     OnPropertyChanged();
@@ -27,7 +26,7 @@ namespace BasicModule.Models.Rule.Content
             get { return _minNum; }
             set
             {
-                if (value >= ulong.MinValue && value <= MaxNum && value.ToString("D").Length <= NumLength)
+                if (value <= MaxNum && value.ToString("D").Length <= NumLength)
                 {
                     _minNum = value;
                     OnPropertyChanged();
@@ -44,7 +43,7 @@ namespace BasicModule.Models.Rule.Content
             get { return _maxNum; }
             set
             {
-                if (value >= MinNum && value <= ulong.MaxValue && value.ToString("D").Length <= NumLength)
+                if (value >= MinNum && value.ToString("D").Length <= NumLength)
                 {
                     _maxNum = value;
                     OnPropertyChanged();
@@ -69,19 +68,8 @@ namespace BasicModule.Models.Rule.Content
             }
         }
 
-        private ulong _increment = 1;
-        public ulong Increment
-        {
-            get { return _increment; }
-            set
-            {
-                if (value > ulong.MinValue && value < ulong.MaxValue)
-                {
-                    _increment = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        private uint _increment = 1;
+        public uint Increment { get { return _increment; } set { _increment = value; OnPropertyChanged(); } }
 
         #endregion Properties
 
@@ -102,7 +90,7 @@ namespace BasicModule.Models.Rule.Content
             }
         }
 
-        public string PrintValue => CurrNum.ToString("D" + _numLength.ToString());
+        public string PrintValue => CurrNum.ToString("D" + NumLength.ToString());
 
         #endregion Rule Common
     }

@@ -30,8 +30,8 @@ namespace BasicModule.ViewModels.Option
                 && LabelObject.Radius >= 0
                 && LabelObject.SelectedPrinter > 0
                 && LabelObject.SelectedDpi > 0
-                && LabelObject.OffsetX > 0
-                && LabelObject.OffsetY > 0;
+                && LabelObject.OffsetX >= 0
+                && LabelObject.OffsetY >= 0;
             if (ret)
                 LabelObject.IsChanged = true;
 
