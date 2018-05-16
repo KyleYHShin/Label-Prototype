@@ -297,8 +297,8 @@ namespace BasicModule.ViewModels.Print
                         zplCode.AppendFormat("^FS");
                         zplCode.AppendFormat("^XZ");
 
-                        Console.WriteLine(zplCode);
-                        //pService.PrintZebraProduct(SelectedPrinterName, zplCode.ToString());
+                        //Console.WriteLine(zplCode);
+                        pService.PrintZebraProduct(SelectedPrinterName, zplCode.ToString());
                         Clipboard.Clear();
                         Clipboard.SetText(zplCode.ToString());
                         break;

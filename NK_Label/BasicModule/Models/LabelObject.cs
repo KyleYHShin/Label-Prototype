@@ -13,7 +13,7 @@ namespace BasicModule.Models
             get { return _width; }
             set
             {
-                if (value >= 10)
+                if (value >= 5)
                 {
                     _width = getRound(value, 2);
                     OnPropertyChanged();
@@ -28,7 +28,7 @@ namespace BasicModule.Models
             get { return _height; }
             set
             {
-                if (value >= 10)
+                if (value >= 3)
                 {
                     _height = getRound(value, 2);
                     OnPropertyChanged();

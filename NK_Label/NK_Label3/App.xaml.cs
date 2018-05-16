@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using NK_Label.License;
+using System.Windows;
 
 namespace NK_Label3
 {
@@ -9,18 +10,19 @@ namespace NK_Label3
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            var today = System.DateTime.Now;
-            if (today.Year == 2018 && today.Month == 5 && today.Day > 1 && today.Day <= 31)
+            string hardLockLoginErrMsg = LicenseController.LoginKey();
+            if (!string.IsNullOrEmpty(hardLockLoginErrMsg))
+            {
+                BasicModule.Utils.DialogService.ShowSimpleTextDialog("Warning", hardLockLoginErrMsg);
+                Shutdown();
+            }
+            else
             {
                 base.OnStartup(e);
                 var bootstrapper = new Bootstrapper();
                 bootstrapper.Run();
             }
-            else
-            {
-                BasicModule.Utils.DialogService.ShowSimpleTextDialog("Warning", "테스트 기간이 만료되었습니다.");
-                base.Shutdown();
-            }
+            
         }
     }
 }

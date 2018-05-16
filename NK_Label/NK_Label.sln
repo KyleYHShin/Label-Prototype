@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NK_Label3", "NK_Label3\NK_Label3.csproj", "{C43F1BA7-28C7-4522-87F4-A5E2DD159D24}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NK_Label", "NK_Label3\NK_Label.csproj", "{C43F1BA7-28C7-4522-87F4-A5E2DD159D24}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicModule", "BasicModule\BasicModule.csproj", "{F6FC8232-095A-48D2-BCC7-99725C2DA406}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAdorner", "SmartAdorner\SmartAdorner.csproj", "{03A51001-899E-4150-A28E-297AAA538D59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Namkang.License", "Namkang.License\Namkang.License.csproj", "{B1E4E7A8-9D06-4913-96FC-8D15EBFDAC7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{03A51001-899E-4150-A28E-297AAA538D59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03A51001-899E-4150-A28E-297AAA538D59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03A51001-899E-4150-A28E-297AAA538D59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1E4E7A8-9D06-4913-96FC-8D15EBFDAC7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1E4E7A8-9D06-4913-96FC-8D15EBFDAC7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1E4E7A8-9D06-4913-96FC-8D15EBFDAC7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1E4E7A8-9D06-4913-96FC-8D15EBFDAC7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

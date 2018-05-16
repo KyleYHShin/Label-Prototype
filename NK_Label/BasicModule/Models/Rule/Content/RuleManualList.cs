@@ -6,7 +6,7 @@ namespace BasicModule.Models.Rule.Content
     {
         #region Properties
 
-        private ObservableDictionary<string, string> _contentList;
+        private ObservableDictionary<string, string> _contentList = new ObservableDictionary<string, string>();
         public ObservableDictionary<string, string> ContentList { get { return _contentList; } set { _contentList = value; OnPropertyChanged(); } }
 
         private string _selectedContent;

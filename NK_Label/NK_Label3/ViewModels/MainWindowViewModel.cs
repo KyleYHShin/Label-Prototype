@@ -16,7 +16,6 @@ using Prism.Regions;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
-using BasicModule.Models.Common;
 
 namespace NK_Label3.ViewModels
 {
@@ -218,7 +217,7 @@ namespace NK_Label3.ViewModels
             if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
             {
                 var newText = new TextObject();
-                newText.Name = "New Text";
+                newText.Name = "NewText";
 
                 var optionViewModel = new OptionTextViewModel(newText); ;
                 var optionView = new OptionTextView();
@@ -248,7 +247,7 @@ namespace NK_Label3.ViewModels
             if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
             {
                 var newBarcode = new BarcodeObject();
-                newBarcode.Name = "New Barcode";
+                newBarcode.Name = "NewBarcode";
 
                 var optionViewModel = new OptionBarcodeViewModel(newBarcode); ;
                 var optionView = new OptionBarcodeView();
