@@ -16,6 +16,7 @@ using Prism.Regions;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
+using NK_Label.Utils;
 
 namespace NK_Label3.ViewModels
 {
@@ -23,9 +24,8 @@ namespace NK_Label3.ViewModels
     {
 
         #region System Properties
-
-        private string _title = "NK-Label 1.0.0 Beta 1";
-        public string Title { get { return _title; } set { _title = value; OnPropertyChanged(); } }
+        
+        public string Title { get { return SystemInfo.Name + "  (" + SystemInfo.Version + ")"; } }
 
         private double _width = 1280;
         public double Width { get { return _width; } set { _width = value; OnPropertyChanged(); } }
@@ -186,6 +186,9 @@ namespace NK_Label3.ViewModels
 
         private void AddLabel(LabelViewModel newLVM)
         {
+            if (!CheckLicense())
+                return;
+
             if (newLVM != null)
             {
                 var newView = new LabelView();
@@ -198,6 +201,9 @@ namespace NK_Label3.ViewModels
         public ICommand ClickAddNewLabel { get; private set; }
         private void AddNewLabel()
         {
+            if (!CheckLicense())
+                return;
+
             var newLabel = new LabelObject();
             var olViewModel = new OptionLabelViewModel(newLabel); ;
             var olView = new OptionLabelView();
@@ -214,6 +220,9 @@ namespace NK_Label3.ViewModels
         public ICommand ClickAddText { get; private set; }
         private void AddTextObject()
         {
+            if (!CheckLicense())
+                return;
+
             if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
             {
                 var newText = new TextObject();
@@ -228,7 +237,7 @@ namespace NK_Label3.ViewModels
                     var thisViewModel = SelectedLabelView.DataContext as LabelViewModel;
                     thisViewModel.ObjectList.Add(newText);
                     newText.IsChanged = true;
-                    
+
                     foreach (var obj in thisViewModel.ObjectList)
                     {
                         if (obj is BarcodeObject)
@@ -244,6 +253,9 @@ namespace NK_Label3.ViewModels
         public ICommand ClickAddBarcode { get; private set; }
         private void AddBarcodeObject()
         {
+            if (!CheckLicense())
+                return;
+
             if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
             {
                 var newBarcode = new BarcodeObject();
@@ -274,6 +286,9 @@ namespace NK_Label3.ViewModels
         public ICommand ClickDeleteObject { get; private set; }
         private void DeleteObject()
         {
+            if (!CheckLicense())
+                return;
+
             if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
                 (SelectedLabelView.DataContext as LabelViewModel).DeleteObject();
         }
@@ -285,6 +300,9 @@ namespace NK_Label3.ViewModels
         public ICommand ClickEidtRuleList { get; private set; }
         private void EditRuleList()
         {
+            if (!CheckLicense())
+                return;
+
             if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
             {
                 var LVM = SelectedLabelView.DataContext as LabelViewModel;
@@ -307,6 +325,9 @@ namespace NK_Label3.ViewModels
         public ICommand ClickOpen { get; private set; }
         private void Open()
         {
+            if (!CheckLicense())
+                return;
+
             LabelViewModel newLVM = FileController.OpenLabel(RegionManager);
             if (newLVM != null)
             {
@@ -330,6 +351,9 @@ namespace NK_Label3.ViewModels
         public ICommand ClickSave { get; private set; }
         private void Save()
         {
+            if (!CheckLicense())
+                return;
+
             if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
             {
                 var labelVM = SelectedLabelView.DataContext as LabelViewModel;
@@ -340,6 +364,9 @@ namespace NK_Label3.ViewModels
         public ICommand ClickSaveAs { get; private set; }
         private void SaveAs()
         {
+            if (!CheckLicense())
+                return;
+
             if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
             {
                 var labelVM = SelectedLabelView.DataContext as LabelViewModel;
@@ -353,6 +380,9 @@ namespace NK_Label3.ViewModels
         public ICommand ClickPrintCurrentLabel { get; private set; }
         private void PrintCurrentLabel()
         {
+            if (!CheckLicense())
+                return;
+
             if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
             {
                 var pWin = new PrintWindow(RegionManager) { Title = "Print Label" };
@@ -377,11 +407,26 @@ namespace NK_Label3.ViewModels
         public ICommand ClickShowVersion { get; private set; }
         private void ShowVersion()
         {
-            string msg = "Product Name: \tNK-Label";
-            msg += "\nVersion : \t1.0.0 Beta 1";
-            msg += "\nRelease : \t2018.05.03";
+            string msg = "Product Name: \t" + SystemInfo.Name;
+            msg += "\nVersion : \t" + SystemInfo.Version;
+            msg += "\nRelease  Date: \t" + SystemInfo.ReleaseDate;
+            msg += "\nService Expiration Date: \t" + Namkang.License.LicenseController.ProgramLicense.ServiceExpirationDate.ToString("yyyy.MM.dd");
             msg += "\n\nDeveloped by NAMKANG HI-TECH CO., LTD.";
-            DialogService.ShowSimpleTextDialog(Application.Current.MainWindow, "Version Information", msg);
+            DialogService.ShowSimpleTextDialog(Application.Current.MainWindow, Language.MenuHelpProgInfo, msg);
         }
+
+        private bool CheckLicense()
+        {
+            string hardLockLoginErrMsg = Namkang.License.LicenseController.LoginKey();
+
+            if (string.IsNullOrEmpty(hardLockLoginErrMsg))
+                return true;
+            else
+            {
+                DialogService.ShowSimpleTextDialog("Warning", hardLockLoginErrMsg);
+                return false;
+            }
+        }
+
     }
 }

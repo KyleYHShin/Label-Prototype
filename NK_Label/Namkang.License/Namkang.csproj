@@ -7,8 +7,8 @@
     <ProjectGuid>{B1E4E7A8-9D06-4913-96FC-8D15EBFDAC7D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Namkang.License</RootNamespace>
-    <AssemblyName>Namkang.License</AssemblyName>
+    <RootNamespace>Namkang</RootNamespace>
+    <AssemblyName>Namkang</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -44,9 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LicenseController.cs" />
-    <Compile Include="NKHardLockInfo.cs" />
-    <Compile Include="NKLicenseList.cs" />
+    <Compile Include="License\LicenseController.cs" />
+    <Compile Include="License\NKHardLockInfo.cs" />
+    <Compile Include="License\NKLicenseList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,5 +1,4 @@
-﻿using NK_Label.License;
-using System.Windows;
+﻿using System.Windows;
 
 namespace NK_Label3
 {
@@ -10,7 +9,10 @@ namespace NK_Label3
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            string hardLockLoginErrMsg = LicenseController.LoginKey();
+            // Initialize SystemLanguage by singleton pattern (ref LicenseController)
+            // Initialize Theme by singleton pattern (ref LicenseController)
+            string hardLockLoginErrMsg = Namkang.License.LicenseController.LoginKey();
+
             if (!string.IsNullOrEmpty(hardLockLoginErrMsg))
             {
                 BasicModule.Utils.DialogService.ShowSimpleTextDialog("Warning", hardLockLoginErrMsg);

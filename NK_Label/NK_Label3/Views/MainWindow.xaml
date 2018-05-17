@@ -118,7 +118,7 @@
             </MenuItem>-->
 
             <MenuItem Header="{Binding Language.MenuHelp}">
-                <MenuItem Header="{Binding Language.MenuHelpVersion}" Command="{Binding ClickShowVersion}"/>
+                <MenuItem Header="{Binding Language.MenuHelpProgInfo}" Command="{Binding ClickShowVersion}"/>
                 <!--<MenuItem Header="{Binding Language.MenuHelpManual}" Command=""/>-->
             </MenuItem>
         </Menu>

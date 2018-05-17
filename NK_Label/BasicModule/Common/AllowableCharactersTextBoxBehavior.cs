@@ -14,14 +14,8 @@ namespace BasicModule.Common
              new FrameworkPropertyMetadata(".*"));
         public string RegularExpression
         {
-            get
-            {
-                return (string)base.GetValue(RegularExpressionProperty);
-            }
-            set
-            {
-                base.SetValue(RegularExpressionProperty, value);
-            }
+            get { return (string)base.GetValue(RegularExpressionProperty); }
+            set { base.SetValue(RegularExpressionProperty, value); }
         }
 
         public static readonly DependencyProperty MaxLengthProperty =
@@ -29,14 +23,8 @@ namespace BasicModule.Common
             new FrameworkPropertyMetadata(int.MinValue));
         public int MaxLength
         {
-            get
-            {
-                return (int)base.GetValue(MaxLengthProperty);
-            }
-            set
-            {
-                base.SetValue(MaxLengthProperty, value);
-            }
+            get { return (int)base.GetValue(MaxLengthProperty); }
+            set { base.SetValue(MaxLengthProperty, value); }
         }
 
         protected override void OnAttached()
@@ -53,14 +41,10 @@ namespace BasicModule.Common
                 string text = Convert.ToString(e.DataObject.GetData(DataFormats.Text));
 
                 if (!IsValid(text, true))
-                {
                     e.CancelCommand();
-                }
             }
             else
-            {
                 e.CancelCommand();
-            }
         }
 
         void OnPreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)

@@ -91,7 +91,7 @@
     <Compile Include="BasicModuleModule.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\AllowableCharactersTextBoxBehavior.cs" />
-    <Compile Include="Common\TextBoxInputRegExBehaviour.cs" />
+    <Compile Include="Common\TextBoxBehaviour.cs" />
     <Compile Include="Models\BarcodeObject.cs" />
     <Compile Include="Models\Common\BasicObject.cs" />
     <Compile Include="Models\Common\IPrintableObject.cs" />

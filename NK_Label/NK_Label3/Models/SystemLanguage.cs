@@ -38,7 +38,7 @@
         public string MenuWindowPreference { get; set; }
 
         public string MenuHelp { get; set; }
-        public string MenuHelpVersion { get; set; }
+        public string MenuHelpProgInfo { get; set; }
         public string MenuHelpManual { get; set; }
 
         #endregion Menu
@@ -89,7 +89,7 @@
             MenuWindowPreference = "창 설정";
 
             MenuHelp = "도움말";
-            MenuHelpVersion = "버전 정보";
+            MenuHelpProgInfo = "프로그램 정보";
             MenuHelpManual = "메뉴얼";
 
             SystemMentExit = "프로그램을 종료하시겠습니까?";

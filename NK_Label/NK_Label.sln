@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicModule", "BasicModule\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAdorner", "SmartAdorner\SmartAdorner.csproj", "{03A51001-899E-4150-A28E-297AAA538D59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Namkang.License", "Namkang.License\Namkang.License.csproj", "{B1E4E7A8-9D06-4913-96FC-8D15EBFDAC7D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Namkang", "Namkang.License\Namkang.csproj", "{B1E4E7A8-9D06-4913-96FC-8D15EBFDAC7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

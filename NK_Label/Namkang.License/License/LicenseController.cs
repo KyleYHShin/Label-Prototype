@@ -2,7 +2,7 @@
 using System;
 using System.Xml;
 
-namespace NK_Label.License
+namespace Namkang.License
 {
     public static class LicenseController
     {
@@ -11,6 +11,7 @@ namespace NK_Label.License
 
         private static void InitializeLicense()
         {
+            // Change by release program
             ProgramLicense = new NKHardLockInfo()
             {
                 VendorCode = NKLicenseList.Code_YIOBI,
