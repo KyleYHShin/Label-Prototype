@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="License\LicenseController.cs" />
+    <Compile Include="License\Controller.cs" />
     <Compile Include="License\NKHardLockInfo.cs" />
     <Compile Include="License\NKLicenseList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
