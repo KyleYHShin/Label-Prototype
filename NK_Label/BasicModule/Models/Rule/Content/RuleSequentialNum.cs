@@ -71,6 +71,9 @@ namespace BasicModule.Models.Rule.Content
         private uint _increment = 1;
         public uint Increment { get { return _increment; } set { _increment = value; OnPropertyChanged(); } }
 
+        private bool _onZeroFiller = true;
+        public bool OnZeroFiller { get { return _onZeroFiller; } set { _onZeroFiller = value; OnPropertyChanged(); } }
+
         #endregion Properties
 
         #region Rule Common
@@ -85,12 +88,22 @@ namespace BasicModule.Models.Rule.Content
                 obj.MinNum = MinNum;
                 obj.CurrNum = CurrNum;
                 obj.Increment = Increment;
+                obj.OnZeroFiller = OnZeroFiller;
 
                 return obj;
             }
         }
 
-        public string PrintValue => CurrNum.ToString("D" + NumLength.ToString());
+        public string PrintValue
+        {
+            get
+            {
+                if (OnZeroFiller)
+                    return CurrNum.ToString("D" + NumLength.ToString());
+                else
+                    return CurrNum.ToString();
+            }
+        }
 
         #endregion Rule Common
     }

@@ -1,6 +1,5 @@
 ﻿using BasicModule.Utils;
 using BasicModule.ViewModels;
-using Prism.Regions;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -73,7 +72,7 @@ namespace BasicModule.Files
 
         #region Open
 
-        public static LabelViewModel OpenLabel(IRegionManager regionManager)
+        public static LabelViewModel OpenLabel(Prism.Regions.IRegionManager regionManager)
         {
             string path = OpenLabel_FileDialog();
             if (!IsValidPath(path))

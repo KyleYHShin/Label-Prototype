@@ -4,7 +4,6 @@ using BasicModule.Models.Rule;
 using BasicModule.Models.Rule.Content;
 using BasicModule.Utils;
 using BasicModule.ViewModels;
-
 using System;
 using System.Collections.Generic;
 
@@ -82,6 +81,9 @@ namespace BasicModule.Files
                 SelectedDpi = lo.SelectedDpi,
                 OffsetX = lo.OffsetX,
                 OffsetY = lo.OffsetY,
+                Repetition = lo.Repetition,
+
+                RepetitionOfInput = lo.RepetitionOfInput,
                 Sequentiable = lo.Sequentiable,
                 SerialNumberStartIndex = lo.SerialNumberStartIndex,
                 SerialNumberLength = lo.SerialNumberLength,
@@ -144,7 +146,8 @@ namespace BasicModule.Files
                     MinNum = rsn.MinNum,
                     MaxNum = rsn.MaxNum,
                     CurrNum = rsn.CurrNum,
-                    Increment = rsn.Increment
+                    Increment = rsn.Increment,
+                    OnZeroFiller = rsn.OnZeroFiller,
                 }
             });
         }
@@ -230,6 +233,9 @@ namespace BasicModule.Files
                 labelData.Label.SelectedDpi = fileData.Label.SelectedDpi;
                 labelData.Label.OffsetX = fileData.Label.OffsetX;
                 labelData.Label.OffsetY = fileData.Label.OffsetY;
+                labelData.Label.Repetition = fileData.Label.Repetition;
+
+                labelData.Label.RepetitionOfInput = fileData.Label.RepetitionOfInput;
                 labelData.Label.Sequentiable = fileData.Label.Sequentiable;
                 labelData.Label.SerialNumberStartIndex = fileData.Label.SerialNumberStartIndex;
                 labelData.Label.SerialNumberLength = fileData.Label.SerialNumberLength;
@@ -280,6 +286,7 @@ namespace BasicModule.Files
                         MaxNum = file.Contents.MaxNum,
                         CurrNum = file.Contents.CurrNum,
                         Increment = file.Contents.Increment,
+                        OnZeroFiller = file.Contents.OnZeroFiller,
                     };
                     labelData.RuleList.Add(new RuleMain()
                     {

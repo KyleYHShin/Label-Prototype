@@ -2,6 +2,8 @@
 {
     public static class NKLicenseList
     {
+        #region Vendor Code
+
         // 'hasp_net_windows.dll' has rebuilded on 2018.05.15 only for this NK-Label project
         public const string Code_YIOBI =
             "BudbQeTWEZvRe2QYHBHkTrFux2aiOVkFaHggKdMHwzj60kPnxsSzcjesi6bRZ3XoCe/4o9if6kZSXHbq"
@@ -18,27 +20,25 @@
             + "LyYUEKb3xw5GTKrEOmRrYUOEKDRTj64HeMoNCtlmYY05DiIfhL2XspewAiK5pt+N8lYVKPeIkmXrx0jo"
             + "Whj9W9iHgqOOoJTBk6zLDg==";
 
+        public const string Code_YXGMI = "";
+
+        #endregion
+
         public enum Feature_YIOBI
         {
             Viewer = 4,
-            CyberOptics = 6,
             EDAS = 7,
-            Mounter = 8,
-            SPI_DEMO = 9,
-            AOI_DEMO = 11,
             NanoSystem = 13,
             NKBMI = 16,
             FoolProofSystem = 20,
             NK_Label = 21,
         }
 
-        // ePM Product Feature Range -> 1 ~ 39 [YXGMI && YIOBI]
-        // MES Product Feature Start Index -> 40 ~ [YXGMI]
+        /* ePM Product Feature Range -> 1 ~ 39 [YXGMI]
+        *  MES Product Feature Start Index -> 40 ~ [YXGMI] */
         public enum Feature_YXGMI
         {
             NK_MES = 41,
-            NK_MONITOR = 42,
-            NK_EAP = 43,
         }
 
         public const string DefaultScope = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?> " + "<haspscope/> ";
@@ -61,6 +61,8 @@
         {
             ePM_Ex = 1,
             Kohyoung = 10,
+            EAP = 20,
+            MES = 30,
         }
     }
 }

@@ -141,7 +141,7 @@
     <Compile Include="ViewModels\Option\OptionTextViewModel.cs" />
     <Compile Include="ViewModels\Print\PrintWindowViewModel.cs" />
     <Compile Include="ViewModels\Rule\RuleEditorViewModel.cs" />
-    <Compile Include="ViewModels\Rule\RuleListViewModel.cs" />
+    <Compile Include="ViewModels\Rule\RuleManagerWindowViewModel.cs" />
     <Compile Include="Views\Common\DialogSelectWindow.xaml.cs">
       <DependentUpon>DialogSelectWindow.xaml</DependentUpon>
     </Compile>
@@ -202,9 +202,6 @@
     <Compile Include="Views\Rule\Content\RuleInputView.xaml.cs">
       <DependentUpon>RuleInputView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Rule\RuleListView.xaml.cs">
-      <DependentUpon>RuleListView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Rule\Content\RuleManualListView.xaml.cs">
       <DependentUpon>RuleManualListView.xaml</DependentUpon>
     </Compile>
@@ -216,6 +213,9 @@
     </Compile>
     <Compile Include="Views\Rule\Content\RuleTimeView.xaml.cs">
       <DependentUpon>RuleTimeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Rule\RuleManagerWindow.xaml.cs">
+      <DependentUpon>RuleManagerWindow.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -312,10 +312,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Rule\RuleListView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Rule\Content\RuleManualListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -329,6 +325,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Rule\Content\RuleTimeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Rule\RuleManagerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

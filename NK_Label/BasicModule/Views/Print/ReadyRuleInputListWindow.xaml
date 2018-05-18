@@ -95,7 +95,7 @@
                 Template="{StaticResource OptionApplyButton}"
                 MinWidth="100"/>
             <Button 
-                Content="Cancle"
+                Content="Cancel"
                 Click="Click_Cancel"
                 IsCancel="True"
                 Background="{StaticResource NKThirdBrush}"

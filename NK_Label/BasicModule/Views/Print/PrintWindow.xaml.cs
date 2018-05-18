@@ -43,18 +43,20 @@ namespace BasicModule.Views.Print
 
         private Timer inputTimer;
         bool isConverted = false, readyToPrint = false;
-        int repeat = 0;
+        int repeatOfInput = 0;
         private void InputTimer_Tick(object sender, System.EventArgs e)
         {
             if (isConverted && readyToPrint)
             {
                 thisDataContext.Print(PrintLabelView.Content as PrintLabelView);
-                repeat--;
+                repeatOfInput--;
                 isConverted = false;
                 readyToPrint = false;
-                if (repeat <= 0)
+                if (repeatOfInput <= 0)
                     TerminateInputTimer();
-            } else if (isConverted && !readyToPrint) {
+            }
+            else if (isConverted && !readyToPrint)
+            {
                 readyToPrint = true;
             }
             else if (!isConverted && !readyToPrint)
@@ -116,7 +118,7 @@ namespace BasicModule.Views.Print
                     if (!ret.HasValue || !(bool)ret)
                     {
                         thisDataContext.Label.LastSerialNumber = tempLastSerialNumber;
-                        for(int i = 0; i<tempInputRuleList.Count; i++)
+                        for (int i = 0; i < tempInputRuleList.Count; i++)
                             thisDataContext.InputRuleList[i].Content = tempInputRuleList[i].Clone;
 
                         if (tempInputCombRule != null)
@@ -140,7 +142,7 @@ namespace BasicModule.Views.Print
 
             isConverted = false;
             readyToPrint = false;
-            repeat = 0;
+            repeatOfInput = 0;
 
             thisDataContext.ConvertRuleToText();
             thisDataContext.IsAbleToAction = true;
@@ -200,7 +202,7 @@ namespace BasicModule.Views.Print
             if (isConverted && readyToPrint)
             {
                 thisDataContext.Print(PrintLabelView.Content as PrintLabelView);
-                repeat--;
+                repeatOfInput--;
                 isConverted = false;
                 readyToPrint = false;
 
@@ -270,10 +272,7 @@ namespace BasicModule.Views.Print
             if (!hasSequentialRule && !hasInputRule)
             {
                 thisDataContext.IsAbleToAction = false;
-                for (var i = 0; i < thisDataContext.Repetition; i++)
-                {
-                    thisDataContext.Print(PrintLabelView.Content as PrintLabelView);
-                }
+                thisDataContext.Print(PrintLabelView.Content as PrintLabelView);
                 thisDataContext.IsAbleToAction = true;
             }
             else if (hasSequentialRule && !hasInputRule)
@@ -293,7 +292,7 @@ namespace BasicModule.Views.Print
                 thisDataContext.IsAbleToAction = false;
                 isConverted = false;
                 readyToPrint = false;
-                repeat = thisDataContext.Repetition;
+                repeatOfInput = thisDataContext.Label.RepetitionOfInput;
 
                 inputTimer = new Timer();
                 inputTimer.Interval = 200;
@@ -330,6 +329,6 @@ namespace BasicModule.Views.Print
                 e.Cancel = true;
             }
         }
-            
+
     }
 }

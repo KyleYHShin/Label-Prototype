@@ -13,9 +13,12 @@ namespace Namkang.License
         public int MaxMemory { get; set; }
         public NKLicenseList.MemoryType MemoryType { get; set; }
 
-        //public string OptionCode { get; set; } // 20자리 Hexa code(미사용)
-        public DateTime ServiceExpirationDate { get; set; } // 4자리 Hexa code
-        //public string LicenseCode { get; set; } // 24자리 Hexa code(미사용)
-        public DateTime ManufacturedDate { get; set; } // 6자리 Hexa code
+        public DateTime ServiceExpirationDate { get; set; }
+        public DateTime ManufacturedDate { get; set; }
+
+        /* Add some properties for program's option */
+        //public bool HasSpecificOption { get; set; }
+        //public string OptionCode { get; set; }
+        //public string LicenseCode { get; set; }
     }
 }

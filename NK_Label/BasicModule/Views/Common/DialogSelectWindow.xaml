@@ -25,13 +25,14 @@
             <Button
                 Content="Apply"
                 Click="Ok_Click"
+                IsDefault="True"
                 Background="{StaticResource NKSecondBrush}"
                 BorderBrush="{StaticResource NKSecondBrush}"
                 Style="{StaticResource OptionButton}"
                 Template="{StaticResource OptionApplyButton}"
                 MinWidth="100"/>
             <Button 
-                Content="Cancle"
+                Content="Cancel"
                 Click="Cancel_Click"
                 IsCancel="True"
                 Background="{StaticResource NKThirdBrush}"

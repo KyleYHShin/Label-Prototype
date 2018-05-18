@@ -59,15 +59,12 @@ namespace BasicModule.ViewModels.Print
 
         private string _selectedPrinterName;
         public string SelectedPrinterName { get { return _selectedPrinterName; } set { _selectedPrinterName = value; OnPropertyChanged(); } }
-
-        private Visibility _repeatable = Visibility.Collapsed;
-        public Visibility Repeatable { get { return _repeatable; } set { _repeatable = value; OnPropertyChanged(); } }
-
-        private int _repetition = 1;
-        public int Repetition { get { return _repetition; } set { _repetition = value; OnPropertyChanged(); } }
-
+        
         private Visibility _sequentiable = Visibility.Collapsed;
         public Visibility Sequentiable { get { return _sequentiable; } set { _sequentiable = value; OnPropertyChanged(); } }
+
+        private Visibility _repeatableOfInput = Visibility.Collapsed;
+        public Visibility RepeatableOfInput { get { return _repeatableOfInput; } set { _repeatableOfInput = value; OnPropertyChanged(); } }
 
         private bool _isAbleToAction;
         public bool IsAbleToAction { get { return _isAbleToAction; } set { _isAbleToAction = value; OnPropertyChanged(); } }
@@ -150,8 +147,6 @@ namespace BasicModule.ViewModels.Print
             SeqRuleList = new ObservableCollection<RuleMain>();
             ManuRuleList = new ObservableCollection<RuleMain>();
             TimeRuleList = new ObservableCollection<RuleMain>();
-            InputRuleList = new ObservableCollection<RuleMain>();
-            var sortingInputRuleList = new List<RuleMain>();
             InCombRuleList = new ObservableCollection<RuleMain>();
 
             foreach (var r in UsingRuleList)
@@ -167,15 +162,22 @@ namespace BasicModule.ViewModels.Print
                     case RuleRegulation.RuleFormat.TIME:
                         TimeRuleList.Add(r);
                         break;
-                    case RuleRegulation.RuleFormat.INPUT:
-                        sortingInputRuleList.Add(r);
-                        break;
                     case RuleRegulation.RuleFormat.INPUT_COMBINE:
                         InCombRuleList.Add(r);
                         break;
                 }
             }
 
+            InputRuleList = new ObservableCollection<RuleMain>();
+            var sortingInputRuleList = new List<RuleMain>();
+            foreach (var r in originalRuleList)
+            {
+                if (r.Format ==  RuleRegulation.RuleFormat.INPUT
+                    && (r.Content as RuleInput).UseInPrinting)
+                {
+                    sortingInputRuleList.Add(r);
+                }
+            }
             sortingInputRuleList.Sort((x, y) => (x.Content as RuleInput).Order.CompareTo((y.Content as RuleInput).Order));
             foreach (var r in sortingInputRuleList)
                 InputRuleList.Add(r);
@@ -195,8 +197,6 @@ namespace BasicModule.ViewModels.Print
                 seqListView.DataContext = this;
                 RegionManager.Regions[RegionNames.PrintRuleSeq].Add(seqListView, null, true);
             }
-            else
-                Repeatable = Visibility.Visible;
 
             if (ManuRuleList.Count > 0)
             {
@@ -226,8 +226,10 @@ namespace BasicModule.ViewModels.Print
                 inputCombListView.DataContext = this;
                 RegionManager.Regions[RegionNames.PrintRuleInputCombine].Add(inputCombListView, null, true);
             }
-        }
 
+            if (SeqRuleList.Count <= 0 && InputRuleList.Count > 0)
+                RepeatableOfInput = Visibility.Visible;
+        }
 
         #endregion Constructor
 
@@ -295,10 +297,12 @@ namespace BasicModule.ViewModels.Print
                         zplCode.AppendFormat("{0}", BitmapConversion.ConvertImageToZPLString(PLView));
                         zplCode.AppendFormat("^FS");
                         zplCode.AppendFormat("^XZ");
-                        
-                        //pService.PrintZebraProduct(SelectedPrinterName, zplCode.ToString());
-                        Clipboard.Clear();
-                        Clipboard.SetText(zplCode.ToString());
+                        for (var i = 0; i < Label.Repetition; i++)
+                        {
+                            pService.PrintZebraProduct(SelectedPrinterName, zplCode.ToString());
+                            Clipboard.Clear();
+                            Clipboard.SetText(zplCode.ToString());
+                        }
                         break;
                 }
             }

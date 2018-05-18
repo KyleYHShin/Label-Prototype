@@ -23,6 +23,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" MinWidth="100"/>
@@ -99,19 +100,30 @@
                     </i:Interaction.Behaviors>
                 </TextBox>
 
-                <Button
+                <TextBlock
                     Grid.Row="5" Grid.Column="0"
+                    Text="On Zero Filler"
+                    Style="{StaticResource OptionColumnHeader}" />
+                <CheckBox
+                    Grid.Row="5" Grid.Column="1"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    IsChecked="{Binding EditingRule.Content.OnZeroFiller}"
+                    IsEnabled="{Binding IsEditMode}"/>
+
+                <Button
+                    Grid.Row="6" Grid.Column="0"
                     Content="Example"
                     Command="{Binding PrintExample}"
                     Style="{StaticResource ExampleButton}"
                     IsEnabled="{Binding IsEditMode}"/>
                 <TextBox
-                    Grid.Row="5" Grid.Column="1"
+                    Grid.Row="6" Grid.Column="1"
                     Text="{Binding Example, Mode=OneWay}"
                     Style="{StaticResource OptionColumnValue}"
                     IsReadOnly="True"/>
             </Grid>
         </GroupBox>
+        
     </Grid>
-
 </UserControl>

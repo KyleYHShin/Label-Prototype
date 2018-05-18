@@ -33,6 +33,9 @@ namespace BasicModule.Files
         public double SelectedDpi { get; set; }
         public ushort OffsetX { get; set; }
         public ushort OffsetY { get; set; }
+        public int Repetition { get; set; }
+
+        public int RepetitionOfInput { get; set; }
         public bool Sequentiable { get; set; }
         public int SerialNumberStartIndex { get; set; }
         public int SerialNumberLength { get; set; }
@@ -85,6 +88,7 @@ namespace BasicModule.Files
             public ulong MaxNum { get; set; }
             public ulong CurrNum { get; set; }
             public uint Increment { get; set; }
+            public bool OnZeroFiller { get; set; }
         }
     }
 
@@ -121,7 +125,7 @@ namespace BasicModule.Files
         {
             public int Order { get; set; }
             public int StartIndex { get; set; }
-            public byte CharLength { get; set; }
+            public int CharLength { get; set; }
             public string InputData { get; set; }
         }
     }

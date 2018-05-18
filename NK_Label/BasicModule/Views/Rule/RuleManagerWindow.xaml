@@ -3,7 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
+        Title="Rule Manager"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize">
 
@@ -17,8 +20,76 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
-            <ContentControl x:Name="PART_ContentControl" />
+        <Grid
+            Grid.Row="0"
+            Width="750"
+            Background="White">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid
+                Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
+                Width="330">
+                <DataGrid
+                    Width="310"
+                    Height="400"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Center"
+                    ItemsSource="{Binding RuleList}" 
+                    SelectedItem="{Binding SelectedRule}"
+                    SelectionMode="Single"
+                    AutoGenerateColumns="False"
+                    IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn
+                            Header="Rule Name"
+                            Binding="{Binding Path=Name}"
+                            Width="Auto" MinWidth="100"
+                            IsReadOnly="True"/>
+                        <DataGridTextColumn
+                            Header="Description"
+                            Binding="{Binding Path=Description}"
+                            Width="Auto" MinWidth="200"
+                            IsReadOnly="True" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+
+            <StackPanel
+                Grid.Row="2" Grid.Column="0"
+                Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button
+                    Content=" Create New Rule " 
+                    Command="{Binding Create}"
+                    Background="{StaticResource NKSecondBrush}"
+                    BorderBrush="{StaticResource NKSecondBrush}"
+                    Style="{StaticResource OptionButton}"
+                    Template="{StaticResource OptionApplyButton}"
+                    MinWidth="90"/>
+            </StackPanel>
+
+            <ContentControl
+                x:Name="RuleCommon"
+                Grid.Row="0" Grid.Column="1"
+                Margin="7,0,0,0"/>
+
+            <ContentControl
+                x:Name="RuleContent"
+                Grid.Row="1" Grid.Column="1"
+                Margin="7,0,0,0"/>
+
+            <ContentControl
+                x:Name="RuleButton"
+                Grid.Row="2" Grid.Column="1"
+                Margin="7,0,0,0"/>
         </Grid>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
@@ -31,7 +102,7 @@
                 Template="{StaticResource OptionApplyButton}"
                 MinWidth="100"/>
             <Button 
-                Content="Cancle"
+                Content="Cancel"
                 Click="Cancel_Click"
                 Background="{StaticResource NKThirdBrush}"
                 BorderBrush="{StaticResource NKThirdBrush}"

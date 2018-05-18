@@ -132,6 +132,13 @@ namespace BasicModule.Models
         private ushort _offsetY;
         public ushort OffsetY { get { return _offsetY; } set { _offsetY = value; } }
 
+        private int _repetition = 1;
+        public int Repetition { get { return _repetition; } set { _repetition = value; OnPropertyChanged(); } }
+
+
+        private int _repetitionOfInput = 1;
+        public int RepetitionOfInput { get { return _repetitionOfInput; } set { _repetitionOfInput = value; OnPropertyChanged(); } }
+
         private bool _sequentiable = false;
         public bool Sequentiable { get { return _sequentiable; } set { _sequentiable = value; OnPropertyChanged(); } }
 

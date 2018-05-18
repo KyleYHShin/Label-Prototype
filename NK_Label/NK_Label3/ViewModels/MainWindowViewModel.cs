@@ -302,13 +302,17 @@ namespace NK_Label3.ViewModels
             if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
             {
                 var LVM = SelectedLabelView.DataContext as LabelViewModel;
-                var ruleEditView = new RuleListView(RegionManager);
-                (ruleEditView.DataContext as RuleListViewModel).RuleList = LVM.CloneObservableRuleList;
 
-                if (DialogService.ShowSelectDialog(Application.Current.MainWindow, ruleEditView, "Edit Rules") == true)
+                var ruleManagerWin = new RuleManagerWindow(RegionManager);
+                var rmWinVM = ruleManagerWin.DataContext as RuleManagerWindowViewModel;
+                rmWinVM.RuleList = LVM.CloneObservableRuleList;
+
+                ruleManagerWin.Owner = Application.Current.MainWindow;
+
+                if (ruleManagerWin .ShowDialog()== true)
                 {
                     LVM.RuleList.Clear();
-                    foreach (var cr in (ruleEditView.DataContext as RuleListViewModel).RuleList)
+                    foreach (var cr in rmWinVM.RuleList)
                         LVM.RuleList.Add(cr);
                 }
             }
@@ -425,14 +429,14 @@ namespace NK_Label3.ViewModels
             string msg = "Product Name: \t" + SystemInfo.Name;
             msg += "\nVersion : \t" + SystemInfo.Version;
             msg += "\nRelease  Date: \t" + SystemInfo.ReleaseDate.ToString("yyyy.MM.dd");
-            msg += "\nService Expiration Date: \t" + Namkang.License.LicenseController.ProgramLicense.ServiceExpirationDate.ToString("yyyy.MM.dd");
+            msg += "\nService Expiration Date: \t" + Namkang.License.Controller.ProgramLicense.ServiceExpirationDate.ToString("yyyy.MM.dd");
             msg += "\n\nDeveloped by NAMKANG HI-TECH CO., LTD.";
             DialogService.ShowSimpleTextDialog(Application.Current.MainWindow, Language.MenuHelpProgInfo, msg);
         }
 
         private bool CheckLicense()
         {
-            string hardLockLoginErrMsg = Namkang.License.LicenseController.LoginKey();
+            string hardLockLoginErrMsg = Namkang.License.Controller.Login();
 
             if (string.IsNullOrEmpty(hardLockLoginErrMsg))
                 return true;

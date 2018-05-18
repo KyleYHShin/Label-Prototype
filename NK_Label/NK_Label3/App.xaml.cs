@@ -12,14 +12,14 @@ namespace NK_Label3
         {
             // Initialize SystemLanguage by singleton pattern (ref LicenseController)
             // Initialize Theme by singleton pattern (ref LicenseController)
-            string hardLockLoginErrMsg = Namkang.License.LicenseController.LoginKey();
+            string hardLockLoginErrMsg = Namkang.License.Controller.Login();
 
             if (!string.IsNullOrEmpty(hardLockLoginErrMsg))
             {
                 BasicModule.Utils.DialogService.ShowSimpleTextDialog("Warning", hardLockLoginErrMsg);
                 Shutdown();
             }
-            else if(DateTime.Compare(Namkang.License.LicenseController.ProgramLicense.ServiceExpirationDate, NK_Label.Utils.SystemInfo.ReleaseDate) < 0)
+            else if(DateTime.Compare(Namkang.License.Controller.ProgramLicense.ServiceExpirationDate, NK_Label.Utils.SystemInfo.ReleaseDate) < 0)
             {
                 BasicModule.Utils.DialogService.ShowSimpleTextDialog("Warning", "라이선스 기간이 만료되었습니다.");
                 Shutdown();

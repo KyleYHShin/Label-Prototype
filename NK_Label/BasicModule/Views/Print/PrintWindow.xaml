@@ -49,9 +49,9 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="115"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="115"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
@@ -116,26 +116,38 @@
             <TextBlock
                 Grid.Row="3" Grid.Column="2"
                 Text="Repetition : "
-                Style="{StaticResource RuleColumnHeader}"
-                Visibility="{Binding Repeatable}"/>
+                Style="{StaticResource RuleColumnHeader}"/>
             <TextBox 
                 Grid.Row="3" Grid.Column="3"
-                Text="{Binding Repetition}"
-                Style="{StaticResource OptionColumnValue}"
-                Visibility="{Binding Repeatable}">
+                Text="{Binding Label.Repetition}"
+                Style="{StaticResource OptionColumnValue}">
                 <i:Interaction.Behaviors>
                     <common:TextBoxNumberBehaviour/>
                 </i:Interaction.Behaviors>
             </TextBox>
 
             <CheckBox
-                Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4"
+                Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
                 IsChecked="{Binding Label.Sequentiable}"
                 Visibility="{Binding Sequentiable}">
                 <TextBlock
                     Text="Sequentiable"
                     Style="{StaticResource RuleColumnHeader}"/>
             </CheckBox>
+            <TextBlock
+                Grid.Row="4" Grid.Column="2"
+                Text="Repetition of Input : "
+                Style="{StaticResource RuleColumnHeader}"
+                Visibility="{Binding RepeatableOfInput}"/>
+            <TextBox 
+                Grid.Row="4" Grid.Column="3"
+                Text="{Binding Label.RepetitionOfInput}"
+                Style="{StaticResource OptionColumnValue}"
+                Visibility="{Binding RepeatableOfInput}">
+                <i:Interaction.Behaviors>
+                    <common:TextBoxNumberBehaviour/>
+                </i:Interaction.Behaviors>
+            </TextBox>
             <Grid
                 Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4"
                 Visibility="{Binding Sequentiable}">

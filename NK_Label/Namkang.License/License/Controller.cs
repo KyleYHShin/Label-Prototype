@@ -4,14 +4,14 @@ using System.Xml;
 
 namespace Namkang.License
 {
-    public static class LicenseController
+    public static class Controller
     {
         public static Hasp HaspData { get; private set; }
         public static NKHardLockInfo ProgramLicense { get; private set; }
 
         private static void InitializeLicense()
         {
-            // Must change by release program
+            // Must change by released program
             ProgramLicense = new NKHardLockInfo()
             {
                 VendorCode = NKLicenseList.Code_YIOBI,
@@ -26,12 +26,13 @@ namespace Namkang.License
                 ManufacturedDate = new DateTime(),
                 ServiceExpirationDate = new DateTime(),
             };
+            //
 
             HaspFeature feature = HaspFeature.FromFeature(ProgramLicense.Feature);
             HaspData = new Hasp(feature);
         }
 
-        public static string LoginKey()
+        public static string Login()
         {
             InitializeLicense();
 
@@ -103,29 +104,36 @@ namespace Namkang.License
             byte[] data = new byte[ProgramLicense.MaxMemory];
             HaspStatus status = file.Read(data, 0, data.Length);
 
-            // Should redefine memory writting type between 'ePM-Ex' style and 'Kohyoung' style in 'NKHardLockInfo' class
+            // Should redefine memory writting styles between 'ePM-Ex', 'Kohyoung', 'EAP' and  'MES' in 'NKHardLockInfo' class
             if (HaspStatus.StatusOk == status)
             {
-                if (NKLicenseList.MemoryType.ePM_Ex == ProgramLicense.MemoryType)
+                switch (ProgramLicense.MemoryType)
                 {
-                    // Check OptionCode
+                    case NKLicenseList.MemoryType.ePM_Ex:
 
-                    int preYear = DateTime.Now.Year / 100 * 100;
-                    int year = ParseHexintToInt(data[10]);
-                    int month = ParseHexintToInt(data[11]);
-                    int day = DateTime.DaysInMonth(year, month);
-                    ProgramLicense.ServiceExpirationDate = new DateTime(preYear + year, month, day, 23, 59, 59);
+                        // Check OptionCode
 
-                    // Check LicenseCode
+                        int preYear = DateTime.Now.Year / 100 * 100;
+                        int year = ParseHexintToInt(data[10]);
+                        int month = ParseHexintToInt(data[11]);
+                        int day = DateTime.DaysInMonth(year, month);
+                        ProgramLicense.ServiceExpirationDate = new DateTime(preYear + year, month, day, 23, 59, 59);
 
-                    year = ParseHexintToInt(data[24]);
-                    month = ParseHexintToInt(data[25]);
-                    day = ParseHexintToInt(data[26]);
-                    ProgramLicense.ManufacturedDate = new DateTime(preYear + year, month, day); ;
-                }
-                else if (NKLicenseList.MemoryType.Kohyoung == ProgramLicense.MemoryType)
-                {
+                        // Check LicenseCode
 
+                        year = ParseHexintToInt(data[24]);
+                        month = ParseHexintToInt(data[25]);
+                        day = ParseHexintToInt(data[26]);
+                        ProgramLicense.ManufacturedDate = new DateTime(preYear + year, month, day);
+                        break;
+                    case NKLicenseList.MemoryType.Kohyoung:
+                        break;
+                    case NKLicenseList.MemoryType.EAP:
+                        break;
+                    case NKLicenseList.MemoryType.MES:
+                        break;
+                    default:
+                        break;
                 }
             }
         }

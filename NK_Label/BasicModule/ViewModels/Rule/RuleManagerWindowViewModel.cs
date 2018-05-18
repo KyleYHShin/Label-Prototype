@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace BasicModule.ViewModels.Rule
 {
-    public class RuleListViewModel : NotifyPropertyChanged
+    public class RuleManagerWindowViewModel : NotifyPropertyChanged
     {
         private ObservableCollection<RuleMain> _ruleList;
         public ObservableCollection<RuleMain> RuleList { get { return _ruleList; } set { _ruleList = value; OnPropertyChanged(); } }
@@ -18,7 +18,8 @@ namespace BasicModule.ViewModels.Rule
             get { return _selectedRule; }
             set
             {
-                _selectedRule = value; OnPropertyChanged();
+                _selectedRule = value;
+                OnPropertyChanged();
 
                 if (_selectedRule == null)
                     return;
@@ -27,7 +28,7 @@ namespace BasicModule.ViewModels.Rule
         }
 
         private readonly IRegionManager RegionManager;
-        public RuleListViewModel(IRegionManager regionManager)
+        public RuleManagerWindowViewModel(IRegionManager regionManager)
         {
             RegionManager = regionManager;
 

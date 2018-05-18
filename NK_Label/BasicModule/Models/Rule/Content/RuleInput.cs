@@ -20,13 +20,16 @@ namespace BasicModule.Models.Rule.Content
             }
         }
 
+        private bool _useInPrinting = true;
+        public bool UseInPrinting { get { return _useInPrinting; } set { _useInPrinting = value; OnPropertyChanged(); } }
+
         private int _startIndex;
         public int StartIndex
         {
             get { return _startIndex + 1; }
             set
             {
-                if (value >= ulong.MinValue.ToString("D").Length && value <= ulong.MaxValue.ToString("D").Length)
+                if (value > 0)
                 {
                     _startIndex = value - 1;
                     OnPropertyChanged();
@@ -34,13 +37,13 @@ namespace BasicModule.Models.Rule.Content
             }
         }
 
-        private byte _charLength = 2;
-        public byte CharLength
+        private int _charLength = 10;
+        public int CharLength
         {
             get { return _charLength; }
             set
             {
-                if (value >= ulong.MinValue.ToString("D").Length && value <= ulong.MaxValue.ToString("D").Length)
+                if (value > 0)
                 {
                     _charLength = value;
                     OnPropertyChanged();
@@ -66,6 +69,7 @@ namespace BasicModule.Models.Rule.Content
             {
                 var obj = new RuleInput();
                 obj.Order = Order;
+                obj.UseInPrinting = UseInPrinting;
                 obj.StartIndex = StartIndex;
                 obj.CharLength = CharLength;
                 obj.InputData = InputData;
