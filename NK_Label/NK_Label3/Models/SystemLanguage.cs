@@ -16,6 +16,7 @@
         public string MenuFileProgramExit { get; set; }
 
         public string MenuEdit { get; set; }
+        public string MenuEidtDelete { get; set; }
         public string MenuEditCopy { get; set; }
         public string MenuEditTruncate { get; set; }
         public string MenuEditPaste { get; set; }
@@ -56,17 +57,18 @@
             #region Initialize Test Source
 
             MenuFile = "파일";
-            MenuFileNew = "새 라벨 디자인 만들기";
-            MenuFileLoad = "열기";
-            MenuFileSave = "저장";
-            MenuFileSaveAs = "다른 이름으로 저장";
-            MenuFileSaveAll = "모두 저장";
-            MenuFilePrint = "인쇄";
+            MenuFileNew = "새 라벨 디자인 만들기" + " (Ctrl+N)";
+            MenuFileLoad = "열기" + " (Ctrl+O)";
+            MenuFileSave = "저장" + " (Ctrl+S)";
+            MenuFileSaveAs = "다른 이름으로 저장" + " (Ctrl+Shift+S)";
+            MenuFileSaveAll = "모두 저장" + " (Ctrl+Shift+A)";
+            MenuFilePrint = "인쇄" + " (Ctrl+P)";
             MenuFileClose = "디자인 창 닫기";
             MenuFileCloseAll = "디자인 창 모두 닫기";
             MenuFileProgramExit = "종료";
 
             MenuEdit = "편집";
+            MenuEidtDelete = "선택한 객체 삭제" + " (Del)";
             MenuEditCopy = "복사";
             MenuEditTruncate = "잘라내기";
             MenuEditPaste = "붙여넣기";
@@ -79,9 +81,9 @@
             MenuViewGrid = "그리드";
 
             MenuTool = "도구";
-            MenuToolText = "새 텍스트 추가";
-            MenuToolBarcode = "새 바코드 추가";
-            MenuToolRuleManager = "규칙 관리자";
+            MenuToolText = "새 텍스트 추가" + " (Ctrl+T)";
+            MenuToolBarcode = "새 바코드 추가" + " (Ctrl+B)";
+            MenuToolRuleManager = "규칙 관리자" + " (Ctrl+R)";
             MenuToolLine = "선";
             MenuToolImage = "이미지";
 

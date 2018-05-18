@@ -16,12 +16,12 @@ namespace NK_Label.Utils
             get { return Assembly.GetExecutingAssembly().GetName().Version; }
         }
 
-        public static string ReleaseDate
+        public static DateTime ReleaseDate
         {
-            get { return Assembly.GetExecutingAssembly().GetReleaseDate().ToString("yyyy.MM.dd"); }
+            get { return Assembly.GetExecutingAssembly().GetReleaseDate(); }
         }
 
-        public static DateTime GetReleaseDate(this Assembly assembly, TimeZoneInfo target = null)
+        private static DateTime GetReleaseDate(this Assembly assembly, TimeZoneInfo target = null)
         {
 
             var filePath = assembly.Location;

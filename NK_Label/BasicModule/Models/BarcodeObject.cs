@@ -138,13 +138,6 @@ namespace BasicModule.Models
 
         #endregion Decoration Properties
 
-        #region Control Properties
-
-        private bool _isSelected;
-        public bool IsSelected { get { return _isSelected; } set { _isSelected = value; OnPropertyChanged(); } }
-
-        #endregion Control Properties
-
         #region Print Properties
 
         public string OriginText { get; set; }

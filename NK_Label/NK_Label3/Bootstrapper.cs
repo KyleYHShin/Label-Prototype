@@ -1,6 +1,4 @@
-﻿using BasicModule;
-using Microsoft.Practices.Unity;
-using Prism.Modularity;
+﻿using Microsoft.Practices.Unity;
 using Prism.Unity;
 using NK_Label3.Views;
 using System.Windows;
@@ -17,12 +15,6 @@ namespace NK_Label3
         protected override void InitializeShell()
         {
             Application.Current.MainWindow.Show();
-        }
-
-        protected override void ConfigureModuleCatalog()
-        {
-            var catalog = (ModuleCatalog)ModuleCatalog;
-            catalog.AddModule(typeof(BasicModuleModule));
         }
     }
 }

@@ -9,6 +9,9 @@ namespace BasicModule.Models.Common
         private bool _isChanged = false;
         public bool IsChanged { get { return _isChanged; } set { _isChanged = value; OnPropertyChanged(); } }
 
+        private bool _isSelected;
+        public bool IsSelected { get { return _isSelected; } set { _isSelected = value; OnPropertyChanged(); } }
+
         private string _name;
         public string Name
         {
@@ -88,7 +91,7 @@ namespace BasicModule.Models.Common
         protected void OnPropertyChanged([CallerMemberName]string propertyname = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyname));
-            if (propertyname != "IsChanged")
+            if (propertyname != "IsChanged" && propertyname != "IsSelected")
                 IsChanged = true;
         }
 

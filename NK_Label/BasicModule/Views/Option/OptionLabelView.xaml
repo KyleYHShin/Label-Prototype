@@ -11,7 +11,7 @@
         <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
     </UserControl.Resources>
 
-    <Grid Width="250" Background="White">
+    <Grid Style="{StaticResource OptionViewMainGrid}">
         <StackPanel>
             <GroupBox Header=" Label " Style="{StaticResource OptionGroup}" >
                 <Grid>
@@ -29,23 +29,22 @@
                     <TextBlock Grid.Row="0" Grid.Column="0"
                                Text="Name"
                                Style="{StaticResource OptionColumnHeader}" />
-                    <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
-                             Text="{Binding LabelObject.Name, Mode=TwoWay}"
-                             Style="{StaticResource OptionColumnValue}" >
-                        <i:Interaction.Behaviors>
-                            <common:TextBoxNameBehaviour/>
-                        </i:Interaction.Behaviors>
-                    </TextBox>
+                    <TextBlock Grid.Row="0" Grid.Column="1"
+                             Text="{Binding LabelObject.Name}"
+                             Style="{StaticResource OptionColumnValue2}" />
+                    <Button Grid.Row="0" Grid.Column="2"
+                            Content="Edit"
+                            FontWeight="Normal"
+                            Command="{Binding ClickChangeObjectName}"/>
 
                     <TextBlock Grid.Row="1" Grid.Column="0"
                                Text="Width"
                                Style="{StaticResource OptionColumnHeader}" />
                     <TextBox Grid.Row="1" Grid.Column="1"
-                             Text="{Binding LabelObject.Width, Mode=TwoWay}"
+                             Text="{Binding LabelObject.Width}"
                              Style="{StaticResource OptionColumnValue}" >
                         <i:Interaction.Behaviors>
                             <common:TextBoxNumberBehaviour/>
-                            <!--<common:TextBoxNumberBehaviour/>-->
                         </i:Interaction.Behaviors>
                     </TextBox>
                     <TextBlock Grid.Row="1" Grid.Column="2"
@@ -56,7 +55,7 @@
                                Text="Height"
                                Style="{StaticResource OptionColumnHeader}" />
                     <TextBox Grid.Row="2" Grid.Column="1"
-                             Text="{Binding LabelObject.Height, Mode=TwoWay}"
+                             Text="{Binding LabelObject.Height}"
                              Style="{StaticResource OptionColumnValue}" >
                         <i:Interaction.Behaviors>
                             <common:TextBoxNumberBehaviour/>
@@ -116,7 +115,7 @@
                                Text="Guide Line"
                                Style="{StaticResource OptionColumnHeader}" />
                     <TextBox Grid.Row="0" Grid.Column="1"
-                             Text="{Binding LabelObject.Margin, Mode=TwoWay}"
+                             Text="{Binding LabelObject.Margin}"
                              Style="{StaticResource OptionColumnValue}" >
                         <i:Interaction.Behaviors>
                             <common:TextBoxNumberBehaviour/>
@@ -127,7 +126,7 @@
                                Text="Radius"
                                Style="{StaticResource OptionColumnHeader}" />
                     <TextBox Grid.Row="1" Grid.Column="1"
-                             Text="{Binding LabelObject.Radius, Mode=TwoWay}"
+                             Text="{Binding LabelObject.Radius}"
                              Style="{StaticResource OptionColumnValue}" >
                         <i:Interaction.Behaviors>
                             <common:TextBoxNumberBehaviour/>

@@ -25,6 +25,7 @@
             <Button
                 Content="Apply"
                 Click="Ok_Click"
+                IsCancel="True"
                 Background="{StaticResource NKSecondBrush}"
                 BorderBrush="{StaticResource NKSecondBrush}"
                 Style="{StaticResource OptionButton}"

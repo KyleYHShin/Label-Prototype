@@ -17,6 +17,8 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using NK_Label.Utils;
+using System.Collections.Generic;
+using BasicModule;
 
 namespace NK_Label3.ViewModels
 {
@@ -44,7 +46,16 @@ namespace NK_Label3.ViewModels
         #region Tab Contents
 
         private ObservableCollection<LabelView> _labelViewList;
-        public ObservableCollection<LabelView> LabelViewList { get { return _labelViewList; } set { _labelViewList = value; OnPropertyChanged(); } }
+        public ObservableCollection<LabelView> LabelViewList
+        {
+            get { return _labelViewList; }
+            set
+            {
+                _labelViewList = value;
+                OnPropertyChanged();
+                UsingLabelList.LabelViewList = value;
+            }
+        }
 
         private LabelView _selectedLabelView;
         public LabelView SelectedLabelView
@@ -52,16 +63,17 @@ namespace NK_Label3.ViewModels
             get { return _selectedLabelView; }
             set
             {
-                _selectedLabelView = value; OnPropertyChanged();
+                _selectedLabelView = value;
+                OnPropertyChanged();
+                UsingLabelList.SelectedLabelView = value;
+
                 if (value is LabelView)
                 {
                     (value.DataContext as LabelViewModel).ChangeOptionRegion();
                     HasLabel = true;
                 }
                 else
-                {
                     HasLabel = false;
-                }
             }
         }
 
@@ -88,6 +100,7 @@ namespace NK_Label3.ViewModels
             ClickOpen = new DelegateCommand(Open);
             ClickSave = new DelegateCommand(Save);
             ClickSaveAs = new DelegateCommand(SaveAs);
+            ClickSaveAll = new DelegateCommand(SaveAll);
             ClickPrintCurrentLabel = new DelegateCommand(PrintCurrentLabel);
             ClickCloseCurrentLabel = new DelegateCommand(CloseCurrentLabel);
             ClickCloseAllLabel = new DelegateCommand(CloseAllLabel);
@@ -106,19 +119,6 @@ namespace NK_Label3.ViewModels
         #endregion Constructor
 
         #region Label Window Control Events
-
-        //private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    var ret =CanCloseAllLabel();
-        //    if (ret)
-        //        e.Cancel = false;
-        //    else
-        //        e.Cancel = true;
-        //    //if ((DataContext as MainWindowViewModel).CanCloseAllLabel())
-        //    //{
-        //    //    e.Cancel = true;
-        //    //}
-        //}
 
         public ICommand ClickCloseWindow { get; private set; }
         private void CloseWindow()
@@ -204,8 +204,12 @@ namespace NK_Label3.ViewModels
             if (!CheckLicense())
                 return;
 
+            List<string> labelNames = new List<string>();
+            foreach (var view in LabelViewList)
+                    labelNames.Add((view.DataContext as LabelViewModel).Label.Name);
+
             var newLabel = new LabelObject();
-            var olViewModel = new OptionLabelViewModel(newLabel); ;
+            var olViewModel = new OptionLabelViewModel(newLabel, true);
             var olView = new OptionLabelView();
             olView.DataContext = olViewModel;
 
@@ -228,7 +232,7 @@ namespace NK_Label3.ViewModels
                 var newText = new TextObject();
                 newText.Name = "NewText";
 
-                var optionViewModel = new OptionTextViewModel(newText); ;
+                var optionViewModel = new OptionTextViewModel(newText, true);
                 var optionView = new OptionTextView();
                 optionView.DataContext = optionViewModel;
 
@@ -239,12 +243,8 @@ namespace NK_Label3.ViewModels
                     newText.IsChanged = true;
 
                     foreach (var obj in thisViewModel.ObjectList)
-                    {
-                        if (obj is BarcodeObject)
-                            (obj as BarcodeObject).IsSelected = false;
-                        else if (obj is TextObject)
-                            (obj as TextObject).IsSelected = false;
-                    }
+                        obj.IsSelected = false;
+
                     newText.IsSelected = true;
                 }
             }
@@ -261,7 +261,7 @@ namespace NK_Label3.ViewModels
                 var newBarcode = new BarcodeObject();
                 newBarcode.Name = "NewBarcode";
 
-                var optionViewModel = new OptionBarcodeViewModel(newBarcode); ;
+                var optionViewModel = new OptionBarcodeViewModel(newBarcode, true);
                 var optionView = new OptionBarcodeView();
                 optionView.DataContext = optionViewModel;
 
@@ -272,12 +272,8 @@ namespace NK_Label3.ViewModels
                     newBarcode.IsChanged = true;
 
                     foreach (var obj in thisViewModel.ObjectList)
-                    {
-                        if (obj is BarcodeObject)
-                            (obj as BarcodeObject).IsSelected = false;
-                        else if (obj is TextObject)
-                            (obj as TextObject).IsSelected = false;
-                    }
+                        obj.IsSelected = false;
+
                     newBarcode.IsSelected = true;
                 }
             }
@@ -336,18 +332,23 @@ namespace NK_Label3.ViewModels
                 foreach (LabelView lv in LabelViewList)
                 {
                     var lvm = lv.DataContext as LabelViewModel;
-                    if (lvm.FilePath.Equals(newPath))
+                    if (!string.IsNullOrEmpty(lvm.FilePath) && lvm.FilePath.Equals(newPath))
                     {
-                        MessageBox.Show("'" + lvm.Label.Name + "' 라벨이 이미 열려있습니다.");
+                        DialogService.ShowSimpleTextDialog("Warning", "해당 라벨 디자인 파일이 이미 열려있습니다.");
                         isExist = true;
                         break;
                     }
+                }
+                if (!isExist && UsingLabelList.UsingLabelNameList.Contains(newLVM.Label.Name))
+                {
+                    DialogService.ShowSimpleTextDialog("Warning", "해당 라벨의 이름(" + newLVM.Label.Name + ")이 이미 사용중입니다.");
+                    isExist = true;
                 }
                 if (!isExist)
                     AddLabel(newLVM);
             }
         }
-
+        
         public ICommand ClickSave { get; private set; }
         private void Save()
         {
@@ -361,6 +362,21 @@ namespace NK_Label3.ViewModels
                 labelVM.IsChanged = false;
             }
         }
+
+        public ICommand ClickSaveAll { get; private set; }
+        private void SaveAll()
+        {
+            if (!CheckLicense())
+                return;
+
+            foreach(var view in LabelViewList)
+            {
+                var labelVM = view.DataContext as LabelViewModel;
+                FileController.SaveLabel(ref labelVM, false);
+                labelVM.IsChanged = false;
+            }
+        }
+
         public ICommand ClickSaveAs { get; private set; }
         private void SaveAs()
         {
@@ -403,13 +419,12 @@ namespace NK_Label3.ViewModels
             }
         }
 
-
         public ICommand ClickShowVersion { get; private set; }
         private void ShowVersion()
         {
             string msg = "Product Name: \t" + SystemInfo.Name;
             msg += "\nVersion : \t" + SystemInfo.Version;
-            msg += "\nRelease  Date: \t" + SystemInfo.ReleaseDate;
+            msg += "\nRelease  Date: \t" + SystemInfo.ReleaseDate.ToString("yyyy.MM.dd");
             msg += "\nService Expiration Date: \t" + Namkang.License.LicenseController.ProgramLicense.ServiceExpirationDate.ToString("yyyy.MM.dd");
             msg += "\n\nDeveloped by NAMKANG HI-TECH CO., LTD.";
             DialogService.ShowSimpleTextDialog(Application.Current.MainWindow, Language.MenuHelpProgInfo, msg);

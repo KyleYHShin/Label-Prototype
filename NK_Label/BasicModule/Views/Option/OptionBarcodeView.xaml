@@ -11,7 +11,7 @@
         <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
     </UserControl.Resources>
 
-    <Grid Width="250" Background="White">
+    <Grid Style="{StaticResource OptionViewMainGrid}">
         <StackPanel>
             <GroupBox Style="{StaticResource OptionGroup}" Header=" Basic Values ">
                 <Grid>
@@ -25,52 +25,57 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" MinWidth="80"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0"
                                Text="Name"
                                Style="{StaticResource OptionColumnHeader}" />
-                    <TextBox Grid.Row="0" Grid.Column="1"
+                    <TextBlock Grid.Row="0" Grid.Column="1"
                              Text="{Binding BarcodeObject.Name}"
-                             Style="{StaticResource OptionColumnValue}">
-                        <i:Interaction.Behaviors>
-                            <common:TextBoxNameBehaviour/>
-                        </i:Interaction.Behaviors>
-                    </TextBox>
+                             Style="{StaticResource OptionColumnValue2}" />
+                    <Button Grid.Row="0" Grid.Column="2"
+                            Content="Edit"
+                            FontWeight="Normal"
+                            Command="{Binding ClickChangeObjectName}"/>
+                    
                     <TextBlock Grid.Row="1" Grid.Column="0"
                                 Text="Width"
                                Style="{StaticResource OptionColumnHeader}"/>
-                    <TextBox Grid.Row="1" Grid.Column="1"
+                    <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
                              Text="{Binding BarcodeObject.Width}"
                              Style="{StaticResource OptionColumnValue}">
                         <i:Interaction.Behaviors>
                             <common:TextBoxNumberBehaviour/>
                         </i:Interaction.Behaviors>
                     </TextBox>
+                    
                     <TextBlock Grid.Row="2" Grid.Column="0"
                                Text="Height"
                                Style="{StaticResource OptionColumnHeader}" />
-                    <TextBox Grid.Row="2" Grid.Column="1"
+                    <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
                              Text="{Binding BarcodeObject.Height}"
                              Style="{StaticResource OptionColumnValue}">
                         <i:Interaction.Behaviors>
                             <common:TextBoxNumberBehaviour/>
                         </i:Interaction.Behaviors>
                     </TextBox>
+                    
                     <TextBlock Grid.Row="3" Grid.Column="0"
                                Text="Positon X"
                                Style="{StaticResource OptionColumnHeader}" />
-                    <TextBox Grid.Row="3" Grid.Column="1"
+                    <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
                              Text="{Binding BarcodeObject.PosX}"
                              Style="{StaticResource OptionColumnValue}">
                         <i:Interaction.Behaviors>
                             <common:TextBoxNumberBehaviour/>
                         </i:Interaction.Behaviors>
                     </TextBox>
+                    
                     <TextBlock Grid.Row="4" Grid.Column="0" 
                                Text="Positon Y"
                                Style="{StaticResource OptionColumnHeader}" />
-                    <TextBox Grid.Row="4" Grid.Column="1"
+                    <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"
                              Text="{Binding BarcodeObject.PosY}"
                              Style="{StaticResource OptionColumnValue}" >
                         <i:Interaction.Behaviors>

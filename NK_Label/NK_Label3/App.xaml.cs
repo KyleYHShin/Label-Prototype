@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace NK_Label3
 {
@@ -16,6 +17,11 @@ namespace NK_Label3
             if (!string.IsNullOrEmpty(hardLockLoginErrMsg))
             {
                 BasicModule.Utils.DialogService.ShowSimpleTextDialog("Warning", hardLockLoginErrMsg);
+                Shutdown();
+            }
+            else if(DateTime.Compare(Namkang.License.LicenseController.ProgramLicense.ServiceExpirationDate, NK_Label.Utils.SystemInfo.ReleaseDate) < 0)
+            {
+                BasicModule.Utils.DialogService.ShowSimpleTextDialog("Warning", "라이선스 기간이 만료되었습니다.");
                 Shutdown();
             }
             else

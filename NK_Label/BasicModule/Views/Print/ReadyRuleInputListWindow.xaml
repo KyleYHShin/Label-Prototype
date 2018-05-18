@@ -97,6 +97,7 @@
             <Button 
                 Content="Cancle"
                 Click="Click_Cancel"
+                IsCancel="True"
                 Background="{StaticResource NKThirdBrush}"
                 BorderBrush="{StaticResource NKThirdBrush}"
                 Style="{StaticResource OptionButton}"

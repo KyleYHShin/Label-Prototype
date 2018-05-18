@@ -11,7 +11,7 @@ namespace Namkang.License
 
         private static void InitializeLicense()
         {
-            // Change by release program
+            // Must change by release program
             ProgramLicense = new NKHardLockInfo()
             {
                 VendorCode = NKLicenseList.Code_YIOBI,
@@ -55,7 +55,8 @@ namespace Namkang.License
         {
             string sessionInfo = string.Empty;
             HaspStatus loginSessionStatus = HaspData.GetSessionInfo(Hasp.KeyInfo, ref sessionInfo);
-
+            
+            // Should update from test and user case
             string msg = string.Empty;
             switch (loginSessionStatus)
             {

@@ -1,6 +1,10 @@
 ﻿using BasicModule.Common;
 using BasicModule.Models;
 using BasicModule.Models.Option;
+using BasicModule.Views.Option;
+using Prism.Commands;
+using System.Windows;
+using System.Windows.Input;
 
 namespace BasicModule.ViewModels.Option
 {
@@ -13,9 +17,32 @@ namespace BasicModule.ViewModels.Option
         private TextObject _textObject;
         public TextObject TextObject { get { return _textObject; } set { _textObject = value; OnPropertyChanged(); } }
 
-        public OptionTextViewModel(TextObject to)
+        private bool IsCreateMode { get; set; }
+
+        public OptionTextViewModel(TextObject to, bool isCreateMode)
         {
             TextObject = to;
+            IsCreateMode = isCreateMode;
+            ClickChangeObjectName = new DelegateCommand(ChangeObjectName);
+        }
+
+        public ICommand ClickChangeObjectName { get; private set; }
+        public void ChangeObjectName()
+        {
+            ChangeNameWindow cnWin = new ChangeNameWindow()
+            {
+                Title = "Change '" + TextObject.Name + "'s Name",
+                Owner = Application.Current.MainWindow
+            };
+            cnWin.SetText(TextObject.Name);
+
+            if (IsCreateMode)
+                cnWin.ExistNameList = UsingLabelList.UsingObjectNameList;
+            else
+                cnWin.ExistNameList = UsingLabelList.UsingObjectNameListExceptSelectedObject;
+
+            if (cnWin.ShowDialog() == true)
+                TextObject.Name = cnWin.TextInput.Text;
         }
 
         public bool isRight()
@@ -34,6 +61,12 @@ namespace BasicModule.ViewModels.Option
                 && !string.IsNullOrEmpty(TextObject.FontStyle)
                 && !string.IsNullOrEmpty(TextObject.FontWeight)
                 && !string.IsNullOrEmpty(TextObject.TextAlignment);
+
+            if (ret && UsingLabelList.UsingObjectNameList.Contains(TextObject.Name))
+            {
+                Utils.DialogService.ShowSimpleTextDialog("Warning", "해당 텍스트의 이름(" + TextObject.Name + ")이 이미 사용중입니다.");
+                ret = false;
+            }
 
             if (ret)
                 TextObject.IsChanged = true;

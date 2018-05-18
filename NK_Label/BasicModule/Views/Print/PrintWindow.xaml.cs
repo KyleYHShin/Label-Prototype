@@ -315,8 +315,6 @@ namespace BasicModule.Views.Print
             }
         }
 
-
-
         private void Click_Stop(object sender, RoutedEventArgs e)
         {
             TerminateSeqTimer();

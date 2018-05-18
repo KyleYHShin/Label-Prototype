@@ -11,12 +11,28 @@
         MinWidth="700"
         Height="{Binding Height}"
         MinHeight="300"
-        Background="{Binding Background}">
-    <!--Closing="Click_Close"-->
+        Background="{Binding Background}"
+        Closing="Click_Close" >
 
     <Window.Resources>
         <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
     </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding Gesture="Ctrl+N" Command="{Binding ClickAddNewLabel}" />
+        <KeyBinding Gesture="Ctrl+O" Command="{Binding ClickOpen}" />
+        <KeyBinding Gesture="Ctrl+S" Command="{Binding ClickSave}" />
+        <KeyBinding Gesture="Ctrl+Shift+S" Command="{Binding ClickSaveAs}" />
+        <KeyBinding Gesture="Ctrl+Shift+A" Command="{Binding ClickSaveAll}" />
+        <KeyBinding Gesture="Ctrl+P" Command="{Binding ClickPrintCurrentLabel}" />
+
+        <KeyBinding Key="Esc" Command="{Binding ClickReleaseAll}"/>
+        <KeyBinding Key="Delete" Command="{Binding ClickDeleteObject}"/>
+
+        <KeyBinding Gesture="Ctrl+Shift+T" Command="{Binding ClickAddText}" />
+        <KeyBinding Gesture="Ctrl+Shift+B" Command="{Binding ClickAddBarcode}" />
+        <KeyBinding Gesture="Ctrl+R" Command="{Binding ClickEidtRuleList}" />
+    </Window.InputBindings>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -40,7 +56,9 @@
             Grid.ColumnSpan="2"
             Style="{StaticResource BasicMenu}">            
             <MenuItem Header="{Binding Language.MenuFile}">
-                <MenuItem Header="{Binding Language.MenuFileNew}" Command="{Binding ClickAddNewLabel}"/>
+                <MenuItem
+                    Header="{Binding Language.MenuFileNew}"
+                    Command="{Binding ClickAddNewLabel}"/>
                 <Separator />
                 <MenuItem
                     Header="{Binding Language.MenuFileLoad}"
@@ -53,7 +71,10 @@
                     Header="{Binding Language.MenuFileSaveAs}"
                     Command="{Binding ClickSaveAs}"
                     IsEnabled="{Binding HasLabel}"/>
-                <!--<MenuItem Header="{Binding Language.MenuFileSaveAll}" Command="{Binding ClickCloseAllLabel}" IsEnabled="{Binding HasCurrView}"/>-->
+                <MenuItem
+                    Header="{Binding Language.MenuFileSaveAll}"
+                    Command="{Binding ClickSaveAll}"
+                    IsEnabled="{Binding HasLabel}"/>
                 <Separator />
                 <MenuItem
                     Header="{Binding Language.MenuFilePrint}"
@@ -76,7 +97,7 @@
 
             <MenuItem Header="{Binding Language.MenuEdit}">
                 <MenuItem
-                    Header="선택한 객체 삭제"
+                    Header="{Binding Language.MenuEidtDelete}"
                     Command="{Binding ClickDeleteObject}"
                     IsEnabled="{Binding HasLabel}"/>
                 <!--<MenuItem Header="{Binding Language.MenuEditCopy}" Command=""/>

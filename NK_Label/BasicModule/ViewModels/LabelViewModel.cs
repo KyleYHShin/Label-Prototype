@@ -67,17 +67,15 @@ namespace BasicModule.ViewModels
             RuleList = new List<RuleMain>();
 
             var newView = new OptionLabelView();
-            newView.DataContext = new OptionLabelViewModel(_label);
+            newView.DataContext = new OptionLabelViewModel(Label, false);
             _regionManager.Regions["OptionRegion"].Add(newView, null, true);
 
             SelectedCommand = new DelegateCommand<object[]>(OnItemSelected);
             ClickReleaseAll = new DelegateCommand(ReleaseObject);
             ClickDeleteObject = new DelegateCommand(DeleteObject);
-
         }
 
         #endregion Constructor
-
 
         #region Common Event
 
@@ -85,12 +83,8 @@ namespace BasicModule.ViewModels
         private void ReleaseObject()
         {
             if (SelectedObject != null)
-            {
-                if (SelectedObject is BarcodeObject)
-                    (SelectedObject as BarcodeObject).IsSelected = false;
-                else if (SelectedObject is TextObject)
-                    (SelectedObject as TextObject).IsSelected = false;
-            }
+                SelectedObject.IsSelected = false;
+
             SelectedObject = null;
         }
 
@@ -140,19 +134,19 @@ namespace BasicModule.ViewModels
             if (SelectedObject is TextObject)
             {
                 var newView = new OptionTextView();
-                newView.DataContext = new OptionTextViewModel(SelectedObject as TextObject);
+                newView.DataContext = new OptionTextViewModel(SelectedObject as TextObject, false);
                 _regionManager.Regions["OptionRegion"].Add(newView, null, true);
             }
             else if (SelectedObject is BarcodeObject)
             {
                 var newView = new OptionBarcodeView();
-                newView.DataContext = new OptionBarcodeViewModel(SelectedObject as BarcodeObject);
+                newView.DataContext = new OptionBarcodeViewModel(SelectedObject as BarcodeObject, false);
                 _regionManager.Regions["OptionRegion"].Add(newView, null, true);
             }
             else
             {
                 var newView = new OptionLabelView();
-                newView.DataContext = new OptionLabelViewModel(_label);
+                newView.DataContext = new OptionLabelViewModel(Label, false);
                 _regionManager.Regions["OptionRegion"].Add(newView, null, true);
             }
         }

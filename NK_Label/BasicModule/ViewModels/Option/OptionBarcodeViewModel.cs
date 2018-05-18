@@ -1,6 +1,10 @@
 ﻿using BasicModule.Common;
 using BasicModule.Models;
 using BasicModule.Models.Option;
+using BasicModule.Views.Option;
+using Prism.Commands;
+using System.Windows;
+using System.Windows.Input;
 
 namespace BasicModule.ViewModels.Option
 {
@@ -13,11 +17,34 @@ namespace BasicModule.ViewModels.Option
         private BarcodeObject _barcodeObject;
         public BarcodeObject BarcodeObject { get { return _barcodeObject; } set { _barcodeObject = value; OnPropertyChanged(); } }
 
+        private bool IsCreateMode { get; set; }
+
         #endregion Properties
 
-        public OptionBarcodeViewModel(BarcodeObject bo)
+        public OptionBarcodeViewModel(BarcodeObject bo, bool isCreateMode)
         {
             BarcodeObject = bo;
+            IsCreateMode = isCreateMode;
+            ClickChangeObjectName = new DelegateCommand(ChangeObjectName);
+        }
+
+        public ICommand ClickChangeObjectName { get; private set; }
+        public void ChangeObjectName()
+        {
+            ChangeNameWindow cnWin = new ChangeNameWindow()
+            {
+                Title = "Change '" + BarcodeObject.Name + "'s Name",
+                Owner = Application.Current.MainWindow
+            };
+            cnWin.SetText(BarcodeObject.Name);
+
+            if (IsCreateMode)
+                cnWin.ExistNameList = UsingLabelList.UsingObjectNameList;
+            else
+                cnWin.ExistNameList = UsingLabelList.UsingObjectNameListExceptSelectedObject;
+
+            if (cnWin.ShowDialog() == true)
+                BarcodeObject.Name = cnWin.TextInput.Text;
         }
 
         public bool isRight()
@@ -30,6 +57,13 @@ namespace BasicModule.ViewModels.Option
                 && BarcodeObject.BarcodeType > 0
                 && !string.IsNullOrEmpty(BarcodeObject.Text)
                 && BarcodeObject.MaxLength > 0;
+
+            if (ret && UsingLabelList.UsingObjectNameList.Contains(BarcodeObject.Name))
+            {
+                Utils.DialogService.ShowSimpleTextDialog("Warning", "해당 바코드의 이름(" + BarcodeObject.Name + ")이 이미 사용중입니다.");
+                ret = false;
+            }
+
             if (ret)
                 BarcodeObject.IsChanged = true;
 

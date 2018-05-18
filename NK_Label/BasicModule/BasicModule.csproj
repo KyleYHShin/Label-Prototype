@@ -88,7 +88,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicModuleModule.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\AllowableCharactersTextBoxBehavior.cs" />
     <Compile Include="Common\TextBoxBehaviour.cs" />
@@ -123,6 +122,7 @@
     </Compile>
     <Compile Include="Models\Option\BarcodeOption.cs" />
     <Compile Include="Common\Region.cs" />
+    <Compile Include="UsingLabel.cs" />
     <Compile Include="Utils\BitmapConversion.cs" />
     <Compile Include="Files\FileController.cs" />
     <Compile Include="Files\Parser.cs" />
@@ -133,6 +133,7 @@
     <Compile Include="Utils\RawPrinterHelper.cs" />
     <Compile Include="Utils\TimeConversion.cs" />
     <Compile Include="Utils\ZebraImage.cs" />
+    <Compile Include="ViewModels\Option\ChangeNameWindowViewModel.cs" />
     <Compile Include="ViewModels\Option\IOptionViewModel.cs" />
     <Compile Include="ViewModels\LabelViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionBarcodeViewModel.cs" />
@@ -149,6 +150,9 @@
     </Compile>
     <Compile Include="Views\LabelView.xaml.cs">
       <DependentUpon>LabelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Option\ChangeNameWindow.xaml.cs">
+      <DependentUpon>ChangeNameWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Option\OptionBarcodeView.xaml.cs">
       <DependentUpon>OptionBarcodeView.xaml</DependentUpon>
@@ -237,6 +241,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LabelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Option\ChangeNameWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

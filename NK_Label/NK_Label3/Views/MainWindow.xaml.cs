@@ -13,20 +13,15 @@ namespace NK_Label3.Views
             InitializeComponent();
         }
 
-        //private void Click_Close(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    if (DataContext is MainWindowViewModel)
-        //    {
-        //        var ret = (DataContext as MainWindowViewModel).CanCloseAllLabel();
-        //        if (ret)
-        //            e.Cancel = false;
-        //        else
-        //            e.Cancel = true;
-        //        //if ((DataContext as MainWindowViewModel).CanCloseAllLabel())
-        //        //{
-        //        //    e.Cancel = true;
-        //        //}
-        //    }
-        //}
+        private void Click_Close(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (DataContext is MainWindowViewModel)
+            {
+                if ((DataContext as MainWindowViewModel).CanCloseAllLabel())
+                    e.Cancel = false;
+                else
+                    e.Cancel = true;
+            }
+        }
     }
 }

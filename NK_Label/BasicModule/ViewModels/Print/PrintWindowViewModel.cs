@@ -241,7 +241,6 @@ namespace BasicModule.ViewModels.Print
         }
 
         public ICommand Refresh { get; private set; }
-
         public void ConvertRuleToText()
         {
             foreach (var obj in ObjectList)
@@ -296,9 +295,8 @@ namespace BasicModule.ViewModels.Print
                         zplCode.AppendFormat("{0}", BitmapConversion.ConvertImageToZPLString(PLView));
                         zplCode.AppendFormat("^FS");
                         zplCode.AppendFormat("^XZ");
-
-                        //Console.WriteLine(zplCode);
-                        pService.PrintZebraProduct(SelectedPrinterName, zplCode.ToString());
+                        
+                        //pService.PrintZebraProduct(SelectedPrinterName, zplCode.ToString());
                         Clipboard.Clear();
                         Clipboard.SetText(zplCode.ToString());
                         break;
