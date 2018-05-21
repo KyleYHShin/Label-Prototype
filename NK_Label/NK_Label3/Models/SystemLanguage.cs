@@ -1,4 +1,4 @@
-﻿namespace NK_Label3.Models
+﻿namespace NK_Label.Models
 {
     public class SystemLanguage
     {

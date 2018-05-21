@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-namespace NK_Label3
+namespace NK_Label
 {
     /// <summary>
     /// App.xaml에 대한 상호 작용 논리

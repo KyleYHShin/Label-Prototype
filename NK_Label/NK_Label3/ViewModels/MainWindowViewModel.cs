@@ -10,7 +10,7 @@ using BasicModule.ViewModels;
 using BasicModule.ViewModels.Option;
 using BasicModule.ViewModels.Print;
 using BasicModule.ViewModels.Rule;
-using NK_Label3.Models;
+using NK_Label.Models;
 using Prism.Commands;
 using Prism.Regions;
 using System.Collections.ObjectModel;
@@ -20,7 +20,7 @@ using NK_Label.Utils;
 using System.Collections.Generic;
 using BasicModule;
 
-namespace NK_Label3.ViewModels
+namespace NK_Label.ViewModels
 {
     public class MainWindowViewModel : NotifyPropertyChanged
     {
