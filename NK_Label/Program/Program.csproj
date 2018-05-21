@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C43F1BA7-28C7-4522-87F4-A5E2DD159D24}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>NK_Label</RootNamespace>
-    <AssemblyName>NK_Label</AssemblyName>
+    <RootNamespace>Program</RootNamespace>
+    <AssemblyName>Program</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -154,7 +154,7 @@
       <Project>{f6fc8232-095a-48d2-bcc7-99725c2da406}</Project>
       <Name>BasicModule</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Namkang.License\Namkang.csproj">
+    <ProjectReference Include="..\Namkang\Namkang.csproj">
       <Project>{b1e4e7a8-9d06-4913-96fc-8d15ebfdac7d}</Project>
       <Name>Namkang</Name>
     </ProjectReference>
@@ -174,9 +174,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Logo.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Logo.ico" />

@@ -1,9 +1,9 @@
 ﻿using Microsoft.Practices.Unity;
 using Prism.Unity;
-using NK_Label.Views;
+using Program.Views;
 using System.Windows;
 
-namespace NK_Label
+namespace Program
 {
     class Bootstrapper : UnityBootstrapper
     {

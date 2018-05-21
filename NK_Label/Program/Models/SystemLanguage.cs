@@ -1,4 +1,4 @@
-﻿namespace NK_Label.Models
+﻿namespace Program.Models
 {
     public class SystemLanguage
     {

@@ -1,7 +1,7 @@
-﻿using NK_Label.ViewModels;
+﻿using Program.ViewModels;
 using System.Windows;
 
-namespace NK_Label.Views
+namespace Program.Views
 {
     /// <summary>
     /// MainWindow.xaml에 대한 상호 작용 논리

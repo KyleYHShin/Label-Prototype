@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace NK_Label.Utils
+namespace Program.Utils
 {
     public static class SystemInfo
     {

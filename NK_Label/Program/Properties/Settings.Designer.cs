@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NK_Label.Properties {
+namespace Program.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

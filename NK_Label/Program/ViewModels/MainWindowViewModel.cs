@@ -10,17 +10,17 @@ using BasicModule.ViewModels;
 using BasicModule.ViewModels.Option;
 using BasicModule.ViewModels.Print;
 using BasicModule.ViewModels.Rule;
-using NK_Label.Models;
+using Program.Models;
 using Prism.Commands;
 using Prism.Regions;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
-using NK_Label.Utils;
+using Program.Utils;
 using System.Collections.Generic;
 using BasicModule;
 
-namespace NK_Label.ViewModels
+namespace Program.ViewModels
 {
     public class MainWindowViewModel : NotifyPropertyChanged
     {

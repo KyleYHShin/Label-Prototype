@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-namespace NK_Label
+namespace Program
 {
     /// <summary>
     /// App.xaml에 대한 상호 작용 논리
@@ -19,7 +19,7 @@ namespace NK_Label
                 BasicModule.Utils.DialogService.ShowSimpleTextDialog("Warning", hardLockLoginErrMsg);
                 Shutdown();
             }
-            else if(DateTime.Compare(Namkang.License.Controller.ProgramLicense.ServiceExpirationDate, NK_Label.Utils.SystemInfo.ReleaseDate) < 0)
+            else if(DateTime.Compare(Namkang.License.Controller.ProgramLicense.ServiceExpirationDate, Utils.SystemInfo.ReleaseDate) < 0)
             {
                 BasicModule.Utils.DialogService.ShowSimpleTextDialog("Warning", "라이선스 기간이 만료되었습니다.");
                 Shutdown();
