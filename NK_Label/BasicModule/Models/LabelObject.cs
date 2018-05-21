@@ -132,15 +132,15 @@ namespace BasicModule.Models
         private ushort _offsetY;
         public ushort OffsetY { get { return _offsetY; } set { _offsetY = value; } }
 
-        private int _repetition = 1;
-        public int Repetition { get { return _repetition; } set { _repetition = value; OnPropertyChanged(); } }
+        private int _numberOfCopies = 1;
+        public int NumberOfCopies { get { return _numberOfCopies; } set { _numberOfCopies = value; OnPropertyChanged(); } }
 
 
-        private int _repetitionOfInput = 1;
-        public int RepetitionOfInput { get { return _repetitionOfInput; } set { _repetitionOfInput = value; OnPropertyChanged(); } }
+        private int _repeatOfInputs = 1;
+        public int RepeatOfInputs { get { return _repeatOfInputs; } set { _repeatOfInputs = value; OnPropertyChanged(); } }
 
-        private bool _sequentiable = false;
-        public bool Sequentiable { get { return _sequentiable; } set { _sequentiable = value; OnPropertyChanged(); } }
+        private bool _enableSequentialInputs = false;
+        public bool EnableSequentialInputs { get { return _enableSequentialInputs; } set { _enableSequentialInputs = value; OnPropertyChanged(); } }
 
         private int _serialNumberStartIndex;
         public int SerialNumberStartIndex

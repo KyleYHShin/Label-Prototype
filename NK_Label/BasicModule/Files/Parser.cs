@@ -81,10 +81,10 @@ namespace BasicModule.Files
                 SelectedDpi = lo.SelectedDpi,
                 OffsetX = lo.OffsetX,
                 OffsetY = lo.OffsetY,
-                Repetition = lo.Repetition,
+                NumberOfCopies = lo.NumberOfCopies,
 
-                RepetitionOfInput = lo.RepetitionOfInput,
-                Sequentiable = lo.Sequentiable,
+                RepeatOfInputs = lo.RepeatOfInputs,
+                EnableSequentialInputs = lo.EnableSequentialInputs,
                 SerialNumberStartIndex = lo.SerialNumberStartIndex,
                 SerialNumberLength = lo.SerialNumberLength,
                 LastSerialNumber = lo.LastSerialNumber
@@ -233,10 +233,10 @@ namespace BasicModule.Files
                 labelData.Label.SelectedDpi = fileData.Label.SelectedDpi;
                 labelData.Label.OffsetX = fileData.Label.OffsetX;
                 labelData.Label.OffsetY = fileData.Label.OffsetY;
-                labelData.Label.Repetition = fileData.Label.Repetition;
+                labelData.Label.NumberOfCopies = fileData.Label.NumberOfCopies;
 
-                labelData.Label.RepetitionOfInput = fileData.Label.RepetitionOfInput;
-                labelData.Label.Sequentiable = fileData.Label.Sequentiable;
+                labelData.Label.RepeatOfInputs = fileData.Label.RepeatOfInputs;
+                labelData.Label.EnableSequentialInputs = fileData.Label.EnableSequentialInputs;
                 labelData.Label.SerialNumberStartIndex = fileData.Label.SerialNumberStartIndex;
                 labelData.Label.SerialNumberLength = fileData.Label.SerialNumberLength;
                 labelData.Label.LastSerialNumber = fileData.Label.LastSerialNumber;

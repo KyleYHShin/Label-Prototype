@@ -29,15 +29,6 @@ namespace NK_Label3.ViewModels
         
         public string Title { get { return SystemInfo.Name + "  (" + SystemInfo.Version + ")"; } }
 
-        private double _width = 1280;
-        public double Width { get { return _width; } set { _width = value; OnPropertyChanged(); } }
-
-        private double _height = 720;
-        public double Height { get { return _height; } set { _height = value; OnPropertyChanged(); } }
-
-        private string _background = "#FFDEDEDE";
-        public string Background { get { return _background; } set { _background = value; OnPropertyChanged(); } }
-
         private SystemLanguage _language;
         public SystemLanguage Language { get { return _language; } set { _language = value; OnPropertyChanged(); } }
 
@@ -418,7 +409,7 @@ namespace NK_Label3.ViewModels
                     pWin.ShowDialog();
                 }
                 else
-                    DialogService.ShowSimpleTextDialog(Application.Current.MainWindow, "Warning", "너무 많은 Serial 규칙을 사용하고 있습니다.");
+                    DialogService.ShowSimpleTextDialog(Application.Current.MainWindow, "Warning", "2개 이상의 Sequential Number 규칙이 적용되었습니다.");
 
             }
         }

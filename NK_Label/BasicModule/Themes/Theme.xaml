@@ -2,7 +2,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
+    
     <!--Basic Brushes-->
     <Color x:Key="NKFirst">#73CFFD</Color>
     <Color x:Key="NKSecond">#439FEA</Color>
@@ -12,6 +12,11 @@
     <SolidColorBrush x:Key="NKThirdBrush" Color="{StaticResource NKThird}" />
 
     <!--Window-->
+    <Style TargetType="{x:Type Window}"
+           x:Key="WindowStyle">
+        <Setter Property="WindowStyle" Value="None"/>
+    </Style>
+    
     <Style TargetType="Menu"
            x:Key="BasicMenu">
         <Setter Property="Height" Value="24"/>

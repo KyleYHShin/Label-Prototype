@@ -13,6 +13,13 @@
     <SolidColorBrush x:Key="NKThirdBrush" Color="{StaticResource NKThird}" />
 
     <!--Window-->
+    <Style TargetType="{x:Type Window}"
+           x:Key="WindowStyle">
+        <Setter Property="WindowStyle" Value="None"/>
+        <Setter Property="Background" Value="#EFEFEF"/>
+        <Setter Property="Template" Value="{StaticResource WindowTemplate}"/>
+    </Style>
+    
     <Style TargetType="Menu"
            x:Key="BasicMenu">
         <Setter Property="Height" Value="24"/>

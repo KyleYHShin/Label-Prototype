@@ -292,7 +292,7 @@ namespace BasicModule.Views.Print
                 thisDataContext.IsAbleToAction = false;
                 isConverted = false;
                 readyToPrint = false;
-                repeatOfInput = thisDataContext.Label.RepetitionOfInput;
+                repeatOfInput = thisDataContext.Label.RepeatOfInputs;
 
                 inputTimer = new Timer();
                 inputTimer.Interval = 200;

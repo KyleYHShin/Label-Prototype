@@ -42,7 +42,7 @@ namespace BasicModule.ViewModels.Option
                 cnWin.ExistNameList = UsingLabelList.UsingObjectNameListExceptSelectedObject;
 
             if (cnWin.ShowDialog() == true)
-                TextObject.Name = cnWin.TextInput.Text;
+                TextObject.Name = cnWin.InputName.Text;
         }
 
         public bool isRight()

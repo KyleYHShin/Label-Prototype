@@ -60,11 +60,11 @@ namespace BasicModule.ViewModels.Print
         private string _selectedPrinterName;
         public string SelectedPrinterName { get { return _selectedPrinterName; } set { _selectedPrinterName = value; OnPropertyChanged(); } }
         
-        private Visibility _sequentiable = Visibility.Collapsed;
-        public Visibility Sequentiable { get { return _sequentiable; } set { _sequentiable = value; OnPropertyChanged(); } }
+        private bool _hasInputRule = false;
+        public bool HasInputRule { get { return _hasInputRule; } set { _hasInputRule = value; OnPropertyChanged(); } }
 
-        private Visibility _repeatableOfInput = Visibility.Collapsed;
-        public Visibility RepeatableOfInput { get { return _repeatableOfInput; } set { _repeatableOfInput = value; OnPropertyChanged(); } }
+        private bool _canRepeatOfInput = false;
+        public bool CanRepeatOfInput { get { return _canRepeatOfInput; } set { _canRepeatOfInput = value; OnPropertyChanged(); } }
 
         private bool _isAbleToAction;
         public bool IsAbleToAction { get { return _isAbleToAction; } set { _isAbleToAction = value; OnPropertyChanged(); } }
@@ -214,7 +214,7 @@ namespace BasicModule.ViewModels.Print
 
             if (InputRuleList.Count > 0)
             {
-                Sequentiable = Visibility.Visible;
+                HasInputRule = true;
                 var inputListView = new PrintRuleInputView();
                 inputListView.DataContext = this;
                 RegionManager.Regions[RegionNames.PrintRuleInput].Add(inputListView, null, true);
@@ -228,7 +228,7 @@ namespace BasicModule.ViewModels.Print
             }
 
             if (SeqRuleList.Count <= 0 && InputRuleList.Count > 0)
-                RepeatableOfInput = Visibility.Visible;
+                CanRepeatOfInput = true;
         }
 
         #endregion Constructor
@@ -297,9 +297,9 @@ namespace BasicModule.ViewModels.Print
                         zplCode.AppendFormat("{0}", BitmapConversion.ConvertImageToZPLString(PLView));
                         zplCode.AppendFormat("^FS");
                         zplCode.AppendFormat("^XZ");
-                        for (var i = 0; i < Label.Repetition; i++)
+                        for (var i = 0; i < Label.NumberOfCopies; i++)
                         {
-                            pService.PrintZebraProduct(SelectedPrinterName, zplCode.ToString());
+                            //pService.PrintZebraProduct(SelectedPrinterName, zplCode.ToString());
                             Clipboard.Clear();
                             Clipboard.SetText(zplCode.ToString());
                         }

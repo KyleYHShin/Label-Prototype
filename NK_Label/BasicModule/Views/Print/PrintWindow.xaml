@@ -9,6 +9,7 @@
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
         Closing="Click_Close" >
 
     <Window.Resources>
@@ -16,8 +17,8 @@
     </Window.Resources>
 
     <Grid
-        Width="Auto" MaxWidth="1280"
-        Height="Auto" MaxHeight="700"
+        Width="Auto"
+        Height="Auto"
         Background="Gray">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -29,186 +30,215 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Row="0" Grid.Column="0"
-              Margin="10"
-              HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid
+            Grid.Row="0" Grid.Column="0"
+            Margin="10"
+            HorizontalAlignment="Center" VerticalAlignment="Center">
             <ContentControl x:Name="PrintLabelView" />
         </Grid>
 
         <Grid
             Grid.Row="1" Grid.Column="0"
-            Margin="10"
-            Background="White"
+            Width="Auto"
+            Height="Auto"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Top"
+            Style="{StaticResource OptionViewMainGrid}"
             IsEnabled="{Binding IsAbleToAction}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
 
-            <TextBlock
-                Grid.Row="0" Grid.Column="0"
-                Text="Manufacturer : "
-                Style="{StaticResource RuleColumnHeader}"/>
-            <ComboBox
-                Grid.Row="0" Grid.Column="1"
-                ItemsSource="{Binding PrinterList}"
-                DisplayMemberPath="Key"
-                SelectedValuePath="Value"
-                SelectedValue="{Binding Label.SelectedPrinter}"
-                Style="{StaticResource OptionComboBoxValue}"/>
-            <TextBlock
-                Grid.Row="0" Grid.Column="2"
-                Text="DPI : "
-                Style="{StaticResource RuleColumnHeader}"/>
-            <ComboBox
-                Grid.Row="0" Grid.Column="3"
-                ItemsSource="{Binding DpiList}"
-                DisplayMemberPath="Key"
-                SelectedValuePath="Value"
-                SelectedValue="{Binding Label.SelectedDpi}"
-                Style="{StaticResource OptionComboBoxValue}"/>
+            <GroupBox
+                Grid.Row="0"
+                Header=" Common Option "
+                Style="{StaticResource OptionGroup}" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-            <TextBlock
-                Grid.Row="1" Grid.Column="0"
-                Text="Printer : "
-                Style="{StaticResource RuleColumnHeader}"/>
-            <ComboBox
-                Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
-                ItemsSource="{Binding UsablePrinterList}"
-                SelectedValue="{Binding SelectedPrinterName}"
-                Style="{StaticResource OptionComboBoxValue}"/>
+                    <TextBlock
+                        Grid.Row="0" Grid.Column="0"
+                        Text="Manufacturer : "
+                        Style="{StaticResource RuleColumnHeader}"/>
+                    <ComboBox
+                        Grid.Row="0" Grid.Column="1"
+                        ItemsSource="{Binding PrinterList}"
+                        DisplayMemberPath="Key"
+                        SelectedValuePath="Value"
+                        SelectedValue="{Binding Label.SelectedPrinter}"
+                        Style="{StaticResource OptionComboBoxValue}"/>
+                    <TextBlock
+                        Grid.Row="0" Grid.Column="2"
+                        Text="DPI : "
+                        Style="{StaticResource RuleColumnHeader}"/>
+                    <ComboBox
+                        Grid.Row="0" Grid.Column="3"
+                        ItemsSource="{Binding DpiList}"
+                        DisplayMemberPath="Key"
+                        SelectedValuePath="Value"
+                        SelectedValue="{Binding Label.SelectedDpi}"
+                        Style="{StaticResource OptionComboBoxValue}"/>
 
-            <TextBlock
-                Grid.Row="2" Grid.Column="0"
-                Text="Offset X : "
-                Style="{StaticResource RuleColumnHeader}"/>
-            <TextBox 
-                Grid.Row="2" Grid.Column="1"
-                Text="{Binding Label.OffsetX}"
-                Style="{StaticResource OptionColumnValue}">
-                <i:Interaction.Behaviors>
-                    <common:TextBoxNumberBehaviour/>
-                </i:Interaction.Behaviors>
-            </TextBox>
-            <TextBlock
-                Grid.Row="2" Grid.Column="2"
-                Text="Offset Y : "
-                Style="{StaticResource RuleColumnHeader}"/>
-            <TextBox 
-                Grid.Row="2" Grid.Column="3"
-                Text="{Binding Label.OffsetY}"
-                Style="{StaticResource OptionColumnValue}">
-                <i:Interaction.Behaviors>
-                    <common:TextBoxNumberBehaviour/>
-                </i:Interaction.Behaviors>
-            </TextBox>
+                    <TextBlock
+                        Grid.Row="1" Grid.Column="0"
+                        Text="Printer : "
+                        Style="{StaticResource RuleColumnHeader}"/>
+                    <ComboBox
+                        Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
+                        ItemsSource="{Binding UsablePrinterList}"
+                        SelectedValue="{Binding SelectedPrinterName}"
+                        Style="{StaticResource OptionComboBoxValue}"/>
 
-            <TextBlock
-                Grid.Row="3" Grid.Column="2"
-                Text="Repetition : "
-                Style="{StaticResource RuleColumnHeader}"/>
-            <TextBox 
-                Grid.Row="3" Grid.Column="3"
-                Text="{Binding Label.Repetition}"
-                Style="{StaticResource OptionColumnValue}">
-                <i:Interaction.Behaviors>
-                    <common:TextBoxNumberBehaviour/>
-                </i:Interaction.Behaviors>
-            </TextBox>
+                    <TextBlock
+                        Grid.Row="2" Grid.Column="0"
+                        Text="Offset X : "
+                        Style="{StaticResource RuleColumnHeader}"/>
+                    <TextBox 
+                        Grid.Row="2" Grid.Column="1"
+                        Text="{Binding Label.OffsetX}"
+                        Style="{StaticResource OptionColumnValue}">
+                        <i:Interaction.Behaviors>
+                            <common:TextBoxNumberBehaviour/>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
+                    <TextBlock
+                        Grid.Row="2" Grid.Column="2"
+                        Text="Offset Y : "
+                        Style="{StaticResource RuleColumnHeader}"/>
+                    <TextBox 
+                        Grid.Row="2" Grid.Column="3"
+                        Text="{Binding Label.OffsetY}"
+                        Style="{StaticResource OptionColumnValue}">
+                        <i:Interaction.Behaviors>
+                            <common:TextBoxNumberBehaviour/>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
 
-            <CheckBox
-                Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
-                IsChecked="{Binding Label.Sequentiable}"
-                Visibility="{Binding Sequentiable}">
-                <TextBlock
-                    Text="Sequentiable"
-                    Style="{StaticResource RuleColumnHeader}"/>
-            </CheckBox>
-            <TextBlock
-                Grid.Row="4" Grid.Column="2"
-                Text="Repetition of Input : "
-                Style="{StaticResource RuleColumnHeader}"
-                Visibility="{Binding RepeatableOfInput}"/>
-            <TextBox 
-                Grid.Row="4" Grid.Column="3"
-                Text="{Binding Label.RepetitionOfInput}"
-                Style="{StaticResource OptionColumnValue}"
-                Visibility="{Binding RepeatableOfInput}">
-                <i:Interaction.Behaviors>
-                    <common:TextBoxNumberBehaviour/>
-                </i:Interaction.Behaviors>
-            </TextBox>
-            <Grid
-                Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4"
-                Visibility="{Binding Sequentiable}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="65"/>
-                    <ColumnDefinition Width="35"/>
-                    <ColumnDefinition Width="70"/>
-                    <ColumnDefinition Width="70"/>
-                    <ColumnDefinition Width="70"/>
-                    <ColumnDefinition Width="120"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Row="3" Grid.Column="2"
+                        Text="Number of copies : "
+                        Style="{StaticResource RuleColumnHeader}"/>
+                    <TextBox 
+                        Grid.Row="3" Grid.Column="3"
+                        Text="{Binding Label.NumberOfCopies}"
+                        Style="{StaticResource OptionColumnValue}">
+                        <i:Interaction.Behaviors>
+                            <common:TextBoxNumberBehaviour/>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
+                </Grid>
+            </GroupBox>
 
-                <TextBlock
-                    Grid.Column="0"
-                    Text="Start Index : "
-                    Style="{StaticResource RuleColumnHeader}" Grid.ColumnSpan="2" Margin="3,8,0,7"/>
-                <TextBox 
-                    Grid.Column="2"
-                    Text="{Binding Label.SerialNumberStartIndex}"
-                    Style="{StaticResource OptionColumnValue}"
-                    IsEnabled="{Binding Label.Sequentiable}" Margin="3,5,3,4">
-                    <i:Interaction.Behaviors>
-                        <common:TextBoxNumberBehaviour/>
-                    </i:Interaction.Behaviors>
-                </TextBox>
+            <GroupBox
+                Grid.Row="1"
+                Header=" Input Option "
+                Style="{StaticResource OptionGroup}" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <CheckBox
+                        Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4"
+                        IsChecked="{Binding Label.EnableSequentialInputs}"
+                        IsEnabled="{Binding HasInputRule}">
+                        <TextBlock
+                            Text="Enable Sequential Input"
+                            Style="{StaticResource RuleColumnHeader}"/>
+                    </CheckBox>
+                    <TextBlock
+                        Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2"
+                        Text="Repeat of inputs : "
+                        Style="{StaticResource RuleColumnHeader}"
+                        IsEnabled="{Binding CanRepeatOfInput}"/>
+                    <TextBox 
+                        Grid.Row="0" Grid.Column="6"
+                        Text="{Binding Label.RepeatOfInputs}"
+                        Style="{StaticResource OptionColumnValue}"
+                        IsEnabled="{Binding CanRepeatOfInput}">
+                        <i:Interaction.Behaviors>
+                            <common:TextBoxNumberBehaviour/>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
 
-                <TextBlock
-                    Grid.Column="3"
-                    Text="Length : "
-                    Style="{StaticResource RuleColumnHeader}" Margin="3,8,0,7"/>
-                <TextBox 
-                    Grid.Column="4"
-                    Text="{Binding Label.SerialNumberLength}"
-                    Style="{StaticResource OptionColumnValue}"
-                    IsEnabled="{Binding Label.Sequentiable}" Margin="3,5,3,4">
-                    <i:Interaction.Behaviors>
-                        <common:TextBoxNumberBehaviour/>
-                    </i:Interaction.Behaviors>
-                </TextBox>
+                    <TextBlock
+                        Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                        Text="Start Index : "
+                        Margin="3,8,0,7"
+                        Style="{StaticResource RuleColumnHeader}"/>
+                    <TextBox 
+                        Grid.Row="1" Grid.Column="2"
+                        Text="{Binding Label.SerialNumberStartIndex}"
+                        Margin="3,5,3,4"
+                        Style="{StaticResource OptionColumnValue}"
+                        IsEnabled="{Binding Label.Sequentiable}">
+                        <i:Interaction.Behaviors>
+                            <common:TextBoxNumberBehaviour/>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
 
-                <TextBlock
-                    Grid.Column="5"
-                    Text="Last Number : "
-                    Style="{StaticResource RuleColumnHeader}" Margin="3,8,0,7"/>
-                <TextBox 
-                    Grid.Column="6"
-                    Text="{Binding Label.LastSerialNumber}"
-                    Style="{StaticResource OptionColumnValue}"
-                    IsEnabled="{Binding Label.Sequentiable}" Margin="3,5,3,4">
-                    <i:Interaction.Behaviors>
-                        <common:TextBoxNumberBehaviour/>
-                    </i:Interaction.Behaviors>
-                </TextBox>
-            </Grid>
+                    <TextBlock
+                        Grid.Row="1" Grid.Column="3"
+                        Text="Length : "
+                        Margin="3,8,0,7"
+                        Style="{StaticResource RuleColumnHeader}"/>
+                    <TextBox 
+                        Grid.Row="1" Grid.Column="4"
+                        Text="{Binding Label.SerialNumberLength}"
+                        Margin="3,5,3,4"
+                        Style="{StaticResource OptionColumnValue}"
+                        IsEnabled="{Binding Label.Sequentiable}">
+                        <i:Interaction.Behaviors>
+                            <common:TextBoxNumberBehaviour/>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
 
+                    <TextBlock
+                        Grid.Row="1" Grid.Column="5"
+                        Text="Last Number : "
+                        Margin="3,8,0,7"
+                        Style="{StaticResource RuleColumnHeader}"/>
+                    <TextBox 
+                        Grid.Row="1" Grid.Column="6"
+                        Text="{Binding Label.LastSerialNumber}"
+                        Margin="3,5,3,4"
+                        Style="{StaticResource OptionColumnValue}"
+                        IsEnabled="{Binding Label.Sequentiable}">
+                        <i:Interaction.Behaviors>
+                            <common:TextBoxNumberBehaviour/>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
+                </Grid>
+            </GroupBox>
         </Grid>
 
         <StackPanel
             Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
-            Orientation="Horizontal" HorizontalAlignment="Center">
+            Orientation="Horizontal"
+            HorizontalAlignment="Center">
 
             <Button
                 Content="Start"
@@ -241,10 +271,10 @@
 
         <ScrollViewer
             Grid.Row="0" Grid.RowSpan="2" Grid.Column="1"
-            MaxWidth="900"
-            MaxHeight="720"
             Margin="0,10,10,10"
             Background="White"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
             VerticalScrollBarVisibility="Auto"
             HorizontalScrollBarVisibility="Auto"
             CanContentScroll="True"

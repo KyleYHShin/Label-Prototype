@@ -18,21 +18,21 @@ namespace BasicModule.Views.Option
 
         private void Change_Click(object sender, RoutedEventArgs e)
         {
-            if (!ExistNameList.Contains(TextInput.Text))
+            if (!ExistNameList.Contains(InputName.Text))
                 DialogResult = true;
             else
             {
                 Utils.DialogService.ShowSimpleTextDialog("Warning", "해당 이름이 이미 사용중입니다.");
-                TextInput.Focus();
-                TextInput.SelectionStart = TextInput.Text.Length;
+                InputName.Focus();
+                InputName.SelectionStart = InputName.Text.Length;
             }
         }
 
         public void SetText(string text)
         {
-            TextInput.Text = text;
-            TextInput.Focus();
-            TextInput.SelectionStart = TextInput.Text.Length;
+            InputName.Text = text;
+            InputName.Focus();
+            InputName.SelectionStart = InputName.Text.Length;
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

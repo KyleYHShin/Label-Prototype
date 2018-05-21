@@ -29,9 +29,13 @@ namespace BasicModule.Views.Print
         {
             thisDataContext = DataContext as PrintWindowViewModel;
 
-            if (thisDataContext.Label.Sequentiable)
+            if (thisDataContext.Label.EnableSequentialInputs)
             {
-                CheckSequentialBlock.Visibility = thisDataContext.Sequentiable;
+                if(thisDataContext.HasInputRule)
+                    CheckSequentialBlock.Visibility = Visibility.Visible;
+                else
+                    CheckSequentialBlock.Visibility = Visibility.Collapsed;
+
                 startIndex = thisDataContext.Label.SerialNumberStartIndex - 1;
                 length = thisDataContext.Label.SerialNumberLength;
             }
@@ -53,7 +57,7 @@ namespace BasicModule.Views.Print
                 if (string.IsNullOrEmpty(InputBox.Text))
                     return false;
 
-                if (thisDataContext.Label.Sequentiable)
+                if (thisDataContext.Label.EnableSequentialInputs)
                 {
                     int newInputNum;
                     int lastInputNum;

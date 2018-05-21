@@ -5,13 +5,11 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="{Binding Title}"
+        Background="#EFEFEF"
+        MinWidth="1280"
+        MinHeight="720"
         MaxWidth="{Binding Source={x:Static SystemParameters.WorkArea}}"
         MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}}"
-        Width="{Binding Width}"
-        MinWidth="700"
-        Height="{Binding Height}"
-        MinHeight="300"
-        Background="{Binding Background}"
         Closing="Click_Close" >
 
     <Window.Resources>
@@ -41,7 +39,8 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="301*"/>
+            <ColumnDefinition Width="79*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
@@ -49,12 +48,12 @@
             Grid.Row="0"
             Grid.Column="0"
             Grid.ColumnSpan="2" />-->
-        
+
         <Menu
             Grid.Row="0"
             Grid.Column="0"
             Grid.ColumnSpan="2"
-            Style="{StaticResource BasicMenu}">            
+            Style="{StaticResource BasicMenu}" Margin="10,5,10,0">
             <MenuItem Header="{Binding Language.MenuFile}">
                 <MenuItem
                     Header="{Binding Language.MenuFileNew}"
@@ -152,7 +151,7 @@
                 Margin="5"
                 Background="Transparent"
                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                ScrollViewer.VerticalScrollBarVisibility="Auto">
+                ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2">
             <TabControl.Resources>
                 <Style TargetType="{x:Type TabItem}">
                     <Setter Property="Header" Value="{Binding DataContext.Label.Name}" />
@@ -162,38 +161,38 @@
 
         <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.OptionRegion}" 
                         Grid.Row="1"
-                        Grid.Column="1"
+                        Grid.Column="2"
                         ScrollViewer.HorizontalScrollBarVisibility="Auto"
                         ScrollViewer.VerticalScrollBarVisibility="Auto"/>
-            
+
         <StackPanel
             Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,5,20,10" Orientation="Horizontal" MinHeight="15">
-            <TextBlock FontWeight="Bold" Width="40" Height="16" VerticalAlignment="Bottom">Name : </TextBlock>
+            <TextBlock FontWeight="Bold" Width="40" Height="16" VerticalAlignment="Bottom">Name :</TextBlock>
             <TextBlock
                 AutomationProperties.AutomationId="SelectedItemTextBlock"
                 Text="{Binding SelectedLabelView.DataContext.SelectedObject.Name}"
                 MinWidth="120" />
-            <TextBlock FontWeight="Bold" Width="15">X : </TextBlock>
+            <TextBlock FontWeight="Bold" Width="15">X :</TextBlock>
             <TextBlock
                 AutomationProperties.AutomationId="SelectedItemTextBlock"
                 Text="{Binding SelectedLabelView.DataContext.SelectedObject.PosX}"
                 MinWidth="100" />
-            <TextBlock FontWeight="Bold" Width="15">Y : </TextBlock>
+            <TextBlock FontWeight="Bold" Width="15">Y :</TextBlock>
             <TextBlock
                 AutomationProperties.AutomationId="SelectedItemTextBlock"
                 Text="{Binding SelectedLabelView.DataContext.SelectedObject.PosY}"
                 MinWidth="100" />
-            <TextBlock FontWeight="Bold" Width="45">Width : </TextBlock>
+            <TextBlock FontWeight="Bold" Width="45">Width :</TextBlock>
             <TextBlock
                 AutomationProperties.AutomationId="SelectedItemTextBlock"
                 Text="{Binding SelectedLabelView.DataContext.SelectedObject.Width}"
                 MinWidth="100" />
-            <TextBlock FontWeight="Bold" Width="45">Height : </TextBlock>
+            <TextBlock FontWeight="Bold" Width="45">Height :</TextBlock>
             <TextBlock
                 AutomationProperties.AutomationId="SelectedItemTextBlock"
                 Text="{Binding SelectedLabelView.DataContext.SelectedObject.Height}"
                 MinWidth="100" />
         </StackPanel>
-        </Grid>
-    
+    </Grid>
+
 </Window>

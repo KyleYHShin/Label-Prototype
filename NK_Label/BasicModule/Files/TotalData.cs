@@ -33,10 +33,10 @@ namespace BasicModule.Files
         public double SelectedDpi { get; set; }
         public ushort OffsetX { get; set; }
         public ushort OffsetY { get; set; }
-        public int Repetition { get; set; }
+        public int NumberOfCopies { get; set; }
 
-        public int RepetitionOfInput { get; set; }
-        public bool Sequentiable { get; set; }
+        public int RepeatOfInputs { get; set; }
+        public bool EnableSequentialInputs { get; set; }
         public int SerialNumberStartIndex { get; set; }
         public int SerialNumberLength { get; set; }
         public string LastSerialNumber { get; set; }

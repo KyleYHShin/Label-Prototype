@@ -44,7 +44,7 @@ namespace BasicModule.ViewModels.Option
                 cnWin.ExistNameList = UsingLabelList.UsingObjectNameListExceptSelectedObject;
 
             if (cnWin.ShowDialog() == true)
-                BarcodeObject.Name = cnWin.TextInput.Text;
+                BarcodeObject.Name = cnWin.InputName.Text;
         }
 
         public bool isRight()
