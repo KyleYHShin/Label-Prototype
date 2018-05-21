@@ -87,22 +87,16 @@
             Grid.Row="3"
             Orientation="Horizontal" HorizontalAlignment="Center" >
             <Button
-                Content="Print"
+                Content="확 인"
                 Click="Click_Print"
-                Background="{StaticResource NKSecondBrush}"
-                BorderBrush="{StaticResource NKSecondBrush}"
-                Style="{StaticResource OptionButton}"
-                Template="{StaticResource OptionApplyButton}"
-                MinWidth="100"/>
+                Style="{StaticResource ButtonCommon}"
+                Template="{StaticResource ButtonCommonTemplate}"/>
             <Button 
-                Content="Cancel"
+                Content="중 지"
                 Click="Click_Cancel"
                 IsCancel="True"
-                Background="{StaticResource NKThirdBrush}"
-                BorderBrush="{StaticResource NKThirdBrush}"
-                Style="{StaticResource OptionButton}"
-                Template="{StaticResource OptionCancleButton}"
-                MinWidth="100"/>
+                Style="{StaticResource ButtonCommon}"
+                Template="{StaticResource ButtonCommonTemplate}"/>
         </StackPanel>
     </Grid>
 </Window>

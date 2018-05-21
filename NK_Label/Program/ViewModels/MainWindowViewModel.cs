@@ -102,7 +102,7 @@ namespace Program.ViewModels
             ClickAddText = new DelegateCommand(AddTextObject);
             ClickAddBarcode = new DelegateCommand(AddBarcodeObject);
             ClickDeleteObject = new DelegateCommand(DeleteObject);
-            ClickEidtRuleList = new DelegateCommand(EditRuleList);
+            ClickRuleManager = new DelegateCommand(RuleManager);
 
             ClickShowVersion = new DelegateCommand(ShowVersion);
         }
@@ -283,9 +283,9 @@ namespace Program.ViewModels
         #endregion Label Object Events
 
         #region Rule Events
-
-        public ICommand ClickEidtRuleList { get; private set; }
-        private void EditRuleList()
+        
+        public ICommand ClickRuleManager { get; private set; }
+        private void RuleManager()
         {
             if (!CheckLicense())
                 return;

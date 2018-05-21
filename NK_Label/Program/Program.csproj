@@ -178,5 +178,15 @@
   <ItemGroup>
     <Resource Include="Logo.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="UI\Images\AddBarcode.png" />
+    <Resource Include="UI\Images\AddText.png" />
+    <Resource Include="UI\Images\Delete.png" />
+    <Resource Include="UI\Images\NewLabel.png" />
+    <Resource Include="UI\Images\Open.png" />
+    <Resource Include="UI\Images\Print.png" />
+    <Resource Include="UI\Images\RuleManager.png" />
+    <Resource Include="UI\Images\Save.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

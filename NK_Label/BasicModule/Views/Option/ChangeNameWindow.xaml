@@ -46,22 +46,16 @@
             Orientation="Horizontal"
             HorizontalAlignment="Center">
             <Button
-                Content="OK"
+                Content="수 정"
                 Click="Change_Click"
-                Background="{StaticResource NKSecondBrush}"
-                BorderBrush="{StaticResource NKSecondBrush}"
-                Style="{StaticResource OptionButton}"
-                Template="{StaticResource OptionApplyButton}"
-                MinWidth="100"/>
+                Style="{StaticResource ButtonCommon}"
+                Template="{StaticResource ButtonCommonTemplate}"/>
             <Button 
-                Content="Cancle"
+                Content="취 소"
                 Click="Cancel_Click"
                 IsCancel="True"
-                Background="{StaticResource NKThirdBrush}"
-                BorderBrush="{StaticResource NKThirdBrush}"
-                Style="{StaticResource OptionButton}"
-                Template="{StaticResource OptionCancleButton}"
-                MinWidth="100"/>
+                Style="{StaticResource ButtonCommon}"
+                Template="{StaticResource ButtonCommonTemplate}"/>
         </StackPanel>
     </Grid>
     

@@ -32,15 +32,15 @@
         <KeyBinding Gesture="Ctrl+R" Command="{Binding ClickEidtRuleList}" />
     </Window.InputBindings>
 
-    <Grid>
+    <Grid Width="Auto" Height="Auto">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="301*"/>
-            <ColumnDefinition Width="79*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
@@ -50,9 +50,7 @@
             Grid.ColumnSpan="2" />-->
 
         <Menu
-            Grid.Row="0"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
+            Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
             Style="{StaticResource BasicMenu}" Margin="10,5,10,0">
             <MenuItem Header="{Binding Language.MenuFile}">
                 <MenuItem
@@ -129,7 +127,7 @@
                 <Separator />
                 <MenuItem
                     Header="{Binding Language.MenuToolRuleManager}"
-                    Command="{Binding ClickEidtRuleList}"
+                    Command="{Binding ClickRuleManager}"
                     IsEnabled="{Binding HasLabel}"/>
             </MenuItem>
 
@@ -143,15 +141,155 @@
             </MenuItem>
         </Menu>
 
-        <TabControl Name="tabDynamic"
-                ItemsSource="{Binding LabelViewList}"
-                SelectedItem="{Binding SelectedLabelView}"
-                Grid.Row="1"
-                Grid.Column="0"
-                Margin="5"
-                Background="Transparent"
-                ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2">
+        <StackPanel
+            Margin="10,8"
+            Grid.Row="1" Grid.Column="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top">
+            <Button
+                Command="{Binding ClickAddNewLabel}"
+                Style="{StaticResource MainButton}"
+                Template="{StaticResource MainButtonTemplate}">
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top">
+                    <Image
+                        Source="pack://application:,,,/UI/Images/NewLabel.png"
+                        Style="{StaticResource MainButtonImage}"/>
+                    <TextBlock
+                        Text="새 라벨"
+                        Style="{StaticResource MainButtonText}"/>
+                </StackPanel>
+            </Button>
+            <Separator />
+            <Button
+                Command="{Binding ClickOpen}"
+                Style="{StaticResource MainButton}"
+                Template="{StaticResource MainButtonTemplate}">
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top">
+                    <Image 
+                        Source="pack://application:,,,/UI/Images/Open.png"
+                        Style="{StaticResource MainButtonImage}"/>
+                    <TextBlock
+                        Text="열기"
+                        Style="{StaticResource MainButtonText}"/>
+                </StackPanel>
+            </Button>
+            <Separator/>
+            <Button
+                Command="{Binding ClickSave}"
+                IsEnabled="{Binding HasLabel}"
+                Style="{StaticResource MainButton}"
+                Template="{StaticResource MainButtonTemplate}">
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top">
+                    <Image
+                        Source="pack://application:,,,/UI/Images/Save.png"
+                        Style="{StaticResource MainButtonImage}"/>
+                    <TextBlock
+                        Text="저장"
+                        Style="{StaticResource MainButtonText}"/>
+                </StackPanel>
+            </Button>
+            <Separator/>
+            <Button
+                Command="{Binding ClickPrintCurrentLabel}"
+                IsEnabled="{Binding HasLabel}"
+                Style="{StaticResource MainButton}"
+                Template="{StaticResource MainButtonTemplate}">
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top">
+                    <Image
+                        Source="pack://application:,,,/UI/Images/Print.png"
+                        Style="{StaticResource MainButtonImage}"/>
+                    <TextBlock
+                        Text="출력"
+                        Style="{StaticResource MainButtonText}"/>
+                </StackPanel>
+            </Button>
+            <Separator/>
+            <Button
+                Command="{Binding ClickDeleteObject}"
+                IsEnabled="{Binding HasLabel}"
+                Style="{StaticResource MainButton}"
+                Template="{StaticResource MainButtonTemplate}">
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top">
+                    <Image
+                        Source="pack://application:,,,/UI/Images/Delete.png"
+                        Style="{StaticResource MainButtonImage}"/>
+                    <TextBlock
+                        Text="삭제"
+                        Style="{StaticResource MainButtonText}"/>
+                </StackPanel>
+            </Button>
+            <Separator/>
+            <Button
+                Command="{Binding ClickAddText}"
+                IsEnabled="{Binding HasLabel}"
+                Style="{StaticResource MainButton}"
+                Template="{StaticResource MainButtonTemplate}">
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top">
+                    <Image
+                        Source="pack://application:,,,/UI/Images/AddText.png"
+                        Style="{StaticResource MainButtonImage}"/>
+                    <TextBlock
+                        Text="텍스트 추가"
+                        Style="{StaticResource MainButtonText}"/>
+                </StackPanel>
+            </Button>
+            <Separator/>
+            <Button
+                Command="{Binding ClickAddBarcode}"
+                IsEnabled="{Binding HasLabel}"
+                Style="{StaticResource MainButton}"
+                Template="{StaticResource MainButtonTemplate}">
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top">
+                    <Image
+                        Source="pack://application:,,,/UI/Images/AddBarcode.png"
+                        Style="{StaticResource MainButtonImage}"/>
+                    <TextBlock
+                        Text="바코드 추가"
+                        Style="{StaticResource MainButtonText}"/>
+                </StackPanel>
+            </Button>
+            <Separator/>
+            <Button
+                Command="{Binding ClickRuleManager}"
+                IsEnabled="{Binding HasLabel}"
+                Style="{StaticResource MainButton}"
+                Template="{StaticResource MainButtonTemplate}">
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top">
+                    <Image
+                        Source="pack://application:,,,/UI/Images/RuleManager.png"
+                        Style="{StaticResource MainButtonImage}"/>
+                    <TextBlock
+                        Text="규칙 관리자"
+                        Style="{StaticResource MainButtonText}"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+        <TabControl
+            Grid.Row="1" Grid.Column="1"
+            Name="tabDynamic"
+            ItemsSource="{Binding LabelViewList}"
+            SelectedItem="{Binding SelectedLabelView}"
+            Margin="0,5"
+            Background="Transparent"
+            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+            ScrollViewer.VerticalScrollBarVisibility="Auto">
             <TabControl.Resources>
                 <Style TargetType="{x:Type TabItem}">
                     <Setter Property="Header" Value="{Binding DataContext.Label.Name}" />
@@ -159,14 +297,17 @@
             </TabControl.Resources>
         </TabControl>
 
-        <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.OptionRegion}" 
-                        Grid.Row="1"
-                        Grid.Column="2"
-                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                        ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+        <ContentControl
+            Grid.Row="1" Grid.Column="2"
+             prism:RegionManager.RegionName="{x:Static common:RegionNames.OptionRegion}" 
+            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+            ScrollViewer.VerticalScrollBarVisibility="Auto"/>
 
         <StackPanel
-            Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,5,20,10" Orientation="Horizontal" MinHeight="15">
+            Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
+            MinHeight="15"
+            Margin="20,5,20,10"
+            Orientation="Horizontal">
             <TextBlock FontWeight="Bold" Width="40" Height="16" VerticalAlignment="Bottom">Name :</TextBlock>
             <TextBlock
                 AutomationProperties.AutomationId="SelectedItemTextBlock"

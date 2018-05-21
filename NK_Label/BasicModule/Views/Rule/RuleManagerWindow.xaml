@@ -67,13 +67,10 @@
                 Grid.Row="2" Grid.Column="0"
                 Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button
-                    Content=" Create New Rule " 
+                    Content="새 규칙 생성" 
                     Command="{Binding Create}"
-                    Background="{StaticResource NKSecondBrush}"
-                    BorderBrush="{StaticResource NKSecondBrush}"
-                    Style="{StaticResource OptionButton}"
-                    Template="{StaticResource OptionApplyButton}"
-                    MinWidth="90"/>
+                    Style="{StaticResource ButtonCommon}"
+                    Template="{StaticResource ButtonCommonTemplate}"/>
             </StackPanel>
 
             <ContentControl
@@ -94,21 +91,15 @@
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
             <Button
-                Content="Apply"
+                Content="적 용"
                 Click="Ok_Click"
-                Background="{StaticResource NKSecondBrush}"
-                BorderBrush="{StaticResource NKSecondBrush}"
-                Style="{StaticResource OptionButton}"
-                Template="{StaticResource OptionApplyButton}"
-                MinWidth="100"/>
+                Style="{StaticResource ButtonCommon}"
+                Template="{StaticResource ButtonCommonTemplate}"/>
             <Button 
-                Content="Cancel"
+                Content="취 소"
                 Click="Cancel_Click"
-                Background="{StaticResource NKThirdBrush}"
-                BorderBrush="{StaticResource NKThirdBrush}"
-                Style="{StaticResource OptionButton}"
-                Template="{StaticResource OptionCancleButton}"
-                MinWidth="100"/>
+                Style="{StaticResource ButtonCommon}"
+                Template="{StaticResource ButtonCommonTemplate}"/>
         </StackPanel>
     </Grid>
 

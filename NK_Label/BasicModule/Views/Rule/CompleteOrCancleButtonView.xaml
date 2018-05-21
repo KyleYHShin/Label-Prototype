@@ -15,22 +15,16 @@
             HorizontalAlignment="Center">
 
             <Button
-                Content=" Edit Complete "
+                Content="편집 완료"
                 Command="{Binding Complete}"
-                Background="{StaticResource NKSecondBrush}"
-                BorderBrush="{StaticResource NKSecondBrush}"
-                Style="{StaticResource OptionButton}"
-                Template="{StaticResource OptionApplyButton}"
-                MinWidth="90"/>
+                Style="{StaticResource ButtonCommon}"
+                Template="{StaticResource ButtonCommonTemplate}"/>
 
             <Button
-                Content=" Edit Cancle"
+                Content="편집 취소"
                 Command="{Binding Cancle}"
-                Background="{StaticResource NKThirdBrush}"
-                BorderBrush="{StaticResource NKThirdBrush}"
-                Style="{StaticResource OptionButton}"
-                Template="{StaticResource OptionApplyButton}"
-                MinWidth="90"/>
+                Style="{StaticResource ButtonCommon}"
+                Template="{StaticResource ButtonCommonTemplate}"/>
         </StackPanel>
     </Grid>
 </UserControl>

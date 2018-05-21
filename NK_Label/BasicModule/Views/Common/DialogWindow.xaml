@@ -23,15 +23,12 @@
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
             <Button
-                Content="OK"
+                Content="확 인"
                 Click="Ok_Click"
                 IsDefault ="True"
                 IsCancel="True"
-                Background="{StaticResource NKSecondBrush}"
-                BorderBrush="{StaticResource NKSecondBrush}"
-                Style="{StaticResource OptionButton}"
-                Template="{StaticResource OptionApplyButton}"
-                MinWidth="100"/>
+                Style="{StaticResource ButtonCommon}"
+                Template="{StaticResource ButtonCommonTemplate}"/>
         </StackPanel>
     </Grid>
 </Window>

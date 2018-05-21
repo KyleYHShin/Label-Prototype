@@ -241,32 +241,22 @@
             HorizontalAlignment="Center">
 
             <Button
-                Content="Start"
+                Content="시 작"
                 Click="PrintLabel"
-                Background="{StaticResource NKFirstBrush}"
-                BorderBrush="{StaticResource NKFirstBrush}"
-                Style="{StaticResource OptionButton}"
-                Template="{StaticResource OptionApplyButton}"
-                MinWidth="100"
-                IsEnabled="{Binding IsAbleToAction}"/>
+                IsEnabled="{Binding IsAbleToAction}"
+                Style="{StaticResource ButtonCommon}"
+                Template="{StaticResource ButtonCommonTemplate}"/>
             <Button
-                Content="Refresh"
-                Command="{Binding Refresh}"
-                Background="{StaticResource NKSecondBrush}"
-                BorderBrush="{StaticResource NKSecondBrush}"
-                Style="{StaticResource OptionButton}"
-                Template="{StaticResource OptionApplyButton}"
-                MinWidth="100"
-                IsEnabled="{Binding IsAbleToAction}"/>
-            <Button
-                Content="Stop"
+                Content="중 지"
                 Click="Click_Stop"
-                VerticalContentAlignment="Bottom"
-                Background="{StaticResource NKThirdBrush}"
-                BorderBrush="{StaticResource NKThirdBrush}"
-                Style="{StaticResource OptionButton}"
-                Template="{StaticResource OptionCancleButton}"
-                MinWidth="100"/>
+                Style="{StaticResource ButtonCommon}"
+                Template="{StaticResource ButtonCommonTemplate}"/>
+            <Button
+                Content="새로고침"
+                Command="{Binding Refresh}"
+                IsEnabled="{Binding IsAbleToAction}"
+                Style="{StaticResource ButtonCommon}"
+                Template="{StaticResource ButtonCommonTemplate}"/>
         </StackPanel>
 
         <ScrollViewer

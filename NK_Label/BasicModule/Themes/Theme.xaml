@@ -2,6 +2,55 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="Button">#08344F</Color>
+    <Color x:Key="ButtonOver">#0C5078</Color>
+    <Color x:Key="ButtonPressed">#052538</Color>
+    <SolidColorBrush x:Key="ButtonBrush" Color="{StaticResource Button}" />
+    <SolidColorBrush x:Key="ButtonOverBrush" Color="{StaticResource ButtonOver}" />
+    <SolidColorBrush x:Key="ButtonPressedBrush" Color="{StaticResource ButtonPressed}" />
+    
+    <Style TargetType="{x:Type Button}"
+           x:Key="ButtonCommon">
+        <Setter Property="Background" Value="{StaticResource ButtonBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonBrush}"/>
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="Width" Value="130"/>
+        <Setter Property="Margin" Value="5,10"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontFamily" Value="Pescadero"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="FontSize" Value="13"/>
+    </Style>
+    <ControlTemplate TargetType="{x:Type Button}"
+                     x:Key="ButtonCommonTemplate">
+        <Border 
+            x:Name="Border"  
+            CornerRadius="3" 
+            BorderThickness="0"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}">
+            <ContentPresenter
+                Margin="15,6,15,5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                RecognizesAccessKey="True"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsDefaulted" Value="true">
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonBrush}" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonOverBrush}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="true">
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonPressedBrush}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!--                                                                                                                                                 -->
     
     <!--Basic Brushes-->
     <Color x:Key="NKFirst">#73CFFD</Color>
@@ -10,12 +59,6 @@
     <SolidColorBrush x:Key="NKFirstBrush" Color="{StaticResource NKFirst}" />
     <SolidColorBrush x:Key="NKSecondBrush" Color="{StaticResource NKSecond}" />
     <SolidColorBrush x:Key="NKThirdBrush" Color="{StaticResource NKThird}" />
-
-    <!--Window-->
-    <Style TargetType="{x:Type Window}"
-           x:Key="WindowStyle">
-        <Setter Property="WindowStyle" Value="None"/>
-    </Style>
     
     <Style TargetType="Menu"
            x:Key="BasicMenu">
@@ -83,68 +126,6 @@
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="Margin" Value="1"/>
     </Style>
-    
-    <Style TargetType="{x:Type Button}"
-           x:Key="OptionButton">
-        <Setter Property="Height" Value="35"/>
-        <Setter Property="Margin" Value="15"/>
-        <Setter Property="Padding" Value="5"/>
-        <Setter Property="VerticalContentAlignment" Value="Bottom"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="FontFamily" Value="Pescadero"/>
-        <Setter Property="FontWeight" Value="Medium"/>
-        <Setter Property="FontSize" Value="15"/>
-    </Style>
-    <ControlTemplate TargetType="{x:Type Button}"
-                     x:Key="OptionApplyButton">
-        <Border 
-            x:Name="Border"  
-            CornerRadius="4" 
-            BorderThickness="0"
-            Background="{TemplateBinding Background}"
-            BorderBrush="{TemplateBinding BorderBrush}">
-            <ContentPresenter
-                Margin="15,6,15,5"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                RecognizesAccessKey="True"/>
-        </Border>
-        <ControlTemplate.Triggers>
-            <Trigger Property="IsDefaulted" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="#3657BA" />
-                <Setter TargetName="Border" Property="TextElement.Foreground" Value="White"/>
-            </Trigger>
-            <Trigger Property="IsMouseOver" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="#92a3d4" />
-                <Setter TargetName="Border" Property="TextElement.Foreground" Value="Black"/>
-            </Trigger>
-        </ControlTemplate.Triggers>
-    </ControlTemplate>
-    <ControlTemplate TargetType="{x:Type Button}"
-                     x:Key="OptionCancleButton">
-        <Border 
-            x:Name="Border"  
-            CornerRadius="4" 
-            BorderThickness="0"
-            Background="{TemplateBinding Background}"
-            BorderBrush="{TemplateBinding BorderBrush}">
-            <ContentPresenter
-                Margin="15,6,15,5"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                RecognizesAccessKey="True"/>
-        </Border>
-        <ControlTemplate.Triggers>
-            <Trigger Property="IsDefaulted" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="#439FEA" />
-                <Setter TargetName="Border" Property="TextElement.Foreground" Value="White"/>
-            </Trigger>
-            <Trigger Property="IsMouseOver" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="#8ec1e8" />
-                <Setter TargetName="Border" Property="TextElement.Foreground" Value="Black"/>
-            </Trigger>
-        </ControlTemplate.Triggers>
-    </ControlTemplate>
 
     <!--Rule-->
     <Style TargetType="{x:Type Button}"
@@ -154,7 +135,7 @@
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="FontSize" Value="14"/>
     </Style>
-
+    
     <Style TargetType="{x:Type TextBlock}"
            x:Key="RuleColumnHeader">
         <Setter Property="VerticalAlignment" Value="Center"/>
