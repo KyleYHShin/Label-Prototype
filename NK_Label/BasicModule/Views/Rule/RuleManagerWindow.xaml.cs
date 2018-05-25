@@ -12,6 +12,8 @@ namespace BasicModule.Views.Rule
         public RuleManagerWindow(IRegionManager regionManager)
         {
             InitializeComponent();
+            MaxWidth = SystemParameters.PrimaryScreenWidth;
+            MaxHeight = SystemParameters.PrimaryScreenHeight;
             SizeToContent = SizeToContent.WidthAndHeight;
 
             if (regionManager != null)

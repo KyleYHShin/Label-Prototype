@@ -8,8 +8,11 @@
     <UserControl.Resources>
         <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
     </UserControl.Resources>
-
-    <Grid Background="White">
-            <TextBox x:Name="TextContent" Style="{StaticResource CommonTextStyle}" />
+        
+        <Grid Background="White">
+            <TextBox x:Name="TextContent"
+                     BorderThickness="0"
+                     Margin="10"
+                     FontSize="15"/>
     </Grid>
 </UserControl>

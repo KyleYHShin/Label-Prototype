@@ -11,6 +11,8 @@ namespace Program.Views
         public MainWindow()
         {
             InitializeComponent();
+            MaxWidth = SystemParameters.PrimaryScreenWidth;
+            MaxHeight = SystemParameters.PrimaryScreenHeight;
         }
 
         private void Click_Close(object sender, System.ComponentModel.CancelEventArgs e)

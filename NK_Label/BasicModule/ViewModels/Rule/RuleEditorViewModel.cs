@@ -286,7 +286,7 @@ namespace BasicModule.ViewModels.Rule
                 if (string.IsNullOrEmpty(EditingRule.Description) || string.IsNullOrWhiteSpace(EditingRule.Description))
                     return "규칙에 대한 설명이 비었습니다.";
 
-                if (!RuleRegulation.BarcodeFormatList.ContainsValue(SelectedRuleFormat))
+                if (!RuleRegulation.BarcodeFormatList.ContainsKey(SelectedRuleFormat))
                     return "규칙 타입이 올바르지 않습니다.";
 
                 string msg = CheckRuleNameDuplication();

@@ -1,5 +1,4 @@
 ﻿using BasicModule.ViewModels;
-using BasicModule.Views;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -7,24 +6,8 @@ namespace BasicModule
 {
     public static class UsingLabelList
     {
-        public static LabelView SelectedLabelView;
-        public static ObservableCollection<LabelView> LabelViewList;
-
-        public static LabelViewModel SelectedLabelViewModel
-        {
-            get { return SelectedLabelView.DataContext as LabelViewModel; }
-        }
-        public static List<LabelViewModel> LabelViewModelList
-        {
-            get
-            {
-                var list = new List<LabelViewModel>();
-                foreach (var view in LabelViewList)
-                    list.Add(view.DataContext as LabelViewModel);
-
-                return list;
-            }
-        }
+        public static LabelViewModel SelectedLabelViewModel;
+        public static ObservableCollection<LabelViewModel> LabelViewModelList;
 
         public static List<string> UsingLabelNameList
         {
@@ -32,8 +15,8 @@ namespace BasicModule
             {
                 var list = new List<string>();
 
-                foreach (var view in LabelViewList)
-                    list.Add((view.DataContext as LabelViewModel).Label.Name);
+                foreach (var LVM in LabelViewModelList)
+                    list.Add(LVM.Label.Name);
 
                 return list;
             }
@@ -45,14 +28,12 @@ namespace BasicModule
             {
                 var list = new List<string>();
 
-                foreach (var view in LabelViewList)
-                    if (view != SelectedLabelView)
-                        list.Add((view.DataContext as LabelViewModel).Label.Name);
+                foreach (var LVM in LabelViewModelList)
+                    list.Add(LVM.Label.Name);
 
                 return list;
             }
         }
-
 
         public static List<string> UsingObjectNameList
         {

@@ -36,31 +36,31 @@ namespace Program.ViewModels
 
         #region Tab Contents
 
-        private ObservableCollection<LabelView> _labelViewList;
-        public ObservableCollection<LabelView> LabelViewList
+        private ObservableCollection<LabelViewModel> _labelList;
+        public ObservableCollection<LabelViewModel> LabelList
         {
-            get { return _labelViewList; }
+            get { return _labelList; }
             set
             {
-                _labelViewList = value;
+                _labelList = value;
                 OnPropertyChanged();
-                UsingLabelList.LabelViewList = value;
+                UsingLabelList.LabelViewModelList = value;
             }
         }
 
-        private LabelView _selectedLabelView;
-        public LabelView SelectedLabelView
+        private LabelViewModel _selectedLabel;
+        public LabelViewModel SelectedLabel
         {
-            get { return _selectedLabelView; }
+            get { return _selectedLabel; }
             set
             {
-                _selectedLabelView = value;
+                _selectedLabel = value;
                 OnPropertyChanged();
-                UsingLabelList.SelectedLabelView = value;
+                UsingLabelList.SelectedLabelViewModel = value;
 
-                if (value is LabelView)
+                if (value != null)
                 {
-                    (value.DataContext as LabelViewModel).ChangeOptionRegion();
+                    value.ChangeOptionRegion();
                     HasLabel = true;
                 }
                 else
@@ -85,7 +85,7 @@ namespace Program.ViewModels
             //Load SystemLanguage  (\Language 폴더\Korean.ini) 
             Language = new SystemLanguage();
 
-            LabelViewList = new ObservableCollection<LabelView>();
+            LabelList = new ObservableCollection<LabelViewModel>();
 
             ClickAddNewLabel = new DelegateCommand(AddNewLabel);
             ClickOpen = new DelegateCommand(Open);
@@ -132,12 +132,11 @@ namespace Program.ViewModels
 
         private bool CanCloseCurrentLabel()
         {
-            if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
+            if (SelectedLabel != null)
             {
-                var lvm = SelectedLabelView.DataContext as LabelViewModel;
-                if (lvm.IsChanged)
+                if (SelectedLabel.IsChanged)
                 {
-                    if (DialogService.ShowSimpleSelectDialog(Application.Current.MainWindow, "Warning", "'" + lvm.Label.Name + "'에 수정된 항목이 있습니다.\n 무시하고 종료하시겠습니까?") == true)
+                    if (DialogService.ShowSimpleSelectDialog(Application.Current.MainWindow, "Warning", "'" + SelectedLabel.Label.Name + "'에 수정된 항목이 있습니다.\n 무시하고 종료하시겠습니까?") == true)
                     {
                         CloseLabel();
                         return true;
@@ -153,7 +152,7 @@ namespace Program.ViewModels
         }
         public bool CanCloseAllLabel()
         {
-            while (LabelViewList.Count > 0 && SelectedLabelView != null)
+            while (LabelList.Count > 0 && SelectedLabel != null)
             {
                 if (!CanCloseCurrentLabel())
                     return false;
@@ -164,11 +163,11 @@ namespace Program.ViewModels
         private void CloseLabel()
         {
             RegionManager.Regions[RegionNames.OptionRegion].RemoveAll();
-            LabelViewList.Remove(SelectedLabelView);
-            if (LabelViewList.Count > 0)
-                SelectedLabelView = LabelViewList[LabelViewList.Count - 1];
+            LabelList.Remove(SelectedLabel);
+            if (LabelList.Count > 0)
+                SelectedLabel = LabelList[LabelList.Count - 1];
             else
-                SelectedLabelView = null;
+                SelectedLabel = null;
         }
 
         #endregion Label Window Control Events
@@ -182,10 +181,8 @@ namespace Program.ViewModels
 
             if (newLVM != null)
             {
-                var newView = new LabelView();
-                newView.DataContext = newLVM;
-                LabelViewList.Add(newView);
-                SelectedLabelView = newView;
+                LabelList.Add(newLVM);
+                SelectedLabel = newLVM;
             }
         }
 
@@ -194,10 +191,6 @@ namespace Program.ViewModels
         {
             if (!CheckLicense())
                 return;
-
-            List<string> labelNames = new List<string>();
-            foreach (var view in LabelViewList)
-                    labelNames.Add((view.DataContext as LabelViewModel).Label.Name);
 
             var newLabel = new LabelObject();
             var olViewModel = new OptionLabelViewModel(newLabel, true);
@@ -218,7 +211,7 @@ namespace Program.ViewModels
             if (!CheckLicense())
                 return;
 
-            if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
+            if (SelectedLabel != null)
             {
                 var newText = new TextObject();
                 newText.Name = "NewText";
@@ -229,11 +222,10 @@ namespace Program.ViewModels
 
                 if (DialogService.ShowSelectDialog(Application.Current.MainWindow, optionView, "Create New Text") == true)
                 {
-                    var thisViewModel = SelectedLabelView.DataContext as LabelViewModel;
-                    thisViewModel.ObjectList.Add(newText);
+                    SelectedLabel.ObjectList.Add(newText);
                     newText.IsChanged = true;
 
-                    foreach (var obj in thisViewModel.ObjectList)
+                    foreach (var obj in SelectedLabel.ObjectList)
                         obj.IsSelected = false;
 
                     newText.IsSelected = true;
@@ -247,7 +239,7 @@ namespace Program.ViewModels
             if (!CheckLicense())
                 return;
 
-            if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
+            if (SelectedLabel != null)
             {
                 var newBarcode = new BarcodeObject();
                 newBarcode.Name = "NewBarcode";
@@ -258,11 +250,10 @@ namespace Program.ViewModels
 
                 if (DialogService.ShowSelectDialog(Application.Current.MainWindow, optionView, "Create New Barcode") == true)
                 {
-                    var thisViewModel = SelectedLabelView.DataContext as LabelViewModel;
-                    thisViewModel.ObjectList.Add(newBarcode);
+                    SelectedLabel.ObjectList.Add(newBarcode);
                     newBarcode.IsChanged = true;
 
-                    foreach (var obj in thisViewModel.ObjectList)
+                    foreach (var obj in SelectedLabel.ObjectList)
                         obj.IsSelected = false;
 
                     newBarcode.IsSelected = true;
@@ -276,8 +267,8 @@ namespace Program.ViewModels
             if (!CheckLicense())
                 return;
 
-            if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
-                (SelectedLabelView.DataContext as LabelViewModel).DeleteObject();
+            if (SelectedLabel != null)
+                SelectedLabel.DeleteObject();
         }
 
         #endregion Label Object Events
@@ -290,21 +281,21 @@ namespace Program.ViewModels
             if (!CheckLicense())
                 return;
 
-            if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
+            if (SelectedLabel != null)
             {
-                var LVM = SelectedLabelView.DataContext as LabelViewModel;
-
                 var ruleManagerWin = new RuleManagerWindow(RegionManager);
                 var rmWinVM = ruleManagerWin.DataContext as RuleManagerWindowViewModel;
-                rmWinVM.RuleList = LVM.CloneObservableRuleList;
+                rmWinVM.RuleList = SelectedLabel.CloneObservableRuleList;
+                if (rmWinVM.RuleList.Count > 0)
+                    rmWinVM.SelectedRule = rmWinVM.RuleList[0];
 
                 ruleManagerWin.Owner = Application.Current.MainWindow;
 
-                if (ruleManagerWin .ShowDialog()== true)
+                if (ruleManagerWin.ShowDialog() == true)
                 {
-                    LVM.RuleList.Clear();
+                    SelectedLabel.RuleList.Clear();
                     foreach (var cr in rmWinVM.RuleList)
-                        LVM.RuleList.Add(cr);
+                        SelectedLabel.RuleList.Add(cr);
                 }
             }
         }
@@ -324,10 +315,9 @@ namespace Program.ViewModels
             {
                 var newPath = newLVM.FilePath;
                 bool isExist = false;
-                foreach (LabelView lv in LabelViewList)
+                foreach (LabelViewModel LVM in LabelList)
                 {
-                    var lvm = lv.DataContext as LabelViewModel;
-                    if (!string.IsNullOrEmpty(lvm.FilePath) && lvm.FilePath.Equals(newPath))
+                    if (!string.IsNullOrEmpty(LVM.FilePath) && LVM.FilePath.Equals(newPath))
                     {
                         DialogService.ShowSimpleTextDialog("Warning", "해당 라벨 디자인 파일이 이미 열려있습니다.");
                         isExist = true;
@@ -350,11 +340,11 @@ namespace Program.ViewModels
             if (!CheckLicense())
                 return;
 
-            if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
+            if (SelectedLabel != null)
             {
-                var labelVM = SelectedLabelView.DataContext as LabelViewModel;
-                FileController.SaveLabel(ref labelVM, false);
-                labelVM.IsChanged = false;
+                var LVM = SelectedLabel;
+                FileController.SaveLabel(ref LVM, false);
+                SelectedLabel.IsChanged = false;
             }
         }
 
@@ -364,11 +354,11 @@ namespace Program.ViewModels
             if (!CheckLicense())
                 return;
 
-            foreach(var view in LabelViewList)
+            foreach(var lvm in LabelList)
             {
-                var labelVM = view.DataContext as LabelViewModel;
-                FileController.SaveLabel(ref labelVM, false);
-                labelVM.IsChanged = false;
+                var LVM = lvm;
+                FileController.SaveLabel(ref LVM, false);
+                lvm.IsChanged = false;
             }
         }
 
@@ -378,11 +368,11 @@ namespace Program.ViewModels
             if (!CheckLicense())
                 return;
 
-            if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
+            if (SelectedLabel != null)
             {
-                var labelVM = SelectedLabelView.DataContext as LabelViewModel;
-                FileController.SaveLabel(ref labelVM, true);
-                labelVM.IsChanged = false;
+                var LVM = SelectedLabel;
+                FileController.SaveLabel(ref LVM, true);
+                SelectedLabel.IsChanged = false;
             }
         }
 
@@ -394,13 +384,12 @@ namespace Program.ViewModels
             if (!CheckLicense())
                 return;
 
-            if (SelectedLabelView != null && SelectedLabelView.DataContext is LabelViewModel)
+            if (SelectedLabel != null)
             {
-                var pWin = new PrintWindow(RegionManager) { Title = "Print Label" };
-
-                var LVM = SelectedLabelView.DataContext as LabelViewModel;
+                var pWin = new PrintWindow(RegionManager) { Title = "라벨 출력" };
                 var pVM = pWin.DataContext as PrintWindowViewModel;
-                if (pVM.Initialize(LVM.Label, LVM.ObjectList, LVM.RuleList))
+
+                if (pVM.Initialize(SelectedLabel.Label, SelectedLabel.ObjectList, SelectedLabel.RuleList))
                 {
                     var pLV = new PrintLabelView() { DataContext = pVM };
                     pWin.SetPrintLabelView(pLV);
@@ -409,7 +398,7 @@ namespace Program.ViewModels
                     pWin.ShowDialog();
                 }
                 else
-                    DialogService.ShowSimpleTextDialog(Application.Current.MainWindow, "Warning", "2개 이상의 Sequential Number 규칙이 적용되었습니다.");
+                    DialogService.ShowSimpleTextDialog(Application.Current.MainWindow, "경고", "2개 이상의 '시리얼 넘버' 규칙이 사용되었습니다.");
 
             }
         }

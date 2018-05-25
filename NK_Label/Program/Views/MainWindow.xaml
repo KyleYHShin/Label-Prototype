@@ -2,14 +2,13 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:common="clr-namespace:BasicModule.Common;assembly=BasicModule"
+        xmlns:lview="clr-namespace:BasicModule.Views;assembly=BasicModule"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="{Binding Title}"
         Background="#EFEFEF"
         MinWidth="1280"
         MinHeight="720"
-        MaxWidth="{Binding Source={x:Static SystemParameters.WorkArea}}"
-        MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}}"
         Closing="Click_Close" >
 
     <Window.Resources>
@@ -24,12 +23,11 @@
         <KeyBinding Gesture="Ctrl+Shift+A" Command="{Binding ClickSaveAll}" />
         <KeyBinding Gesture="Ctrl+P" Command="{Binding ClickPrintCurrentLabel}" />
 
-        <KeyBinding Key="Esc" Command="{Binding ClickReleaseAll}"/>
-        <KeyBinding Key="Delete" Command="{Binding ClickDeleteObject}"/>
-
         <KeyBinding Gesture="Ctrl+Shift+T" Command="{Binding ClickAddText}" />
         <KeyBinding Gesture="Ctrl+Shift+B" Command="{Binding ClickAddBarcode}" />
-        <KeyBinding Gesture="Ctrl+R" Command="{Binding ClickEidtRuleList}" />
+
+        <KeyBinding Key="Esc" Command="{Binding ClickReleaseAll}"/>
+        <KeyBinding Key="Delete" Command="{Binding ClickDeleteObject}"/>
     </Window.InputBindings>
 
     <Grid Width="Auto" Height="Auto">
@@ -40,19 +38,21 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*" MinWidth="200" MaxWidth="500"/>
         </Grid.ColumnDefinitions>
 
         <!--<ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.MenuRegion}"
             Grid.Row="0"
             Grid.Column="0"
             Grid.ColumnSpan="2" />-->
-
         <Menu
-            Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
-            Style="{StaticResource BasicMenu}" Margin="10,5,10,0">
-            <MenuItem Header="{Binding Language.MenuFile}">
+            Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4"
+            Style="{StaticResource MainTopMenu}">
+            <MenuItem
+                Header="{Binding Language.MenuFile}"
+                Style="{StaticResource MainTopMenuHeader}">
                 <MenuItem
                     Header="{Binding Language.MenuFileNew}"
                     Command="{Binding ClickAddNewLabel}"/>
@@ -92,7 +92,9 @@
                     Command="{Binding ClickCloseWindow}"/>
             </MenuItem>
 
-            <MenuItem Header="{Binding Language.MenuEdit}">
+            <MenuItem
+                Header="{Binding Language.MenuEdit}"
+                Style="{StaticResource MainTopMenuHeader}">
                 <MenuItem
                     Header="{Binding Language.MenuEidtDelete}"
                     Command="{Binding ClickDeleteObject}"
@@ -112,7 +114,9 @@
                 <MenuItem Header="{Binding Language.MenuViewGrid}" Command=""/>
             </MenuItem>-->
 
-            <MenuItem Header="{Binding Language.MenuTool}">
+            <MenuItem
+                Header="{Binding Language.MenuTool}"
+                Style="{StaticResource MainTopMenuHeader}">
                 <MenuItem
                     Header="{Binding Language.MenuToolText}"
                     Command="{Binding ClickAddText}"
@@ -135,17 +139,17 @@
                 <MenuItem Header="{Binding Language.MenuWindowPreference}" Command=""/>
             </MenuItem>-->
 
-            <MenuItem Header="{Binding Language.MenuHelp}">
+            <MenuItem
+                Header="{Binding Language.MenuHelp}"
+                Style="{StaticResource MainTopMenuHeader}">
                 <MenuItem Header="{Binding Language.MenuHelpProgInfo}" Command="{Binding ClickShowVersion}"/>
                 <!--<MenuItem Header="{Binding Language.MenuHelpManual}" Command=""/>-->
             </MenuItem>
         </Menu>
 
         <StackPanel
-            Margin="10,8"
             Grid.Row="1" Grid.Column="0"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top">
+            Style="{StaticResource MainLeftStackPanel}">
             <Button
                 Command="{Binding ClickAddNewLabel}"
                 Style="{StaticResource MainButton}"
@@ -281,58 +285,96 @@
             </Button>
         </StackPanel>
 
-        <TabControl
+        <Grid
             Grid.Row="1" Grid.Column="1"
-            Name="tabDynamic"
-            ItemsSource="{Binding LabelViewList}"
-            SelectedItem="{Binding SelectedLabelView}"
-            Margin="0,5"
-            Background="Transparent"
-            ScrollViewer.HorizontalScrollBarVisibility="Auto"
-            ScrollViewer.VerticalScrollBarVisibility="Auto">
-            <TabControl.Resources>
-                <Style TargetType="{x:Type TabItem}">
-                    <Setter Property="Header" Value="{Binding DataContext.Label.Name}" />
-                </Style>
-            </TabControl.Resources>
-        </TabControl>
+            Style="{StaticResource LabelGrid}">
+            <TabControl
+                ItemsSource="{Binding LabelList}"
+                SelectedItem="{Binding SelectedLabel}"
+                Style="{StaticResource LabelTabControl}">
+                <TabControl.ItemContainerStyle>
+                    <Style TargetType="{x:Type TabItem}">
+                        <Setter Property="Template" Value="{StaticResource LabelTabItemTemplate}"/>
+                    </Style>
+                </TabControl.ItemContainerStyle>
+                <TabControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Label.Name}"/>
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
+                <TabControl.ContentTemplate>
+                    <DataTemplate>
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                            <lview:LabelView/>
+                        </ScrollViewer>
+                    </DataTemplate>
+                </TabControl.ContentTemplate>
+            </TabControl>
+        </Grid>
 
-        <ContentControl
-            Grid.Row="1" Grid.Column="2"
-             prism:RegionManager.RegionName="{x:Static common:RegionNames.OptionRegion}" 
-            ScrollViewer.HorizontalScrollBarVisibility="Auto"
-            ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+        <GridSplitter
+            Grid.Row="1"  Grid.Column="2"
+            Style="{StaticResource MainGridSplitter}"/>
+        
+        <Grid
+            Grid.Row="1" Grid.Column="3"
+            Style="{StaticResource MainRightGrid}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock
+                Grid.Row="0"
+                Text="설 정" 
+                Style="{StaticResource MainRightHeader}"/>
+            <Border
+                Grid.Row="1"
+                Style="{StaticResource MainRightBorder}" Grid.RowSpan="2">
+                <ScrollViewer
+                    Style="{StaticResource MainRightScrollViewer}">
+                    <ContentControl
+                        prism:RegionManager.RegionName="{x:Static common:RegionNames.OptionRegion}"/>
+                </ScrollViewer>
+            </Border>
+        </Grid>
 
         <StackPanel
-            Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
-            MinHeight="15"
-            Margin="20,5,20,10"
-            Orientation="Horizontal">
-            <TextBlock FontWeight="Bold" Width="40" Height="16" VerticalAlignment="Bottom">Name :</TextBlock>
+            Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"
+            Style="{StaticResource MainBottomStackPanel}">
             <TextBlock
-                AutomationProperties.AutomationId="SelectedItemTextBlock"
+                Text="객체 이름: "
+                Style="{StaticResource MainBottomHeader}"/>
+            <TextBlock
                 Text="{Binding SelectedLabelView.DataContext.SelectedObject.Name}"
-                MinWidth="120" />
-            <TextBlock FontWeight="Bold" Width="15">X :</TextBlock>
+                Style="{StaticResource MainBottomValue}"/>
+
             <TextBlock
-                AutomationProperties.AutomationId="SelectedItemTextBlock"
+                Text="X: "
+                Style="{StaticResource MainBottomHeader}" Height="16" VerticalAlignment="Bottom"/>
+            <TextBlock
                 Text="{Binding SelectedLabelView.DataContext.SelectedObject.PosX}"
-                MinWidth="100" />
-            <TextBlock FontWeight="Bold" Width="15">Y :</TextBlock>
+                Style="{StaticResource MainBottomValue}"/>
+
             <TextBlock
-                AutomationProperties.AutomationId="SelectedItemTextBlock"
+                Text="Y: "
+                Style="{StaticResource MainBottomHeader}"/>
+            <TextBlock
                 Text="{Binding SelectedLabelView.DataContext.SelectedObject.PosY}"
-                MinWidth="100" />
-            <TextBlock FontWeight="Bold" Width="45">Width :</TextBlock>
+                Style="{StaticResource MainBottomValue}"/>
+
             <TextBlock
-                AutomationProperties.AutomationId="SelectedItemTextBlock"
+                Text="가로(mm): "
+                Style="{StaticResource MainBottomHeader}"/>
+            <TextBlock
                 Text="{Binding SelectedLabelView.DataContext.SelectedObject.Width}"
-                MinWidth="100" />
-            <TextBlock FontWeight="Bold" Width="45">Height :</TextBlock>
+                Style="{StaticResource MainBottomValue}"/>
+
             <TextBlock
-                AutomationProperties.AutomationId="SelectedItemTextBlock"
+                Text="세로(mm): "
+                Style="{StaticResource MainBottomHeader}"/>
+            <TextBlock
                 Text="{Binding SelectedLabelView.DataContext.SelectedObject.Height}"
-                MinWidth="100" />
+                Style="{StaticResource MainBottomValue}"/>
         </StackPanel>
     </Grid>
 

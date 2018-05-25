@@ -13,79 +13,77 @@
         <ListBox
             ItemsSource="{Binding InputRuleList}"
             Background="Transparent"
-            BorderBrush="Black"
-            BorderThickness="1">
+            BorderThickness="0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid
-                        Margin="5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="Auto" MinWidth="30"/>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="Auto" MinWidth="30"/>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="Auto" MinWidth="30"/>
-                        </Grid.ColumnDefinitions>
+                    <Border Style="{StaticResource PrintRuleMainBorder}">
+                        <Expander>
+                            <Expander.Header>
+                                <StackPanel Style="{StaticResource PrintRuleHeaderStackPanel}">
+                                    <Label
+                                        Content="규칙 명: "
+                                        Style="{StaticResource PrintRuleHeaderLabel}"/>
+                                    <Label
+                                        Content="{Binding Name}"
+                                        Style="{StaticResource PrintRuleHeaderLabel}"/>
+                                </StackPanel>
+                            </Expander.Header>
 
-                        <TextBlock
-                            Grid.Row="0" Grid.Column="0"
-                            Text="Rule Name : " 
-                            Style="{StaticResource RuleColumnHeader}"/>
-                        <TextBlock
-                            Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="5"
-                            Text="{Binding Name}"
-                            Style="{StaticResource RuleColumnValue}"/>
+                            <Grid Style="{StaticResource PrintRuleContentGrid}">
+                                <StackPanel Style="{StaticResource PrintRuleContentStackPanel}">
+                                    <StackPanel Style="{StaticResource PrintRuleRowStackPanel}">
+                                        <TextBlock
+                                            Text="설명:"
+                                            Style="{StaticResource PrintRuleRowHeaderTextBlock}"/>
+                                        <TextBlock
+                                            Text="{Binding Description}"
+                                            Style="{StaticResource PrintRuleRowValueTextBlock}"/>
+                                    </StackPanel>
+                                    <StackPanel Style="{StaticResource PrintRuleRowStackPanel}">
+                                        <TextBlock
+                                            Text="규칙 타입:"
+                                            Style="{StaticResource PrintRuleRowHeaderTextBlock}"/>
+                                        <TextBlock 
+                                            Text="{Binding RuleFormatName}"
+                                            Style="{StaticResource PrintRuleRowValueTextBlock}"/>
+                                    </StackPanel>
 
-                        <TextBlock
-                            Grid.Row="1" Grid.Column="0"
-                            Text="Description : "
-                            Style="{StaticResource RuleColumnHeader}"/>
-                        <TextBlock 
-                            Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="5"
-                            Text="{Binding Description}"
-                            Style="{StaticResource RuleColumnValue}"/>
-
-                        <TextBlock
-                            Grid.Row="2" Grid.Column="0"
-                            Text="Order : "
-                            Style="{StaticResource RuleColumnHeader}"/>
-                        <TextBlock
-                            Grid.Row="2" Grid.Column="1"
-                            Text="{Binding Content.Order}"
-                            Style="{StaticResource RuleColumnValue}"/>
-                        <TextBlock
-                            Grid.Row="2" Grid.Column="2"
-                            Text="Start Index : "
-                            Style="{StaticResource RuleColumnHeader}"/>
-                        <TextBlock
-                            Grid.Row="2" Grid.Column="3"
-                            Text="{Binding Content.StartIndex}"
-                            Style="{StaticResource RuleColumnValue}"/>
-                        <TextBlock
-                            Grid.Row="2" Grid.Column="4"
-                            Text="Length : "
-                            Style="{StaticResource RuleColumnHeader}"/>
-                        <TextBlock
-                            Grid.Row="2" Grid.Column="5"
-                            Text="{Binding Content.CharLength}"
-                            Style="{StaticResource RuleColumnValue}"/>
-                    </Grid>
+                                    <StackPanel Style="{StaticResource PrintRuleRowStackPanel}">
+                                        <TextBlock
+                                            Text="입력 순서:"
+                                            Style="{StaticResource PrintRuleRowHeaderTextBlock}"/>
+                                        <TextBlock 
+                                            Text="{Binding Content.Order}"
+                                            Style="{StaticResource PrintRuleRowValueTextBlock}"/>
+                                    </StackPanel>
+                                    <StackPanel Style="{StaticResource PrintRuleRowStackPanel}">
+                                        <TextBlock
+                                            Text="추출 글자 시작위치:"
+                                            Style="{StaticResource PrintRuleRowHeaderTextBlock}"/>
+                                        <TextBlock 
+                                            Text="{Binding Content.StartIndex}"
+                                            Style="{StaticResource PrintRuleRowValueTextBlock}"/>
+                                    </StackPanel>
+                                    <StackPanel Style="{StaticResource PrintRuleRowStackPanel}">
+                                        <TextBlock
+                                            Text="추출 글자 길이:"
+                                            Style="{StaticResource PrintRuleRowHeaderTextBlock}"/>
+                                        <TextBlock 
+                                            Text="{Binding Content.CharLength}"
+                                            Style="{StaticResource PrintRuleRowValueTextBlock}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Expander>
+                    </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
 
             <!--Block Highlight-->
             <ListBox.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
-                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
                 <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Transparent" />
             </ListBox.Resources>
         </ListBox>
 

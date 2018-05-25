@@ -13,7 +13,7 @@
 
     <Grid Style="{StaticResource OptionViewMainGrid}">
         <StackPanel>
-            <GroupBox Style="{StaticResource OptionGroup}" Header=" Basic Values ">
+            <GroupBox Header=" 바코드 크기 " Style="{StaticResource OptionGroupBox}" >
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -23,24 +23,25 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" MinWidth="80"/>
+                        <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0"
-                               Text="Name"
+                               Text="바코드 명"
                                Style="{StaticResource OptionColumnHeader}" />
                     <TextBlock Grid.Row="0" Grid.Column="1"
                              Text="{Binding BarcodeObject.Name}"
                              Style="{StaticResource OptionColumnValue2}" />
                     <Button Grid.Row="0" Grid.Column="2"
-                            Content="Edit"
-                            FontWeight="Normal"
-                            Command="{Binding ClickChangeObjectName}"/>
+                            Content="편집"
+                            Command="{Binding ClickChangeObjectName}"
+                            Style="{StaticResource OptionColumnButton}"
+                            Template="{StaticResource OptionColumnButtonTemplate}"/>
                     
                     <TextBlock Grid.Row="1" Grid.Column="0"
-                                Text="Width"
+                                Text="가로"
                                Style="{StaticResource OptionColumnHeader}"/>
                     <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
                              Text="{Binding BarcodeObject.Width}"
@@ -51,7 +52,7 @@
                     </TextBox>
                     
                     <TextBlock Grid.Row="2" Grid.Column="0"
-                               Text="Height"
+                               Text="세로"
                                Style="{StaticResource OptionColumnHeader}" />
                     <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
                              Text="{Binding BarcodeObject.Height}"
@@ -62,7 +63,7 @@
                     </TextBox>
                     
                     <TextBlock Grid.Row="3" Grid.Column="0"
-                               Text="Positon X"
+                               Text="X"
                                Style="{StaticResource OptionColumnHeader}" />
                     <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
                              Text="{Binding BarcodeObject.PosX}"
@@ -73,7 +74,7 @@
                     </TextBox>
                     
                     <TextBlock Grid.Row="4" Grid.Column="0" 
-                               Text="Positon Y"
+                               Text="Y"
                                Style="{StaticResource OptionColumnHeader}" />
                     <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"
                              Text="{Binding BarcodeObject.PosY}"
@@ -85,7 +86,7 @@
                 </Grid>
             </GroupBox>
 
-            <GroupBox Style="{StaticResource OptionGroup}" Header=" Barcode Values ">
+            <GroupBox Header=" 바코드 내용 " Style="{StaticResource OptionGroupBox}" >
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -98,7 +99,7 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0"
-                               Text="Barcode Type"
+                               Text="바코드 종류"
                                Style="{StaticResource OptionColumnHeader}"/>
                     <ComboBox Grid.Row="0" Grid.Column="1"
                               ItemsSource="{Binding BarcodeFormatList}"
@@ -107,7 +108,7 @@
                               SelectedValue="{Binding BarcodeObject.BarcodeType}"
                               Style="{StaticResource OptionComboBoxValue}" />
                     <TextBlock Grid.Row="1" Grid.Column="0"
-                               Text="Text"
+                               Text="내 용"
                                Style="{StaticResource OptionColumnHeader}"  />
                     <TextBox Grid.Row="1" Grid.Column="1"
                              Text="{Binding BarcodeObject.Text}"
@@ -117,7 +118,7 @@
                         </i:Interaction.Behaviors>
                     </TextBox>
                     <TextBlock Grid.Row="2" Grid.Column="0"
-                               Text="Max Length"
+                               Text="최대 출력 길이"
                                Style="{StaticResource OptionColumnHeader}"/>
                     <TextBox Grid.Row="2" Grid.Column="1"
                              Text="{Binding BarcodeObject.MaxLength}"

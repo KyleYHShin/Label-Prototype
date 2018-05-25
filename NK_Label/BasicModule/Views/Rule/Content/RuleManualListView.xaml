@@ -11,18 +11,22 @@
         <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
     </UserControl.Resources>
 
-    <Grid Width="410">
-        <GroupBox
-            Header=" Rule Manual List "
-            Style="{StaticResource OptionGroup}">
+    <Grid
+        IsEnabled="{Binding IsEditMode}"
+        Width="Auto"
+        HorizontalAlignment="Stretch">
+        <GroupBox Header=" 상세 옵션 " Style="{StaticResource OptionGroupBox}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0" HorizontalAlignment="Center">
+                <Grid Grid.Row="0">
                     <DataGrid
+                        Width="371"
+                        Height="160"
+                        Margin="5"
                         ItemsSource="{Binding EditingRule.Content.ContentList}" 
                         SelectedItem="{Binding SelectedManualContent}"
                         
@@ -36,39 +40,37 @@
                         CanUserSortColumns="True"
                         
                         HorizontalAlignment="Left"
-                        Height="170"
-                        Width="360"
-                        Margin="10"
                         FontWeight="Normal" FontSize="14"
                         IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn
-                                Header="Print Value"
+                                Header="출력 문자"
                                 Binding="{Binding Path=Key}"
+                                MinWidth="100"
                                 FontWeight="Bold"
-                                Width="Auto" MinWidth="100"
-                                CanUserResize="True"/>
+                                Width="Auto" CanUserResize="True"/>
                             <DataGridTextColumn
-                                Header="Description"
+                                Header="내 용"
                                 Binding="{Binding Path=Value}"
+                                MinWidth="200"
                                 FontWeight="Normal"
-                                Width="Auto" MinWidth="200"
-                                CanUserResize="True"/>
+                                Width="Auto" CanUserResize="True"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
 
                 <GroupBox
                     Grid.Row="1"
-                    Header=" Edit "
-                    Style="{StaticResource OptionGroup}">
+                    Header=" 선택 항목 "
+                    Margin="3"
+                    Style="{StaticResource OptionGroupBox}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <Grid Grid.Row="0" HorizontalAlignment="Center">
+                        <Grid Grid.Row="0" HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -76,46 +78,49 @@
                             
                             <TextBox
                                 Grid.Column="0"
-                                Text="{Binding EditKey}"
-                                Style="{StaticResource OptionColumnValue}"
                                 Width="100"
-                                IsEnabled="{Binding IsEditMode}">
+                                Text="{Binding EditKey}"
+                                Style="{StaticResource RuleWinColumnValueTextBox}">
                                 <i:Interaction.Behaviors>
                                     <common:TextBoxNameBehaviour/>
                                 </i:Interaction.Behaviors>
                             </TextBox>
                             <TextBox
                                 Grid.Column="1"
-                                Text="{Binding EditValue}"
-                                Style="{StaticResource OptionColumnValue}"
                                 Width="235"
-                                IsEnabled="{Binding IsEditMode}"/>
+                                Text="{Binding EditValue}"
+                                Style="{StaticResource RuleWinColumnValueTextBox}"/>
                         </Grid>
 
                         <StackPanel
                             Grid.Row="1"
-                            Orientation="Horizontal" HorizontalAlignment="Center">
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            Margin="0,8,0,3">
                             <Button
-                                Content="Add"
+                                Content="추 가"
                                 Command="{Binding AddToList}"
                                 Height="30"
-                                MinWidth="90"
-                                Margin="10,0"
-                                IsEnabled="{Binding IsEditMode}"/>
+                                Width="100"
+                                Margin="0,0,10,0"
+                                Style="{StaticResource RuleSampleButton}"
+                                Template="{StaticResource RuleSampleButtonTemplate}"/>
                             <Button
-                                Content="Edit Description" 
+                                Content="내용 편집" 
+                                Height="30"
+                                Width="100"
+                                Margin="10,0,10,0"
                                 Command="{Binding UpdateList}"
-                                Height="30"
-                                MinWidth="90"
-                                Margin="10,0"
-                                IsEnabled="{Binding IsEditMode}"/>
+                                Style="{StaticResource RuleSampleButton}"
+                                Template="{StaticResource RuleSampleButtonTemplate}"/>
                             <Button
-                                Content="Remove" 
-                                Command="{Binding RemoveFromList}"
+                                Content="삭 제" 
                                 Height="30"
-                                MinWidth="90"
-                                Margin="10,0"
-                                IsEnabled="{Binding IsEditMode}"/>
+                                Width="100"
+                                Margin="10,0,0,0"
+                                Command="{Binding RemoveFromList}"
+                                Style="{StaticResource RuleSampleButton}"
+                                Template="{StaticResource RuleSampleButtonTemplate}"/>
                         </StackPanel>
                     </Grid>
                 </GroupBox>

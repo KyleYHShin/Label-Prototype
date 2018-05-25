@@ -13,7 +13,7 @@
 
     <Grid Style="{StaticResource OptionViewMainGrid}">
         <StackPanel>
-            <GroupBox Header=" Label " Style="{StaticResource OptionGroup}" >
+            <GroupBox Header=" 라벨 크기 " Style="{StaticResource OptionGroupBox}" >
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -27,22 +27,23 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0"
-                               Text="Name"
+                               Text="라벨 명"
                                Style="{StaticResource OptionColumnHeader}" />
                     <TextBlock Grid.Row="0" Grid.Column="1"
                              Text="{Binding LabelObject.Name}"
                              Style="{StaticResource OptionColumnValue2}" />
                     <Button Grid.Row="0" Grid.Column="2"
-                            Content="Edit"
-                            FontWeight="Normal"
-                            Command="{Binding ClickChangeObjectName}"/>
+                            Content="편집"
+                            Command="{Binding ClickChangeObjectName}"
+                            Style="{StaticResource OptionColumnButton}"
+                            Template="{StaticResource OptionColumnButtonTemplate}"/>
 
                     <TextBlock Grid.Row="1" Grid.Column="0"
-                               Text="Width"
+                               Text="가로"
                                Style="{StaticResource OptionColumnHeader}" />
                     <TextBox Grid.Row="1" Grid.Column="1"
                              Text="{Binding LabelObject.Width}"
-                             Style="{StaticResource OptionColumnValue}" >
+                             Style="{StaticResource OptionColumnValue}">
                         <i:Interaction.Behaviors>
                             <common:TextBoxNumberBehaviour/>
                         </i:Interaction.Behaviors>
@@ -52,7 +53,7 @@
                              Style="{StaticResource OptionColumnValue2}"/>
 
                     <TextBlock Grid.Row="2" Grid.Column="0"
-                               Text="Height"
+                               Text="세로"
                                Style="{StaticResource OptionColumnHeader}" />
                     <TextBox Grid.Row="2" Grid.Column="1"
                              Text="{Binding LabelObject.Height}"
@@ -67,7 +68,7 @@
                 </Grid>
             </GroupBox>
 
-            <GroupBox Header=" Printer " Style="{StaticResource OptionGroup}" >
+            <GroupBox Header=" 프린터 설정 " Style="{StaticResource OptionGroupBox}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -79,7 +80,7 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0"
-                               Text="Manufacturer"
+                               Text="제조사"
                                Style="{StaticResource OptionColumnHeader}" />
                     <ComboBox Grid.Row="0" Grid.Column="1"
                               ItemsSource="{Binding PrinterList}"
@@ -89,7 +90,7 @@
                               Style="{StaticResource OptionComboBoxValue}" />
 
                     <TextBlock Grid.Row="1" Grid.Column="0"
-                               Text="DPI"
+                               Text="해상도"
                                Style="{StaticResource OptionColumnHeader}" />
                     <ComboBox Grid.Row="1" Grid.Column="1"
                               ItemsSource="{Binding DpiList}"
@@ -100,7 +101,8 @@
                 </Grid>
             </GroupBox>
 
-            <GroupBox Header=" View " Style="{StaticResource OptionGroup}" >
+            <GroupBox Header=" 보기 설정 " Style="{StaticResource OptionGroupBox}" 
+                      >
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -109,10 +111,11 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" MinWidth="80"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0"
-                               Text="Guide Line"
+                               Text="가이드 라인"
                                Style="{StaticResource OptionColumnHeader}" />
                     <TextBox Grid.Row="0" Grid.Column="1"
                              Text="{Binding LabelObject.Margin}"
@@ -121,9 +124,12 @@
                             <common:TextBoxNumberBehaviour/>
                         </i:Interaction.Behaviors>
                     </TextBox>
+                    <TextBlock Grid.Row="0" Grid.Column="2"
+                             Text="mm"
+                             Style="{StaticResource OptionColumnValue2}"/>
 
                     <TextBlock Grid.Row="1" Grid.Column="0"
-                               Text="Radius"
+                               Text="모서리 굴림"
                                Style="{StaticResource OptionColumnHeader}" />
                     <TextBox Grid.Row="1" Grid.Column="1"
                              Text="{Binding LabelObject.Radius}"
@@ -132,6 +138,10 @@
                             <common:TextBoxNumberBehaviour/>
                         </i:Interaction.Behaviors>
                     </TextBox>
+                    <TextBlock Grid.Row="1" Grid.Column="2"
+                             Text="pixel"
+                             Style="{StaticResource OptionColumnValue2}"/>
+                    
                 </Grid>
             </GroupBox>
         </StackPanel>

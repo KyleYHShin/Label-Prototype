@@ -31,6 +31,7 @@ namespace BasicModule.Models.Rule
                     Content = new RuleInputCombine();
             }
         }
+        public string RuleFormatName => RuleRegulation.BarcodeFormatList[Format];
 
         private string _name; // Prefix && Postfix 미포함
         public string Name

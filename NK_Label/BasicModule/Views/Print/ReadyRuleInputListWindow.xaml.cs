@@ -20,6 +20,8 @@ namespace BasicModule.Views.Print
         public ReadyRuleInputListWindow()
         {
             InitializeComponent();
+            MaxWidth = SystemParameters.PrimaryScreenWidth;
+            MaxHeight = SystemParameters.PrimaryScreenHeight;
             SizeToContent = SizeToContent.WidthAndHeight;
 
             InputBox.Focus();

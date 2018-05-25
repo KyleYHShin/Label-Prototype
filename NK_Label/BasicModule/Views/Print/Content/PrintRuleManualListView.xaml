@@ -13,66 +13,84 @@
         <ListBox
             ItemsSource="{Binding ManuRuleList}"
             Background="Transparent"
-            BorderBrush="Black"
-            BorderThickness="1" >
+            BorderThickness="0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid
-                        Margin="5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="Auto" MinWidth="100"/>
-                            <ColumnDefinition Width="*" MinWidth="200"/>
-                        </Grid.ColumnDefinitions>
+                    <Border Style="{StaticResource PrintRuleMainBorder}">
+                        <Expander>
+                            <Expander.Header>
+                                <StackPanel Style="{StaticResource PrintRuleHeaderStackPanel}">
+                                    <Label
+                                        Content="규칙 명: "
+                                        Style="{StaticResource PrintRuleHeaderLabel}"/>
+                                    <Label
+                                        Content="{Binding Name}"
+                                        Style="{StaticResource PrintRuleHeaderLabel}"/>
+                                </StackPanel>
+                            </Expander.Header>
 
-                        <TextBlock
-                            Grid.Row="0" Grid.Column="0"
-                            Text="Rule Name : " 
-                            Style="{StaticResource RuleColumnHeader}"/>
-                        <TextBlock
-                            Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
-                            Text="{Binding Name}"
-                            Style="{StaticResource RuleColumnValue}"/>
+                            <Grid Style="{StaticResource PrintRuleContentGrid}">
+                                <StackPanel Style="{StaticResource PrintRuleContentStackPanel}">
+                                    <StackPanel Style="{StaticResource PrintRuleRowStackPanel}">
+                                        <TextBlock
+                                            Text="설명:"
+                                            Style="{StaticResource PrintRuleRowHeaderTextBlock}"/>
+                                        <TextBlock
+                                            Text="{Binding Description}"
+                                            Style="{StaticResource PrintRuleRowValueTextBlock}"/>
+                                    </StackPanel>
+                                    <StackPanel Style="{StaticResource PrintRuleRowStackPanel}">
+                                        <TextBlock
+                                            Text="규칙 타입:"
+                                            Style="{StaticResource PrintRuleRowHeaderTextBlock}"/>
+                                        <TextBlock 
+                                            Text="{Binding RuleFormatName}"
+                                            Style="{StaticResource PrintRuleRowValueTextBlock}"/>
+                                    </StackPanel>
 
-                        <TextBlock
-                            Grid.Row="1" Grid.Column="0"
-                            Text="Description : "
-                            Style="{StaticResource RuleColumnHeader}"/>
-                        <TextBlock 
-                            Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
-                            Text="{Binding Description}"
-                            Style="{StaticResource RuleColumnValue}"/>
+                                    <Grid Style="{StaticResource PrintRuleRowGrid}">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="70"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
 
-                        <TextBlock
-                            Grid.Row="2" Grid.Column="0"
-                            Text="Selection : "
-                            Style="{StaticResource RuleColumnHeader}"
-                            Foreground="Red"/>
-                        <TextBlock
-                            Grid.Row="2" Grid.Column="1"
-                            Text="{Binding Content.SelectedContent}"
-                            Style="{StaticResource RuleColumnValue}"/>
-                        <ComboBox
-                            Grid.Row="2" Grid.Column="2"
-                            ItemsSource="{Binding Content.ContentList}"
-                            DisplayMemberPath="Value"
-                            SelectedValuePath="Key"
-                            SelectedValue="{Binding Content.SelectedContent}"
-                            Style="{StaticResource OptionComboBoxValue}"/>
-                    </Grid>
+                                        <TextBlock
+                                            Grid.Row="0" Grid.Column="0"
+                                            Text="출력 문자:"
+                                            Style="{StaticResource PrintRuleRowGridHeaderTextBlock}"/>
+                                        <TextBlock 
+                                            Grid.Row="0" Grid.Column="1"
+                                            Text="{Binding Content.SelectedContent}"
+                                            Style="{StaticResource PrintRuleRowValueHighlightedTextBlock}"/>
+
+                                        <TextBlock
+                                            Grid.Row="1" Grid.Column="0"
+                                            Text="내용 목록:"
+                                            Style="{StaticResource PrintRuleRowGridHeaderTextBlock}"/>
+                                        <ComboBox
+                                            Grid.Row="1" Grid.Column="1"
+                                            ItemsSource="{Binding Content.ContentList}"
+                                            DisplayMemberPath="Value"
+                                            SelectedValuePath="Key"
+                                            SelectedValue="{Binding Content.SelectedContent}"
+                                            Style="{StaticResource OptionComboBoxValue}"/>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+                        </Expander>
+                    </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
 
             <!--Block Highlight-->
             <ListBox.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
-                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
                 <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Transparent" />
             </ListBox.Resources>
             
         </ListBox>

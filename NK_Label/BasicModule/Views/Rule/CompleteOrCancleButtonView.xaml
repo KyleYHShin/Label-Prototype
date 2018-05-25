@@ -9,10 +9,8 @@
         <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
     </UserControl.Resources>
 
-    <Grid Width="Auto">
-        <StackPanel
-            Orientation="Horizontal"
-            HorizontalAlignment="Center">
+    <Grid>
+        <StackPanel Style="{StaticResource RuleCommonButtonStackPanel}">
 
             <Button
                 Content="편집 완료"

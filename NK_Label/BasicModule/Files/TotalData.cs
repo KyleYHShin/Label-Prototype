@@ -84,8 +84,8 @@ namespace BasicModule.Files
         public class RSContent
         {
             public byte NumLength { get; set; }
-            public ulong MinNum { get; set; }
             public ulong MaxNum { get; set; }
+            public ulong MinNum { get; set; }
             public ulong CurrNum { get; set; }
             public uint Increment { get; set; }
             public bool OnZeroFiller { get; set; }
@@ -141,7 +141,7 @@ namespace BasicModule.Files
         {
             public string Seperator { get; set; }
             public int StartIndex { get; set; }
-            public int Length { get; set; }
+            public int CharLength { get; set; }
             public ObservableCollection<string> InputList { get; set; }
         }
     }

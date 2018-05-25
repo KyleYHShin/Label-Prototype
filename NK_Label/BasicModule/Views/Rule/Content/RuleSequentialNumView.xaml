@@ -11,10 +11,11 @@
         <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
     </UserControl.Resources>
 
-    <Grid Width="410">
-        <GroupBox
-            Header=" Rule Sequential Number "
-            Style="{StaticResource OptionGroup}">
+    <Grid
+        IsEnabled="{Binding IsEditMode}"
+        Width="Auto"
+        HorizontalAlignment="Stretch">
+        <GroupBox Header=" 상세 옵션 " Style="{StaticResource OptionGroupBox}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -32,13 +33,12 @@
 
                 <TextBlock
                     Grid.Row="0" Grid.Column="0"
-                    Text="Number Length"
-                    Style="{StaticResource OptionColumnHeader}"/>
+                    Text="숫자 길이"
+                    Style="{StaticResource RuleWinColumnHeader}"/>
                 <TextBox
                     Grid.Row="0" Grid.Column="1"
                     Text="{Binding EditingRule.Content.NumLength}"
-                    Style="{StaticResource OptionColumnValue}"
-                    IsEnabled="{Binding IsEditMode}">
+                    Style="{StaticResource RuleWinColumnValueTextBox}">
                     <i:Interaction.Behaviors>
                         <common:TextBoxNumberBehaviour/>
                     </i:Interaction.Behaviors>
@@ -46,13 +46,12 @@
 
                 <TextBlock
                     Grid.Row="1" Grid.Column="0"
-                    Text="Maximum Number"
-                    Style="{StaticResource OptionColumnHeader}" />
+                    Text="마지막 숫자"
+                    Style="{StaticResource RuleWinColumnHeader}" />
                 <TextBox
                     Grid.Row="1" Grid.Column="1"
                     Text="{Binding EditingRule.Content.MaxNum}"
-                    Style="{StaticResource OptionColumnValue}"
-                    IsEnabled="{Binding IsEditMode}">
+                    Style="{StaticResource RuleWinColumnValueTextBox}">
                     <i:Interaction.Behaviors>
                         <common:TextBoxNumberBehaviour/>
                     </i:Interaction.Behaviors>
@@ -60,13 +59,12 @@
 
                 <TextBlock
                     Grid.Row="2" Grid.Column="0"
-                    Text="Minimum Number"
-                    Style="{StaticResource OptionColumnHeader}"/>
+                    Text="시작 숫자"
+                    Style="{StaticResource RuleWinColumnHeader}"/>
                 <TextBox
                     Grid.Row="2" Grid.Column="1"
                     Text="{Binding EditingRule.Content.MinNum}"
-                    Style="{StaticResource OptionColumnValue}"
-                    IsEnabled="{Binding IsEditMode}">
+                    Style="{StaticResource RuleWinColumnValueTextBox}">
                     <i:Interaction.Behaviors>
                         <common:TextBoxNumberBehaviour/>
                     </i:Interaction.Behaviors>
@@ -74,13 +72,12 @@
 
                 <TextBlock
                     Grid.Row="3" Grid.Column="0"
-                    Text="Increment"
-                    Style="{StaticResource OptionColumnHeader}" />
+                    Text="증가 값"
+                    Style="{StaticResource RuleWinColumnHeader}" />
                 <TextBox
                     Grid.Row="3" Grid.Column="1"
                     Text="{Binding EditingRule.Content.Increment}"
-                    Style="{StaticResource OptionColumnValue}"
-                    IsEnabled="{Binding IsEditMode}">
+                    Style="{StaticResource RuleWinColumnValueTextBox}">
                     <i:Interaction.Behaviors>
                         <common:TextBoxNumberBehaviour/>
                     </i:Interaction.Behaviors>
@@ -88,13 +85,12 @@
 
                 <TextBlock
                     Grid.Row="4" Grid.Column="0"
-                    Text="Current Number"
-                    Style="{StaticResource OptionColumnHeader}" />
+                    Text="현재 출력 값"
+                    Style="{StaticResource RuleWinColumnHeader}" />
                 <TextBox
                     Grid.Row="4" Grid.Column="1"
                     Text="{Binding EditingRule.Content.CurrNum}"
-                    Style="{StaticResource OptionColumnValue}"
-                    IsEnabled="{Binding IsEditMode}">
+                    Style="{StaticResource RuleWinColumnValueTextBox}">
                     <i:Interaction.Behaviors>
                         <common:TextBoxNumberBehaviour/>
                     </i:Interaction.Behaviors>
@@ -102,25 +98,25 @@
 
                 <TextBlock
                     Grid.Row="5" Grid.Column="0"
-                    Text="On Zero Filler"
-                    Style="{StaticResource OptionColumnHeader}" />
+                    Text="빈 값 채우기"
+                    Style="{StaticResource RuleWinColumnHeader}" />
                 <CheckBox
                     Grid.Row="5" Grid.Column="1"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
-                    IsChecked="{Binding EditingRule.Content.OnZeroFiller}"
-                    IsEnabled="{Binding IsEditMode}"/>
+                    Style="{StaticResource SliderCheckBox}"
+                    IsChecked="{Binding EditingRule.Content.OnZeroFiller}"/>
 
                 <Button
                     Grid.Row="6" Grid.Column="0"
-                    Content="Example"
+                    Content="샘플 출력"
                     Command="{Binding PrintExample}"
-                    Style="{StaticResource ExampleButton}"
-                    IsEnabled="{Binding IsEditMode}"/>
+                    Style="{StaticResource RuleSampleButton}"
+                    Template="{StaticResource RuleSampleButtonTemplate}"/>
                 <TextBox
                     Grid.Row="6" Grid.Column="1"
                     Text="{Binding Example, Mode=OneWay}"
-                    Style="{StaticResource OptionColumnValue}"
+                    Style="{StaticResource RuleWinColumnValueTextBox}"
                     IsReadOnly="True"/>
             </Grid>
         </GroupBox>

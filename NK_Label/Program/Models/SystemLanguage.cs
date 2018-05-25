@@ -83,7 +83,7 @@
             MenuTool = "도구";
             MenuToolText = "새 텍스트 추가" + " (Ctrl+T)";
             MenuToolBarcode = "새 바코드 추가" + " (Ctrl+B)";
-            MenuToolRuleManager = "규칙 관리자" + " (Ctrl+R)";
+            MenuToolRuleManager = "규칙 관리자";
             MenuToolLine = "선";
             MenuToolImage = "이미지";
 

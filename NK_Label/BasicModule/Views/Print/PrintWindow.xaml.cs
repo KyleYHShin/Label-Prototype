@@ -20,6 +20,8 @@ namespace BasicModule.Views.Print
         public PrintWindow(IRegionManager regionManager)
         {
             InitializeComponent();
+            //MaxWidth = SystemParameters.PrimaryScreenWidth;
+            //MaxHeight = SystemParameters.PrimaryScreenHeight;
 
             if (regionManager != null)
             {
@@ -30,7 +32,9 @@ namespace BasicModule.Views.Print
                 RegionController.SetRegionManager(regionManager, this.PrintRuleInputCombine, RegionNames.PrintRuleInputCombine);
             }
 
-            SizeToContent = SizeToContent.WidthAndHeight;
+            //SizeToContent = SizeToContent.WidthAndHeight;
+            //Width = SystemParameters.VirtualScreenWidth;
+            //Height = SystemParameters.VirtualScreenHeight;
             thisDataContext = DataContext as PrintWindowViewModel;
         }
 
@@ -321,7 +325,7 @@ namespace BasicModule.Views.Print
             TerminateMultiTimer();
         }
 
-        private void Click_Close(object sender, CancelEventArgs e)
+        private void Close(object sender, CancelEventArgs e)
         {
             if (!thisDataContext.IsAbleToAction || seqTimer != null)
             {

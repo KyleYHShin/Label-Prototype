@@ -14,91 +14,85 @@
         <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
     </Window.Resources>
 
-    <Grid Width="Auto" Height="Auto" Margin="10">
+    <Grid Style="{StaticResource RuleWindowMainGrid}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Grid
+        <Border
             Grid.Row="0"
-            Width="750"
-            Background="White">
+            Style="{StaticResource RuleWindowTopBorder}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-            <Grid
-                Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
-                Width="330">
                 <DataGrid
-                    Width="310"
-                    Height="400"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Center"
+                    Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
                     ItemsSource="{Binding RuleList}" 
                     SelectedItem="{Binding SelectedRule}"
-                    SelectionMode="Single"
-                    AutoGenerateColumns="False"
-                    IsReadOnly="True">
+                    Style="{StaticResource RuleWindowListDataGrid}">
                     <DataGrid.Columns>
                         <DataGridTextColumn
-                            Header="Rule Name"
+                            Header="규칙 명"
                             Binding="{Binding Path=Name}"
                             Width="Auto" MinWidth="100"
                             IsReadOnly="True"/>
                         <DataGridTextColumn
-                            Header="Description"
+                            Header="설 명"
                             Binding="{Binding Path=Description}"
                             Width="Auto" MinWidth="200"
                             IsReadOnly="True" />
                     </DataGrid.Columns>
                 </DataGrid>
+
+                <StackPanel
+                    Grid.Row="2" Grid.Column="0"
+                    Style="{StaticResource RuleCommonButtonStackPanel}">
+                    <Button
+                        Content="새 규칙 생성" 
+                        Command="{Binding Create}"
+                        Style="{StaticResource ButtonCommon}"
+                        Template="{StaticResource ButtonCommonTemplate}"/>
+                </StackPanel>
+
+                <ContentControl
+                    x:Name="RuleCommon"
+                    Grid.Row="0" Grid.Column="1"
+                    Style="{StaticResource RuleWindowContentControl}"/>
+
+                <ContentControl
+                    x:Name="RuleContent"
+                    Grid.Row="1" Grid.Column="1"
+                    Style="{StaticResource RuleWindowContentControl}"/>
+
+                <ContentControl
+                    x:Name="RuleButton"
+                    Grid.Row="2" Grid.Column="1"
+                    Style="{StaticResource RuleWindowContentControl}"/>
             </Grid>
+        </Border>
 
-            <StackPanel
-                Grid.Row="2" Grid.Column="0"
-                Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button
-                    Content="새 규칙 생성" 
-                    Command="{Binding Create}"
-                    Style="{StaticResource ButtonCommon}"
-                    Template="{StaticResource ButtonCommonTemplate}"/>
-            </StackPanel>
-
-            <ContentControl
-                x:Name="RuleCommon"
-                Grid.Row="0" Grid.Column="1"
-                Margin="7,0,0,0"/>
-
-            <ContentControl
-                x:Name="RuleContent"
-                Grid.Row="1" Grid.Column="1"
-                Margin="7,0,0,0"/>
-
-            <ContentControl
-                x:Name="RuleButton"
-                Grid.Row="2" Grid.Column="1"
-                Margin="7,0,0,0"/>
-        </Grid>
-
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
+        <StackPanel
+            Grid.Row="1"
+            Margin="0,5,0,13"
+            Style="{StaticResource RuleCommonButtonStackPanel}">
             <Button
                 Content="적 용"
                 Click="Ok_Click"
-                Style="{StaticResource ButtonCommon}"
+                Style="{StaticResource RuleWindowButton}"
                 Template="{StaticResource ButtonCommonTemplate}"/>
             <Button 
                 Content="취 소"
                 Click="Cancel_Click"
-                Style="{StaticResource ButtonCommon}"
+                Style="{StaticResource RuleWindowButton}"
                 Template="{StaticResource ButtonCommonTemplate}"/>
         </StackPanel>
     </Grid>

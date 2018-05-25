@@ -15,100 +15,121 @@
         <ListBox
             ItemsSource="{Binding SeqRuleList}"
             Background="Transparent"
-            BorderBrush="Black"
-            BorderThickness="1">
+            BorderThickness="0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid
-                        Margin="5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="Auto" MinWidth="100"/>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="Auto" MinWidth="100"/>
-                        </Grid.ColumnDefinitions>
+                    <Border Style="{StaticResource PrintRuleMainBorder}">
+                        <Expander>
+                            <Expander.Header>
+                                <StackPanel Style="{StaticResource PrintRuleHeaderStackPanel}">
+                                    <Label
+                                        Content="규칙 명: "
+                                        Style="{StaticResource PrintRuleHeaderLabel}"/>
+                                    <Label
+                                        Content="{Binding Name}"
+                                        Style="{StaticResource PrintRuleHeaderLabel}"/>
+                                </StackPanel>
+                            </Expander.Header>
 
-                        <TextBlock
-                            Grid.Row="0" Grid.Column="0"
-                            Text="Rule Name : " 
-                            Style="{StaticResource RuleColumnHeader}"/>
-                        <TextBlock
-                            Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"
-                            Text="{Binding Name}"
-                            Style="{StaticResource RuleColumnValue}"/>
+                            <Grid Style="{StaticResource PrintRuleContentGrid}">
+                                <StackPanel Style="{StaticResource PrintRuleContentStackPanel}">
+                                    <StackPanel Style="{StaticResource PrintRuleRowStackPanel}">
+                                        <TextBlock
+                                            Text="설명:"
+                                            Style="{StaticResource PrintRuleRowHeaderTextBlock}"/>
+                                        <TextBlock
+                                            Text="{Binding Description}"
+                                            Style="{StaticResource PrintRuleRowValueTextBlock}"/>
+                                    </StackPanel>
+                                    <StackPanel Style="{StaticResource PrintRuleRowStackPanel}">
+                                        <TextBlock
+                                            Text="규칙 타입:"
+                                            Style="{StaticResource PrintRuleRowHeaderTextBlock}"/>
+                                        <TextBlock 
+                                            Text="{Binding RuleFormatName}"
+                                            Style="{StaticResource PrintRuleRowValueTextBlock}"/>
+                                    </StackPanel>
+                                    
+                                    <StackPanel Style="{StaticResource PrintRuleRowStackPanel}">
+                                        <TextBlock 
+                                            Text="시작 숫자:"
+                                            Style="{StaticResource PrintRuleRowHeaderTextBlock}"/>
+                                        <TextBlock 
+                                            Text="{Binding Content.MinNum}"
+                                            Style="{StaticResource PrintRuleRowValueTextBlock}"/>
+                                        <TextBlock
+                                            Text="~"
+                                            Style="{StaticResource PrintRuleRowHeaderTextBlock}"
+                                            Margin="15,0,15,0"/>
+                                        <TextBlock 
+                                            Text="마지막 숫자:"
+                                            Style="{StaticResource PrintRuleRowHeaderTextBlock}"/>
+                                        <TextBlock 
+                                            Text="{Binding Content.MaxNum}"
+                                            Style="{StaticResource PrintRuleRowValueTextBlock}"/>
+                                    </StackPanel>
+                                    
+                                    <Grid Style="{StaticResource PrintRuleRowGrid}">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
 
-                        <TextBlock
-                            Grid.Row="1" Grid.Column="0"
-                            Text="Description : "
-                            Style="{StaticResource RuleColumnHeader}"/>
-                        <TextBlock 
-                            Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
-                            Text="{Binding Description}"
-                            Style="{StaticResource RuleColumnValue}"/>
+                                        <CheckBox
+                                            Grid.Row="0" Grid.Column="0"
+                                            IsChecked="{Binding Content.OnZeroFiller}"
+                                            Style="{StaticResource PrintRuleRowGridCheckBox}">
+                                            <TextBlock Text="빈 값 채우기"/>
+                                        </CheckBox>
+                                        <TextBlock
+                                            Grid.Row="0" Grid.Column="1"
+                                            Text="숫자 길이:"
+                                            Style="{StaticResource PrintRuleRowGridHeaderTextBlock}"/>
+                                        <TextBox
+                                            Grid.Row="0" Grid.Column="2"
+                                            Text="{Binding Content.NumLength}"
+                                            Style="{StaticResource PrintRuleRowGridValueTextBox}"/>
 
-                        <TextBlock
-                            Grid.Row="2" Grid.Column="0"
-                            Text="Max : "
-                            Style="{StaticResource RuleColumnHeader}"/>
-                        <TextBlock
-                            Grid.Row="2" Grid.Column="1"
-                            Text="{Binding Content.MaxNum}"
-                            Style="{StaticResource RuleColumnValue}"/>
-                        <TextBlock
-                            Grid.Row="2" Grid.Column="2"
-                            Text="Min : "
-                            Style="{StaticResource RuleColumnHeader}"/>
-                        <TextBlock
-                            Grid.Row="2" Grid.Column="3"
-                            Text="{Binding Content.MinNum}"
-                            Style="{StaticResource RuleColumnValue}"/>
-
-                        <TextBlock
-                            Grid.Row="3" Grid.Column="0"
-                            Text="Inc : "
-                            Style="{StaticResource RuleColumnHeader}"/>
-                        <TextBlock
-                            Grid.Row="3" Grid.Column="1"
-                            Text="{Binding Content.Increment}"
-                            Style="{StaticResource RuleColumnValue}"/>
-                        <TextBlock
-                            Grid.Row="3" Grid.Column="2"
-                            Text="Length : "
-                            Style="{StaticResource RuleColumnHeader}"/>
-                        <TextBlock
-                            Grid.Row="3" Grid.Column="3"
-                            Text="{Binding Content.NumLength}"
-                            Style="{StaticResource RuleColumnValue}"/>
-
-                        <TextBlock
-                            Grid.Row="4" Grid.Column="0"
-                            Text="Current : "
-                            Style="{StaticResource RuleColumnHeader}"
-                            Foreground="Red"/>
-                        <TextBox
-                            Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3"
-                            Text="{Binding Content.CurrNum}"
-                            Style="{StaticResource OptionColumnValue}">
-                            <i:Interaction.Behaviors>
-                                <common:TextBoxNumberBehaviour/>
-                            </i:Interaction.Behaviors>
-                        </TextBox>
-                    </Grid>
+                                        <TextBlock
+                                            Grid.Row="1" Grid.Column="0"
+                                            Text="증가 값:"
+                                            Style="{StaticResource PrintRuleRowGridHeaderTextBlock}"/>
+                                        <TextBox
+                                            Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                                            Text="{Binding Content.Increment}"
+                                            Style="{StaticResource PrintRuleRowGridValueTextBox}"/>
+                                        
+                                        <TextBlock
+                                            Grid.Row="2" Grid.Column="0"
+                                            Text="현재 출력 값:"
+                                            Style="{StaticResource PrintRuleRowGridHeaderTextBlock}"/>
+                                        <TextBox
+                                            Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+                                            Text="{Binding Content.CurrNum}"
+                                            Style="{StaticResource PrintRuleRowGridValueHighlightedTextBox}">
+                                            <i:Interaction.Behaviors>
+                                                <common:TextBoxNumberBehaviour/>
+                                            </i:Interaction.Behaviors>
+                                        </TextBox>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+                        </Expander>
+                    </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
 
             <!--Block Highlight-->
             <ListBox.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
-                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
                 <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Transparent" />
             </ListBox.Resources>
         </ListBox>
 

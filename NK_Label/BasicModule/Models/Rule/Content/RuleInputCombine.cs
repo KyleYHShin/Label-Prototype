@@ -36,15 +36,15 @@ namespace BasicModule.Models.Rule.Content
             }
         }
 
-        private int _length = 100;
-        public int Length
+        private int _charLength = 10;
+        public int CharLength
         {
-            get { return _length; }
+            get { return _charLength; }
             set
             {
                 if (value > 0)
                 {
-                    _length = value;
+                    _charLength = value;
                     OnPropertyChanged();
                 }
             }
@@ -62,12 +62,12 @@ namespace BasicModule.Models.Rule.Content
 
             string convertedStr = string.Empty;
 
-            if (StartIndex <= 0 || Length <= 0 || StartIndex > str.Length)
+            if (StartIndex <= 0 || CharLength <= 0 || StartIndex > str.Length)
                 convertedStr = string.Empty;
-            else if (StartIndex + Length - 1 >= str.Length)
+            else if (StartIndex + CharLength - 1 >= str.Length)
                 convertedStr= str.Substring(_startIndex);
             else
-                convertedStr = str.Substring(_startIndex, Length);
+                convertedStr = str.Substring(_startIndex, CharLength);
 
             InputList.Add(convertedStr);
         }
@@ -87,7 +87,7 @@ namespace BasicModule.Models.Rule.Content
                 obj.InputList = InputList;
                 obj.Seperator = Seperator;
                 obj.StartIndex = StartIndex;
-                obj.Length = Length;
+                obj.CharLength = CharLength;
 
                 return obj;
             }

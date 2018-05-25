@@ -11,10 +11,11 @@
         <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
     </UserControl.Resources>
 
-    <Grid Width="410">
-        <GroupBox
-            Header=" Rule Input Combine "
-            Style="{StaticResource OptionGroup}">
+    <Grid
+        IsEnabled="{Binding IsEditMode}"
+        Width="Auto"
+        HorizontalAlignment="Stretch">
+        <GroupBox Header=" 상세 옵션 " Style="{StaticResource OptionGroupBox}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -29,13 +30,12 @@
 
                 <TextBlock
                     Grid.Row="0" Grid.Column="0"
-                    Text="Input Seperator"
-                    Style="{StaticResource OptionColumnHeader}"/>
+                    Text="구분자"
+                    Style="{StaticResource RuleWinColumnHeader}"/>
                 <TextBox
                     Grid.Row="0" Grid.Column="1"
                     Text="{Binding EditingRule.Content.Seperator}"
-                    Style="{StaticResource OptionColumnValue}"
-                    IsEnabled="{Binding IsEditMode}">
+                    Style="{StaticResource RuleWinColumnValueTextBox}">
                     <i:Interaction.Behaviors>
                         <common:TextBoxDenyKoreanBehaviour/>
                     </i:Interaction.Behaviors>
@@ -43,13 +43,12 @@
 
                 <TextBlock
                     Grid.Row="1" Grid.Column="0"
-                    Text="Character Start Index"
-                    Style="{StaticResource OptionColumnHeader}"/>
+                    Text="추출 글자 시작위치"
+                    Style="{StaticResource RuleWinColumnHeader}"/>
                 <TextBox
                     Grid.Row="1" Grid.Column="1"
                     Text="{Binding EditingRule.Content.StartIndex}"
-                    Style="{StaticResource OptionColumnValue}"
-                    IsEnabled="{Binding IsEditMode}">
+                    Style="{StaticResource RuleWinColumnValueTextBox}">
                     <i:Interaction.Behaviors>
                         <common:TextBoxNumberBehaviour/>
                     </i:Interaction.Behaviors>
@@ -57,13 +56,12 @@
 
                 <TextBlock
                     Grid.Row="2" Grid.Column="0"
-                    Text="Character Length"
-                    Style="{StaticResource OptionColumnHeader}"/>
+                    Text="추출 글자 길이"
+                    Style="{StaticResource RuleWinColumnHeader}"/>
                 <TextBox
                     Grid.Row="2" Grid.Column="1"
-                    Text="{Binding EditingRule.Content.Length}"
-                    Style="{StaticResource OptionColumnValue}"
-                    IsEnabled="{Binding IsEditMode}">
+                    Text="{Binding EditingRule.Content.CharLength}"
+                    Style="{StaticResource RuleWinColumnValueTextBox}">
                     <i:Interaction.Behaviors>
                         <common:TextBoxNumberBehaviour/>
                     </i:Interaction.Behaviors>
@@ -71,14 +69,14 @@
 
                 <Button
                     Grid.Row="3" Grid.Column="0"
-                    Content="Example"
+                    Content="샘플 출력"
                     Command="{Binding PrintExample}"
-                    Style="{StaticResource ExampleButton}"
-                    IsEnabled="{Binding IsEditMode}"/>
+                    Style="{StaticResource RuleSampleButton}"
+                    Template="{StaticResource RuleSampleButtonTemplate}"/>
                 <TextBox
                     Grid.Row="3" Grid.Column="1"
                     Text="{Binding Example, Mode=OneWay}"
-                    Style="{StaticResource OptionColumnValue}"
+                    Style="{StaticResource RuleWinColumnValueTextBox}"
                     IsReadOnly="True"/>
             </Grid>
         </GroupBox>

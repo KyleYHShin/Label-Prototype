@@ -38,7 +38,6 @@ C:\Work\Git\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\SmartAdorner.dll
 C:\Work\Git\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\SmartAdorner.pdb
 C:\Work\Label-Prototype\NK_Label\SmartAdorner\bin\Debug\SmartAdorner.dll
 C:\Work\Label-Prototype\NK_Label\SmartAdorner\bin\Debug\SmartAdorner.pdb
-C:\Work\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\SmartAdorner.csprojResolveAssemblyReference.cache
 C:\Work\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Work\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\SmartAdorner_MarkupCompile.cache
 C:\Work\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\SmartAdorner_MarkupCompile.lref

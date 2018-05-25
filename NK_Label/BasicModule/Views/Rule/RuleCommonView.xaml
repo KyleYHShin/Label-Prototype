@@ -11,10 +11,11 @@
         <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
     </UserControl.Resources>
 
-    <Grid Width="Auto">
-        <GroupBox
-            Header=" Rule Common "
-            Style="{StaticResource OptionGroup}">
+    <Grid
+        IsEnabled="{Binding IsEditMode}"
+        Width="Auto"
+        HorizontalAlignment="Stretch">
+        <GroupBox Header=" 규 칙 " Style="{StaticResource OptionGroupBox}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -22,19 +23,18 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" MinWidth="100"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*" MinWidth="200"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock
                     Grid.Row="0" Grid.Column="0"
-                    Text="Name"
-                    Style="{StaticResource OptionColumnHeader}"/>
+                    Text="이 름"
+                    Style="{StaticResource RuleWinColumnHeader}"/>
                 <TextBox
                     Grid.Row="0" Grid.Column="1"
                     Text="{Binding EditingRule.Name}"
-                    Style="{StaticResource OptionColumnValue}"
-                    IsEnabled="{Binding IsEditMode}">
+                    Style="{StaticResource RuleWinColumnValueTextBox}">
                     <i:Interaction.Behaviors>
                         <common:TextBoxNameBehaviour/>
                     </i:Interaction.Behaviors>
@@ -42,26 +42,24 @@
 
                 <TextBlock
                     Grid.Row="1" Grid.Column="0"
-                    Text="Description"
-                    Style="{StaticResource OptionColumnHeader}"/>
+                    Text="설 명"
+                    Style="{StaticResource RuleWinColumnHeader}"/>
                 <TextBox
                     Grid.Row="1" Grid.Column="1"
                     Text="{Binding EditingRule.Description}"
-                    Style="{StaticResource OptionColumnValue}"
-                    IsEnabled="{Binding IsEditMode}"/>
+                    Style="{StaticResource RuleWinColumnValueTextBox}"/>
                     
                 <TextBlock
                     Grid.Row="2" Grid.Column="0"
-                    Text="Format"
-                    Style="{StaticResource OptionColumnHeader}" />
+                    Text="종 류"
+                    Style="{StaticResource RuleWinColumnHeader}" />
                 <ComboBox
                     Grid.Row="2" Grid.Column="1"
                     ItemsSource="{Binding RuleFormatList}"
-                    DisplayMemberPath="Key"
-                    SelectedValuePath="Value"
+                    DisplayMemberPath="Value"
+                    SelectedValuePath="Key"
                     SelectedValue="{Binding SelectedRuleFormat}"
-                    Style="{StaticResource OptionComboBoxValue}"
-                    IsEnabled="{Binding IsEditMode}"/>
+                    Style="{StaticResource RuleWinColumnValueComboBox}"/>
             </Grid>
         </GroupBox>
     </Grid>

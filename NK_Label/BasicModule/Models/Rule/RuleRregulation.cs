@@ -24,13 +24,13 @@ namespace BasicModule.Models.Rule
             INPUT_COMBINE = 40
         }
 
-        public static readonly Dictionary<string, RuleFormat> BarcodeFormatList = new Dictionary<string, RuleFormat>
+        public static readonly Dictionary<RuleFormat, string> BarcodeFormatList = new Dictionary<RuleFormat, string>
         {
-            { "Time", RuleFormat.TIME }
-            , { "Sequential Number", RuleFormat.SEQUENTIAL_NUM }
-            , { "Manual List", RuleFormat.MANUAL_LIST }
-            , { "Input", RuleFormat.INPUT }
-            , { "Input Combine", RuleFormat.INPUT_COMBINE }
+            { RuleFormat.TIME, "시간"}
+            , { RuleFormat.SEQUENTIAL_NUM, "시리얼 넘버" }
+            , { RuleFormat.MANUAL_LIST,"목록 선택" }
+            , { RuleFormat.INPUT, "입력" }
+            , { RuleFormat.INPUT_COMBINE , "입력 결합" }
         };
 
         public static Dictionary<string, string> TimeFormatList
@@ -40,17 +40,17 @@ namespace BasicModule.Models.Rule
                 // 사용 불가 목록 : %
                 return new Dictionary<string, string>()
                 {
-                    { "yyyy" , "4자리 연도"}
-                    , { "yy" , "2자리 연도"}
-                    , { "MM" , "월 (숫자)"}
-                    , { "MMM" , "월 (약식 문자)"}
-                    , { "MMMM" , "월 (전체 문자)"}
-                    , { "dd" , "일"}
-                    , { "hh" , "시 (12시간 형식)"}
-                    , { "HH" , "시 (24시간 형식)"}
-                    , { "tt" , "AM / PM"}
-                    , { "mm" , "분"}
-                    , { "ss" , "초"}
+                    { "yyyy" , "4자리 연도" }
+                    , { "yy" , "2자리 연도" }
+                    , { "MM" , "월 (숫자)" }
+                    , { "MMM" , "월 (약식 문자)" }
+                    , { "MMMM" , "월 (전체 문자)" }
+                    , { "dd" , "일" }
+                    , { "hh" , "시 (12시간 형식)" }
+                    , { "HH" , "시 (24시간 형식)" }
+                    , { "tt" , "AM / PM" }
+                    , { "mm" , "분" }
+                    , { "ss" , "초" }
                 };
             }
         }

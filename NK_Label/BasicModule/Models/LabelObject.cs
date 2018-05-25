@@ -13,12 +13,9 @@ namespace BasicModule.Models
             get { return _width; }
             set
             {
-                if (value >= 5)
-                {
-                    _width = getRound(value, 2);
-                    OnPropertyChanged();
-                    ResetActualSize();
-                }
+                _width = ValidWidth(getRound(value, 2));
+                ResetActualSize();
+                OnPropertyChanged();
             }
         }
 
@@ -28,12 +25,9 @@ namespace BasicModule.Models
             get { return _height; }
             set
             {
-                if (value >= 3)
-                {
-                    _height = getRound(value, 2);
-                    OnPropertyChanged();
-                    ResetActualSize();
-                }
+                _height = ValidHeight(getRound(value, 2));
+                ResetActualSize();
+                OnPropertyChanged();
             }
         }
 
@@ -49,12 +43,68 @@ namespace BasicModule.Models
         private double _convertedGuideHeight;
         public double ConvertedGuideHeight { get { return _convertedGuideHeight; } set { _convertedGuideHeight = value; OnPropertyChanged(); } }
 
+        private double ValidWidth(double value)
+        {
+            double minWidth = 5;
+            if (value < minWidth)
+                return minWidth;
+
+            double minWidthLow = 225;
+            double minWidthMid = 168;
+            double minWidthHigh = 135;
+
+            switch (SelectedDpi)
+            {
+                case PrinterOption.DPI_LOW:
+                    if (value > minWidthLow)
+                        return minWidthLow;
+                    break;
+                case PrinterOption.DPI_MID:
+                    if (value > minWidthMid)
+                        return minWidthMid;
+                    break;
+                case PrinterOption.DPI_HIGH:
+                    if (value > minWidthHigh)
+                        return minWidthHigh;
+                    break;
+            }
+            return value;
+        }
+
+        private double ValidHeight(double value)
+        {
+            double minHeight = 3;
+            if (value < minHeight)
+                return minHeight;
+
+            double minHeightLow = 168;
+            double minHeightMid = 125;
+            double minHeightHigh = 100;
+
+            switch (SelectedDpi)
+            {
+                case PrinterOption.DPI_LOW:
+                    if (value > minHeightLow)
+                        return minHeightLow;
+                    break;
+                case PrinterOption.DPI_MID:
+                    if (value > minHeightMid)
+                        return minHeightMid;
+                    break;
+                case PrinterOption.DPI_HIGH:
+                    if (value > minHeightHigh)
+                        return minHeightHigh;
+                    break;
+            }
+            return value;
+        }
+
         private void ResetActualSize()
         {
             ConvertedWidth = Width * 10 * SelectedDpi;
             ConvertedHeight = Height * 10 * SelectedDpi;
-            ConvertedGuideWidth = (Width * 10 - Margin * 2) * SelectedDpi;
-            ConvertedGuideHeight = (Height * 10 - Margin * 2) * SelectedDpi;
+            ConvertedGuideWidth = ConvertedWidth - (Margin * 10 * SelectedDpi * 2);
+            ConvertedGuideHeight = ConvertedHeight - (Margin * 10 * SelectedDpi * 2);
         }
 
         #endregion Vector Properties
@@ -120,8 +170,11 @@ namespace BasicModule.Models
                 if (value > 0)
                 {
                     _selectedDpi = value;
-                    OnPropertyChanged();
+                    Width = ValidWidth(Width);
+                    Height = ValidHeight(Height);
+
                     ResetActualSize();
+                    OnPropertyChanged();
                 }
             }
         }

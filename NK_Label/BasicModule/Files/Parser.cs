@@ -143,8 +143,8 @@ namespace BasicModule.Files
                 Contents = new RuleSequFile_1.RSContent
                 {
                     NumLength = rsn.NumLength,
-                    MinNum = rsn.MinNum,
                     MaxNum = rsn.MaxNum,
+                    MinNum = rsn.MinNum,
                     CurrNum = rsn.CurrNum,
                     Increment = rsn.Increment,
                     OnZeroFiller = rsn.OnZeroFiller,
@@ -210,7 +210,7 @@ namespace BasicModule.Files
                 {
                     Seperator = ric.Seperator,
                     StartIndex = ric.StartIndex,
-                    Length = ric.Length,
+                    CharLength = ric.CharLength,
                     InputList = ric.InputList
                 }
             });
@@ -282,8 +282,8 @@ namespace BasicModule.Files
                     var rsn = new RuleSequentialNum()
                     {
                         NumLength = file.Contents.NumLength,
-                        MinNum = file.Contents.MinNum,
                         MaxNum = file.Contents.MaxNum,
+                        MinNum = file.Contents.MinNum,
                         CurrNum = file.Contents.CurrNum,
                         Increment = file.Contents.Increment,
                         OnZeroFiller = file.Contents.OnZeroFiller,
@@ -349,7 +349,7 @@ namespace BasicModule.Files
                     {
                         Seperator = file.Contents.Seperator,
                         StartIndex = file.Contents.StartIndex,
-                        Length = file.Contents.Length,
+                        CharLength = file.Contents.CharLength,
                         InputList = file.Contents.InputList
                     };
                     labelData.RuleList.Add(new RuleMain()

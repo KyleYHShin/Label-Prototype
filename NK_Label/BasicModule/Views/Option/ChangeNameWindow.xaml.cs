@@ -13,6 +13,8 @@ namespace BasicModule.Views.Option
         public ChangeNameWindow()
         {
             InitializeComponent();
+            MaxWidth = SystemParameters.PrimaryScreenWidth;
+            MaxHeight = SystemParameters.PrimaryScreenHeight;
             SizeToContent = SizeToContent.WidthAndHeight;
         }
 

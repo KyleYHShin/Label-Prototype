@@ -4,8 +4,7 @@
              xmlns:prism="http://prismlibrary.com/"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:model="clr-namespace:BasicModule.Models"
-             xmlns:a="clr-namespace:SmartAdorner;assembly=SmartAdorner" 
-             prism:ViewModelLocator.AutoWireViewModel="True">
+             xmlns:a="clr-namespace:SmartAdorner;assembly=SmartAdorner">
 
     <UserControl.InputBindings>
         <KeyBinding Key="Esc" Command="{Binding ClickReleaseAll}"/>
@@ -15,19 +14,23 @@
         <Canvas
             x:Name="CanvasLabel"
             DataContext="{Binding Label}"
-            Background="White"
             Width="{Binding ConvertedWidth}"
-            Height="{Binding ConvertedHeight}">
-            <Rectangle
+            Height="{Binding ConvertedHeight}"
+            Background="White">
+            <Grid
+                Width="{Binding ConvertedWidth}"
+                Height="{Binding ConvertedHeight}">
+                <Rectangle
                 Width="{Binding ConvertedGuideWidth}"
                 Height="{Binding ConvertedGuideHeight}"
                 RadiusX="{Binding Radius}"
                 RadiusY="{Binding Radius}"
-                Margin="{Binding Margin}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
                 Stroke="Red"
                 StrokeDashArray="5"
-                StrokeThickness="1"
-                Fill="White"/>
+                StrokeThickness="1"/>
+            </Grid>
         </Canvas>
         
         <ListBox
