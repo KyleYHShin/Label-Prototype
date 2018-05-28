@@ -33,7 +33,7 @@ namespace BasicModule.ViewModels.Option
         {
             ChangeNameWindow cnWin = new ChangeNameWindow()
             {
-                Title = "Change '" + BarcodeObject.Name + "'s Name",
+                Title = "'" + BarcodeObject.Name + "' 의 이름 편집",
                 Owner = Application.Current.MainWindow
             };
             cnWin.SetText(BarcodeObject.Name);
@@ -60,7 +60,7 @@ namespace BasicModule.ViewModels.Option
 
             if (ret && UsingLabelList.UsingObjectNameList.Contains(BarcodeObject.Name))
             {
-                Utils.DialogService.ShowSimpleTextDialog("Warning", "해당 바코드의 이름(" + BarcodeObject.Name + ")이 이미 사용중입니다.");
+                Utils.DialogService.ShowSimpleTextDialog("확인", "해당 바코드의 이름(" + BarcodeObject.Name + ")이 이미 사용중입니다.");
                 ret = false;
             }
 

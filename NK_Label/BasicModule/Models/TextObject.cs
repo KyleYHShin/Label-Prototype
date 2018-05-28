@@ -1,51 +1,54 @@
 ﻿using BasicModule.Models.Common;
+using BasicModule.Models.Option;
 
 namespace BasicModule.Models
 {
     public class TextObject : BasicObject, IPrintableObject
     {
+        public LabelObject Label { get; set; }
+
         #region Vector Properties
 
-        private double _width = 150;
+        private double _width = TextOption.DEFAULT_WIDTH;
         public new double Width
         {
             get { return _width; }
             set
             {
-                if (value >= 50)
-                {
-                    _width = getRound(value, 2);
-                    OnPropertyChanged();
-                    ConvertedWidth = _width + 10;
-                }
+                if (value < TextOption.MIN_WIDTH)
+                    value = TextOption.MIN_WIDTH;
+
+                _width = getRound(value, 2);
+                OnPropertyChanged();
+                ConvertedWidth = _width + TextOption.CONV_ADD_WIDTH;
             }
         }
 
-        private double _height = 25;
+        private double _height = TextOption.DEFAULT_HEIGHT;
         public new double Height
         {
             get { return _height; }
             set
             {
-                if (value >= 15)
-                {
-                    _height = getRound(value, 2);
-                    OnPropertyChanged();
-                    ConvertedHeight = _height + 6;
-                }
+                if (value < TextOption.MIN_HEIGHT)
+                    value = TextOption.MIN_HEIGHT;
+
+                _height = getRound(value, 2);
+                OnPropertyChanged();
+                ConvertedHeight = _height + TextOption.CONV_ADD_HEIGHT;
             }
         }
 
-        private double _convertedWidth = 160;
+        private double _convertedWidth = TextOption.DEFAULT_WIDTH + TextOption.CONV_ADD_WIDTH;
         public double ConvertedWidth { get { return _convertedWidth; } set { _convertedWidth = value; OnPropertyChanged(); } }
-        private double _convertedHeight = 31;
+        private double _convertedHeight = TextOption.DEFAULT_HEIGHT + TextOption.CONV_ADD_HEIGHT;
         public double ConvertedHeight { get { return _convertedHeight; } set { _convertedHeight = value; OnPropertyChanged(); } }
 
         #endregion Vector Properties
 
         #region Text Properties
 
-        private string _text = "Text Contents";
+        private string _text = TextOption.DEFAULT_TEXT;
         public string Text
         {
             get { return _text; }
@@ -56,7 +59,7 @@ namespace BasicModule.Models
             }
         }
 
-        private int _maxLength = 20;
+        private int _maxLength = TextOption.DEFAULT_MAX_LENGTH;
         public int MaxLength
         {
             get { return _maxLength; }
@@ -74,30 +77,30 @@ namespace BasicModule.Models
 
         #region Font Style Properties
 
-        private double _fontSize = 20;
+        private double _fontSize = TextOption.DEFAULT_FONT_SIZE;
         public double FontSize
         {
             get { return _fontSize; }
             set
             {
-                if (value >= 10)
-                {
-                    _fontSize = value;
-                    OnPropertyChanged();
-                }
+                if (value < TextOption.MIN_FONT_SIZE)
+                    value = TextOption.MIN_FONT_SIZE;
+
+                _fontSize = value;
+                OnPropertyChanged();
             }
         }
 
-        private string _fontFamily = "Arial";
+        private string _fontFamily = TextOption.DEFAULT_FONT_FAMILY;
         public string FontFamily { get { return _fontFamily; } set { _fontFamily = value; OnPropertyChanged(); } }
 
-        private string _fontStyle = "Normal";
+        private string _fontStyle = TextOption.DEFAULT_FONT_STYLE;
         public string FontStyle { get { return _fontStyle; } set { _fontStyle = value; OnPropertyChanged(); } }
 
-        private string _fontWeight = "Normal";
+        private string _fontWeight = TextOption.DEFAULT_FONT_WEIGHT;
         public string FontWeight { get { return _fontWeight; } set { _fontWeight = value; OnPropertyChanged(); } }
 
-        private string _textAlignment = "Left";
+        private string _textAlignment = TextOption.DEFAULT_TEXT_ALIGN;
         public string TextAlignment { get { return _textAlignment; } set { _textAlignment = value; OnPropertyChanged(); } }
 
         #endregion Font Style Properties

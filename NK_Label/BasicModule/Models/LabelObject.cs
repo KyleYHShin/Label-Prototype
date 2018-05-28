@@ -7,65 +7,60 @@ namespace BasicModule.Models
     {
         #region Vector Properties
 
-        private double _width;
+        private double _width = LabelOption.DEFAULT_WIDTH;
         public new double Width
         {
             get { return _width; }
             set
             {
                 _width = ValidWidth(getRound(value, 2));
-                ResetActualSize();
                 OnPropertyChanged();
+                ResetActualSize();
             }
         }
 
-        private double _height;
+        private double _height = LabelOption.DEFAULT_HEIGHT;
         public new double Height
         {
             get { return _height; }
             set
             {
                 _height = ValidHeight(getRound(value, 2));
-                ResetActualSize();
                 OnPropertyChanged();
+                ResetActualSize();
             }
         }
 
-        private double _convertedWidth;
+        private double _convertedWidth = LabelOption.DEFAULT_WIDTH * PrinterOption.DEFAULT_DPI;
         public double ConvertedWidth { get { return _convertedWidth; } set { _convertedWidth = value; OnPropertyChanged(); } }
 
-        private double _convertedHeight;
+        private double _convertedHeight = LabelOption.DEFAULT_HEIGHT * PrinterOption.DEFAULT_DPI;
         public double ConvertedHeight { get { return _convertedHeight; } set { _convertedHeight = value; OnPropertyChanged(); } }
 
-        private double _convertedGuideWidth;
+        private double _convertedGuideWidth = (LabelOption.DEFAULT_WIDTH * PrinterOption.DEFAULT_DPI) - (LabelOption.DEFAULT_MARGIN * PrinterOption.DEFAULT_DPI * 2);
         public double ConvertedGuideWidth { get { return _convertedGuideWidth; } set { _convertedGuideWidth = value; OnPropertyChanged(); } }
 
-        private double _convertedGuideHeight;
+        private double _convertedGuideHeight = (LabelOption.DEFAULT_HEIGHT * PrinterOption.DEFAULT_DPI) - (LabelOption.DEFAULT_MARGIN * PrinterOption.DEFAULT_DPI * 2);
         public double ConvertedGuideHeight { get { return _convertedGuideHeight; } set { _convertedGuideHeight = value; OnPropertyChanged(); } }
 
         private double ValidWidth(double value)
         {
-            double minWidth = 5;
-            if (value < minWidth)
-                return minWidth;
-
-            double minWidthLow = 225;
-            double minWidthMid = 168;
-            double minWidthHigh = 135;
+            if (value < LabelOption.MIN_WIDTH)
+                return LabelOption.MIN_WIDTH;
 
             switch (SelectedDpi)
             {
-                case PrinterOption.DPI_LOW:
-                    if (value > minWidthLow)
-                        return minWidthLow;
+                case PrinterOption.DPI_152:
+                    if (value > LabelOption.MAX_WIDTH_152)
+                        return LabelOption.MAX_WIDTH_152;
                     break;
-                case PrinterOption.DPI_MID:
-                    if (value > minWidthMid)
-                        return minWidthMid;
+                case PrinterOption.DPI_203:
+                    if (value > LabelOption.MAX_WIDTH_203)
+                        return LabelOption.MAX_WIDTH_203;
                     break;
-                case PrinterOption.DPI_HIGH:
-                    if (value > minWidthHigh)
-                        return minWidthHigh;
+                case PrinterOption.DPI_300:
+                    if (value > LabelOption.MAX_WIDTH_300)
+                        return LabelOption.MAX_WIDTH_300;
                     break;
             }
             return value;
@@ -73,27 +68,22 @@ namespace BasicModule.Models
 
         private double ValidHeight(double value)
         {
-            double minHeight = 3;
-            if (value < minHeight)
-                return minHeight;
-
-            double minHeightLow = 168;
-            double minHeightMid = 125;
-            double minHeightHigh = 100;
+            if (value < LabelOption.MIN_HEIGHT)
+                return LabelOption.MIN_HEIGHT;
 
             switch (SelectedDpi)
             {
-                case PrinterOption.DPI_LOW:
-                    if (value > minHeightLow)
-                        return minHeightLow;
+                case PrinterOption.DPI_152:
+                    if (value > LabelOption.MAX_HEIGHT_152)
+                        return LabelOption.MAX_HEIGHT_152;
                     break;
-                case PrinterOption.DPI_MID:
-                    if (value > minHeightMid)
-                        return minHeightMid;
+                case PrinterOption.DPI_203:
+                    if (value > LabelOption.MAX_HEIGHT_203)
+                        return LabelOption.MAX_HEIGHT_203;
                     break;
-                case PrinterOption.DPI_HIGH:
-                    if (value > minHeightHigh)
-                        return minHeightHigh;
+                case PrinterOption.DPI_300:
+                    if (value > LabelOption.MAX_HEIGHT_300)
+                        return LabelOption.MAX_HEIGHT_300;
                     break;
             }
             return value;
@@ -101,17 +91,17 @@ namespace BasicModule.Models
 
         private void ResetActualSize()
         {
-            ConvertedWidth = Width * 10 * SelectedDpi;
-            ConvertedHeight = Height * 10 * SelectedDpi;
-            ConvertedGuideWidth = ConvertedWidth - (Margin * 10 * SelectedDpi * 2);
-            ConvertedGuideHeight = ConvertedHeight - (Margin * 10 * SelectedDpi * 2);
+            ConvertedWidth = Width * SelectedDpi;
+            ConvertedHeight = Height * SelectedDpi;
+            ConvertedGuideWidth = ConvertedWidth - (Margin * SelectedDpi * 2);
+            ConvertedGuideHeight = ConvertedHeight - (Margin * SelectedDpi * 2);
         }
 
         #endregion Vector Properties
 
         #region View Properties
 
-        private int _margin = 10;
+        private int _margin = LabelOption.DEFAULT_MARGIN;
         public int Margin
         {
             get { return _margin; }
@@ -126,7 +116,7 @@ namespace BasicModule.Models
             }
         }
 
-        private double _radius = 10;
+        private double _radius = LabelOption.DEFAULT_RADIUS;
         public double Radius
         {
             get { return _radius; }
@@ -140,7 +130,7 @@ namespace BasicModule.Models
             }
         }
 
-        private double _viewSize = 1;
+        private double _viewSize = LabelOption.DEFAULT_VIEW_SIZE;
         public double ViewSize
         {
             get { return _viewSize; }
@@ -158,10 +148,10 @@ namespace BasicModule.Models
 
         #region Print Properties
 
-        private PrinterOption.PrinterType _selectedPrinter;
+        private PrinterOption.PrinterType _selectedPrinter = PrinterOption.DEFAULT_PRINTER_TYPE;
         public PrinterOption.PrinterType SelectedPrinter { get { return _selectedPrinter; } set { _selectedPrinter = value; OnPropertyChanged(); } }
 
-        private double _selectedDpi;
+        private double _selectedDpi = PrinterOption.DEFAULT_DPI;
         public double SelectedDpi
         {
             get { return _selectedDpi; }
@@ -195,7 +185,7 @@ namespace BasicModule.Models
         private bool _enableSequentialInputs = false;
         public bool EnableSequentialInputs { get { return _enableSequentialInputs; } set { _enableSequentialInputs = value; OnPropertyChanged(); } }
 
-        private int _serialNumberStartIndex;
+        private int _serialNumberStartIndex = 1;
         public int SerialNumberStartIndex
         {
             get { return _serialNumberStartIndex + 1; }

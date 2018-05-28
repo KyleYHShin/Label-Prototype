@@ -7,10 +7,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d">
 
-    <UserControl.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
-    </UserControl.Resources>
-
     <Grid Style="{StaticResource OptionViewMainGrid}">
         <StackPanel>
             <GroupBox Header=" 라벨 크기 " Style="{StaticResource OptionGroupBox}" >
@@ -27,7 +23,7 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0"
-                               Text="라벨 명"
+                               Text="라벨명"
                                Style="{StaticResource OptionColumnHeader}" />
                     <TextBlock Grid.Row="0" Grid.Column="1"
                              Text="{Binding LabelObject.Name}"

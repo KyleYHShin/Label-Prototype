@@ -7,10 +7,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d">
 
-    <UserControl.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
-    </UserControl.Resources>
-
     <Grid Style="{StaticResource OptionViewMainGrid}">
         <StackPanel>
             <GroupBox Header=" 바코드 크기 " Style="{StaticResource OptionGroupBox}" >
@@ -29,7 +25,7 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0"
-                               Text="바코드 명"
+                               Text="바코드명"
                                Style="{StaticResource OptionColumnHeader}" />
                     <TextBlock Grid.Row="0" Grid.Column="1"
                              Text="{Binding BarcodeObject.Name}"
@@ -43,46 +39,58 @@
                     <TextBlock Grid.Row="1" Grid.Column="0"
                                 Text="가로"
                                Style="{StaticResource OptionColumnHeader}"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                    <TextBox Grid.Row="1" Grid.Column="1"
                              Text="{Binding BarcodeObject.Width}"
                              Style="{StaticResource OptionColumnValue}">
                         <i:Interaction.Behaviors>
                             <common:TextBoxNumberBehaviour/>
                         </i:Interaction.Behaviors>
                     </TextBox>
+                    <TextBlock Grid.Row="1" Grid.Column="2"
+                             Text="pixel"
+                             Style="{StaticResource OptionColumnValue2}"/>
                     
                     <TextBlock Grid.Row="2" Grid.Column="0"
                                Text="세로"
                                Style="{StaticResource OptionColumnHeader}" />
-                    <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+                    <TextBox Grid.Row="2" Grid.Column="1"
                              Text="{Binding BarcodeObject.Height}"
                              Style="{StaticResource OptionColumnValue}">
                         <i:Interaction.Behaviors>
                             <common:TextBoxNumberBehaviour/>
                         </i:Interaction.Behaviors>
                     </TextBox>
+                    <TextBlock Grid.Row="2" Grid.Column="2"
+                             Text="pixel"
+                             Style="{StaticResource OptionColumnValue2}"/>
                     
                     <TextBlock Grid.Row="3" Grid.Column="0"
                                Text="X"
                                Style="{StaticResource OptionColumnHeader}" />
-                    <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
+                    <TextBox Grid.Row="3" Grid.Column="1"
                              Text="{Binding BarcodeObject.PosX}"
                              Style="{StaticResource OptionColumnValue}">
                         <i:Interaction.Behaviors>
                             <common:TextBoxNumberBehaviour/>
                         </i:Interaction.Behaviors>
                     </TextBox>
+                    <TextBlock Grid.Row="3" Grid.Column="2"
+                             Text="pixel"
+                             Style="{StaticResource OptionColumnValue2}"/>
                     
                     <TextBlock Grid.Row="4" Grid.Column="0" 
                                Text="Y"
                                Style="{StaticResource OptionColumnHeader}" />
-                    <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"
+                    <TextBox Grid.Row="4" Grid.Column="1"
                              Text="{Binding BarcodeObject.PosY}"
                              Style="{StaticResource OptionColumnValue}" >
                         <i:Interaction.Behaviors>
                             <common:TextBoxNumberBehaviour/>
                         </i:Interaction.Behaviors>
                     </TextBox>
+                    <TextBlock Grid.Row="4" Grid.Column="2"
+                             Text="pixel"
+                             Style="{StaticResource OptionColumnValue2}"/>
                 </Grid>
             </GroupBox>
 

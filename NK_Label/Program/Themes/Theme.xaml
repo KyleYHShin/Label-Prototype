@@ -1,47 +1,275 @@
 ﻿<!-- Basic Module -->
+<!-- Program -->
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sw="clr-namespace:Program.UI.StyleableWindow">
 
+    <!--#region Color Preset-->
     <Color x:Key="MainTop">#0A4268</Color>
     <Color x:Key="MainBackground">#EFEFEF</Color>
+    <Color x:Key="WindowFore">White</Color>
+    <SolidColorBrush x:Key="MainTopColor" Color="{StaticResource MainTop}" />
+    <SolidColorBrush x:Key="MainBackgroundColor" Color="{StaticResource MainBackground}" />
+    <SolidColorBrush x:Key="WindowForeColor" Color="{StaticResource WindowFore}" />
 
     <Color x:Key="LabelBorder">#A5A5A6</Color>
     <Color x:Key="LabelActive">#DCDCDD</Color>
     <Color x:Key="LabelInactive">#C5C5C6</Color>
+    <SolidColorBrush x:Key="LabelBorderColor" Color="{StaticResource LabelBorder}" />
+    <SolidColorBrush x:Key="LabelActiveColor" Color="{StaticResource LabelActive}" />
+    <SolidColorBrush x:Key="LabelInactiveColor" Color="{StaticResource LabelInactive}" />
+
+    <Color x:Key="GridBack">White</Color>
+    <SolidColorBrush x:Key="GridBackColor" Color="{StaticResource GridBack}" />
 
     <Color x:Key="Button">#043350</Color>
     <Color x:Key="ButtonOver">#074F78</Color>
     <Color x:Key="ButtonPressed">#031C2b</Color>
     <Color x:Key="ButtonDisabled">#4D4D4D</Color>
+    <SolidColorBrush x:Key="ButtonColor" Color="{StaticResource Button}" />
+    <SolidColorBrush x:Key="ButtonOverColor" Color="{StaticResource ButtonOver}" />
+    <SolidColorBrush x:Key="ButtonPressedColor" Color="{StaticResource ButtonPressed}" />
+    <SolidColorBrush x:Key="ButtonDisabledColor" Color="{StaticResource ButtonDisabled}" />
 
     <Color x:Key="ToggleIcon">#E5E5E5</Color>
     <Color x:Key="ToggleOffBack">#A5A5A6</Color>
     <Color x:Key="ToggleDisabledOnBack">#244152</Color>
+    <SolidColorBrush x:Key="ToggleIconColor" Color="{StaticResource ToggleIcon}" />
+    <SolidColorBrush x:Key="ToggleOffBackColor" Color="{StaticResource ToggleOffBack}" />
+    <SolidColorBrush x:Key="ToggleOnBackColor" Color="{StaticResource Button}" />
+    <SolidColorBrush x:Key="ToggleDisabledOnBackColor" Color="{StaticResource ButtonDisabled}" />
 
+    <Color x:Key="HighlightedTextBoxFore">Red</Color>
     <Color x:Key="TextBoxBorder">#074F78</Color>
     <Color x:Key="TextBoxBorderFocused">#333333</Color>
+    <SolidColorBrush x:Key="HighlightedTextBoxForeColor" Color="{StaticResource HighlightedTextBoxFore}" />
+    <SolidColorBrush x:Key="TextBoxBorderColor" Color="{StaticResource TextBoxBorder}" />
+    <SolidColorBrush x:Key="TextBoxBorderFocusedColor" Color="{StaticResource TextBoxBorderFocused}" />
+    <!--#endregion-->
 
+    <!--#region Custom Window-->
 
-    <SolidColorBrush x:Key="MainTopBrush" Color="{StaticResource MainTop}" />
-    <SolidColorBrush x:Key="MainBackgroundBrush" Color="{StaticResource MainBackground}" />
+    <!--The window template and it's components -->
+    <sw:WindowMinimizeCommand x:Key="MinimizeCommand"></sw:WindowMinimizeCommand>
+    <sw:WindowMaximizeCommand x:Key="MaximizeCommand"></sw:WindowMaximizeCommand>
+    <sw:WindowCloseCommand x:Key="CloseCommand"></sw:WindowCloseCommand>
 
-    <SolidColorBrush x:Key="LabelBorderBrush" Color="{StaticResource LabelBorder}" />
-    <SolidColorBrush x:Key="LabelActiveBrush" Color="{StaticResource LabelActive}" />
-    <SolidColorBrush x:Key="LabelInactiveBrush" Color="{StaticResource LabelInactive}" />
+    <Style x:Key="WindowButton" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="38"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Background" Value="{StaticResource MainTopColor}"/>
+        <Setter Property="Foreground" Value="{StaticResource WindowForeColor}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{StaticResource ButtonOverColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="{StaticResource ButtonPressedColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="{StaticResource ButtonDisabledColor}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-    <SolidColorBrush x:Key="ButtonBrush" Color="{StaticResource Button}" />
-    <SolidColorBrush x:Key="ButtonOverBrush" Color="{StaticResource ButtonOver}" />
-    <SolidColorBrush x:Key="ButtonPressedBrush" Color="{StaticResource ButtonPressed}" />
-    <SolidColorBrush x:Key="ButtonDisabledBrush" Color="{StaticResource ButtonDisabled}" />
+    <Style x:Key="WindowIcon" TargetType="{x:Type Image}" >
+        <Setter Property="Height" Value="25"/>
+        <Setter Property="Width" Value="25"/>
+    </Style>
+    
+    <ControlTemplate x:Key="WindowTemplate" TargetType="{x:Type Window}">
+        <Grid Background="{StaticResource MainTopColor}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Margin="0,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="114"/>
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Grid.Column="0"
+                        Padding="0"
+                        sw:ControlDoubleClickBehavior.ExecuteCommand="{StaticResource CloseCommand}"
+                        sw:ControlDoubleClickBehavior.ExecuteCommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">
+                        <Image
+                            DockPanel.Dock="Left"
+                            Style="{StaticResource WindowIcon}"
+                            Width="20"
+                            Margin="13,5,11,5"
+                            Source="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}},Path=Icon}"
+                            sw:ShowSystemMenuBehavior.TargetWindow="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+                            sw:ShowSystemMenuBehavior.LeftButtonShowAt="{Binding ElementName=WindowContent}"/>
+                    </Label>
+                    <Label
+                        Grid.Column="1"
+                        Margin="0,5"
+                        Padding="0"                                  
+                        DockPanel.Dock="Left"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        HorizontalContentAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        Foreground="{StaticResource WindowForeColor}"
+                        FontSize="14"
+                        FontWeight="Medium"
+                        Content="{TemplateBinding Property=Title}"
+                        sw:WindowDragBehavior.LeftMouseButtonDrag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+                        sw:ControlDoubleClickBehavior.ExecuteCommand="{StaticResource MaximizeCommand}"
+                        sw:ControlDoubleClickBehavior.ExecuteCommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+                        sw:ShowSystemMenuBehavior.TargetWindow="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+                        sw:ShowSystemMenuBehavior.RightButtonShow="True">
+                    </Label>
+                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                        <Button DockPanel.Dock="Right" Style="{StaticResource WindowButton}" Command="{StaticResource MinimizeCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">_</Button>
+                        <Button DockPanel.Dock="Right" Style="{StaticResource WindowButton}" Command="{StaticResource MaximizeCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">+</Button>
+                        <Button DockPanel.Dock="Right"  Style="{StaticResource WindowButton}" Command="{StaticResource CloseCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">X</Button>
+                    </StackPanel>
+                </Grid>
+                <Border Grid.Row="1" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                    <Grid>
+                        <AdornerDecorator>
+                            <ContentPresenter x:Name="WindowContent"/>
+                        </AdornerDecorator>
+                        <ResizeGrip  x:Name="WindowResizeGrip" HorizontalAlignment="Right"  VerticalAlignment="Bottom" IsTabStop="false" Visibility="Collapsed" />
+                    </Grid>
+                </Border>
+            </Grid>
+            <Thumb x:Name="ThumbTop" Height="6" Margin="14,0" VerticalAlignment="Top" Cursor="SizeNS"  Opacity="0" sw:WindowResizeBehavior.TopResize="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+            <Thumb x:Name="ThumbTopLeft" Height="6" Width="6" VerticalAlignment="Top" HorizontalAlignment="Left" Cursor="SizeNWSE"  Opacity="0" sw:WindowResizeBehavior.TopLeftResize="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+            <Thumb x:Name="ThumbBottom" Height="6" Margin="14,0" VerticalAlignment="Bottom" Cursor="SizeNS" Opacity="0" sw:WindowResizeBehavior.BottomResize="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+            <Thumb x:Name="ThumbTopRight" Height="6" Width="6" VerticalAlignment="Top" HorizontalAlignment="Right" Cursor="SizeNESW"  Opacity="0" sw:WindowResizeBehavior.TopRightResize="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+            <Thumb x:Name="ThumbRight" HorizontalAlignment="Right" Margin="0,14" Width="6" Cursor="SizeWE"  Opacity="0" sw:WindowResizeBehavior.RightResize="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+            <Thumb x:Name="ThumbBottomRight" Height="6" Width="6" VerticalAlignment="Bottom" HorizontalAlignment="Right" Cursor="SizeNWSE"  Opacity="0" sw:WindowResizeBehavior.BottomRightResize="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+            <Thumb x:Name="ThumbLeft" HorizontalAlignment="Left" Margin="0,14" Width="6" Cursor="SizeWE"  Opacity="0" sw:WindowResizeBehavior.LeftResize="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+            <Thumb x:Name="ThumbBottomLeft" Height="6" Width="6" VerticalAlignment="Bottom" HorizontalAlignment="Left" Cursor="SizeNESW"  Opacity="0" sw:WindowResizeBehavior.BottomLeftResize="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="ResizeMode" Value="CanResizeWithGrip"/>
+                    <Condition Property="WindowState" Value="Normal"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="Visibility" TargetName="WindowResizeGrip" Value="Visible"/>
+            </MultiTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
 
-    <SolidColorBrush x:Key="ToggleIconBrush" Color="{StaticResource ToggleIcon}" />
-    <SolidColorBrush x:Key="ToggleOffBackBrush" Color="{StaticResource ToggleOffBack}" />
-    <SolidColorBrush x:Key="ToggleOnBackBrush" Color="{StaticResource Button}" />
-    <SolidColorBrush x:Key="ToggleDisabledOnBackBrush" Color="{StaticResource ButtonDisabled}" />
+    <ControlTemplate x:Key="DialogWindowStyleTemplate" TargetType="{x:Type Window}">
+        <Grid Background="{StaticResource MainTopColor}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Margin="0,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="38"/>
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Grid.Column="0"
+                        Padding="0"
+                        sw:ControlDoubleClickBehavior.ExecuteCommand="{StaticResource CloseCommand}"
+                        sw:ControlDoubleClickBehavior.ExecuteCommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">
+                        <Image
+                            DockPanel.Dock="Left"
+                            Style="{StaticResource WindowIcon}"
+                            Width="20"
+                            Margin="13,5,11,5"
+                            Source="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}},Path=Icon}"
+                            sw:ShowSystemMenuBehavior.TargetWindow="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+                            sw:ShowSystemMenuBehavior.LeftButtonShowAt="{Binding ElementName=WindowContent}"/>
+                    </Label>
+                    <Label
+                        Grid.Column="1"
+                        Margin="0,5"
+                        Padding="0"                                  
+                        DockPanel.Dock="Left"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        HorizontalContentAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        Foreground="{StaticResource WindowForeColor}"
+                        FontSize="14"
+                        FontWeight="Medium"
+                        Content="{TemplateBinding Property=Title}"
+                        sw:WindowDragBehavior.LeftMouseButtonDrag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+                        sw:ShowSystemMenuBehavior.TargetWindow="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+                        sw:ShowSystemMenuBehavior.RightButtonShow="True">
+                    </Label>
+                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                        <Button DockPanel.Dock="Right"  Style="{StaticResource WindowButton}" Command="{StaticResource CloseCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">X</Button>
+                    </StackPanel>
+                </Grid>
+                <Border Grid.Row="1" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                    <Grid>
+                        <AdornerDecorator>
+                            <ContentPresenter x:Name="WindowContent"/>
+                        </AdornerDecorator>
+                        <ResizeGrip  x:Name="WindowResizeGrip" HorizontalAlignment="Right"  VerticalAlignment="Bottom" IsTabStop="false" Visibility="Collapsed" />
+                    </Grid>
+                </Border>
+            </Grid>
+            <Thumb x:Name="ThumbTop" Height="6" Margin="14,0" VerticalAlignment="Top" Cursor="SizeNS"  Opacity="0" sw:WindowResizeBehavior.TopResize="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+            <Thumb x:Name="ThumbTopLeft" Height="6" Width="6" VerticalAlignment="Top" HorizontalAlignment="Left" Cursor="SizeNWSE"  Opacity="0" sw:WindowResizeBehavior.TopLeftResize="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+            <Thumb x:Name="ThumbBottom" Height="6" Margin="14,0" VerticalAlignment="Bottom" Cursor="SizeNS" Opacity="0" sw:WindowResizeBehavior.BottomResize="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+            <Thumb x:Name="ThumbTopRight" Height="6" Width="6" VerticalAlignment="Top" HorizontalAlignment="Right" Cursor="SizeNESW"  Opacity="0" sw:WindowResizeBehavior.TopRightResize="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+            <Thumb x:Name="ThumbRight" HorizontalAlignment="Right" Margin="0,14" Width="6" Cursor="SizeWE"  Opacity="0" sw:WindowResizeBehavior.RightResize="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+            <Thumb x:Name="ThumbBottomRight" Height="6" Width="6" VerticalAlignment="Bottom" HorizontalAlignment="Right" Cursor="SizeNWSE"  Opacity="0" sw:WindowResizeBehavior.BottomRightResize="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+            <Thumb x:Name="ThumbLeft" HorizontalAlignment="Left" Margin="0,14" Width="6" Cursor="SizeWE"  Opacity="0" sw:WindowResizeBehavior.LeftResize="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+            <Thumb x:Name="ThumbBottomLeft" Height="6" Width="6" VerticalAlignment="Bottom" HorizontalAlignment="Left" Cursor="SizeNESW"  Opacity="0" sw:WindowResizeBehavior.BottomLeftResize="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="ResizeMode" Value="CanResizeWithGrip"/>
+                    <Condition Property="WindowState" Value="Normal"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="Visibility" TargetName="WindowResizeGrip" Value="Visible"/>
+            </MultiTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    
+    <!-- the custom window style and the window template 
+        Here you can customize the look of the window without having to touch the control template 
+        or comment out the brushes and create a new style (see the red style below)-->
 
-    <SolidColorBrush x:Key="TextBoxBorderBrush" Color="{StaticResource TextBoxBorder}" />
-    <SolidColorBrush x:Key="TextBoxBorderFocusedBrush" Color="{StaticResource TextBoxBorderFocused}" />
+    <Style x:Key="NKWindowStyle" TargetType="{x:Type Window}">
+        <Setter Property="WindowStyle" Value="None"/>
+        <Setter Property="AllowsTransparency" Value="True"/>
+        <!--CaptionHeight + ResizeBorderThickness * 2-->
+        <Setter Property="Background" Value="{StaticResource MainBackgroundColor}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource MainTopColor}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Template" Value="{StaticResource WindowTemplate}"/>
+    </Style>
+    
+    <Style x:Key="NKDialogWindowStyle" TargetType="{x:Type Window}">
+        <Setter Property="WindowStyle" Value="None"/>
+        <Setter Property="AllowsTransparency" Value="True"/>
+        <Setter Property="ResizeMode" Value="NoResize"/>
+        <Setter Property="Background" Value="{StaticResource MainBackgroundColor}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource MainTopColor}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Template" Value="{StaticResource DialogWindowStyleTemplate}"/>
+    </Style>
+    <!--#endregion-->
 
     <!--#region Main Window-->
     <Color x:Key="MenuBar">#DCDCDD</Color>
@@ -82,14 +310,14 @@
     </Style>
 
     <Color x:Key="ImageButton">#093450</Color>
-    <SolidColorBrush x:Key="ImageButtonBrush" Color="{StaticResource ImageButton}" />
+    <SolidColorBrush x:Key="ImageButtonColor" Color="{StaticResource ImageButton}" />
     <Style x:Key="MainButtonText"
            TargetType="{x:Type TextBlock}" >
         <Setter Property="Width" Value="70"/>
         <Setter Property="FontFamily" Value="Malgun Gothic"/>
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="FontSize" Value="13"/>
-        <Setter Property="Foreground" Value="{StaticResource ImageButtonBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ImageButtonColor}" />
         <Setter Property="TextAlignment" Value="Center"/>
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
@@ -103,12 +331,12 @@
 
     <Color x:Key="MainButtonOver">#FFFFFF</Color>
     <Color x:Key="MainButtonPressed">#BDBDBD</Color>
-    <SolidColorBrush x:Key="MainButtonOverBrush" Color="{StaticResource MainButtonOver}" />
-    <SolidColorBrush x:Key="MainButtonPressedBrush" Color="{StaticResource MainButtonPressed}" />
+    <SolidColorBrush x:Key="MainButtonOverColor" Color="{StaticResource MainButtonOver}" />
+    <SolidColorBrush x:Key="MainButtonPressedColor" Color="{StaticResource MainButtonPressed}" />
     <Style x:Key="MainButton"
            TargetType="{x:Type Button}" >
-        <Setter Property="Background" Value="{StaticResource MainBackgroundBrush}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource MainBackgroundBrush}"/>
+        <Setter Property="Background" Value="{StaticResource MainBackgroundColor}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource MainBackgroundColor}"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
     </Style>
     <ControlTemplate x:Key="MainButtonTemplate"
@@ -127,7 +355,7 @@
         </Border>
         <ControlTemplate.Triggers>
             <Trigger Property="IsPressed" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="{StaticResource MainButtonPressedBrush}" />
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource MainButtonPressedColor}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -135,16 +363,16 @@
 
     <Style x:Key="LabelGrid"
            TargetType="{x:Type Grid}">
-        <Setter Property="Background" Value="White"/>
+        <Setter Property="Background" Value="{StaticResource GridBackColor}"/>
         <Setter Property="Margin" Value="0,10,4,10"/>
     </Style>
 
     <Style x:Key="LabelTabControl"
            TargetType="{x:Type TabControl}">
-        <Setter Property="Background" Value="{StaticResource LabelActiveBrush}"/>
+        <Setter Property="Background" Value="{StaticResource LabelActiveColor}"/>
         <Setter Property="Margin" Value="5,3"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="{StaticResource LabelBorderBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource LabelBorderColor}"/>
         <Setter Property="FontSize" Value="13" />
     </Style>
 
@@ -154,7 +382,7 @@
                 Margin="-2,0,4,0"
                 VerticalAlignment="Bottom"
                 BorderThickness="1,1,1,0"
-                BorderBrush="{StaticResource LabelBorderBrush}"
+                BorderBrush="{StaticResource LabelBorderColor}"
                 CornerRadius="0,0,0,0">
             <ContentPresenter
                 x:Name="ContentSite"
@@ -166,14 +394,14 @@
         </Border>
         <ControlTemplate.Triggers>
             <Trigger Property="IsSelected" Value="True">
-                <Setter TargetName="Border" Property="Background" Value="{StaticResource LabelActiveBrush}" />
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource LabelActiveColor}" />
             </Trigger>
             <Trigger Property="IsSelected" Value="False">
-                <Setter TargetName="Border" Property="Background" Value="{StaticResource LabelInactiveBrush}" />
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource LabelInactiveColor}" />
                 <Setter TargetName="ContentSite" Property="Margin" Value="13,1" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter TargetName="Border" Property="Background" Value="{StaticResource LabelActiveBrush}" />
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource LabelActiveColor}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -182,7 +410,7 @@
            TargetType="{x:Type GridSplitter}">
         <Setter Property="Width" Value="3"/>
         <Setter Property="Margin" Value="0,0,0,10"/>
-        <Setter Property="Background" Value="{StaticResource LabelActiveBrush}"/>
+        <Setter Property="Background" Value="{StaticResource LabelActiveColor}"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
     </Style>
 
@@ -194,15 +422,15 @@
            TargetType="{x:Type TextBlock}">
         <Setter Property="Height" Value="27"/>
         <Setter Property="Padding" Value="20,3"/>
-        <Setter Property="Background" Value="{StaticResource MainTopBrush}"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="{StaticResource MainTopColor}"/>
+        <Setter Property="Foreground" Value="{StaticResource WindowForeColor}"/>
         <Setter Property="FontSize" Value="14"/>
     </Style>
     <Style x:Key="MainRightBorder"
            TargetType="{x:Type Border}">
-        <Setter Property="Background" Value="White"/>
+        <Setter Property="Background" Value="{StaticResource GridBackColor}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="{StaticResource LabelActiveBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource LabelActiveColor}"/>
     </Style>
     <Style x:Key="MainRightScrollViewer"
            TargetType="{x:Type ScrollViewer}">
@@ -240,9 +468,9 @@
         <Setter Property="Height" Value="35"/>
         <Setter Property="Width" Value="130"/>
         <Setter Property="Margin" Value="5,10"/>
-        <Setter Property="Background" Value="{StaticResource ButtonBrush}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ButtonBrush}"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="{StaticResource ButtonColor}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonColor}"/>
+        <Setter Property="Foreground" Value="{StaticResource WindowForeColor}"/>
 
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="FontSize" Value="13"/>
@@ -263,16 +491,16 @@
         </Border>
         <ControlTemplate.Triggers>
             <Trigger Property="IsDefaulted" Value="True">
-                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonBrush}" />
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonColor}" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonOverBrush}" />
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonOverColor}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonPressedBrush}" />
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonPressedColor}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonDisabledBrush}" />
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonDisabledColor}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -321,7 +549,7 @@
                                     Width="35" Height="20" BorderThickness="1" CornerRadius="10">
                                 <Canvas>
                                     <Border x:Name="CheckFlag"
-                                            Background="{StaticResource ToggleIconBrush}" 
+                                            Background="{StaticResource ToggleIconColor}" 
                                             Width="19" Height="18"
                                             VerticalAlignment="Center" 
                                             BorderThickness="1" CornerRadius="10"
@@ -356,14 +584,14 @@
                             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="ForegroundPanel" Property="Background" Value="{StaticResource ToggleOnBackBrush}" />
+                            <Setter TargetName="ForegroundPanel" Property="Background" Value="{StaticResource ToggleOnBackColor}" />
                             <Trigger.EnterActions>
                                 <BeginStoryboard x:Name="BeginStoryboardCheckedTrue" Storyboard="{StaticResource StoryboardIsChecked}" />
                                 <RemoveStoryboard BeginStoryboardName="BeginStoryboardCheckedFalse" />
                             </Trigger.EnterActions>
                         </Trigger>
                         <Trigger Property="IsChecked" Value="False">
-                            <Setter TargetName="ForegroundPanel" Property="Background" Value="{StaticResource ToggleOffBackBrush}" />
+                            <Setter TargetName="ForegroundPanel" Property="Background" Value="{StaticResource ToggleOffBackColor}" />
                             <Trigger.EnterActions>
                                 <BeginStoryboard x:Name="BeginStoryboardCheckedFalse" Storyboard="{StaticResource StoryboardIsCheckedOff}" />
                                 <RemoveStoryboard BeginStoryboardName="BeginStoryboardCheckedTrue" />
@@ -375,7 +603,7 @@
                                 <Condition Property="IsChecked" Value="True"/>
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
-                                <Setter TargetName="ForegroundPanel" Property="Background" Value="{StaticResource ToggleDisabledOnBackBrush}" />
+                                <Setter TargetName="ForegroundPanel" Property="Background" Value="{StaticResource ToggleDisabledOnBackColor}" />
                             </MultiTrigger.Setters>
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
@@ -481,15 +709,15 @@
     <Style x:Key="OptionViewMainGrid"
            TargetType="{x:Type Grid}">
         <Setter Property="MinWidth" Value="300"/>
-        <Setter Property="Background" Value="White"/>
+        <Setter Property="Background" Value="{StaticResource GridBackColor}"/>
     </Style>
     <Style x:Key="OptionGroupBox"
            TargetType="{x:Type GroupBox}">
         <Setter Property="Margin" Value="3,7"/>
         <Setter Property="Padding" Value="8"/>
-        <Setter Property="BorderBrush" Value="{StaticResource MainTopBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource MainTopColor}"/>
         <Setter Property="BorderThickness" Value="2"/>
-        <Setter Property="Foreground" Value="{StaticResource MainTopBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource MainTopColor}"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontSize" Value="15"/>
     </Style>
@@ -536,9 +764,9 @@
     <Style x:Key="OptionColumnButton"
            TargetType="{x:Type Button}">
         <Setter Property="Height" Value="25"/>
-        <Setter Property="Background" Value="{StaticResource ButtonBrush}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ButtonBrush}"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="{StaticResource ButtonColor}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonColor}"/>
+        <Setter Property="Foreground" Value="{StaticResource WindowForeColor}"/>
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="FontSize" Value="12"/>
     </Style>
@@ -558,16 +786,16 @@
         </Border>
         <ControlTemplate.Triggers>
             <Trigger Property="IsDefaulted" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonBrush}" />
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonColor}" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonOverBrush}" />
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonOverColor}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonPressedBrush}" />
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonPressedColor}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="false">
-                <Setter TargetName="Border" Property="Background" Value="Gray" />
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonDisabledColor}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -578,7 +806,7 @@
            TargetType="{x:Type Grid}">
         <Setter Property="Width" Value="Auto"/>
         <Setter Property="Height" Value="Auto"/>
-        <Setter Property="Background" Value="White"/>
+        <Setter Property="Background" Value="{StaticResource GridBackColor}"/>
     </Style>
 
     <Style x:Key="RuleCommonButtonStackPanel"
@@ -593,7 +821,7 @@
         <Setter Property="Height" Value="570"/>
         <Setter Property="Margin" Value="7"/>
         <Setter Property="Padding" Value="3"/>
-        <Setter Property="BorderBrush" Value="{StaticResource LabelActiveBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource LabelActiveColor}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="CornerRadius" Value="5"/>
     </Style>
@@ -619,9 +847,9 @@
         <Setter Property="Height" Value="35"/>
         <Setter Property="Width" Value="130"/>
         <Setter Property="Margin" Value="5,0"/>
-        <Setter Property="Background" Value="{StaticResource ButtonBrush}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ButtonBrush}"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="{StaticResource ButtonColor}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonColor}"/>
+        <Setter Property="Foreground" Value="{StaticResource WindowForeColor}"/>
 
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="FontSize" Value="13"/>
@@ -661,10 +889,10 @@
            TargetType="{x:Type Button}">
         <Setter Property="Height" Value="23"/>
         <Setter Property="Margin" Value="1,2,1,0"/>
-        <Setter Property="Background" Value="{StaticResource ButtonBrush}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ButtonBrush}"/>
+        <Setter Property="Background" Value="{StaticResource ButtonColor}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonColor}"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Foreground" Value="{StaticResource WindowForeColor}"/>
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="FontSize" Value="12"/>
     </Style>
@@ -684,16 +912,16 @@
         </Border>
         <ControlTemplate.Triggers>
             <Trigger Property="IsDefaulted" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonBrush}" />
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonColor}" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonOverBrush}" />
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonOverColor}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonPressedBrush}" />
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonPressedColor}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="false">
-                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonDisabledBrush}" />
+                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonDisabledColor}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -704,13 +932,13 @@
            TargetType="{x:Type Grid}">
         <Setter Property="Width" Value="Auto"/>
         <Setter Property="Height" Value="Auto"/>
-        <Setter Property="Background" Value="White"/>
+        <Setter Property="Background" Value="{StaticResource GridBackColor}"/>
     </Style>
     <Style x:Key="PrintWindowMainBorder"
            TargetType="{x:Type Border}">
         <Setter Property="Margin" Value="10"/>
         <Setter Property="Padding" Value="5"/>
-        <Setter Property="BorderBrush" Value="{StaticResource LabelActiveBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource LabelActiveColor}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="CornerRadius" Value="5"/>
     </Style>
@@ -723,15 +951,15 @@
     </Style>
     <Style x:Key="PrintLabelOuterBorder"
            TargetType="{x:Type Border}">
-        <Setter Property="BorderBrush" Value="{StaticResource LabelBorderBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource LabelBorderColor}"/>
         <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="Padding" Value="8"/>
         <Setter Property="CornerRadius" Value="3"/>
-        <Setter Property="Background" Value="{StaticResource LabelActiveBrush}"/>
+        <Setter Property="Background" Value="{StaticResource LabelActiveColor}"/>
     </Style>
     <Style x:Key="PrintLabelInnerBorder"
            TargetType="{x:Type Border}">
-        <Setter Property="BorderBrush" Value="{StaticResource LabelBorderBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource LabelBorderColor}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -739,9 +967,9 @@
 
     <Style x:Key="PrintRuleListBorder"
            TargetType="{x:Type Border}">
-        <Setter Property="BorderBrush" Value="{StaticResource LabelBorderBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource LabelBorderColor}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Background" Value="{StaticResource LabelActiveBrush}"/>
+        <Setter Property="Background" Value="{StaticResource LabelActiveColor}"/>
     </Style>
     <Style x:Key="PrintRuleScrollViewer"
            TargetType="{x:Type ScrollViewer}">
@@ -756,7 +984,7 @@
            TargetType="{x:Type GroupBox}">
         <Setter Property="Padding" Value="5,4"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
-        <Setter Property="BorderBrush" Value="{StaticResource LabelBorderBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource LabelBorderColor}"/>
         <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="FontWeight" Value="Bold"/>
@@ -807,13 +1035,13 @@
 
     <Style  x:Key="PrintButton"
             TargetType="{x:Type Button}" >
-        <Setter Property="Background" Value="{StaticResource ButtonBrush}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ButtonBrush}"/>
+        <Setter Property="Background" Value="{StaticResource ButtonColor}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonColor}"/>
         <Setter Property="Height" Value="35"/>
         <Setter Property="Width" Value="110"/>
         <Setter Property="Margin" Value="5,10,5,0"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Foreground" Value="{StaticResource WindowForeColor}"/>
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="FontSize" Value="13"/>
     </Style>
@@ -824,7 +1052,7 @@
            TargetType="{x:Type Border}">
         <Setter Property="Width" Value="410"/>
         <Setter Property="Margin" Value="10"/>
-        <Setter Property="Background" Value="{StaticResource MainTopBrush}"/>
+        <Setter Property="Background" Value="{StaticResource MainTopColor}"/>
         <Setter Property="CornerRadius" Value="3"/>
     </Style>
 
@@ -840,12 +1068,12 @@
            TargetType="{x:Type Label}">
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Foreground" Value="{StaticResource WindowForeColor}"/>
     </Style>
 
     <Style x:Key="PrintRuleContentGrid"
            TargetType="{x:Type Grid}">
-        <Setter Property="Background" Value="White"/>
+        <Setter Property="Background" Value="{StaticResource GridBackColor}"/>
     </Style>
 
     <Style x:Key="PrintRuleContentStackPanel"
@@ -872,7 +1100,7 @@
     <Style x:Key="PrintRuleRowValueHighlightedTextBlock"
            TargetType="{x:Type TextBlock}">
         <Setter Property="Margin" Value="0,3,0,0"/>
-        <Setter Property="Foreground" Value="Red"/>
+        <Setter Property="Foreground" Value="{StaticResource HighlightedTextBoxForeColor}"/>
         <Setter Property="FontWeight" Value="Bold"/>
     </Style>
 
@@ -909,7 +1137,7 @@
            TargetType="{x:Type TextBox}">
         <Setter Property="Margin" Value="2,3,2,2"/>
         <Setter Property="TextAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="Red"/>
+        <Setter Property="Foreground" Value="{StaticResource HighlightedTextBoxForeColor}"/>
         <Setter Property="FontWeight" Value="Bold"/>
     </Style>
     <!--#endregion-->

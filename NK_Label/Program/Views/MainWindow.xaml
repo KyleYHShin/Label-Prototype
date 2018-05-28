@@ -6,14 +6,11 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="{Binding Title}"
-        Background="#EFEFEF"
         MinWidth="1280"
         MinHeight="720"
-        Closing="Click_Close" >
-
-    <Window.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
-    </Window.Resources>
+        Closing="Click_Close"
+        Icon="pack://application:,,,/UI/Images/Icon.ico"
+        Style="{StaticResource NKWindowStyle}" >
 
     <Window.InputBindings>
         <KeyBinding Gesture="Ctrl+N" Command="{Binding ClickAddNewLabel}" />
@@ -161,7 +158,7 @@
                         Source="pack://application:,,,/UI/Images/NewLabel.png"
                         Style="{StaticResource MainButtonImage}"/>
                     <TextBlock
-                        Text="새 라벨"
+                        Text="새라벨"
                         Style="{StaticResource MainButtonText}"/>
                 </StackPanel>
             </Button>
@@ -245,7 +242,7 @@
                         Source="pack://application:,,,/UI/Images/AddText.png"
                         Style="{StaticResource MainButtonImage}"/>
                     <TextBlock
-                        Text="텍스트 추가"
+                        Text="텍스트추가"
                         Style="{StaticResource MainButtonText}"/>
                 </StackPanel>
             </Button>
@@ -262,7 +259,7 @@
                         Source="pack://application:,,,/UI/Images/AddBarcode.png"
                         Style="{StaticResource MainButtonImage}"/>
                     <TextBlock
-                        Text="바코드 추가"
+                        Text="바코드추가"
                         Style="{StaticResource MainButtonText}"/>
                 </StackPanel>
             </Button>
@@ -279,7 +276,7 @@
                         Source="pack://application:,,,/UI/Images/RuleManager.png"
                         Style="{StaticResource MainButtonImage}"/>
                     <TextBlock
-                        Text="규칙 관리자"
+                        Text="규칙관리자"
                         Style="{StaticResource MainButtonText}"/>
                 </StackPanel>
             </Button>
@@ -345,35 +342,35 @@
                 Text="객체 이름: "
                 Style="{StaticResource MainBottomHeader}"/>
             <TextBlock
-                Text="{Binding SelectedLabelView.DataContext.SelectedObject.Name}"
+                Text="{Binding SelectedLabel.SelectedObject.Name}"
                 Style="{StaticResource MainBottomValue}"/>
 
             <TextBlock
                 Text="X: "
                 Style="{StaticResource MainBottomHeader}" Height="16" VerticalAlignment="Bottom"/>
             <TextBlock
-                Text="{Binding SelectedLabelView.DataContext.SelectedObject.PosX}"
+                Text="{Binding SelectedLabel.SelectedObject.PosX}"
                 Style="{StaticResource MainBottomValue}"/>
 
             <TextBlock
                 Text="Y: "
                 Style="{StaticResource MainBottomHeader}"/>
             <TextBlock
-                Text="{Binding SelectedLabelView.DataContext.SelectedObject.PosY}"
+                Text="{Binding SelectedLabel.SelectedObject.PosY}"
                 Style="{StaticResource MainBottomValue}"/>
 
             <TextBlock
                 Text="가로(mm): "
                 Style="{StaticResource MainBottomHeader}"/>
             <TextBlock
-                Text="{Binding SelectedLabelView.DataContext.SelectedObject.Width}"
+                Text="{Binding SelectedLabel.SelectedObject.Width}"
                 Style="{StaticResource MainBottomValue}"/>
 
             <TextBlock
                 Text="세로(mm): "
                 Style="{StaticResource MainBottomHeader}"/>
             <TextBlock
-                Text="{Binding SelectedLabelView.DataContext.SelectedObject.Height}"
+                Text="{Binding SelectedLabel.SelectedObject.Height}"
                 Style="{StaticResource MainBottomValue}"/>
         </StackPanel>
     </Grid>

@@ -240,7 +240,7 @@ namespace BasicModule.ViewModels.Rule
         public ICommand Delete { get; private set; }
         private void DeleteRule()
         {
-            if (DialogService.ShowSimpleSelectDialog("Alarm", "'" + EditingRule.Name + "'을 삭제하시겠습니까?") == true)
+            if (DialogService.ShowSimpleSelectDialog("확인", "'" + EditingRule.Name + "'을 삭제하시겠습니까?") == true)
             {
                 OriginalRuleList.Remove(OriginalRuleBeforeEdit);
                 foreach (var r in OriginalRuleList)
@@ -257,7 +257,7 @@ namespace BasicModule.ViewModels.Rule
         {
             if (ErrorMsg != null)
             {
-                DialogService.ShowSimpleTextDialog("Warning", ErrorMsg);
+                DialogService.ShowSimpleTextDialog("경고", ErrorMsg);
             }
             else
             {

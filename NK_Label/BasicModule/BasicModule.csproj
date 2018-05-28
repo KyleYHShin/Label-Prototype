@@ -96,6 +96,7 @@
     <Compile Include="Models\Common\IPrintableObject.cs" />
     <Compile Include="Models\LabelObject.cs" />
     <Compile Include="Common\NotifyPropertyChanged.cs" />
+    <Compile Include="Models\Option\LabelOption.cs" />
     <Compile Include="Models\Option\PrinterOption.cs" />
     <Compile Include="Models\Option\TextOption.cs" />
     <Compile Include="Models\Rule\IRuleObject.cs" />
@@ -228,10 +229,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Themes\Theme.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Common\DialogSelectWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

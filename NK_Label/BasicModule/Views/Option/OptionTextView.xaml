@@ -7,10 +7,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d">
 
-    <UserControl.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
-    </UserControl.Resources>
-
     <Grid Style="{StaticResource OptionViewMainGrid}">
         <StackPanel>
             <GroupBox Header=" 텍스트 크기 " Style="{StaticResource OptionGroupBox}" >
@@ -29,7 +25,7 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0"
-                               Text="텍스트 명"
+                               Text="텍스트명"
                                Style="{StaticResource OptionColumnHeader}"/>
                     <TextBlock Grid.Row="0" Grid.Column="1"
                              Text="{Binding TextObject.Name}"
@@ -43,46 +39,58 @@
                     <TextBlock Grid.Row="1" Grid.Column="0"
                                 Text="가로"
                                Style="{StaticResource OptionColumnHeader}"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                    <TextBox Grid.Row="1" Grid.Column="1"
                              Text="{Binding TextObject.Width}"
                              Style="{StaticResource OptionColumnValue}">
                         <i:Interaction.Behaviors>
                             <common:TextBoxNumberBehaviour/>
                         </i:Interaction.Behaviors>
                     </TextBox>
+                    <TextBlock Grid.Row="1" Grid.Column="2"
+                             Text="pixel"
+                             Style="{StaticResource OptionColumnValue2}"/>
 
                     <TextBlock Grid.Row="2" Grid.Column="0"
                                Text="세로"
                                Style="{StaticResource OptionColumnHeader}" />
-                    <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+                    <TextBox Grid.Row="2" Grid.Column="1"
                              Text="{Binding TextObject.Height}"
                              Style="{StaticResource OptionColumnValue}">
                         <i:Interaction.Behaviors>
                             <common:TextBoxNumberBehaviour/>
                         </i:Interaction.Behaviors>
                     </TextBox>
+                    <TextBlock Grid.Row="2" Grid.Column="2"
+                             Text="pixel"
+                             Style="{StaticResource OptionColumnValue2}"/>
 
                     <TextBlock Grid.Row="3" Grid.Column="0"
                                Text="X"
                                Style="{StaticResource OptionColumnHeader}"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
+                    <TextBox Grid.Row="3" Grid.Column="1"
                              Text="{Binding TextObject.PosX}"
                              Style="{StaticResource OptionColumnValue}">
                         <i:Interaction.Behaviors>
                             <common:TextBoxNumberBehaviour/>
                         </i:Interaction.Behaviors>
                     </TextBox>
+                    <TextBlock Grid.Row="3" Grid.Column="2"
+                             Text="pixel"
+                             Style="{StaticResource OptionColumnValue2}"/>
 
                     <TextBlock Grid.Row="4" Grid.Column="0"
                                Text="Y"
                                Style="{StaticResource OptionColumnHeader}"/>
-                    <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"
+                    <TextBox Grid.Row="4" Grid.Column="1"
                              Text="{Binding TextObject.PosY}"
                              Style="{StaticResource OptionColumnValue}">
                         <i:Interaction.Behaviors>
                             <common:TextBoxNumberBehaviour/>
                         </i:Interaction.Behaviors>
                     </TextBox>
+                    <TextBlock Grid.Row="4" Grid.Column="2"
+                             Text="pixel"
+                             Style="{StaticResource OptionColumnValue2}"/>
 
                 </Grid>
             </GroupBox>
@@ -129,23 +137,27 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0"
                                Text="크기" 
                                Style="{StaticResource OptionColumnHeader}"/>
-                    <TextBox Grid.Row="0" Grid.Column="2"
+                    <TextBox Grid.Row="0" Grid.Column="1"
                              Text="{Binding TextObject.FontSize}"
                              Style="{StaticResource OptionColumnValue}">
                         <i:Interaction.Behaviors>
                             <common:TextBoxNumberBehaviour/>
                         </i:Interaction.Behaviors>
                     </TextBox>
+                    <TextBlock Grid.Row="0" Grid.Column="2"
+                             Text="pt"
+                             Style="{StaticResource OptionColumnValue2}"/>
 
                     <TextBlock Grid.Row="1" Grid.Column="0"
                                Text="글꼴"
                                Style="{StaticResource OptionColumnHeader}"/>
-                    <ComboBox Grid.Row="1" Grid.Column="2"
+                    <ComboBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
                               ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}"
                               DisplayMemberPath="Source"
                               SelectedValuePath="Source"
@@ -155,7 +167,7 @@
                     <TextBlock Grid.Row="2" Grid.Column="0"
                                Text="이탤릭체"
                                Style="{StaticResource OptionColumnHeader}"/>
-                    <ComboBox Grid.Row="2" Grid.Column="2"
+                    <ComboBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
                               ItemsSource="{Binding FontStyleList}"
                               DisplayMemberPath="Key"
                               SelectedValuePath="Value"
@@ -165,7 +177,7 @@
                     <TextBlock Grid.Row="3" Grid.Column="0"
                                Text="굵기"
                                Style="{StaticResource OptionColumnHeader}"/>
-                    <ComboBox Grid.Row="3" Grid.Column="2"
+                    <ComboBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
                               ItemsSource="{Binding FontWeightList}"
                               DisplayMemberPath="Key"
                               SelectedValuePath="Value"
@@ -175,7 +187,7 @@
                     <TextBlock Grid.Row="4" Grid.Column="0"
                                Text="정렬"
                                Style="{StaticResource OptionColumnHeader}"/>
-                    <ComboBox Grid.Row="4" Grid.Column="2"
+                    <ComboBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"
                               ItemsSource="{Binding TextAlignmentList}"
                               DisplayMemberPath="Key"
                               SelectedValuePath="Value"

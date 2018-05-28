@@ -1,4 +1,5 @@
 ﻿using BasicModule.Models.Common;
+using BasicModule.Models.Option;
 using BasicModule.Utils;
 using System.Windows.Media.Imaging;
 using ZXing;
@@ -7,49 +8,39 @@ namespace BasicModule.Models
 {
     public class BarcodeObject : BasicObject, IPrintableObject
     {
+        public LabelObject Label { get; set; }
+
         #region Vector Properties
 
-        private double _width = 100;
+        private double _width = BarcodeOption.DEFAULT_WIDTH;
         public new double Width
         {
             get { return _width; }
             set
             {
-                if (value >= 45)
-                {
-                    _width = getRound(value, 2);
-                    OnPropertyChanged();
+                if (value < BarcodeOption.MIN_WIDTH)
+                    value = BarcodeOption.MIN_WIDTH;
 
-                    if (BarcodeWriter != null)
-                    {
-                        BarcodeWriter.Options.Width = (int)_width;
-                        BarcodeWriter.Options.Height = (int)_height;
-                        if (BarcodeWriter != null && !string.IsNullOrEmpty(_text))
-                            Barcode = BitmapConversion.BitmapToBitmapSource(BarcodeWriter.Write(_text));
-                    }
-                }
+                _width = getRound(value, 2);
+                OnPropertyChanged();
+
+                ChangeBarcodeImage();
             }
         }
 
-        private double _height = 100;
+        private double _height = BarcodeOption.DEFAULT_HEIGHT;
         public new double Height
         {
             get { return _height; }
             set
             {
-                if (value >= 45)
-                {
-                    _height = getRound(value, 2);
-                    OnPropertyChanged();
+                if (value < BarcodeOption.MIN_HEIGHT)
+                    value = BarcodeOption.MIN_HEIGHT;
 
-                    if (BarcodeWriter != null)
-                    {
-                        BarcodeWriter.Options.Width = (int)_width;
-                        BarcodeWriter.Options.Height = (int)_height;
-                        if (BarcodeWriter != null && !string.IsNullOrEmpty(_text))
-                            Barcode = BitmapConversion.BitmapToBitmapSource(BarcodeWriter.Write(_text));
-                    }
-                }
+                _height = getRound(value, 2);
+                OnPropertyChanged();
+
+                ChangeBarcodeImage();
             }
         }
 
@@ -72,18 +63,14 @@ namespace BasicModule.Models
                 newWriter.Format = _barcodeType;
                 newWriter.Options.PureBarcode = true;
                 newWriter.Options.Margin = 0;
-                newWriter.Options.Width = (int)Width;
-                newWriter.Options.Height = (int)Height;
-
                 BarcodeWriter = newWriter;
-                if (BarcodeWriter != null && !string.IsNullOrEmpty(_text))
-                    Barcode = BitmapConversion.BitmapToBitmapSource(newWriter.Write(_text));
-
                 OnPropertyChanged();
+
+                ChangeBarcodeImage();
             }
         }
 
-        private string _text = string.Empty;
+        private string _text = BarcodeOption.DEFAULT_TEXT;
         public string Text
         {
             get { return _text; }
@@ -92,12 +79,29 @@ namespace BasicModule.Models
                 _text = value;
                 OnPropertyChanged();
 
-                if (BarcodeWriter != null && !string.IsNullOrEmpty(_text))
-                    Barcode = BitmapConversion.BitmapToBitmapSource(_barcodeWriter.Write(_text));
+                ChangeBarcodeImage();
             }
         }
 
-        private int _maxLength = 50;
+        private void ChangeBarcodeImage()
+        {
+            try
+            {
+                if (BarcodeWriter != null)
+                {
+                    BarcodeWriter.Options.Width = (int)Width;
+                    BarcodeWriter.Options.Height = (int)Height;
+
+                    if (!string.IsNullOrEmpty(_text))
+                        Barcode = BitmapConversion.BitmapToBitmapSource(BarcodeWriter.Write(_text));
+                }
+            }catch(System.Exception e)
+            {
+                Barcode = null;
+            }
+        }
+
+        private int _maxLength = BarcodeOption.DEFAULT_MAX_LENGTH;
         public int MaxLength
         {
             get { return _maxLength; }

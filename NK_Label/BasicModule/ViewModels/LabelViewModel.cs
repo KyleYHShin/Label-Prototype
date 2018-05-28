@@ -110,7 +110,7 @@ namespace BasicModule.ViewModels
                         + "\n\n을(를) 삭제하시겠습니까?";
                 }
 
-                if (DialogService.ShowSimpleSelectDialog(Application.Current.MainWindow, "Alarm", msg) == true)
+                if (DialogService.ShowSimpleSelectDialog(Application.Current.MainWindow, "알림", msg) == true)
                 {
                     ObjectList.Remove(SelectedObject);
                     SelectedObject = null;

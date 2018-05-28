@@ -7,11 +7,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
-        ResizeMode="NoResize">
-
-    <Window.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
-    </Window.Resources>
+        Icon="pack://application:,,,/UI/Images/Icon.ico"
+        Style="{StaticResource NKDialogWindowStyle}">
 
     <Grid
         Width="Auto"
@@ -28,7 +25,7 @@
             HorizontalAlignment="Center">
 
             <TextBlock
-                Text="Name : "
+                Text="새이름 : "
                 FontWeight="Bold"
                 Style="{StaticResource OptionColumnHeader}"/>
             <TextBox

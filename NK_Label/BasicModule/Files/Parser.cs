@@ -219,154 +219,154 @@ namespace BasicModule.Files
 
         internal static bool FileToObject_1(ref LabelViewModel labelData, FileData_1 fileData)
         {
-            try
+            //try
+            //{
+            labelData.Label = new LabelObject();
+            labelData.Label.Name = fileData.Label.Name;
+            labelData.Label.Width = fileData.Label.Width;
+            labelData.Label.Height = fileData.Label.Height;
+
+            labelData.Label.Margin = fileData.Label.Margin;
+            labelData.Label.Radius = fileData.Label.Radius;
+
+            labelData.Label.SelectedPrinter = fileData.Label.SelectedPrinter;
+            labelData.Label.SelectedDpi = fileData.Label.SelectedDpi;
+            labelData.Label.OffsetX = fileData.Label.OffsetX;
+            labelData.Label.OffsetY = fileData.Label.OffsetY;
+            labelData.Label.NumberOfCopies = fileData.Label.NumberOfCopies;
+
+            labelData.Label.RepeatOfInputs = fileData.Label.RepeatOfInputs;
+            labelData.Label.EnableSequentialInputs = fileData.Label.EnableSequentialInputs;
+            labelData.Label.SerialNumberStartIndex = fileData.Label.SerialNumberStartIndex;
+            labelData.Label.SerialNumberLength = fileData.Label.SerialNumberLength;
+            labelData.Label.LastSerialNumber = fileData.Label.LastSerialNumber;
+
+            foreach (var to in fileData.TextList)
             {
-                labelData.Label = new LabelObject();
-                labelData.Label.Name = fileData.Label.Name;
-                labelData.Label.Width = fileData.Label.Width;
-                labelData.Label.Height = fileData.Label.Height;
-
-                labelData.Label.Margin = fileData.Label.Margin;
-                labelData.Label.Radius = fileData.Label.Radius;
-
-                labelData.Label.SelectedPrinter = fileData.Label.SelectedPrinter;
-                labelData.Label.SelectedDpi = fileData.Label.SelectedDpi;
-                labelData.Label.OffsetX = fileData.Label.OffsetX;
-                labelData.Label.OffsetY = fileData.Label.OffsetY;
-                labelData.Label.NumberOfCopies = fileData.Label.NumberOfCopies;
-
-                labelData.Label.RepeatOfInputs = fileData.Label.RepeatOfInputs;
-                labelData.Label.EnableSequentialInputs = fileData.Label.EnableSequentialInputs;
-                labelData.Label.SerialNumberStartIndex = fileData.Label.SerialNumberStartIndex;
-                labelData.Label.SerialNumberLength = fileData.Label.SerialNumberLength;
-                labelData.Label.LastSerialNumber = fileData.Label.LastSerialNumber;
-                
-                foreach (var to in fileData.TextList)
+                labelData.ObjectList.Add(new TextObject()
                 {
-                    labelData.ObjectList.Add(new TextObject()
-                    {
-                        Name = to.Name,
-                        Width = to.Width,
-                        Height = to.Height,
-                        PosX = to.PosX,
-                        PosY = to.PosY,
+                    Name = to.Name,
+                    Width = to.Width,
+                    Height = to.Height,
+                    PosX = to.PosX,
+                    PosY = to.PosY,
 
-                        Text = to.Text,
-                        MaxLength = to.MaxLength,
+                    Text = to.Text,
+                    MaxLength = to.MaxLength,
 
-                        FontSize = to.FontSize,
-                        FontFamily = to.FontFamily,
-                        FontStyle = to.FontStyle,
-                        FontWeight = to.FontWeight,
-                        TextAlignment = to.TextAlignment
-                    });
-                }
-
-                foreach (var bo in fileData.BarcodeList)
-                {
-                    labelData.ObjectList.Add(new BarcodeObject()
-                    {
-                        Name = bo.Name,
-                        Width = bo.Width,
-                        Height = bo.Height,
-                        PosX = bo.PosX,
-                        PosY = bo.PosY,
-                        MaxLength = bo.MaxLength,
-                        BarcodeType = bo.BarcodeType,
-                        Text = bo.Text
-                    });
-                }
-
-                foreach (var file in fileData.RuleSequentialNumList)
-                {
-                    var rsn = new RuleSequentialNum()
-                    {
-                        NumLength = file.Contents.NumLength,
-                        MaxNum = file.Contents.MaxNum,
-                        MinNum = file.Contents.MinNum,
-                        CurrNum = file.Contents.CurrNum,
-                        Increment = file.Contents.Increment,
-                        OnZeroFiller = file.Contents.OnZeroFiller,
-                    };
-                    labelData.RuleList.Add(new RuleMain()
-                    {
-                        Format = file.Format,
-                        Name = file.Name,
-                        Description = file.Description,
-                        Content = rsn
-                    });
-
-                }
-                foreach (var file in fileData.RuleTimeList)
-                {
-                    var rt = new RuleTime()
-                    {
-                        Pattern = file.Contents.Pattern
-                    };
-                    labelData.RuleList.Add(new RuleMain()
-                    {
-                        Format = file.Format,
-                        Name = file.Name,
-                        Description = file.Description,
-                        Content = rt
-                    });
-                }
-                foreach (var file in fileData.RuleManualList)
-                {
-                    var rml = new RuleManualList()
-                    {
-                        ContentList = XMLSerializer.XmlToDictionary(file.Contents),
-                        SelectedContent = file.SelectedContent
-                    };
-                    labelData.RuleList.Add(new RuleMain()
-                    {
-                        Format = file.Format,
-                        Name = file.Name,
-                        Description = file.Description,
-                        Content = rml
-                    });
-                }
-                foreach(var file in fileData.RuleInputList)
-                {
-                    var ri = new RuleInput()
-                    {
-                        Order = file.Contents.Order,
-                        StartIndex = file.Contents.StartIndex,
-                        CharLength = file.Contents.CharLength,
-                        InputData = file.Contents.InputData
-                    };
-                    labelData.RuleList.Add(new RuleMain()
-                    {
-                        Format = file.Format,
-                        Name = file.Name,
-                        Description = file.Description,
-                        Content = ri
-                    });
-                }
-                foreach(var file in fileData.RuleInputCombineList)
-                {
-                    var ric = new RuleInputCombine()
-                    {
-                        Seperator = file.Contents.Seperator,
-                        StartIndex = file.Contents.StartIndex,
-                        CharLength = file.Contents.CharLength,
-                        InputList = file.Contents.InputList
-                    };
-                    labelData.RuleList.Add(new RuleMain()
-                    {
-                        Format = file.Format,
-                        Name = file.Name,
-                        Description = file.Description,
-                        Content = ric
-                    });
-                }
-                return true;
+                    FontSize = to.FontSize,
+                    FontFamily = to.FontFamily,
+                    FontStyle = to.FontStyle,
+                    FontWeight = to.FontWeight,
+                    TextAlignment = to.TextAlignment
+                });
             }
-            catch (Exception e)
+
+            foreach (var bo in fileData.BarcodeList)
             {
-                Console.WriteLine(e.Message);
-                return false;
+                labelData.ObjectList.Add(new BarcodeObject()
+                {
+                    Name = bo.Name,
+                    Width = bo.Width,
+                    Height = bo.Height,
+                    PosX = bo.PosX,
+                    PosY = bo.PosY,
+                    MaxLength = bo.MaxLength,
+                    BarcodeType = bo.BarcodeType,
+                    Text = bo.Text
+                });
             }
+
+            foreach (var file in fileData.RuleSequentialNumList)
+            {
+                var rsn = new RuleSequentialNum()
+                {
+                    NumLength = file.Contents.NumLength,
+                    MaxNum = file.Contents.MaxNum,
+                    MinNum = file.Contents.MinNum,
+                    CurrNum = file.Contents.CurrNum,
+                    Increment = file.Contents.Increment,
+                    OnZeroFiller = file.Contents.OnZeroFiller,
+                };
+                labelData.RuleList.Add(new RuleMain()
+                {
+                    Format = file.Format,
+                    Name = file.Name,
+                    Description = file.Description,
+                    Content = rsn
+                });
+
+            }
+            foreach (var file in fileData.RuleTimeList)
+            {
+                var rt = new RuleTime()
+                {
+                    Pattern = file.Contents.Pattern
+                };
+                labelData.RuleList.Add(new RuleMain()
+                {
+                    Format = file.Format,
+                    Name = file.Name,
+                    Description = file.Description,
+                    Content = rt
+                });
+            }
+            foreach (var file in fileData.RuleManualList)
+            {
+                var rml = new RuleManualList()
+                {
+                    ContentList = XMLSerializer.XmlToDictionary(file.Contents),
+                    SelectedContent = file.SelectedContent
+                };
+                labelData.RuleList.Add(new RuleMain()
+                {
+                    Format = file.Format,
+                    Name = file.Name,
+                    Description = file.Description,
+                    Content = rml
+                });
+            }
+            foreach (var file in fileData.RuleInputList)
+            {
+                var ri = new RuleInput()
+                {
+                    Order = file.Contents.Order,
+                    StartIndex = file.Contents.StartIndex,
+                    CharLength = file.Contents.CharLength,
+                    InputData = file.Contents.InputData
+                };
+                labelData.RuleList.Add(new RuleMain()
+                {
+                    Format = file.Format,
+                    Name = file.Name,
+                    Description = file.Description,
+                    Content = ri
+                });
+            }
+            foreach (var file in fileData.RuleInputCombineList)
+            {
+                var ric = new RuleInputCombine()
+                {
+                    Seperator = file.Contents.Seperator,
+                    StartIndex = file.Contents.StartIndex,
+                    CharLength = file.Contents.CharLength,
+                    InputList = file.Contents.InputList
+                };
+                labelData.RuleList.Add(new RuleMain()
+                {
+                    Format = file.Format,
+                    Name = file.Name,
+                    Description = file.Description,
+                    Content = ric
+                });
+            }
+            return true;
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e.Message);
+            //    return false;
+            //}
         }
 
         #endregion Version 1

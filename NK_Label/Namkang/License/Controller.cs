@@ -19,9 +19,11 @@ namespace Namkang.License
                 Scope = NKLicenseList.DefaultScope,
 
                 HaspID = string.Empty,
-                NetCountLimit = string.Empty,
                 MaxMemory = (int)NKLicenseList.MaxMemory.SRM_PRO,
                 MemoryType = NKLicenseList.MemoryType.ePM_Ex,
+
+                IsNetKey = true,
+                NetCountLimit = string.Empty,
 
                 ManufacturedDate = new DateTime(),
                 ServiceExpirationDate = new DateTime(),
@@ -54,18 +56,20 @@ namespace Namkang.License
 
         public static string GetLicenseMessage()
         {
-            string sessionInfo = string.Empty;
-            HaspStatus loginSessionStatus = HaspData.GetSessionInfo(Hasp.KeyInfo, ref sessionInfo);
-            
+            HaspStatus loginSessionStatus = HaspData.Login(ProgramLicense.VendorCode, ProgramLicense.Scope);
+
             // Should update from test and user case
             string msg = string.Empty;
             switch (loginSessionStatus)
             {
                 case HaspStatus.InvalidHandle:
                 case HaspStatus.ContainerNotFound:
-                case HaspStatus.BrokenSession:
                     msg = "라이선스 키를 확인할 수 없습니다.";
                     break;
+                case HaspStatus.BrokenSession:
+                    msg = "라이선스 키 연결이 종료되었습니다.";
+                    break;
+                case HaspStatus.AlreadyLoggedIn:
                 case HaspStatus.StatusOk:
                     msg = string.Empty;
                     break;

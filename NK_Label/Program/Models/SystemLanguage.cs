@@ -57,7 +57,7 @@
             #region Initialize Test Source
 
             MenuFile = "파일";
-            MenuFileNew = "새 라벨 디자인 만들기" + " (Ctrl+N)";
+            MenuFileNew = "새라벨" + " (Ctrl+N)";
             MenuFileLoad = "열기" + " (Ctrl+O)";
             MenuFileSave = "저장" + " (Ctrl+S)";
             MenuFileSaveAs = "다른 이름으로 저장" + " (Ctrl+Shift+S)";
@@ -81,9 +81,9 @@
             MenuViewGrid = "그리드";
 
             MenuTool = "도구";
-            MenuToolText = "새 텍스트 추가" + " (Ctrl+T)";
-            MenuToolBarcode = "새 바코드 추가" + " (Ctrl+B)";
-            MenuToolRuleManager = "규칙 관리자";
+            MenuToolText = "새텍스트" + " (Ctrl+T)";
+            MenuToolBarcode = "새바코드" + " (Ctrl+B)";
+            MenuToolRuleManager = "규칙관리자";
             MenuToolLine = "선";
             MenuToolImage = "이미지";
 

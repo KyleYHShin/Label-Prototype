@@ -20,6 +20,9 @@ namespace BasicModule.ViewModels.Print
 
     public class PrintWindowViewModel : NotifyPropertyChanged
     {
+        public delegate bool NKLicense();
+        public NKLicense HasLicense;
+
         #region Label Properties
 
         private LabelObject _label;
@@ -51,7 +54,7 @@ namespace BasicModule.ViewModels.Print
 
         private PrintService pService;
 
-        public object PrinterList { get => PrinterOption.PrinterList; }
+        public object PrinterList { get => PrinterOption.PrinterTypeList; }
         public object DpiList { get => PrinterOption.DpiList; }
 
         public List<string> _usablePrinterList;
@@ -239,7 +242,7 @@ namespace BasicModule.ViewModels.Print
         public void CanClose()
         {
             if (!IsAbleToAction)
-                DialogService.ShowSimpleTextDialog(Application.Current.MainWindow, "Warning", "프린터 항목이 남아있습니다.");
+                DialogService.ShowSimpleTextDialog(Application.Current.MainWindow, "경고", "프린터 항목이 남아있습니다.");
         }
 
         public ICommand Refresh { get; private set; }
@@ -299,7 +302,7 @@ namespace BasicModule.ViewModels.Print
                         zplCode.AppendFormat("^XZ");
                         for (var i = 0; i < Label.NumberOfCopies; i++)
                         {
-                            //pService.PrintZebraProduct(SelectedPrinterName, zplCode.ToString());
+                            pService.PrintZebraProduct(SelectedPrinterName, zplCode.ToString());
                             Clipboard.Clear();
                             Clipboard.SetText(zplCode.ToString());
                         }

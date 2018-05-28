@@ -12,8 +12,6 @@ namespace BasicModule.Views.Common
         public DialogSelectWindow()
         {
             InitializeComponent();
-            MaxWidth = SystemParameters.PrimaryScreenWidth;
-            MaxHeight = SystemParameters.PrimaryScreenHeight;
             SizeToContent = SizeToContent.WidthAndHeight;
         }
 

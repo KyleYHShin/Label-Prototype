@@ -5,11 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
-        ResizeMode="NoResize">
-
-    <Window.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
-    </Window.Resources>
+        Icon="pack://application:,,,/UI/Images/Icon.ico"
+        Style="{StaticResource NKDialogWindowStyle}">
 
     <Grid Width="Auto" Height="Auto" Margin="10">
         <Grid.RowDefinitions>

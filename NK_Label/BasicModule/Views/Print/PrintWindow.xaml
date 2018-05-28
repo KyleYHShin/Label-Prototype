@@ -8,14 +8,12 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        WindowStyle="None"
+        Closing="Close" 
+        Title="라벨 출력"
         ResizeMode="NoResize"
         WindowState="Maximized"
-        Closing="Close" >
-
-    <Window.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
-    </Window.Resources>
+        Icon="pack://application:,,,/UI/Images/Icon.ico"
+        Style="{StaticResource NKWindowStyle}">
 
     <Grid Style="{StaticResource PrintWindowMainGrid}">
         <Border Style="{StaticResource PrintWindowMainBorder}">

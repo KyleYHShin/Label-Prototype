@@ -6,13 +6,10 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Title="Rule Manager"
         WindowStartupLocation="CenterOwner"
-        ResizeMode="NoResize">
-
-    <Window.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
-    </Window.Resources>
+        Title="규칙 관리자"
+        Icon="pack://application:,,,/UI/Images/Icon.ico"
+        Style="{StaticResource NKDialogWindowStyle}">
 
     <Grid Style="{StaticResource RuleWindowMainGrid}">
         <Grid.RowDefinitions>
@@ -41,7 +38,7 @@
                     Style="{StaticResource RuleWindowListDataGrid}">
                     <DataGrid.Columns>
                         <DataGridTextColumn
-                            Header="규칙 명"
+                            Header="규칙명"
                             Binding="{Binding Path=Name}"
                             Width="Auto" MinWidth="100"
                             IsReadOnly="True"/>
@@ -57,7 +54,7 @@
                     Grid.Row="2" Grid.Column="0"
                     Style="{StaticResource RuleCommonButtonStackPanel}">
                     <Button
-                        Content="새 규칙 생성" 
+                        Content="새규칙" 
                         Command="{Binding Create}"
                         Style="{StaticResource ButtonCommon}"
                         Template="{StaticResource ButtonCommonTemplate}"/>

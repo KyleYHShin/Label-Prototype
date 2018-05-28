@@ -2,7 +2,6 @@
 using BasicModule.Files;
 using BasicModule.Models;
 using BasicModule.Utils;
-using BasicModule.Views;
 using BasicModule.Views.Option;
 using BasicModule.Views.Print;
 using BasicModule.Views.Rule;
@@ -17,7 +16,6 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using Program.Utils;
-using System.Collections.Generic;
 using BasicModule;
 
 namespace Program.ViewModels
@@ -27,7 +25,7 @@ namespace Program.ViewModels
 
         #region System Properties
         
-        public string Title { get { return SystemInfo.Name + "  (" + SystemInfo.Version + ")"; } }
+        public string Title { get { return SystemInfo.Name; } }
 
         private SystemLanguage _language;
         public SystemLanguage Language { get { return _language; } set { _language = value; OnPropertyChanged(); } }
@@ -136,7 +134,7 @@ namespace Program.ViewModels
             {
                 if (SelectedLabel.IsChanged)
                 {
-                    if (DialogService.ShowSimpleSelectDialog(Application.Current.MainWindow, "Warning", "'" + SelectedLabel.Label.Name + "'에 수정된 항목이 있습니다.\n 무시하고 종료하시겠습니까?") == true)
+                    if (DialogService.ShowSimpleSelectDialog(Application.Current.MainWindow, "확인", "'" + SelectedLabel.Label.Name + "'에 수정된 항목이 있습니다.\n 무시하고 종료하시겠습니까?") == true)
                     {
                         CloseLabel();
                         return true;
@@ -176,7 +174,7 @@ namespace Program.ViewModels
 
         private void AddLabel(LabelViewModel newLVM)
         {
-            if (!CheckLicense())
+            if (!HasLicense())
                 return;
 
             if (newLVM != null)
@@ -189,7 +187,7 @@ namespace Program.ViewModels
         public ICommand ClickAddNewLabel { get; private set; }
         private void AddNewLabel()
         {
-            if (!CheckLicense())
+            if (!HasLicense())
                 return;
 
             var newLabel = new LabelObject();
@@ -197,7 +195,7 @@ namespace Program.ViewModels
             var olView = new OptionLabelView();
             olView.DataContext = olViewModel;
 
-            if (DialogService.ShowSelectDialog(Application.Current.MainWindow, olView, "Create New Label") == true)
+            if (DialogService.ShowSelectDialog(Application.Current.MainWindow, olView, "새 라벨") == true)
             {
                 var newLVM = new LabelViewModel(RegionManager);
                 newLVM.Label = newLabel;
@@ -208,7 +206,7 @@ namespace Program.ViewModels
         public ICommand ClickAddText { get; private set; }
         private void AddTextObject()
         {
-            if (!CheckLicense())
+            if (!HasLicense())
                 return;
 
             if (SelectedLabel != null)
@@ -220,7 +218,7 @@ namespace Program.ViewModels
                 var optionView = new OptionTextView();
                 optionView.DataContext = optionViewModel;
 
-                if (DialogService.ShowSelectDialog(Application.Current.MainWindow, optionView, "Create New Text") == true)
+                if (DialogService.ShowSelectDialog(Application.Current.MainWindow, optionView, "새 텍스트") == true)
                 {
                     SelectedLabel.ObjectList.Add(newText);
                     newText.IsChanged = true;
@@ -236,7 +234,7 @@ namespace Program.ViewModels
         public ICommand ClickAddBarcode { get; private set; }
         private void AddBarcodeObject()
         {
-            if (!CheckLicense())
+            if (!HasLicense())
                 return;
 
             if (SelectedLabel != null)
@@ -248,7 +246,7 @@ namespace Program.ViewModels
                 var optionView = new OptionBarcodeView();
                 optionView.DataContext = optionViewModel;
 
-                if (DialogService.ShowSelectDialog(Application.Current.MainWindow, optionView, "Create New Barcode") == true)
+                if (DialogService.ShowSelectDialog(Application.Current.MainWindow, optionView, "새 바코드") == true)
                 {
                     SelectedLabel.ObjectList.Add(newBarcode);
                     newBarcode.IsChanged = true;
@@ -264,7 +262,7 @@ namespace Program.ViewModels
         public ICommand ClickDeleteObject { get; private set; }
         private void DeleteObject()
         {
-            if (!CheckLicense())
+            if (!HasLicense())
                 return;
 
             if (SelectedLabel != null)
@@ -278,7 +276,7 @@ namespace Program.ViewModels
         public ICommand ClickRuleManager { get; private set; }
         private void RuleManager()
         {
-            if (!CheckLicense())
+            if (!HasLicense())
                 return;
 
             if (SelectedLabel != null)
@@ -307,7 +305,7 @@ namespace Program.ViewModels
         public ICommand ClickOpen { get; private set; }
         private void Open()
         {
-            if (!CheckLicense())
+            if (!HasLicense())
                 return;
 
             LabelViewModel newLVM = FileController.OpenLabel(RegionManager);
@@ -319,14 +317,14 @@ namespace Program.ViewModels
                 {
                     if (!string.IsNullOrEmpty(LVM.FilePath) && LVM.FilePath.Equals(newPath))
                     {
-                        DialogService.ShowSimpleTextDialog("Warning", "해당 라벨 디자인 파일이 이미 열려있습니다.");
+                        DialogService.ShowSimpleTextDialog("확인", "해당 라벨 디자인 파일이 이미 열려있습니다.");
                         isExist = true;
                         break;
                     }
                 }
                 if (!isExist && UsingLabelList.UsingLabelNameList.Contains(newLVM.Label.Name))
                 {
-                    DialogService.ShowSimpleTextDialog("Warning", "해당 라벨의 이름(" + newLVM.Label.Name + ")이 이미 사용중입니다.");
+                    DialogService.ShowSimpleTextDialog("확인", "해당 라벨의 이름(" + newLVM.Label.Name + ")이 이미 사용중입니다.");
                     isExist = true;
                 }
                 if (!isExist)
@@ -337,9 +335,6 @@ namespace Program.ViewModels
         public ICommand ClickSave { get; private set; }
         private void Save()
         {
-            if (!CheckLicense())
-                return;
-
             if (SelectedLabel != null)
             {
                 var LVM = SelectedLabel;
@@ -351,9 +346,6 @@ namespace Program.ViewModels
         public ICommand ClickSaveAll { get; private set; }
         private void SaveAll()
         {
-            if (!CheckLicense())
-                return;
-
             foreach(var lvm in LabelList)
             {
                 var LVM = lvm;
@@ -365,9 +357,6 @@ namespace Program.ViewModels
         public ICommand ClickSaveAs { get; private set; }
         private void SaveAs()
         {
-            if (!CheckLicense())
-                return;
-
             if (SelectedLabel != null)
             {
                 var LVM = SelectedLabel;
@@ -381,13 +370,14 @@ namespace Program.ViewModels
         public ICommand ClickPrintCurrentLabel { get; private set; }
         private void PrintCurrentLabel()
         {
-            if (!CheckLicense())
+            if (!HasLicense())
                 return;
 
             if (SelectedLabel != null)
             {
-                var pWin = new PrintWindow(RegionManager) { Title = "라벨 출력" };
+                var pWin = new PrintWindow(RegionManager);
                 var pVM = pWin.DataContext as PrintWindowViewModel;
+                pVM.HasLicense = new PrintWindowViewModel.NKLicense(HasLicense);
 
                 if (pVM.Initialize(SelectedLabel.Label, SelectedLabel.ObjectList, SelectedLabel.RuleList))
                 {
@@ -406,15 +396,16 @@ namespace Program.ViewModels
         public ICommand ClickShowVersion { get; private set; }
         private void ShowVersion()
         {
-            string msg = "Product Name: \t" + SystemInfo.Name;
-            msg += "\nVersion : \t" + SystemInfo.Version;
-            msg += "\nRelease  Date: \t" + SystemInfo.ReleaseDate.ToString("yyyy.MM.dd");
-            msg += "\nService Expiration Date: \t" + Namkang.License.Controller.ProgramLicense.ServiceExpirationDate.ToString("yyyy.MM.dd");
-            msg += "\n\nDeveloped by NAMKANG HI-TECH CO., LTD.";
+            string msg = " 제품 명: \t" + SystemInfo.Name;
+            msg += "\n 버전 : \t\t" + SystemInfo.Version;
+            msg += "\n 프로그램 제작일: \t" + SystemInfo.ReleaseDate.ToString("yyyy.MM.dd");
+            msg += "\n 라이선스 키 제조일: \t" + Namkang.License.Controller.ProgramLicense.ManufacturedDate.ToString("yyyy.MM.dd");
+            msg += "\n 서비스 종료일: \t\t" + Namkang.License.Controller.ProgramLicense.ServiceExpirationDate.ToString("yyyy.MM.dd");
+            msg += "\n\n Developed by NAMKANG HI-TECH CO., LTD.";
             DialogService.ShowSimpleTextDialog(Application.Current.MainWindow, Language.MenuHelpProgInfo, msg);
         }
 
-        private bool CheckLicense()
+        private bool HasLicense()
         {
             string hardLockLoginErrMsg = Namkang.License.Controller.Login();
 
@@ -422,7 +413,7 @@ namespace Program.ViewModels
                 return true;
             else
             {
-                DialogService.ShowSimpleTextDialog("Warning", hardLockLoginErrMsg);
+                DialogService.ShowSimpleTextDialog("경고", hardLockLoginErrMsg);
                 return false;
             }
         }

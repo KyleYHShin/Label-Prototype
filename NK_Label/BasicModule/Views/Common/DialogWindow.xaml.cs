@@ -10,8 +10,6 @@ namespace BasicModule.Views.Common
         public DialogWindow()
         {
             InitializeComponent();
-            MaxWidth = SystemParameters.PrimaryScreenWidth;
-            MaxHeight = SystemParameters.PrimaryScreenHeight;
             SizeToContent = SizeToContent.WidthAndHeight;
         }
 

@@ -13,8 +13,6 @@ namespace BasicModule.Views.Option
         public ChangeNameWindow()
         {
             InitializeComponent();
-            MaxWidth = SystemParameters.PrimaryScreenWidth;
-            MaxHeight = SystemParameters.PrimaryScreenHeight;
             SizeToContent = SizeToContent.WidthAndHeight;
         }
 
@@ -24,7 +22,7 @@ namespace BasicModule.Views.Option
                 DialogResult = true;
             else
             {
-                Utils.DialogService.ShowSimpleTextDialog("Warning", "해당 이름이 이미 사용중입니다.");
+                Utils.DialogService.ShowSimpleTextDialog(this, "확인", "해당 이름이 이미 사용중입니다.");
                 InputName.Focus();
                 InputName.SelectionStart = InputName.Text.Length;
             }

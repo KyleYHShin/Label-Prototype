@@ -36,7 +36,7 @@ namespace BasicModule.Files
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "NK Label-File | *.nkl";
-            saveFileDialog.Title = "Save a Label File";
+            saveFileDialog.Title = "라벨 디자인 파일 저장";
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 ret = SaveLabel_Xml(ref labelData, saveFileDialog.FileName);
@@ -92,7 +92,7 @@ namespace BasicModule.Files
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "NK Label-File | *.nkl";
-            openFileDialog.Title = "Select a Label File";
+            openFileDialog.Title = "라벨 디자인 파일 선택";
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
                 return openFileDialog.FileName;

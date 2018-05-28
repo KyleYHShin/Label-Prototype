@@ -12,7 +12,7 @@ namespace BasicModule.ViewModels.Option
     {
         #region Properties
 
-        public object PrinterList { get => PrinterOption.PrinterList; }
+        public object PrinterList { get => PrinterOption.PrinterTypeList; }
         public object DpiList { get => PrinterOption.DpiList; }
 
         private LabelObject _labelObject;
@@ -34,7 +34,7 @@ namespace BasicModule.ViewModels.Option
         {
             ChangeNameWindow cnWin = new ChangeNameWindow()
             {
-                Title = "Change '" + LabelObject.Name + "'s Name",
+                Title = "'" + LabelObject.Name + "' 의 이름 편집",
                 Owner = Application.Current.MainWindow
             };
             cnWin.SetText(LabelObject.Name);
@@ -62,7 +62,7 @@ namespace BasicModule.ViewModels.Option
 
             if(ret && UsingLabelList.UsingLabelNameList.Contains(LabelObject.Name))
             {
-                Utils.DialogService.ShowSimpleTextDialog("Warning", "해당 라벨의 이름(" + LabelObject.Name + ")이 이미 사용중입니다.");
+                Utils.DialogService.ShowSimpleTextDialog("확인", "해당 라벨의 이름(" + LabelObject.Name + ")이 이미 사용중입니다.");
                 ret = false;
             }
 

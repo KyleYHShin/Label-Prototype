@@ -16,12 +16,12 @@ namespace Program
 
             if (!string.IsNullOrEmpty(hardLockLoginErrMsg))
             {
-                BasicModule.Utils.DialogService.ShowSimpleTextDialog("Warning", hardLockLoginErrMsg);
+                BasicModule.Utils.DialogService.ShowSimpleTextDialog("경고", hardLockLoginErrMsg);
                 Shutdown();
             }
-            else if(DateTime.Compare(Namkang.License.Controller.ProgramLicense.ServiceExpirationDate, Utils.SystemInfo.ReleaseDate) < 0)
+            else if (DateTime.Compare(Namkang.License.Controller.ProgramLicense.ServiceExpirationDate, Utils.SystemInfo.ReleaseDate) < 0)
             {
-                BasicModule.Utils.DialogService.ShowSimpleTextDialog("Warning", "라이선스 기간이 만료되었습니다.");
+                BasicModule.Utils.DialogService.ShowSimpleTextDialog("경고", "라이선스 기간이 만료되었습니다.");
                 Shutdown();
             }
             else
@@ -30,7 +30,7 @@ namespace Program
                 var bootstrapper = new Bootstrapper();
                 bootstrapper.Run();
             }
-            
+
         }
     }
 }

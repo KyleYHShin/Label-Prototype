@@ -20,8 +20,6 @@ namespace BasicModule.Views.Print
         public PrintWindow(IRegionManager regionManager)
         {
             InitializeComponent();
-            //MaxWidth = SystemParameters.PrimaryScreenWidth;
-            //MaxHeight = SystemParameters.PrimaryScreenHeight;
 
             if (regionManager != null)
             {
@@ -31,10 +29,6 @@ namespace BasicModule.Views.Print
                 RegionController.SetRegionManager(regionManager, this.PrintRuleInput, RegionNames.PrintRuleInput);
                 RegionController.SetRegionManager(regionManager, this.PrintRuleInputCombine, RegionNames.PrintRuleInputCombine);
             }
-
-            //SizeToContent = SizeToContent.WidthAndHeight;
-            //Width = SystemParameters.VirtualScreenWidth;
-            //Height = SystemParameters.VirtualScreenHeight;
             thisDataContext = DataContext as PrintWindowViewModel;
         }
 
@@ -110,11 +104,7 @@ namespace BasicModule.Views.Print
                         (thisDataContext.InCombRuleList[0].Content as RuleInputCombine).InputRefresh();
                     }
 
-                    var dlWin = new ReadyRuleInputListWindow
-                    {
-                        Title = "Ready to Manual Input",
-                        DataContext = thisDataContext
-                    };
+                    var dlWin = new ReadyRuleInputListWindow { DataContext = thisDataContext };
                     dlWin.InitializeDataContext();
                     dlWin.Owner = System.Windows.Application.Current.MainWindow;
                     bool? ret = dlWin.ShowDialog();
@@ -268,6 +258,9 @@ namespace BasicModule.Views.Print
 
         private void PrintLabel(object sender, RoutedEventArgs e)
         {
+            if (!thisDataContext.HasLicense())
+                return;
+
             thisDataContext.ConvertRuleToText();
 
             bool hasSequentialRule = thisDataContext.SeqRuleList.Count > 0 ? true : false;
@@ -329,7 +322,7 @@ namespace BasicModule.Views.Print
         {
             if (!thisDataContext.IsAbleToAction || seqTimer != null)
             {
-                Utils.DialogService.ShowSimpleTextDialog(this, "Warning", "프린터 항목이 남아있습니다.");
+                Utils.DialogService.ShowSimpleTextDialog(this, "경고", "프린터 항목이 남아있습니다.");
                 e.Cancel = true;
             }
         }

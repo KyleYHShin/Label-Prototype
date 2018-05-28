@@ -9,9 +9,11 @@ namespace Namkang.License
         public string Scope { get; set; }
 
         public string HaspID { get; set; }
-        public string NetCountLimit { get; set; } // 0, 10, 50, unlimited
         public int MaxMemory { get; set; }
         public NKLicenseList.MemoryType MemoryType { get; set; }
+
+        public bool IsNetKey { get; set; }
+        public string NetCountLimit { get; set; } // 0, 10, 50, unlimited
 
         public DateTime ServiceExpirationDate { get; set; }
         public DateTime ManufacturedDate { get; set; }

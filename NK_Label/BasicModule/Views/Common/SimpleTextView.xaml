@@ -4,15 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d">
-
-    <UserControl.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Themes/Theme.xaml"/>
-    </UserControl.Resources>
-        
-        <Grid Background="White">
+    <Border
+            Background="{StaticResource GridBackColor}"
+            CornerRadius="5">
             <TextBox x:Name="TextContent"
                      BorderThickness="0"
                      Margin="10"
                      FontSize="15"/>
-    </Grid>
+    </Border>
 </UserControl>
