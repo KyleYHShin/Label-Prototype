@@ -112,6 +112,7 @@
                     <TextBox Grid.Row="0" Grid.Column="1"
                              Text="{Binding TextObject.Text}"
                              Style="{StaticResource OptionColumnValue}"/>
+                    
                     <TextBlock Grid.Row="1" Grid.Column="0"
                                Text="최대 출력 길이"
                                Style="{StaticResource OptionColumnHeader}"/>

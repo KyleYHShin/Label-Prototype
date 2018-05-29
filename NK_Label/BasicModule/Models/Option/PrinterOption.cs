@@ -19,8 +19,8 @@ namespace BasicModule.Models.Option
         public const double DEFAULT_DPI = DPI_300;
         //Must be changed by testing
         public const double DPI_152 = 6;
-        public const double DPI_203 = 8;
-        public const double DPI_300 = 10;
+        public const double DPI_203 = 8.013;
+        public const double DPI_300 = 11.9;
 
         public static readonly Dictionary<string, double> DpiList = new Dictionary<string, double>
         {

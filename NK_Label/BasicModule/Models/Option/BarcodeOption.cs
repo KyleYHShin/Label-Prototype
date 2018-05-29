@@ -22,6 +22,7 @@ namespace BasicModule.Models.Option
 
         public const string DEFAULT_TEXT = "Barcode Contents";
         public const int DEFAULT_MAX_LENGTH = 30;
+        public const string PARSING_ERR_CODE = "Error. Check input data.";
 
     }
 }

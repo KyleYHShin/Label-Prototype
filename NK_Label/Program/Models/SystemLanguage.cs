@@ -8,7 +8,7 @@
         public string MenuFileNew { get; set; }
         public string MenuFileLoad { get; set; }
         public string MenuFileSave { get; set; }
-        public string MenuFileSaveAs { get; set; }        
+        public string MenuFileSaveAs { get; set; }
         public string MenuFileSaveAll { get; set; }
         public string MenuFilePrint { get; set; }
         public string MenuFileClose { get; set; }
@@ -47,6 +47,9 @@
 
         #region System Comment
 
+        public string TitleCheck { get; set; }
+        public string TitleWarning { get; set; }
+
         public string SystemMentExit { get; set; }
 
         #endregion System Comment
@@ -81,8 +84,8 @@
             MenuViewGrid = "그리드";
 
             MenuTool = "도구";
-            MenuToolText = "새텍스트" + " (Ctrl+T)";
-            MenuToolBarcode = "새바코드" + " (Ctrl+B)";
+            MenuToolText = "텍스트추가" + " (Ctrl+T)";
+            MenuToolBarcode = "바코드추가" + " (Ctrl+B)";
             MenuToolRuleManager = "규칙관리자";
             MenuToolLine = "선";
             MenuToolImage = "이미지";
@@ -94,6 +97,8 @@
             MenuHelpProgInfo = "프로그램 정보";
             MenuHelpManual = "메뉴얼";
 
+            TitleCheck = "확인";
+            TitleWarning = "경고";
             SystemMentExit = "프로그램을 종료하시겠습니까?";
 
             #endregion Initialize Test Source

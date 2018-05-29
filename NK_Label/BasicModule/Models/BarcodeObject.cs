@@ -95,9 +95,13 @@ namespace BasicModule.Models
                     if (!string.IsNullOrEmpty(_text))
                         Barcode = BitmapConversion.BitmapToBitmapSource(BarcodeWriter.Write(_text));
                 }
-            }catch(System.Exception e)
+            }
+            catch (System.Exception e)
             {
-                Barcode = null;
+                if (BarcodeWriter == null)
+                    Barcode = null;
+                else
+                    Barcode = BitmapConversion.BitmapToBitmapSource(BarcodeWriter.Write(BarcodeOption.PARSING_ERR_CODE));
             }
         }
 

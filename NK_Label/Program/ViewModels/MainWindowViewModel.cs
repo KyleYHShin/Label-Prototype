@@ -397,7 +397,7 @@ namespace Program.ViewModels
         private void ShowVersion()
         {
             string msg = " 제품 명: \t" + SystemInfo.Name;
-            msg += "\n 버전 : \t\t" + SystemInfo.Version;
+            msg += "\n 버전 : \t\t" + SystemInfo.Version.Major + "." + SystemInfo.Version.Minor + "." + SystemInfo.Version.Build;
             msg += "\n 프로그램 제작일: \t" + SystemInfo.ReleaseDate.ToString("yyyy.MM.dd");
             msg += "\n 라이선스 키 제조일: \t" + Namkang.License.Controller.ProgramLicense.ManufacturedDate.ToString("yyyy.MM.dd");
             msg += "\n 서비스 종료일: \t\t" + Namkang.License.Controller.ProgramLicense.ServiceExpirationDate.ToString("yyyy.MM.dd");
@@ -407,7 +407,7 @@ namespace Program.ViewModels
 
         private bool HasLicense()
         {
-            string hardLockLoginErrMsg = Namkang.License.Controller.Login();
+            string hardLockLoginErrMsg = Namkang.License.Controller.GetLicenseMessage();
 
             if (string.IsNullOrEmpty(hardLockLoginErrMsg))
                 return true;

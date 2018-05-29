@@ -302,7 +302,8 @@ namespace BasicModule.ViewModels.Print
                         zplCode.AppendFormat("^XZ");
                         for (var i = 0; i < Label.NumberOfCopies; i++)
                         {
-                            pService.PrintZebraProduct(SelectedPrinterName, zplCode.ToString());
+                            //pService.PrintZebraProduct(SelectedPrinterName, zplCode.ToString());
+                            //Test
                             Clipboard.Clear();
                             Clipboard.SetText(zplCode.ToString());
                         }
@@ -311,7 +312,7 @@ namespace BasicModule.ViewModels.Print
             }
             catch (Exception ex)
             {
-                DialogService.ShowSimpleTextDialog(Application.Current.MainWindow, "Exception", ex.Source + ex.Message + "\n" + ex.StackTrace);
+                DialogService.ShowSimpleTextDialog(Application.Current.MainWindow, "프린터 오류", ex.Source + ex.Message + "\n" + ex.StackTrace);
             }
         }
 

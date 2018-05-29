@@ -40,14 +40,18 @@
     <SolidColorBrush x:Key="ToggleOnBackColor" Color="{StaticResource Button}" />
     <SolidColorBrush x:Key="ToggleDisabledOnBackColor" Color="{StaticResource ButtonDisabled}" />
 
+    <Color x:Key="TextBoxHeaderFore">Black</Color>
+    <Color x:Key="TextBoxValueFore">Black</Color>
     <Color x:Key="HighlightedTextBoxFore">Red</Color>
     <Color x:Key="TextBoxBorder">#074F78</Color>
     <Color x:Key="TextBoxBorderFocused">#333333</Color>
+    <SolidColorBrush x:Key="TextBoxHeaderForeColor" Color="{StaticResource TextBoxHeaderFore}" />
+    <SolidColorBrush x:Key="TextBoxValueForeColor" Color="{StaticResource TextBoxValueFore}" />
     <SolidColorBrush x:Key="HighlightedTextBoxForeColor" Color="{StaticResource HighlightedTextBoxFore}" />
     <SolidColorBrush x:Key="TextBoxBorderColor" Color="{StaticResource TextBoxBorder}" />
     <SolidColorBrush x:Key="TextBoxBorderFocusedColor" Color="{StaticResource TextBoxBorderFocused}" />
     <!--#endregion-->
-
+    
     <!--#region Custom Window-->
 
     <!--The window template and it's components -->
@@ -614,7 +618,7 @@
 
     <Style x:Key="SliderCheckBoxWithText"
            TargetType="{x:Type CheckBox}">
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Foreground" Value="{StaticResource TextBoxValueForeColor}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -728,16 +732,17 @@
         <Setter Property="Margin" Value="10,8"/>
         <Setter Property="Padding" Value="0,0,0,0"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Foreground" Value="{StaticResource TextBoxHeaderForeColor}"/>
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="FontSize" Value="13.5"/>
         <Setter Property="TextAlignment" Value="Right"/>
     </Style>
     <Style x:Key="OptionColumnValue"
            TargetType="{x:Type TextBox}">
+        <Setter Property="MaxWidth" Value="300"/>
         <Setter Property="Margin" Value="3,7,3,4"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Foreground" Value="{StaticResource TextBoxValueForeColor}"/>
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="TextAlignment" Value="Center"/>
@@ -747,7 +752,7 @@
            TargetType="{x:Type TextBlock}">
         <Setter Property="Margin" Value="3,5,3,5"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Foreground" Value="{StaticResource TextBoxValueForeColor}"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="TextAlignment" Value="Center"/>
@@ -863,7 +868,7 @@
         <Setter Property="Margin" Value="10,8"/>
         <Setter Property="Padding" Value="0,0,0,0"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Foreground" Value="{StaticResource TextBoxHeaderForeColor}"/>
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="FontSize" Value="13.5"/>
         <Setter Property="TextAlignment" Value="Right"/>
@@ -872,7 +877,7 @@
            TargetType="{x:Type TextBox}">
         <Setter Property="Margin" Value="3,7,3,4"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Foreground" Value="{StaticResource TextBoxValueForeColor}"/>
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="TextAlignment" Value="Center"/>
@@ -986,7 +991,7 @@
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="BorderBrush" Value="{StaticResource LabelBorderColor}"/>
         <Setter Property="BorderThickness" Value="2"/>
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Foreground" Value="{StaticResource TextBoxHeaderForeColor}"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontSize" Value="16"/>
     </Style>
@@ -1012,7 +1017,7 @@
            TargetType="{x:Type TextBox}">
         <Setter Property="Margin" Value="3,7,3,4"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Foreground" Value="{StaticResource TextBoxValueForeColor}"/>
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="TextAlignment" Value="Center"/>

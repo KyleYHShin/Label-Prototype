@@ -14,16 +14,16 @@ namespace Namkang.License
             // Must change by released program
             ProgramLicense = new NKHardLockInfo()
             {
+                HaspID = string.Empty,
+
                 VendorCode = NKLicenseList.Code_YIOBI,
                 Feature = (int)NKLicenseList.Feature_YIOBI.NK_Label,
                 Scope = NKLicenseList.DefaultScope,
+                NetMaxCount = string.Empty,
+                IsNetKey = true,
 
-                HaspID = string.Empty,
                 MaxMemory = (int)NKLicenseList.MaxMemory.SRM_PRO,
                 MemoryType = NKLicenseList.MemoryType.ePM_Ex,
-
-                IsNetKey = true,
-                NetCountLimit = string.Empty,
 
                 ManufacturedDate = new DateTime(),
                 ServiceExpirationDate = new DateTime(),
@@ -56,22 +56,23 @@ namespace Namkang.License
 
         public static string GetLicenseMessage()
         {
+
             HaspStatus loginSessionStatus = HaspData.Login(ProgramLicense.VendorCode, ProgramLicense.Scope);
 
             // Should update from test and user case
+            if (ProgramLicense.IsNetKey && ProgramLicense.NetMaxCount.Equals("0"))
+                return "라이선스 키: 네트워크 키가 아닙니다.";
+                
             string msg = string.Empty;
             switch (loginSessionStatus)
             {
-                case HaspStatus.InvalidHandle:
-                case HaspStatus.ContainerNotFound:
-                    msg = "라이선스 키를 확인할 수 없습니다.";
-                    break;
-                case HaspStatus.BrokenSession:
-                    msg = "라이선스 키 연결이 종료되었습니다.";
-                    break;
                 case HaspStatus.AlreadyLoggedIn:
                 case HaspStatus.StatusOk:
                     msg = string.Empty;
+                    break;
+                case HaspStatus.InvalidHandle:
+                case HaspStatus.ContainerNotFound:
+                    msg = "라이선스 키를 확인할 수 없습니다.";
                     break;
                 case HaspStatus.InvalidFeature:
                     msg = "라이선스 키 : 사용 권한이 없습니다.";
@@ -79,11 +80,14 @@ namespace Namkang.License
                 case HaspStatus.TooManyUsers:
                     msg = "라이선스 키 : 최대 사용자 수를 초과하였습니다.";
                     break;
+                case HaspStatus.BrokenSession:
+                    msg = "라이선스 키 세션이 종료되었습니다.";
+                    break;
                 case HaspStatus.RemoteCommErr:
                     msg = "라이선스 키 : 네트워크 통신 오류";
                     break;
                 default:
-                    msg = "라이선스 키 : 알 수 없는 오류";
+                    msg = "라이선스 키 : 알 수 없는 오류(" + loginSessionStatus + ")";
                     break;
             }
             return msg;
@@ -98,7 +102,7 @@ namespace Namkang.License
             foreach (XmlNode item in xmlList)
             {
                 ProgramLicense.HaspID = item["haspid"].InnerText;
-                ProgramLicense.NetCountLimit = item["nethasptype"].InnerText;
+                ProgramLicense.NetMaxCount = item["nethasptype"].InnerText;
             }
         }
 
