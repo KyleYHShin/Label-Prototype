@@ -48,3 +48,4 @@ C:\Work\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\SmartAdorner.csproj.Gene
 C:\Work\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\SmartAdorner.csproj.CoreCompileInputs.cache
 C:\Work\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\SmartAdorner.dll
 C:\Work\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\SmartAdorner.pdb
+C:\Work\Label-Prototype\NK_Label\SmartAdorner\obj\Debug\SmartAdorner.csprojResolveAssemblyReference.cache

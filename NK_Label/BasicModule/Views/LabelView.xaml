@@ -10,7 +10,7 @@
         <KeyBinding Key="Esc" Command="{Binding ClickReleaseAll}"/>
         <KeyBinding Key="Delete" Command="{Binding ClickDeleteObject}"/>
     </UserControl.InputBindings>
-    <Grid>
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Canvas
             x:Name="CanvasLabel"
             DataContext="{Binding Label}"
@@ -21,18 +21,18 @@
                 Width="{Binding ConvertedWidth}"
                 Height="{Binding ConvertedHeight}">
                 <Rectangle
-                Width="{Binding ConvertedGuideWidth}"
-                Height="{Binding ConvertedGuideHeight}"
-                RadiusX="{Binding Radius}"
-                RadiusY="{Binding Radius}"
+                    Width="{Binding ConvertedGuideWidth}"
+                    Height="{Binding ConvertedGuideHeight}"
+                    RadiusX="{Binding Radius}"
+                    RadiusY="{Binding Radius}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                Stroke="Red"
-                StrokeDashArray="5"
-                StrokeThickness="1"/>
+                    Stroke="Red"
+                    StrokeDashArray="5"
+                    StrokeThickness="1"/>
             </Grid>
         </Canvas>
-        
+
         <ListBox
             ItemsSource="{Binding ObjectList}"
             Background="Transparent"

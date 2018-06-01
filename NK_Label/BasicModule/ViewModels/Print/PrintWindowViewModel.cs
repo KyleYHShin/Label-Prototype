@@ -302,7 +302,7 @@ namespace BasicModule.ViewModels.Print
                         zplCode.AppendFormat("^XZ");
                         for (var i = 0; i < Label.NumberOfCopies; i++)
                         {
-                            //pService.PrintZebraProduct(SelectedPrinterName, zplCode.ToString());
+                            pService.PrintZebraProduct(SelectedPrinterName, zplCode.ToString());
                             //Test
                             Clipboard.Clear();
                             Clipboard.SetText(zplCode.ToString());
